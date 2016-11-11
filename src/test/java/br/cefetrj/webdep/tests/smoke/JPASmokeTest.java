@@ -1,4 +1,4 @@
-package br.cefetrj.webdep.tests;
+package br.cefetrj.webdep.tests.smoke;
 
 import static org.junit.Assert.fail;
 
