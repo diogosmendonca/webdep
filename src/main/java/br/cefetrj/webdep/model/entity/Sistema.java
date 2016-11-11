@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -50,7 +51,16 @@ public class Sistema implements Serializable{
 	private List<Versao> versoes; 
 	
 	@OneToMany(mappedBy="sistema")
-	private List<Permissao> permissoes; 
+	private List<Permissao> permissoes;
+	
+	@OneToMany(mappedBy="sistema")
+	private List<RegistroLogAcesso> acessos;
+	
+	@OneToMany(mappedBy="sistema")
+	private List<RegistroLogErro> erros; 
+	
+	@ManyToOne
+	private Servidor servidor;
 	
 	public Long getId() {
 		return id;
@@ -123,6 +133,38 @@ public class Sistema implements Serializable{
 
 	public void setVersoes(List<Versao> versoes) {
 		this.versoes = versoes;
+	}
+
+	public List<Permissao> getPermissoes() {
+		return permissoes;
+	}
+
+	public void setPermissoes(List<Permissao> permissoes) {
+		this.permissoes = permissoes;
+	}
+
+	public List<RegistroLogAcesso> getAcessos() {
+		return acessos;
+	}
+
+	public void setAcessos(List<RegistroLogAcesso> acessos) {
+		this.acessos = acessos;
+	}
+
+	public List<RegistroLogErro> getErros() {
+		return erros;
+	}
+
+	public void setErros(List<RegistroLogErro> erros) {
+		this.erros = erros;
+	}
+
+	public Servidor getServidor() {
+		return servidor;
+	}
+
+	public void setServidor(Servidor servidor) {
+		this.servidor = servidor;
 	}
 
 	
