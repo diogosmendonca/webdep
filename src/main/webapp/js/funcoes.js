@@ -27,6 +27,7 @@ $(document).ready(function () {
                         					"<td><a id=\""+ el.nome +"-excluir\" class=\"excluir-sistema\">Excluir</a></td></tr>");
                         });
                         refresh = false;
+                        
                     } else if (response.indexOf("Erro")) {
 
                     }

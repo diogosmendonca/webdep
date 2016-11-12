@@ -17,7 +17,7 @@
             <div class="row form-inline">
             	<div class="col-sm-5">
                 	<input id="filtro-busca-sistemas" class="form-control" type="text">
-                		<button id="buscar-sistemas" type="submit" class="btn btn-primary">Buscar</button>
+                	<button id="buscar-sistemas" type="submit" class="btn btn-primary">Buscar</button>
             	</div>
             </div>
             <br>

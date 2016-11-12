@@ -11,22 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.hibernate.tuple.CreationTimestampGeneration;
-
-import br.cefetrj.webdep.model.entity.PadraoURL;
-import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
-import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
+import br.cefetrj.webdep.model.entity.PadraoURL;
+import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 
 /**
  *
@@ -99,10 +92,6 @@ public class NovoPadraoURL extends HttpServlet {
             erro_json = erro_json.replace(",]}","]}");
             if (erro) pw.write(erro_json);
             else {
-                //form validation succeded
-            	for (RegistroLogAcesso registroLogAcesso: registrosLogAcesso){
-            		
-            	}
                 PadraoURL padraoURL = new PadraoURL();
                 padraoURL.setNome(nome);
                 padraoURL.setExpressaoRegular(regex);
