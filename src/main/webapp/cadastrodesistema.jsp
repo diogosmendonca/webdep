@@ -1,11 +1,11 @@
-<%-- 
+<%--
     Document   : cadastrodesistema
     Created on : Nov 5, 2016, 8:24:05 PM
     Author     : Luan
 --%>
-
+ 
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
-
+ 
 <!DOCTYPE html>
 <html><head>
         <jsp:include page="head.jspf"/>
@@ -51,11 +51,15 @@
                     </div>
                 </fieldset>
             </div>
-            <div class="row">
+		 <div class="row">
                 <fieldset class="form-group">
                     <legend>Periocidade de Leitura dos Logs</legend>
                     <div class="col-sm-6">
-                        <label class="text-right col-sm-6">Data da Primeira Leitura: </label><div class="input-group"><input class="form-control" type="text"/></div> <br>
+                        <label class="text-right col-sm-6">Data da Primeira Leitura: </label><div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        <div class="input-group">
+                        <input class="form-control" type="text" readonly/>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div> <br>
                         <label class="text-right col-sm-6">Horário da Primeira Leitura: </label><div class="input-group"><input class="form-control" type="text"/><span class="input-group-addon"> (hh:mm)</span></div> <br>
                         <label class="text-right col-sm-6">Novas Leituras a Cada: </label><div class="input-group"><input class="form-control" type="text"/><span class="input-group-addon">(dd hh:mm)</span></div> <br>
                     </div>
@@ -65,6 +69,24 @@
             <button type="submit" class="btn btn-primary ">Salvar</button>
             <button class="btn btn-secondary "type="button">Cancelar</button>
             </div>
-        </form>
-    </body>
+	</form>
+	<script type="text/javascript" src="jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.pt-BR.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+  
+	$('.form_date').datetimepicker({
+        language:  'pt-BR',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+	
+</script>
+</body>
 </html>
