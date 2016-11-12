@@ -9,7 +9,12 @@ public class SeleniumSmokeTest {
 	@Test
 	public void openPageSelenium() {
         WebDriver driver;
-        System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver");
+        if (System.getProperty("os.name").contains("Windows")){
+        	System.setProperty("webdriver.gecko.driver", "src\\test\\resources\\geckodriver.exe");
+        }else{
+        	System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver");
+        }
+        
         driver = new FirefoxDriver();
         driver.get("http://localhost:8080/webdep/index.jsp");
         driver.quit();
