@@ -12,11 +12,15 @@
     </head>
     <body>
         <jsp:include page="scripts.jspf"/>
-        <div class="form-group container">
+        <div id="div-buscar-sistemas" class="form-group container">
             <br></br>
-            <div class="row">
-                <input type="text">  <button type="submit" class="btn btn-primary">Buscar</button><br></br>
+            <div class="row form-inline">
+            	<div class="col-sm-5">
+                	<input id="filtro-busca-sistemas" class="form-control" type="text">
+                		<button id="buscar-sistemas" type="submit" class="btn btn-primary">Buscar</button>
+            	</div>
             </div>
+            <br>
             <div class="row">
                 <table class="table table-bordered table-condensed">
                     <thead>
@@ -31,15 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">XPTO</th>
-                            <td>Apache Web Server</td>
-                            <td>Common</td>
-                            <td>1d</td>
-                            <td>30/09/2016 00:00</td>
-                            <td><a class="">Alterar</a></td>
-                            <td><a>Excluir</a></td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>

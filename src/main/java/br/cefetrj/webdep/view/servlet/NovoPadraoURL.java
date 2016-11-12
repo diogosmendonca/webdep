@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +32,7 @@ import br.cefetrj.webdep.model.dao.PersistenceManager;
  *
  * @author Luan
  */
+@WebServlet("/NovoPadraoURL")
 public class NovoPadraoURL extends HttpServlet {
 
     /*protected void processRequest(HttpServletRequest request, HttpServletResponse response)
