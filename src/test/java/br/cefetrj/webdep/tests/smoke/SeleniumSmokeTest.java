@@ -15,6 +15,7 @@ public class SeleniumSmokeTest {
         	System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver");
         }
         
+        
         driver = new FirefoxDriver();
         driver.get("http://localhost:8080/webdep/index.jsp");
         driver.quit();
