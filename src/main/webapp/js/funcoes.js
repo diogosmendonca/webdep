@@ -28,7 +28,7 @@ $(document).ready(function () {
                         });
                         refresh = false;
                     } else if (response.indexOf("Erro")) {
-                    	
+
                     }
                 }
             });
