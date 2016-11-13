@@ -87,7 +87,7 @@
 	<script type="text/javascript" src="jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.pt-BR.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.<fmt:message key="br.cefetrj.webdep.jsp.datapicker" />.js" charset="UTF-8"></script>
 	<script type="text/javascript">
 		$('.form_datetime').datetimepicker({
 			language : 'pt-BR',

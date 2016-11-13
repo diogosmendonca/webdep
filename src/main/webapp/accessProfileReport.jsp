@@ -96,7 +96,7 @@
 	</form>
 		<div id="exTab1" class="panel panel-default">
 			<ul class="nav nav-tabs ">
-				<li class="active"><a href="#1a" data-toggle="tab"><fmt:message key="br.cefetrj.webdep.jsp.apr.table" /></a></li>
+				<li class="active"><a href="#1a" data-toggle="tab">pt-BR</a></li>
 				<li><a href="#2a" data-toggle="tab"><fmt:message key="br.cefetrj.webdep.jsp.apr.graphic" /></a></li>
 			</ul>
 			<div class="tab-content clearfix">
@@ -109,7 +109,7 @@
 		<script type="text/javascript" src="jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.pt-BR.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.<fmt:message key="br.cefetrj.webdep.jsp.datapicker" />.js" charset="UTF-8"></script>
 	<script type="text/javascript">
 		$('.form_datetime').datetimepicker({
 			language : 'pt-BR',
