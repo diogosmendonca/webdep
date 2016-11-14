@@ -1,6 +1,3 @@
-
-
-
 <!-- 
 links barra menu -->
 <nav class="navbar navbar-default">
@@ -72,7 +69,7 @@ links barra menu -->
 
 				<li><button type="button" class="btn  navbar-btn "><fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.sair" /></button></li>
 			</ul>
-
+			
 		</div>
 		<!-- /.navbar-collapse -->
 	</div>
