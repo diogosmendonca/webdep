@@ -15,40 +15,42 @@
 <title><fmt:message key="br.cefetrj.webdep.jsp.vs.title" /></title>
 <jsp:include page="head.jspf" />
 </head>
-<body class="container ">
-
-	<form class="form-horizontal">
-		<div class="form-group">
-			<div class="col-sm-4">
-				<input class="form-control" type="text">
+<body class="container-full ">
+	<jsp:include page="scripts.jspf" />
+	<%@include file="navbar.jspf"%>
+	<div class="container">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<div class="col-sm-4">
+					<input class="form-control" type="text">
+				</div>
+				<input class="btn btn-primary btn-md" type="submit" value="<fmt:message key="br.cefetrj.webdep.jsp.vs.search" />">
 			</div>
-			<input class="btn btn-primary btn-md" type="submit" value="<fmt:message key="br.cefetrj.webdep.jsp.vs.search" />">
-		</div>
-	</form>
-	
-	<div class="tab-pane fade in active" id="1a">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>URLs</th>
-					<th><fmt:message key="br.cefetrj.webdep.jsp.vs.system" /></th>
-					<th><fmt:message key="br.cefetrj.webdep.jsp.vs.version" /></th>
-					<th><fmt:message key="br.cefetrj.webdep.jsp.vs.dateTime" /></th>
-					<th><fmt:message key="br.cefetrj.webdep.jsp.vs.change" /></th>
-					<th><fmt:message key="br.cefetrj.webdep.jsp.vs.delete" /></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-				</tr>
-			</tbody>
-		</table>
+		</form>
 		
-		 <div class="row text-center">		
-		<button type="submit" class="btn btn-primary btn-md"><fmt:message key="br.cefetrj.webdep.jsp.vs.back" /></button>
+		<div class="tab-pane fade in active" id="1a">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>URLs</th>
+						<th><fmt:message key="br.cefetrj.webdep.jsp.vs.system" /></th>
+						<th><fmt:message key="br.cefetrj.webdep.jsp.vs.version" /></th>
+						<th><fmt:message key="br.cefetrj.webdep.jsp.vs.dateTime" /></th>
+						<th><fmt:message key="br.cefetrj.webdep.jsp.vs.change" /></th>
+						<th><fmt:message key="br.cefetrj.webdep.jsp.vs.delete" /></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+					</tr>
+				</tbody>
+			</table>
+			
+			 <div class="row text-center">		
+			<button type="submit" class="btn btn-primary btn-md"><fmt:message key="br.cefetrj.webdep.jsp.vs.back" /></button>
+			</div>
+	
 		</div>
-
 	</div>
-
 </body>
 </html>
