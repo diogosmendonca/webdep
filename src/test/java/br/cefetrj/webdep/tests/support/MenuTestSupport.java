@@ -3,6 +3,7 @@ package br.cefetrj.webdep.tests.support;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class MenuTestSupport {
 	
@@ -13,7 +14,7 @@ public class MenuTestSupport {
 	}
 
 	public void visita() {
-		driver.get("localhost:8080/index.jsp");
+		driver.get("http://localhost:8080/webdep/index.jsp");
 	}
 
 	public void efetuaLogin(String usuario, String senha) {
@@ -26,6 +27,11 @@ public class MenuTestSupport {
 
 	public void clicaLink(String url) {
 		driver.findElement(By.linkText(url)).click();
+	}
+
+	public void acionaSelectSistema(String nomeSistema) {
+		Select sistema = new Select(driver.findElement(By.id("sistema")));
+		sistema.selectByVisibleText(nomeSistema);
 	}
 
 }
