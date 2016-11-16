@@ -17,7 +17,8 @@
 <title><fmt:message key="br.cefetrj.webdep.jsp.http.title" /></title>
 <jsp:include page="head.jspf" />
 </head>
-<body class="container ">
+<body class="container-full">
+	<%@include file="navbar.jspf"%>
 	<form class="form-horizontal">
 		<div class="panel panel-default">
 			<div class="panel-heading">
