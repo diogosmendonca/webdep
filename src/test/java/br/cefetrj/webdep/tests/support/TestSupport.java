@@ -5,11 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-public class MenuTestSupport {
+public class TestSupport {
 	
 	private WebDriver driver;
 	
-	public MenuTestSupport(WebDriver driver) {
+	public TestSupport(WebDriver driver) {
 		this.driver = driver;
 	}
 
