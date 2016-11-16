@@ -22,10 +22,10 @@ links barra menu -->
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false"> <fmt:message key="br.cefetrj.webdep.jsp.navbar.sistemas" /><span class="caret"></span>
 						<ul class="dropdown-menu">
-							<li><a href="#"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarsistema" /></a></li>
-							<li><a href="#"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluir" /></a></li>
-							<li><a href="#"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarnovaversao" /></a></li>
-							<li><a href="#"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluirversoes" /></a></li>
+							<li><a href='cadastrodesistema.jsp'><fmt:message key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarsistema" /></a></li>
+							<li><a href="gerenciadorsistema.jsp"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluir" /></a></li>
+							<li><a href="versionRegistration.jsp"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarnovaversao" /></a></li>
+							<li><a href="versionSearch.jsp"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluirversoes" /></a></li>
 
 						</ul></li>
 				<!-- END SISTEMAS -->
@@ -44,7 +44,7 @@ links barra menu -->
 					aria-expanded="false"> <fmt:message key="br.cefetrj.webdep.jsp.navbar.relatorios" /><span class="caret"></span>
 						<ul class="dropdown-menu">
 							<li><a href="#"><fmt:message key="br.cefetrj.webdep.jsp.navbar.relatorios.perfildeacesso" /></a></li>
-							<li><a href="#"><fmt:message key="br.cefetrj.webdep.jsp.navbar.relatorios.confiabilidadeurls" /></a></li>
+							<li><a href="HTTPreport.jsp"><fmt:message key="br.cefetrj.webdep.jsp.navbar.relatorios.confiabilidadeurls" /></a></li>
 						</ul></li>
 				<!-- END Relatórios -->
 			</ul>

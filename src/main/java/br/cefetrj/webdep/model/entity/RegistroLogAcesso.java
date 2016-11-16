@@ -28,7 +28,7 @@ public class RegistroLogAcesso implements Serializable{
 	private String ip;
 	
 	@Column(nullable = false, length = 100)
-	private String usuario;
+	private Usuario usuario;
 	
 	@Column(nullable = false)
 	private LocalDateTime timestamp;
@@ -67,11 +67,11 @@ public class RegistroLogAcesso implements Serializable{
 		this.ip = ip;
 	}
 
-	public String getUsuario() {
+	public Usuario getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(String usuario) {
+	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
 

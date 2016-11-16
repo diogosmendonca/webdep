@@ -16,10 +16,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.entity.PadraoURL;
 import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
+import br.cefetrj.webdep.model.entity.Usuario;
 
 /**
  *
@@ -67,9 +70,30 @@ public class NovoPadraoURL extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter pw = response.getWriter();
-        PersistenceManager pm = PersistenceManager.getInstance(); 
+        HttpSession session = request.getSession();  
+        Long usuario_id;
+        Usuario usuarioLogado = new Usuario();
+    	usuarioLogado.setId(0L);
+        PersistenceManager pm = PersistenceManager.getInstance();
         GenericDAO<RegistroLogAcesso> regLogAcessoDAO = pm.createGenericDAO(RegistroLogAcesso.class);
+        GenericDAO<Usuario> usuarioDAO = pm.createGenericDAO(Usuario.class);
+        GenericDAO<PadraoURL> padraoURLDAO = pm.createGenericDAO(PadraoURL.class);
+        List<Usuario> usuarios = usuarioDAO.listAll();
+        if (session != null) {
+        	usuario_id = (Long)session.getAttribute("name"); //alterar atributo name para o atributo que o outro grupo utilizar
+        	for (Usuario u: usuarios) {
+        		if (u.getId() == usuario_id) {
+        			usuarioLogado = u;
+        		}
+        	}
+        }
         List<RegistroLogAcesso> registrosLogAcesso = regLogAcessoDAO.listAll();
+        List<RegistroLogAcesso> registrosLogAcessoPermitidos = new ArrayList<>();
+        for (RegistroLogAcesso r : registrosLogAcesso) {
+        	if (r.getUsuario().getId() == usuarioLogado.getId()){
+        		registrosLogAcessoPermitidos.add(r);
+        	}
+        }
         //retrieving URL Pattern form fields
         String action = request.getParameter("action");
         String nome = request.getParameter("nome");
@@ -95,10 +119,8 @@ public class NovoPadraoURL extends HttpServlet {
                 PadraoURL padraoURL = new PadraoURL();
                 padraoURL.setNome(nome);
                 padraoURL.setExpressaoRegular(regex);
-                
-                //padraoURL.setUsuario(usuario); // usuario logado quem é?
-                //urlDAO.addPadrao(padraoURL);
-                
+                padraoURL.setUsuario(usuarioLogado); // usuario logado quem é?
+                padraoURLDAO.insert(padraoURL);
                 pw.write("success");
             }
         } else if ("buscaRegex".equals(action)) {
@@ -110,7 +132,7 @@ public class NovoPadraoURL extends HttpServlet {
                     /*Aqui utiliza-se o DAO do outro grupo que está responsável por guardar as URLs no banco.
                     A intenção é pegar todas as URLs do banco:*/
                 List<String> URLsRegex = new ArrayList<String>();
-                for (RegistroLogAcesso registroLogAcesso: registrosLogAcesso){
+                for (RegistroLogAcesso registroLogAcesso: registrosLogAcessoPermitidos){
                 	//depois que descobrir quem é o usuário logado.. 
                 	//verificar permissão para ver registros de log de acesso
                 	String url = registroLogAcesso.getUrl();
