@@ -16,6 +16,7 @@
 <jsp:include page="head.jspf" />
 </head>
 <body class="container-full ">
+	<jsp:include page="scripts.jspf" />
 	<%@include file="navbar.jspf"%>
 	<div class="container">
 		<form class="form-horizontal">
@@ -107,7 +108,6 @@
 				</div>
 			</div>
 	</div>
-	<jsp:include page="scripts.jspf" />
 	
 	<script type="text/javascript" src="jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>

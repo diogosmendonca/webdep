@@ -19,7 +19,7 @@
 	<jsp:include page="scripts.jspf" />
 	<%@include file="navbar.jspf"%>
 	<div class="container">
-		<form class="form-horizontal container">
+		<form class="form-horizontal container" method="post" action="FrontControllerServlet">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3>
@@ -30,22 +30,23 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="name"><fmt:message key="br.cefetrj.webdep.jsp.vr.system" /></label>
 						<div class="col-xs-2">
-							<select class="form-control">
+							<select class="form-control" name="sistema" id="sistema">
 								<option disabled selected><fmt:message key="br.cefetrj.webdep.jsp.vr.select" /></option>
+								<option value="Segmentation Fault">Segmentation Fault</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.versionName" /></label>
 						<div class="col-xs-4">
-							<input type="text" class="form-control" id="version">
+							<input type="text" class="form-control" name="nome" id="nome" >
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.releaseDate" /></label>
 						<div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 							<div class="input-group">
-								<input class="form-control" type="text" readonly />
+								<input class="form-control" type="text"  name="date" id="date" readonly />
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-remove"></span>
 								</span> 
@@ -59,7 +60,7 @@
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.releaseTime" /></label>
 						<div class="input-group date form_time col-sm-4" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
 							<div class="input-group">
-								<input class="form-control" type="text" readonly />
+								<input class="form-control" type="text" name="time" id="time" readonly />
 								<span class="input-group-addon"> 
 									<span class="glyphicon glyphicon-remove"></span>
 								</span> 
@@ -79,7 +80,7 @@
 					<button type="submit" class="btn btn-primary btn-md">
 						<fmt:message key="br.cefetrj.webdep.jsp.vr.save" />
 					</button>
-					<button type="submit" class="btn btn-danger btn-md">
+					<button type="reset" class="btn btn-danger btn-md">
 						<fmt:message key="br.cefetrj.webdep.jsp.vr.cancel" />
 					</button>
 				</div>
@@ -110,7 +111,9 @@
 			todayHighlight : 1,
 			startView : 2,
 			minView : 2,
-			forceParse : 0
+			forceParse : 0,
+			format: "yyyy-mm-dd"
+			
 		});
 		$('.form_time').datetimepicker({
 			language : 'pt-BR',
