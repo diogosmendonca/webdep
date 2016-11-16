@@ -33,5 +33,16 @@ public class TestSupport {
 		Select sistema = new Select(driver.findElement(By.id("sistema")));
 		sistema.selectByVisibleText(nomeSistema);
 	}
-
+	
+	public void logarIrAtePagina(String usuario,
+								  String senha,
+								  String sistema,
+								  String menu,
+								  String subMenu) {
+		visita();
+		efetuaLogin(usuario, senha);
+		acionaSelectSistema(sistema);
+		clicaLink(menu);
+		clicaLink(subMenu);
+	}
 }
