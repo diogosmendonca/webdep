@@ -1,17 +1,20 @@
-<%--
-    Document   : cadastrodesistema
-    Created on : Nov 5, 2016, 8:24:05 PM
-    Author     : Luan
---%>
- 
-<%@page contentType="text/html" pageEncoding="windows-1252"%>
- 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
+<!-- Variável criada para auxiliar na identificação do locale -->
+<c:set var="lang" scope="session" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}"/>
+
+<!-- Necessário para utilizar o i18N, informar o locale e o bundle -->
+<fmt:setLocale value="${ lang }"/>
+<fmt:setBundle basename="Messages" />
 <!DOCTYPE html>
 <html><head>
         <jsp:include page="head.jspf"/>
     </head>
     <body>
-        <jsp:include page="scripts.jspf"/>
+    <%@include file="navbar.jspf"%>
         <form class="form-horizontal container">
             <div class="row">
                 <fieldset class="form-group">
@@ -64,7 +67,7 @@
 								</div>
 							</div><br>
 						
-                        <label class="text-right col-sm-6">Hor�rio da Primeira Leitura: </label>
+                        <label class="text-right col-sm-6">Horário da Primeira Leitura: </label>
                         	<div class="input-group date form_time col-sm-6" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
                         		<div class="input-group">
                         		<input class="form-control" type="text" readonly/><span class="input-group-addon">
@@ -89,43 +92,6 @@
             <button class="btn btn-secondary "type="button">Cancelar</button>
             </div>
 	</form>
-	<script type="text/javascript" src="jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.pt-BR.js" charset="UTF-8"></script>
-	<script type="text/javascript">
-	$('.form_datetime').datetimepicker({
-        language:  'pt-BR',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		forceParse: 0,
-        showMeridian: 1
-    });
-	$('.form_date').datetimepicker({
-        language:  'pt-BR',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		minView: 2,
-		forceParse: 0
-    });
-	$('.form_time').datetimepicker({
-        language:  'pt-BR',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 1,
-		minView: 0,
-		maxView: 1,
-		forceParse: 0
-    });
-	
-</script>
+        <jsp:include page="scripts.jspf"/>
 </body>
 </html>
