@@ -39,6 +39,9 @@ public class Usuario implements Serializable {
 	@Column(nullable = false)
 	private boolean admGeral;
 	
+	@Column(nullable = false, length = 50)
+	private String perfil;
+	
 	@OneToMany(mappedBy="usuario")
 	private List<PadraoURL> padraoURL;
 	
@@ -92,6 +95,15 @@ public class Usuario implements Serializable {
 	public void setAdmGeral(boolean admGeral) {
 		this.admGeral = admGeral;
 	}
+	
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
+	}
+
 
 	public List<PadraoURL> getPadraoURL() {
 		return padraoURL;
