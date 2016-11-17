@@ -56,8 +56,13 @@
 								<td>${ item.sistema }</td>
 								<td>${ item.nome }</td>
 								<td>${ item.timestampLiberacao.format(DateTimeFormatter.ofPattern(dateTime)) }</td>
+<<<<<<< HEAD
+								<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#changeModal"><span class="glyphicon glyphicon-edit"></span></button></td>
+								<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteModal"><span class="glyphicon glyphicon-remove"></span></button></td>
+=======
 								<td><span class="glyphicon glyphicon-edit"></span></td>
 								<td><span class="glyphicon glyphicon-remove"></span></td>
+>>>>>>> origin/master
 							</tr>
 					</c:forEach>
 				</tbody>
@@ -69,5 +74,131 @@
 	
 		</div>
 	</div>
+	
+	
+	<div class="modal fade" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel"><fmt:message key="br.cefetrj.webdep.jsp.vs.changeHeader" /></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form id="form-padrao-url" class="form-horizontal col-sm-11">
+									<div class="panel-body">
+										<div class="form-group">
+											<label class="control-label col-sm-2" for="name"><fmt:message key="br.cefetrj.webdep.jsp.vr.system" /></label>
+											<div class="col-xs-4">
+												<select class="form-control" name="sistema" id="sistema">
+													<option disabled selected><fmt:message key="br.cefetrj.webdep.jsp.vr.select" /></option>
+													<option value="Segmentation Fault">Segmentation Fault</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.versionName" /></label>
+											<div class="col-xs-4">
+												<input type="text" class="form-control" name="nome" id="nome" >
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.releaseDate" /></label>
+											<div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+												<div class="input-group">
+													<input class="form-control" type="text"  name="date" id="date" readonly />
+													<span class="input-group-addon">
+														<span class="glyphicon glyphicon-remove"></span>
+													</span> 
+													<span class="input-group-addon">
+														<span class="glyphicon glyphicon-calendar"></span>
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.releaseTime" /></label>
+											<div class="input-group date form_time col-sm-4" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+												<div class="input-group">
+													<input class="form-control" type="text" name="time" id="time" readonly />
+													<span class="input-group-addon"> 
+														<span class="glyphicon glyphicon-remove"></span>
+													</span> 
+													<span class="input-group-addon">
+														<span class="glyphicon glyphicon-time"></span>
+													</span>
+												</div>
+											</div>
+										</div>
+								</div>
+                                <div class="modal-footer col-sm-6">
+                                    <button id="submit-padrao-url" name="action" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.save" /></button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+         
+         
+         
+
+  <div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><fmt:message key="br.cefetrj.webdep.jsp.vs.deleteHeader" /></h4>
+        </div>
+        <div class="modal-body">
+          <p><fmt:message key="br.cefetrj.webdep.jsp.vs.deleteMessage" /></p>
+        </div>
+        <div class="modal-footer">
+          <button id="submit-padrao-url" name="action" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" /></button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  
+  <script type="text/javascript" src="jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.<fmt:message key="br.cefetrj.webdep.jsp.datepicker" />.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+	
+		$('.form_date').datetimepicker({
+			language : 'pt-BR',
+			weekStart : 1,
+			todayBtn : 1,
+			autoclose : 1,
+			todayHighlight : 1,
+			startView : 2,
+			minView : 2,
+			forceParse : 0,
+			format: "yyyy-mm-dd"
+			
+		});
+		$('.form_time').datetimepicker({
+			language : 'pt-BR',
+			weekStart : 1,
+			todayBtn : 1,
+			autoclose : 1,
+			todayHighlight : 1,
+			startView : 1,
+			minView : 0,
+			maxView : 1,
+			forceParse : 0
+		});
+	</script>      
+         
+         
 </body>
 </html>
