@@ -18,10 +18,35 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Classe que gerencia o acesso aos dados do persistence.xml.
+ * 
+ * @author diogo
+ * @since 0.1
+ */
 public class ConfigurationDAO {
 	
+	/**
+	 * Enum que define os tipos de banco de dados possíveis.
+	 * @author diogo
+	 * @since 0.1
+	 */
 	public static enum DatabaseType {HSQL, MySQL, Postgres};
 	
+	
+	/**
+	 * Grava as configurações de banco no pesistence unit do banco selecionado.
+	 * 
+	 * @param persistencePath caminho para o arquivo persistence.xml
+	 * @param database o tipo do banco de dados que se quer gravar a configuração
+	 * @param url url de acesso ao banco
+	 * @param username nome de usuário de acesso ao banco
+	 * @param password senha de acesso ao banco
+	 * @return se a gravação ocorreu com sucesso
+	 * 
+	 * @author diogo
+	 * @since 0.1
+	 */
 	public static boolean changeDatabaseConfig(String persistencePath, DatabaseType database, String url, String username, String password){
 		
 		if (persistencePath == null)
@@ -99,6 +124,14 @@ public class ConfigurationDAO {
 		return true;
 	}
 	
+	/**
+	 * Recupera o valor de uma propriedade da configuração de um banco de dados.
+	 * 
+	 * @param persistencePath caminho para o perisistence.xml
+	 * @param database o tipo do banco de dados de configuração
+	 * @param propertyName nome da propriedade que se quer recuperar 
+	 * @return valor da propriedade no xml
+	 */
 	public static String getPropertyValue(String persistencePath, DatabaseType database, String propertyName){
 		
 		if (persistencePath == null)
