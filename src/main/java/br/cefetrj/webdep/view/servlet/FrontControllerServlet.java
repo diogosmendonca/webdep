@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.cefetrj.webdep.view.command.Command;
 import br.cefetrj.webdep.view.command.InsertVersionCommand;
 import br.cefetrj.webdep.view.command.SearchVersionCommand;
+import br.cefetrj.webdep.view.command.ObterUsuarioCommand;
 
 /**
  * Servlet implementation class FrontControllerServlet
@@ -26,6 +27,8 @@ public class FrontControllerServlet extends HttpServlet {
 	static{
 		commands.put("insertVersion", new InsertVersionCommand());
 		commands.put("searchVersion", new SearchVersionCommand());
+		commands.put("getUsuario", new ObterUsuarioCommand());
+
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
