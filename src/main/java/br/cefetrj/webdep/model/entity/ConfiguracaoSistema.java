@@ -9,48 +9,29 @@ import javax.persistence.Id;
 
 
 /**
- * Entidade de banco de dados correspondente a tabela Configuração Sistema.
+ * Entidade correspondente a Configuração do Sistema.
+ * Não é armazenada no banco de dados, mas sim no config.properties
  * 
  * @author diogo
  * @since 0.1
  */
-@Entity
 public class ConfiguracaoSistema implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue
-	private Long id;
-	
-	@Column(nullable = false, length = 50)
 	private String banco;
 	
-	@Column(nullable = false, length = 100)
 	private String urlBanco;
 	
-	@Column(nullable = false, length = 50)
 	private String usuarioBanco;
 	
-	@Column(nullable = false, length = 50)
 	private String senhaBanco;
 	
-	@Column(nullable = true, length = 100)
 	private String provedorSmtp;
 	
-	@Column(nullable = true, length = 50)
 	private String usuarioEmail;
 	
-	@Column(nullable = true, length = 50)
 	private String senhaEmail;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getBanco() {
 		return banco;

@@ -1,6 +1,12 @@
 package br.cefetrj.webdep.model.dao;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,8 +24,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import br.cefetrj.webdep.model.entity.ConfiguracaoSistema;
+
 /**
- * Classe que gerencia o acesso aos dados do persistence.xml.
+ * Classe que gerencia o acesso aos dados do persistence.xml e config.properties.
  * 
  * @author diogo
  * @since 0.1
@@ -33,6 +41,73 @@ public class ConfigurationDAO {
 	 */
 	public static enum DatabaseType {HSQL, MySQL, Postgres};
 	
+	/**
+	 * Carrega as configurações do config.properties para a entidade ConfiguracaoSistema
+	 * 
+	 * @param pathConfigFile caminho para o arquivo de configuração config.properties
+	 * @return configurações do sistema
+	 * @author diogo
+	 * @since 0.1
+	 */
+	public static ConfiguracaoSistema load(String pathConfigFile){
+		Properties p = new Properties();
+		ConfiguracaoSistema config = null;
+		try (FileInputStream fis = new FileInputStream(new File(pathConfigFile))){
+			p.load(fis);
+			
+			config = new ConfiguracaoSistema();
+			config.setBanco(p.getProperty("banco"));
+			config.setUrlBanco(p.getProperty("urlBanco"));
+			config.setUsuarioBanco(p.getProperty("usuarioBanco"));
+			config.setSenhaBanco(p.getProperty("senhaBanco"));
+			config.setProvedorSmtp(p.getProperty("provedorSmtp"));
+			config.setUsuarioEmail(p.getProperty("usuarioEmail"));
+			config.setSenhaEmail(p.getProperty("senhaEmail"));
+			
+		} catch (IOException e) {
+			Logger lg = Logger.getLogger(ConfigurationDAO.class);
+        	lg.error("Impossible to load config.propertes", e);
+		}
+		
+		return config;
+	}
+	
+	/**
+	 * Armazena as os valores da entidade ConfiguracaoSistema no arquivo config.properties
+	 * 
+	 * @param config configurações do sistema
+	 * @param pathConfigFile caminho para o arquivo de configuração config.properties
+	 * @return se o armazenamento foi bem sucedido
+	 * 
+	 * @author diogo
+	 * @since 0.1
+	 */
+	public static boolean store(ConfiguracaoSistema config, String pathConfigFile){
+		
+		if (config == null)
+			throw new IllegalArgumentException("config parameter cannot be null");
+		
+		Properties p = new Properties();
+		boolean status = false;
+		
+		try (FileOutputStream fos = new FileOutputStream(new File(pathConfigFile))){
+			
+			p.setProperty("banco", config.getBanco());
+			p.setProperty("urlBanco", config.getUrlBanco());
+			p.setProperty("usuarioBanco", config.getUsuarioBanco());
+			p.setProperty("senhaBanco", config.getSenhaBanco());
+			p.setProperty("provedorSmtp", config.getProvedorSmtp());
+			p.setProperty("usuarioEmail", config.getUsuarioEmail());
+			p.setProperty("senhaEmail", config.getSenhaEmail());
+			
+			p.store(fos, "");
+			status = true;
+		} catch (IOException e) {
+			Logger lg = Logger.getLogger(ConfigurationDAO.class);
+        	lg.error("Impossible to store config.propertes", e);
+		}
+		return status;
+	}
 	
 	/**
 	 * Grava as configurações de banco no pesistence unit do banco selecionado.

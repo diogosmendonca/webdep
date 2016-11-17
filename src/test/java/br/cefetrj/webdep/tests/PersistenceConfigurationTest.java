@@ -14,7 +14,7 @@ import org.junit.Test;
 import br.cefetrj.webdep.model.dao.ConfigurationDAO;
 import br.cefetrj.webdep.model.dao.ConfigurationDAO.DatabaseType;
 
-public class ConfigurationDAOTest {
+public class PersistenceConfigurationTest {
 
 	@Before
 	public void createCleanFile(){
