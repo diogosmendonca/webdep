@@ -1,5 +1,6 @@
 package br.cefetrj.webdep.teste;
 
+import br.cefetrj.webdep.model.entity.Permissao;
 import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.services.UsuarioService;
 
@@ -13,7 +14,16 @@ public class TesteUsuario {
 		
 		u.setId(1L);
 
-		System.out.println(UsuarioService.getUsuario(u));
+		Usuario uSaida = UsuarioService.getUsuario(u);
+		
+		System.out.println(uSaida.getNome());
+		
+		for (Permissao permissao : uSaida.getPermissoes()) {
+			
+			System.out.println(permissao.getSistema().getNome());
+			
+		}
+		
 		
 	}
 	

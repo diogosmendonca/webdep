@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.cefetrj.webdep.view.command.Command;
+import br.cefetrj.webdep.view.command.ObterUsuarioCommand;
 
 /**
  * Servlet implementation class FrontControllerServlet
@@ -23,6 +24,9 @@ public class FrontControllerServlet extends HttpServlet {
 	
 	static{
 		//commands.put("insertPessoa", new InserirPessoaCommand());
+		
+		commands.put("getUsuario", new ObterUsuarioCommand());
+	
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
