@@ -38,7 +38,7 @@
                             <th><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.excluir" /></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="table-sistemas">
                        
                     </tbody>
                 </table>

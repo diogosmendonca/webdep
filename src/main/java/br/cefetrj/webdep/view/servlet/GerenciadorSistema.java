@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package br.cefetrj.webdep.view.servlet;
- 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -18,114 +18,126 @@ import javax.servlet.http.HttpServletResponse;
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.entity.Sistema;
- 
+import br.cefetrj.webdep.services.SistemaServices;
+
 /**
  *
  * @author Luan
  */
 @WebServlet("/GerenciadorSistema")
 public class GerenciadorSistema extends HttpServlet {
- 
-    private static final long serialVersionUID = 1L;
- 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/gerenciadorsistema.jsp");
-        dispatcher.forward(request,response);
-    }
- 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
- 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String action = request.getParameter("action");
-        String filtro = request.getParameter("filtro");
-        PrintWriter pw = response.getWriter();
-        PersistenceManager pm = PersistenceManager.getInstance();
-        GenericDAO<Sistema> sistemaDAO = pm.createGenericDAO(Sistema.class);
-       
-       
-        switch(action){
-        case "buscaSistema":
-            List<Sistema> sistemas = sistemaDAO.listAll();
-            List<Sistema> sistemasFiltrados = new ArrayList<>();
-            for (Sistema s: sistemas) {
-                if (s.getNome().contains(filtro)) {
-                    sistemasFiltrados.add(s);
-                }
-            }
-            String json = "";
-            if (sistemasFiltrados.size() != 0){
-                json = "{\"sistemas\": [";
-                for (Sistema s: sistemasFiltrados) {
-                    json = "{";
-                    json = "\"nome\":\"" + s.getNome() + "\",";
-                    json = "\"servidor\":\"" + s.getServidor().getNome() + "\",";
-                    json = "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
-                    json = "\"periodicidade\":\"" + s.getPeriodicidadeLeitura().toString() + "\",";
-                    json = "\"proximaleitura\":\"" + "Ultima leitura + periodicidade" + "\"";
-                    json = "},";
-                }
-                json = "]}";
-                json = json.replace("},]}", "}]}");
-            } else {
-                json = "{\"Erro\": \"Nenhum resultado encontrado\"}";
-            }
-            pw.write(json);
-       
-        case "excluirSistema":
-            List<Sistema> sistemas2 = sistemaDAO.listAll();
-            Sistema sistemaFiltrado = new Sistema();
-            for (Sistema s: sistemas2) {
-                if (s.getNome().contains(filtro)) {
-                    sistemaFiltrado = s;
-                }
-            }
-            sistemaDAO.delete(sistemaFiltrado);
-            action = "buscaSistema";
-            }
-    }
- 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-z     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
- 
+
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+	 * methods.
+	 *
+	 * @param request
+	 *            servlet request
+	 * @param response
+	 *            servlet response
+	 * @throws ServletException
+	 *             if a servlet-specific error occurs
+	 * @throws IOException
+	 *             if an I/O error occurs
+	 */
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/gerenciadorsistema.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on
+	// the + sign on the left to edit the code.">
+	/**
+	 * Handles the HTTP <code>GET</code> method.
+	 *
+	 * @param request
+	 *            servlet request
+	 * @param response
+	 *            servlet response
+	 * @throws ServletException
+	 *             if a servlet-specific error occurs
+	 * @throws IOException
+	 *             if an I/O error occurs
+	 */
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		processRequest(request, response);
+	}
+
+	/**
+	 * Handles the HTTP <code>POST</code> method.
+	 *
+	 * @param request
+	 *            servlet request
+	 * @param response
+	 *            servlet response
+	 * @throws ServletException
+	 *             if a servlet-specific error occurs
+	 * @throws IOException
+	 *             if an I/O error occurs
+	 */
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String action = request.getParameter("action");
+		String filtro = request.getParameter("filtro");
+		PrintWriter pw = response.getWriter();
+		PersistenceManager pm = PersistenceManager.getInstance();
+		pm.beginTransaction();
+		GenericDAO<Sistema> sistemaDAO = pm.createGenericDAO(Sistema.class);
+		pm.commitTransaction();
+		switch (action) {
+		case "buscaSistema":
+			List<Sistema> sistemas = sistemaDAO.listAll();
+			List<Sistema> sistemasFiltrados = new ArrayList<>();
+			for (Sistema s : sistemas) {
+				if (s.getNome().contains(filtro)) {
+					sistemasFiltrados.add(s);
+				}
+			}
+			String json = "";
+			if (sistemasFiltrados.size() != 0) {
+				json = "{\"sistemas\": [";
+				for (Sistema s : sistemasFiltrados) {
+					json += "{";
+					json += "\"nome\":\"" + s.getNome() + "\",";
+					json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
+					json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
+					json += "\"periodicidade\":\"" + s.getPeriodicidadeLeitura().toString() + "\",";
+					json += "\"proximaleitura\":\"" + "Ultima leitura + periodicidade" + "\"";
+					json += "},";
+				}
+				json += "]}";
+				json = json.replace("},]}", "}]}");
+			} else {
+				json = "{\"Erro\": \"Nenhum resultado encontrado\"}";
+			}
+			response.setContentType("application/json");
+			pw.write(json);
+			break;
+
+		case "excluirSistema":
+			String id = request.getParameter("filtro");
+			Sistema sistemaFiltrado = SistemaServices.searchSistema(id).get(0);
+			sistemaDAO.delete(sistemaFiltrado);
+			action = "buscaSistema";
+			break;
+		}
+	}
+
+	/**
+	 * Returns a short description of the servlet.
+	 *
+	 * @return a String containing servlet description z
+	 */
+	@Override
+	public String getServletInfo() {
+		return "Short description";
+	}// </editor-fold>
+
 }

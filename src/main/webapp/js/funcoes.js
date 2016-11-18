@@ -14,67 +14,28 @@ $(document).ready(function () {
                     filtro: filtro
                 },
                 success: function (response) {
-                    if (response.indexOf("sistemas") > -1) {
-                        var sistemas = JSON.parse(response).sistemas;
+                        var sistemas = response.sistemas;
+                		var erro = response.Erro;
+                        if (response.hasOwnProperty("sistemas")){
                         sistemas.forEach(function (el) {
-                        	$("#table-url").append("<tr><td>" 
+                        	$("#table-sistemas").append("<tr><td>" 
                         			+ el.nome + "</td><td>" 
                         			+ el.servidor + "</td><td>" 
                         			+ el.formatolog + "</td><td>" 
                         			+ el.periodicidade + "</td><td>" 
                         			+ el.proximaleitura + "</td>" +
                         					"<td><a id=\""+ el.nome +"-alterar\" class=\"alterar-sistema\">Alterar</a></td>" +
-                        					"<td><a id=\""+ el.nome +"-excluir\" class=\"excluir-sistema\">Excluir</a></td></tr>");
+                        					"<td><a onclick=excluir(\""+ el.nome +"\"); id=\""+ el.nome +"-excluir\" class=\"excluir-sistema\">Excluir</a></td></tr>");
                         });
-                        refresh = false;
-                        
-                    } else if (response.indexOf("Erro")) {
-
-                    }
+                        } else if (response.hasOwnProperty("Erro")){
+                        	alert(response.Erro);
+                        }
                 }
             });
 		}
+		
 	});
 	/*FIM LISTAGEM DE SISTEMA*/
-	
-	  $("#excluir-sistemas").click(function () {
-          var filtro = $("#filtro-excluir-sistemas").val();
-          //validação form
-          if (filtro.trim() === ""){
-              $("#div-excluir-sistemas").toggleClass("has-error");
-          } else {
-              decisao = confirm("Tem certeza que deseja excluir o sistema?\nTodos os registros de logs serão apagados.");
-              if(decisao){
-              $.ajax({
-                      type: "POST",
-                       url: "GerenciadorSistema",
-                      data: {
-                      action: "excluirSistema",
-                      filtro: filtro
-                  },
-                  success: function (response) {
-                      if (response.indexOf("sistemas") > -1) {
-                          var sistemas = JSON.parse(response).sistemas;
-                          sistemas.forEach(function (el) {
-                              $("#table-url").append("<tr><td>"
-                                      + el.nome + "</td><td>"
-                                      + el.servidor + "</td><td>"
-                                      + el.formatolog + "</td><td>"
-                                      + el.periodicidade + "</td><td>"
-                                      + el.proximaleitura + "</td>" +
-                                              "<td><a id=\""+ el.nome +"-alterar\" class=\"alterar-sistema\">Alterar</a></td>" +
-                                              "<td><a id=\""+ el.nome +"-excluir\" class=\"excluir-sistema\">Excluir</a></td></tr>");
-                          });
-                          refresh = false;
-                         
-                      } else if (response.indexOf("Erro")) {
-                      }
-                  }
-              });
-              }
-          }
-      });
-	
 	
 	/* MODAL PADRAO URL*/
 	//abrir modal Novo Padrão de URL
@@ -201,6 +162,7 @@ $(document).ready(function () {
 	
 		
 	$("#cadastro-sistema-submit").click(function () {
+		var sistemaForm = $("#sistema-form").serialize();
 		var nome = $("#nome").val();
 		var servidor = $("#selection").val();
 		var fmtLogs = $("#fmtLogs").val();
@@ -214,45 +176,51 @@ $(document).ready(function () {
 	
 		//validação form
 		if (nome.trim() === ""){
-			$("#nome").toggleClass("has-error");
+			$("#div-nome").toggleClass("has-error");
 		} 
 		if (data.trim() === ""){
-			$("#data").toggleClass("has-error");
+			$("#div-data").toggleClass("has-error");
 		}
 		if (hora.trim() === ""){
-			$("#time").toggleClass("has-error");
+			$("#div-time").toggleClass("has-error");
 		}
-		if (nome.trim() === ""){
-			$("#novaData").toggleClass("has-error");
+		if (nova.trim() === ""){
+			$("#div-nova").toggleClass("has-error");
 		}
 		else {
 			$.ajax({
 	            type: "POST",
 	            url: "CadastroSistema",
 	            data: {
-	                nome: nome,
-	                servidor: servidor,
-	                formatoLogs: fmtLogs,
-	                pastaLogs: ptLogs,
-	                prefixoLogs: pxLogs,
-	                pastaLogs2: ptLogs2,
-	                prefixoLogs2: pxLogs2,
-	                data: data,
-	                hora: hora,
-	                nova: nova
+	                form: sistemaForm
 	            },
 	            success: function (response) {
 	                if (response.indexOf("mensagem") > -1) {
 	                    var mensagem = JSON.parse(response).mensagem;
 	                    $("#mensagem").val(mensagem);
 	                }
-                        
-                } 
-
-                    
+                }
             });
           }
 	});
 		
 });
 
+function excluir(nome){
+	decisao = confirm("Tem certeza que deseja excluir o sistema?\nTodos os registros de logs serão apagados.");
+	              if(decisao){
+	              $.ajax({
+	                      type: "POST",
+	                       url: "GerenciadorSistema",
+	                      data: {
+	                      action: "excluirSistema",
+	                      filtro: nome
+	                  },
+	                  success: function (response) {
+	                	  alert("O Sistema " + nome + "foi excluído com sucesso!" );
+	                  }
+	              });
+	              } else {
+	            	  
+	              }
+}
