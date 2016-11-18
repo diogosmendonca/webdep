@@ -56,13 +56,10 @@
 								<td>${ item.sistema }</td>
 								<td>${ item.nome }</td>
 								<td>${ item.timestampLiberacao.format(DateTimeFormatter.ofPattern(dateTime)) }</td>
-<<<<<<< HEAD
 								<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#changeModal"><span class="glyphicon glyphicon-edit"></span></button></td>
 								<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteModal"><span class="glyphicon glyphicon-remove"></span></button></td>
-=======
 								<td><span class="glyphicon glyphicon-edit"></span></td>
 								<td><span class="glyphicon glyphicon-remove"></span></td>
->>>>>>> origin/master
 							</tr>
 					</c:forEach>
 				</tbody>
