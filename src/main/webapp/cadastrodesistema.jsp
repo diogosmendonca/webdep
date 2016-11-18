@@ -59,7 +59,7 @@
                     <legend><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.titulo3" /></legend>
                     <div class="col-sm-6">
                         <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.data" /></label>
-                        	<div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        	<div class="input-group date form_date col-sm-6" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
                         		<div id="div-data" class="input-group">
                         			<input class="form-control" type="text" id="data" name="data" readonly/>
                         			<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
@@ -68,7 +68,7 @@
 							</div><br>
 						
                         <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.hora" /></label>
-                        	<div class="input-group date form_time col-sm-6" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                        	<div class="input-group date form_time col-sm-6" data-date="" data-date-format="hh:mm:ss" data-link-field="dtp_input3" data-link-format="hh:ii">
                         		<div id="div-time" class="input-group">
                         		<input class="form-control" type="text" id="time" name="time" readonly/>
                         		<span class="input-group-addon">
@@ -78,7 +78,7 @@
 							</div><br>
 					
                         <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.nova" /></label>
-                       		<div class="input-group date form_time col-sm-6" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                       		<div class="input-group date form_time col-sm-6" data-date="" data-date-format="hh:mm:ss" data-link-field="dtp_input3" data-link-format="hh:ii">
                         		<div id="div-nova" class="input-group">
                         		<input class="form-control" type="text" id="novaData" name="novaData" readonly/>
                         		<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
@@ -90,11 +90,12 @@
             </div>
             <div class="row text-center">
             <span id="mensagem"></span>
+            <input id="update" type="hidden" value="false"/>
+            <input id="id-sistema-update" type="hidden" value=""/>
             <button id="cadastro-sistema-submit" type="submit" class="btn btn-primary "><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnSalvar" /></button>
             <button class="btn btn-secondary "type="button"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnCancelar" /></button>
             </div>
-            <input id="update" type="hidden" value="false"/>
-            <input id="id-sistema-update" type="hidden" value=""/>
+            
 	</form>
 	
         <jsp:include page="scripts.jspf"/>

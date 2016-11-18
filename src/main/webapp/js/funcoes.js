@@ -177,13 +177,11 @@ $(document).ready(function () {
 			$.ajax({
 	            type: "POST",
 	            url: "CadastroSistema",
-	            data: {
-	                form: sistemaForm
-	            },
+	            data: sistemaForm,
 	            success: function (response) {
 	                if (response.indexOf("mensagem") > -1) {
 	                    var mensagem = response.mensagem;
-	                    $("#mensagem").text(mensagem);
+	                    alert(mensagem);
 	                }
                 }
             });

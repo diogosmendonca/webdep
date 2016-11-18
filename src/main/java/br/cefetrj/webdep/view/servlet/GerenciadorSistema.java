@@ -125,8 +125,9 @@ public class GerenciadorSistema extends HttpServlet {
 		case "excluirSistema":
 			String id = request.getParameter("filtro");
 			Sistema sistemaFiltrado = SistemaServices.searchSistema(id).get(0);
+			pm.beginTransaction();
 			sistemaDAO.delete(sistemaFiltrado);
-			action = "buscaSistema";
+			pm.commitTransaction();
 			break;
 		}
 	}

@@ -70,7 +70,7 @@ public class CadastroSistema extends HttpServlet {
 		String data = request.getParameter("data");
 		String hora = request.getParameter("time");
 		String nova = request.getParameter("novaData");
-		String dataPrimeiraLeitura = data + " " + hora;
+		String dataPrimeiraLeitura = data + "T" + hora;
 		String mensagem = "";
 		try {
 			Sistema system = new Sistema();
@@ -85,8 +85,8 @@ public class CadastroSistema extends HttpServlet {
 			system.setPrefixoLogAcesso(pxLogs);
 			system.setPrefixoLogErro(pxLogs2);
 			system.setPastaLogErro(ptLogs2);
-			system.setPeriodicidadeLeitura(Long.parseLong(new SimpleDateFormat("hh:mm").parse(nova).toString()));
-			LocalDateTime primeiraLeit = LocalDateTime.parse(dataPrimeiraLeitura, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+			system.setPeriodicidadeLeitura(new SimpleDateFormat("hh:mm").parse(nova).getTime());
+			LocalDateTime primeiraLeit = LocalDateTime.parse(dataPrimeiraLeitura);
 			system.setPrimeiraLeitura(primeiraLeit);
 			// system.setNovaLeitura();
 			SistemaServices.insertSistema(system);
