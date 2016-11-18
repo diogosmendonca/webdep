@@ -22,9 +22,6 @@ public class Permissao implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	@Column(nullable = false, length = 50)
-	private String perfil;
 
 	@ManyToOne
 	private Sistema sistema;
@@ -39,15 +36,7 @@ public class Permissao implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getPerfil() {
-		return perfil;
-	}
-
-	public void setPerfil(String perfil) {
-		this.perfil = perfil;
-	}
-
+	
 	public Sistema getSistema() {
 		return sistema;
 	}

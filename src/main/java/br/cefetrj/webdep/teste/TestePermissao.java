@@ -17,11 +17,12 @@ public static void main(String [] args){
 		
 		usu.setNome("felipe");
 		usu.setAdmGeral(true);
-		
+		//alterado devido ao perfil ser do usuário e não da permissão
+		usu.setPerfil("Administartor");
+				
 		sis.setNome("LINUX");
 		sis.setPastaLogErro("logAcesso");
 		
-		per.setPerfil("Administartor");
 		per.setSistema(sis);
 		per.setUsuario(usu);
 		

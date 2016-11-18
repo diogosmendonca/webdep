@@ -93,16 +93,6 @@
 	<script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.<fmt:message key="br.cefetrj.webdep.jsp.datepicker" />.js" charset="UTF-8"></script>
 	<script type="text/javascript">
-		$('.form_datetime').datetimepicker({
-			language : 'pt-BR',
-			weekStart : 1,
-			todayBtn : 1,
-			autoclose : 1,
-			todayHighlight : 1,
-			startView : 2,
-			forceParse : 0,
-			showMeridian : 1
-		});
 		$('.form_date').datetimepicker({
 			language : 'pt-BR',
 			weekStart : 1,
