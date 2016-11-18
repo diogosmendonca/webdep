@@ -41,9 +41,9 @@
                             </span>
                          </div>
                         <br>
-                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.ptLogs" /></label><div class="input-group"><input class="form-control" id="ptLogs2" name="ptLogs2" type="text"/></div>
+                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.ptErroLogs" /></label><div class="input-group"><input class="form-control" id="ptLogs2" name="ptLogs2" type="text"/></div>
                         <br>
-                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.pxLogs" /></label>
+                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.pxErroLogs" /></label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="pxLogs2" name="pxLogs2">
                             <span class="input-group-btn">
