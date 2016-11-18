@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <!-- Variável criada para auxiliar na identificação do locale -->
@@ -9,7 +9,6 @@
 <!-- Necessário para utilizar o i18N, informar o locale e o bundle -->
 <fmt:setLocale value="${ lang }"/>
 <fmt:setBundle basename="Messages" />
-
 <!DOCTYPE html>
 <html><head>
         <jsp:include page="head.jspf"/>
@@ -79,11 +78,11 @@
 							</div><br>
 					
                         <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.nova" /></label>
-                        <div class="input-group date form_datetime col-sm-6" data-date="2016-11-12T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
-                        	<div class="input-group">
+                       		<div class="input-group date form_time col-sm-6" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                        		<div class="input-group">
                         		<input class="form-control" type="text" id="novaData" name="novaData" readonly/>
                         		<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
 							</div>
                         </div> <br>
                     </div>
