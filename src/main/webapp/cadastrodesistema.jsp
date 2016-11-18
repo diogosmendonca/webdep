@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <!-- Variável criada para auxiliar na identificação do locale -->
@@ -9,6 +9,7 @@
 <!-- Necessário para utilizar o i18N, informar o locale e o bundle -->
 <fmt:setLocale value="${ lang }"/>
 <fmt:setBundle basename="Messages" />
+
 <!DOCTYPE html>
 <html><head>
         <jsp:include page="head.jspf"/>
@@ -18,10 +19,10 @@
         <form class="form-horizontal container">
             <div class="row">
                 <fieldset class="form-group">
-                    <legend>Sistema</legend>
+                    <legend><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.titulo1"/></legend>
                     <div class="col-sm-6">
-                        <label class="text-right col-sm-6">Nome do Sistema: </label><div class="input-group"><input class="form-control" type="text"/></div><br>
-                        <label class="text-right col-sm-6">Servidor: </label><div class="input-group"><select class="form-control"><option>Apache</option></select></div>
+                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.nome" /></label><div class="input-group"><input class="form-control" id="nome" name="nome" type="text"/></div><br>
+                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.servidor" /></label><div class="input-group"><select class="form-control" id="selection" name="selection"><option>Apache</option></select></div>
                     </div>
                 </fieldset>
             </div>
@@ -29,25 +30,25 @@
                 <fieldset class="form-group">
                     <legend>Logs</legend>
                     <div class="col-sm-6">
-                        <label class="text-right col-sm-6">Formato Logs de Acesso: </label><div class="input-group"><select class="form-control"><option>Common</option></select></div>
+                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.fmtLogs" /></label><div class="input-group"><select class="form-control" id="fmtLogs" name="fmtLogs"><option>Common</option></select></div>
                         <br>
-                        <label class="text-right col-sm-6">Pasta dos Logs de Acesso: </label><div class="input-group"><input class="form-control" type="text"/></div>
+                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.ptLogs" /></label><div class="input-group"><input class="form-control" id="ptLogs" name="ptLogs" type="text"/></div>
                         <br>
-                        <label class="text-right col-sm-6">Prefixo dos Logs de Acesso: </label>
+                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.pxLogs" /></label>
                         <div class="input-group">
-                            <input type="text" class="form-control">
+                            <input type="text" id="pxLogs" name="pxLogs" class="form-control">
                             <span class="input-group-btn">
-                              <button class="btn btn-info" type="button">Testar Acesso</button>
+                              <button class="btn btn-info" type="button"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnTeste" /></button>
                             </span>
                          </div>
                         <br>
-                        <label class="text-right col-sm-6">Pasta dos Logs de Erro: </label><div class="input-group"><input class="form-control" type="text"/></div>
+                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.ptLogs" /></label><div class="input-group"><input class="form-control" id="ptLogs2" name="ptLogs2" type="text"/></div>
                         <br>
-                        <label class="text-right col-sm-6">Prefixo dos Logs de Erro: </label>
+                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.pxLogs" /></label>
                         <div class="input-group">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" id="pxLogs2" name="pxLogs2">
                             <span class="input-group-btn">
-                              <button class="btn btn-info" type="button">Testar Acesso</button>
+                              <button class="btn btn-info" type="button"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnTeste" /></button>
                             </span>
                          </div>
                         <br>
@@ -56,30 +57,31 @@
             </div>
 		 <div class="row">
                 <fieldset class="form-group">
-                    <legend>Periocidade de Leitura dos Logs</legend>
+                    <legend><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.titulo3" /></legend>
                     <div class="col-sm-6">
-                        <label class="text-right col-sm-6">Data da Primeira Leitura: </label>
+                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.data" /></label>
                         	<div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
                         		<div class="input-group">
-                        			<input class="form-control" type="text" readonly/>
+                        			<input class="form-control" type="text" id="data" name="data" readonly/>
                         			<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 								</div>
 							</div><br>
 						
-                        <label class="text-right col-sm-6">Horário da Primeira Leitura: </label>
+                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.hora" /></label>
                         	<div class="input-group date form_time col-sm-6" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
                         		<div class="input-group">
-                        		<input class="form-control" type="text" readonly/><span class="input-group-addon">
+                        		<input class="form-control" type="text" id="time" name="time" readonly/>
+                        		<span class="input-group-addon">
                         		<span class="glyphicon glyphicon-remove"></span></span>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
                         		</div>
 							</div><br>
 					
-                        <label class="text-right col-sm-6">Novas Leituras a Cada: </label>
+                        <label class="text-right col-sm-6"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.nova" /></label>
                         <div class="input-group date form_datetime col-sm-6" data-date="2016-11-12T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
                         	<div class="input-group">
-                        		<input class="form-control" type="text" readonly/>
+                        		<input class="form-control" type="text" id="novaData" name="novaData" readonly/>
                         		<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
 							</div>
@@ -88,8 +90,9 @@
                 </fieldset>
             </div>
             <div class="row text-center">
-            <button type="submit" class="btn btn-primary ">Salvar</button>
-            <button class="btn btn-secondary "type="button">Cancelar</button>
+            <span id="mensagem"></span>
+            <button id="cadastro-sistema-submit" type="submit" class="btn btn-primary "><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnSalvar" /></button>
+            <button class="btn btn-secondary "type="button"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnCancelar" /></button>
             </div>
 	</form>
         <jsp:include page="scripts.jspf"/>
