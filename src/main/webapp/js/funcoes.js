@@ -139,6 +139,82 @@ $(document).ready(function () {
 		maxView: 1,
 		forceParse: 0
     });
-});
+	
+	$("#lista-sistemas a").click(function () {
+		//saber qual o id do link que foi clickado
+		var idLink;
+		var sistema_id;
+		var acao;
+		if (idLink.indexOf("alterar")){
+			var sistema_id = idLink.replace("-alterar", "");
+		}
+		$.ajax({
+            type: "POST",
+            url: "GerenciadorSistema",
+            data: {
+            	sistema_id: sistema_id,
+            	acao: acao
+                //resto dos campos
+            },
+            success: function (response) {}
+            
+		});
+	});
+	
+		
+	$("#cadastro-sistema-submit").click(function () {
+		var nome = $("#nome").val();
+		var servidor = $("#selection").val();
+		var fmtLogs = $("#fmtLogs").val();
+		var ptLogs = $("#ptLogs").val();
+		var pxLogs = $("#pxLogs").val();
+		var ptLogs2 = $("#ptLogs2").val();
+		var pxLogs2 = $("#pxLogs2").val();
+		var data = $("#data").val();
+		var hora = $("#time").val();
+		var nova = $("#novaData").val();
+	
+		//validação form
+		if (nome.trim() === ""){
+			$("#nome").toggleClass("has-error");
+		} 
+		if (data.trim() === ""){
+			$("#data").toggleClass("has-error");
+		}
+		if (hora.trim() === ""){
+			$("#time").toggleClass("has-error");
+		}
+		if (nome.trim() === ""){
+			$("#novaData").toggleClass("has-error");
+		}
+		else {
+			$.ajax({
+	            type: "POST",
+	            url: "CadastroSistema",
+	            data: {
+	                nome: nome,
+	                servidor: servidor,
+	                formatoLogs: fmtLogs,
+	                pastaLogs: ptLogs,
+	                prefixoLogs: pxLogs,
+	                pastaLogs2: ptLogs2,
+	                prefixoLogs2: pxLogs2,
+	                data: data,
+	                hora: hora,
+	                nova: nova
+	            },
+	            success: function (response) {
+	                if (response.indexOf("mensagem") > -1) {
+	                    var mensagem = JSON.parse(response).mensagem;
+	                    $("#mensagem").val(mensagem);
+	                }
+                        
+                } 
 
+                    
+            });
+          }
+	});
+		
+});
 
