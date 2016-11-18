@@ -3,82 +3,86 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.cefetrj.webdep.view.servlet;
 
-import java.io.IOException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+	package br.cefetrj.webdep.view.servlet;
 
-/**
- *
- * @author Luan
- */
-@WebServlet("/CadastroSistema")
-public class CadastroSistema extends HttpServlet {
+	import java.io.IOException;
+	import java.io.PrintWriter;
+	import java.util.ArrayList;
+	import java.util.List;
+	import java.util.regex.Matcher;
+	import java.util.regex.Pattern;
+	import javax.servlet.ServletException;
+	import javax.servlet.annotation.WebServlet;
+	import javax.servlet.http.HttpServlet;
+	import javax.servlet.http.HttpServletRequest;
+	import javax.servlet.http.HttpServletResponse;
+	import javax.servlet.http.HttpSession;
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	import br.cefetrj.webdep.model.dao.GenericDAO;
+	import br.cefetrj.webdep.model.dao.PersistenceManager;
+	import br.cefetrj.webdep.model.entity.PadraoURL;
+	import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
+	import br.cefetrj.webdep.model.entity.Servidor;
+	import br.cefetrj.webdep.model.entity.Sistema;
+	import br.cefetrj.webdep.model.entity.Usuario;
 
 	/**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/cadastrodesistema.jsp");
-        dispatcher.forward(request,response);
-    }
+	 *
+	 * @author Rian
+	 */
+	@WebServlet("/CadastroSistema")
+	public class CadastroSistema extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+		private static final long serialVersionUID = 1L;
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+	    @Override
+	    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	            throws ServletException, IOException {
+	    }
+	    @Override
+	    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	            throws ServletException, IOException {
+	    	
+	    	PrintWriter pw = response.getWriter();
+	        HttpSession session = request.getSession();  
+	        Long usuario_id;
+	        Usuario usuarioLogado = new Usuario();
+	    	usuarioLogado.setId(0L);
+	        PersistenceManager pm = PersistenceManager.getInstance(); 
+	        //indicando a tabela pra sistemas no banco
+	    	GenericDAO<Sistema> sistemaDAO = pm.createGenericDAO(Sistema.class);
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+	    	List<Sistema> usuarios = sistemaDAO.listAll();
+	          
+	        String nome = request.getParameter("nome");
+	        String server = request.getParameter("servidor");
+	        String fmtLogs = request.getParameter("formatoLogs");
+	        String data = request.getParameter("data");
+	        String hora = request.getParameter("hora");
+	        String nova = request.getParameter("nova");
+	        		
+	        		String mensagem = "";
+	            	try{
+	            		Sistema sistem = new Sistema();
+	                    /* Essa parte está incompleta. Faltam alguns atributos na classe Sistema 
+	                     * e é necessário criar um cálculo para mostrar a periodicidade
+	                     * */
+	            		sistem.setNome(nome);
+	                    //sistem.setServidor(server);
+	                    //sistem.setPeriodicidadeLeitura(); // 
+	                    //sistem.setNovaLeitura();
+	                    
+	                    sistemaDAO.insert(sistem); //insere no banco
+	                    mensagem = "Sistema cadastrado com sucesso!";
+	            	}catch(Exception e){
+	            		mensagem = "Não foi possível cadastrar o sistema!";
+	            	}finally{
+	            		String json = "{\"mensagem\": \""+ mensagem +"\"]}";
+	                    pw.write(json);
+	            	}
+	            }
 
-}
+	}
+
+
