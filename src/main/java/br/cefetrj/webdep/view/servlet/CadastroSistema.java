@@ -46,14 +46,12 @@
 	    	
 	    	PrintWriter pw = response.getWriter();
 	        HttpSession session = request.getSession();  
-	        Long usuario_id;
-	        Usuario usuarioLogado = new Usuario();
-	    	usuarioLogado.setId(0L);
 	        PersistenceManager pm = PersistenceManager.getInstance(); 
+	        
 	        //indicando a tabela pra sistemas no banco
 	    	GenericDAO<Sistema> sistemaDAO = pm.createGenericDAO(Sistema.class);
 
-	    	List<Sistema> usuarios = sistemaDAO.listAll();
+	    	List<Sistema> systemlist = sistemaDAO.listAll();
 	          
 	        String nome = request.getParameter("nome");
 	        String server = request.getParameter("servidor");
@@ -64,16 +62,16 @@
 	        		
 	        		String mensagem = "";
 	            	try{
-	            		Sistema sistem = new Sistema();
+	            		Sistema system = new Sistema();
 	                    /* Essa parte está incompleta. Faltam alguns atributos na classe Sistema 
 	                     * e é necessário criar um cálculo para mostrar a periodicidade
 	                     * */
-	            		sistem.setNome(nome);
-	                    //sistem.setServidor(server);
-	                    //sistem.setPeriodicidadeLeitura(); // 
-	                    //sistem.setNovaLeitura();
+	            		system.setNome(nome);
+	                    //system.setServidor(server);
+	                    //system.setPeriodicidadeLeitura(); // 
+	                    //system.setNovaLeitura();
 	                    
-	                    sistemaDAO.insert(sistem); //insere no banco
+	                    sistemaDAO.insert(system); //insere na tabela
 	                    mensagem = "Sistema cadastrado com sucesso!";
 	            	}catch(Exception e){
 	            		mensagem = "Não foi possível cadastrar o sistema!";
