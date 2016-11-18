@@ -37,6 +37,44 @@ $(document).ready(function () {
 	});
 	/*FIM LISTAGEM DE SISTEMA*/
 	
+	  $("#excluir-sistemas").click(function () {
+          var filtro = $("#filtro-excluir-sistemas").val();
+          //validação form
+          if (filtro.trim() === ""){
+              $("#div-excluir-sistemas").toggleClass("has-error");
+          } else {
+              decisao = confirm("Tem certeza que deseja excluir o sistema?\nTodos os registros de logs serão apagados.");
+              if(decisao){
+              $.ajax({
+                      type: "POST",
+                       url: "GerenciadorSistema",
+                      data: {
+                      action: "excluirSistema",
+                      filtro: filtro
+                  },
+                  success: function (response) {
+                      if (response.indexOf("sistemas") > -1) {
+                          var sistemas = JSON.parse(response).sistemas;
+                          sistemas.forEach(function (el) {
+                              $("#table-url").append("<tr><td>"
+                                      + el.nome + "</td><td>"
+                                      + el.servidor + "</td><td>"
+                                      + el.formatolog + "</td><td>"
+                                      + el.periodicidade + "</td><td>"
+                                      + el.proximaleitura + "</td>" +
+                                              "<td><a id=\""+ el.nome +"-alterar\" class=\"alterar-sistema\">Alterar</a></td>" +
+                                              "<td><a id=\""+ el.nome +"-excluir\" class=\"excluir-sistema\">Excluir</a></td></tr>");
+                          });
+                          refresh = false;
+                         
+                      } else if (response.indexOf("Erro")) {
+                      }
+                  }
+              });
+              }
+          }
+      });
+	
 	
 	/* MODAL PADRAO URL*/
 	//abrir modal Novo Padrão de URL
