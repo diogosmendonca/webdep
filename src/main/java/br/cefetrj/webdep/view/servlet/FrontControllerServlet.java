@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.cefetrj.webdep.view.command.Command;
 import br.cefetrj.webdep.view.command.InsertVersionCommand;
 import br.cefetrj.webdep.view.command.SearchVersionCommand;
+import br.cefetrj.webdep.view.command.ValidaHttpReportCommand;
 import br.cefetrj.webdep.view.command.ObterUsuarioCommand;
 
 /**
@@ -28,6 +29,7 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("insertVersion", new InsertVersionCommand());
 		commands.put("searchVersion", new SearchVersionCommand());
 		commands.put("getUsuario", new ObterUsuarioCommand());
+		commands.put("errorParameter", new ValidaHttpReportCommand());
 
 	}
 	
