@@ -105,6 +105,7 @@ public class GerenciadorSistema extends HttpServlet {
 				json = "{\"sistemas\": [";
 				for (Sistema s : sistemasFiltrados) {
 					json += "{";
+					json += "\"id\":\"" + s.getId() + "\",";
 					json += "\"nome\":\"" + s.getNome() + "\",";
 					json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
 					json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";

@@ -1,4 +1,11 @@
 $(document).ready(function () {
+	if (window.location.href.indexOf("cadastrodesistema.jsp?u")){
+		$("#update").val("update");
+		var url = window.location;
+		//alert(url)
+		//$("id-sistema-update").val(id);
+	}
+	
 	/*LISTAGEM DE SISTEMA*/
 	$("#buscar-sistemas").click(function () {
 		var filtro = $("#filtro-busca-sistemas").val();
@@ -24,8 +31,8 @@ $(document).ready(function () {
                         			+ el.formatolog + "</td><td>" 
                         			+ el.periodicidade + "</td><td>" 
                         			+ el.proximaleitura + "</td>" +
-                        					"<td><a id=\""+ el.nome +"-alterar\" class=\"alterar-sistema\">Alterar</a></td>" +
-                        					"<td><a onclick=excluir(\""+ el.nome +"\"); id=\""+ el.nome +"-excluir\" class=\"excluir-sistema\">Excluir</a></td></tr>");
+                        					"<td><a onclick=alterar(\""+ el.id +"\"); id=\""+ el.id +"-alterar\" class=\"alterar-sistema\">Alterar</a></td>" +
+                        					"<td><a onclick=excluir(\""+ el.id +"\"); id=\""+ el.id +"-excluir\" class=\"excluir-sistema\">Excluir</a></td></tr>");
                         });
                         } else if (response.hasOwnProperty("Erro")){
                         	alert(response.Erro);
@@ -115,7 +122,8 @@ $(document).ready(function () {
 		todayHighlight: 1,
 		startView: 2,
 		forceParse: 0,
-        showMeridian: 1
+        showMeridian: 1,
+        format: 'YYYY-MM-DD HH:mm:ss'
     });
 	$('.form_date').datetimepicker({
         language:  'pt-BR',
@@ -139,27 +147,6 @@ $(document).ready(function () {
 		forceParse: 0
     });
 	
-	$("#lista-sistemas a").click(function () {
-		//saber qual o id do link que foi clickado
-		var idLink;
-		var sistema_id;
-		var acao;
-		if (idLink.indexOf("alterar")){
-			var sistema_id = idLink.replace("-alterar", "");
-		}
-		$.ajax({
-            type: "POST",
-            url: "GerenciadorSistema",
-            data: {
-            	sistema_id: sistema_id,
-            	acao: acao
-                //resto dos campos
-            },
-            success: function (response) {}
-            
-		});
-	});
-	
 		
 	$("#cadastro-sistema-submit").click(function () {
 		var sistemaForm = $("#sistema-form").serialize();
@@ -173,7 +160,6 @@ $(document).ready(function () {
 		var data = $("#data").val();
 		var hora = $("#time").val();
 		var nova = $("#novaData").val();
-	
 		//validação form
 		if (nome.trim() === ""){
 			$("#div-nome").toggleClass("has-error");
@@ -196,15 +182,20 @@ $(document).ready(function () {
 	            },
 	            success: function (response) {
 	                if (response.indexOf("mensagem") > -1) {
-	                    var mensagem = JSON.parse(response).mensagem;
-	                    $("#mensagem").val(mensagem);
+	                    var mensagem = response.mensagem;
+	                    $("#mensagem").text(mensagem);
 	                }
                 }
             });
+			return false;
           }
 	});
 		
 });
+
+function alterar(nome){
+	window.location.replace("cadastrodesistema.jsp?u="+nome);
+}
 
 function excluir(nome){
 	decisao = confirm("Tem certeza que deseja excluir o sistema?\nTodos os registros de logs serão apagados.");

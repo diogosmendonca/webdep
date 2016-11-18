@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -57,13 +59,17 @@ public class CadastroSistema extends HttpServlet {
 		GenericDAO<Servidor> servidorDAO = pm.createGenericDAO(Servidor.class);
 		pm.beginTransaction();
 		List<Sistema> systemlist = sistemaDAO.listAll();
-
+		pm.commitTransaction();
+		String update = request.getParameter("update");
 		String nome = request.getParameter("nome");
 		String server = request.getParameter("servidor");
-		String fmtLogs = request.getParameter("formatoLogs");
+		String ptLogs = request.getParameter("ptLogs");
+		String pxLogs = request.getParameter("pxLogs");
+		String ptLogs2 = request.getParameter("ptLogs2");
+		String pxLogs2 = request.getParameter("pxLogs2");
 		String data = request.getParameter("data");
-		String hora = request.getParameter("hora");
-		String nova = request.getParameter("nova");
+		String hora = request.getParameter("time");
+		String nova = request.getParameter("novaData");
 		String dataPrimeiraLeitura = data + " " + hora;
 		String mensagem = "";
 		try {
@@ -74,9 +80,14 @@ public class CadastroSistema extends HttpServlet {
 			 * periodicidade
 			 */
 			system.setNome(nome);
-			system.setServidor(SistemaServices.searchServidor(server).get(0));
+			system.setServidor(servidorDAO.listAll().get(0));
+			system.setPastaLogAcesso(ptLogs);
+			system.setPrefixoLogAcesso(pxLogs);
+			system.setPrefixoLogErro(pxLogs2);
+			system.setPastaLogErro(ptLogs2);
 			system.setPeriodicidadeLeitura(Long.parseLong(new SimpleDateFormat("hh:mm").parse(nova).toString()));
-			system.setPrimeiraLeitura(LocalDateTime.parse(dataPrimeiraLeitura));
+			LocalDateTime primeiraLeit = LocalDateTime.parse(dataPrimeiraLeitura, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+			system.setPrimeiraLeitura(primeiraLeit);
 			// system.setNovaLeitura();
 			SistemaServices.insertSistema(system);
 			mensagem = "Sistema cadastrado com sucesso!";
@@ -84,6 +95,7 @@ public class CadastroSistema extends HttpServlet {
 			mensagem = "Não foi possível cadastrar o sistema!";
 		} finally {
 			String json = "{\"mensagem\": \"" + mensagem + "\"]}";
+			response.setContentType("application/json");
 			pw.write(json);
 			
 		}

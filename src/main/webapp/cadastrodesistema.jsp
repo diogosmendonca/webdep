@@ -93,7 +93,10 @@
             <button id="cadastro-sistema-submit" type="submit" class="btn btn-primary "><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnSalvar" /></button>
             <button class="btn btn-secondary "type="button"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnCancelar" /></button>
             </div>
+            <input id="update" type="hidden" value="false"/>
+            <input id="id-sistema-update" type="hidden" value=""/>
 	</form>
+	
         <jsp:include page="scripts.jspf"/>
 </body>
 </html>
