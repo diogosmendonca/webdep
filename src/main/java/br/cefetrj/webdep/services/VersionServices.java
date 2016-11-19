@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.hsqldb.persist.PersistentStoreCollectionSession;
+
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.entity.Versao;
 
@@ -38,4 +40,29 @@ public class VersionServices {
 			return null;
 		}
 	}
+	
+	public static List<Versao> searchVersion(Long id){
+		PersistenceManager pm = PersistenceManager.getInstance();
+		try {
+			Query q = pm.createQuery("FROM Versao WHERE id LIKE :param");
+			
+			q.setParameter("param", "%"+id+"%");
+
+			return q.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static void deleteVersion(Versao v){
+		PersistenceManager pm = PersistenceManager.getInstance();
+		
+		pm.beginTransaction();
+
+		GenericDAO<Versao> dao = pm.createGenericDAO(Versao.class);
+		dao.delete(v);
+
+		pm.commitTransaction();
+	} 
 }

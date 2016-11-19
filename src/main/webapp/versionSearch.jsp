@@ -35,37 +35,39 @@
 				<div class="col-sm-4">
 					<input class="form-control" type="text" name="arg" id="arg">
 				</div>
-				<input class="btn btn-primary btn-md" type="submit" value="<fmt:message key="br.cefetrj.webdep.jsp.vs.search" />">
+				<button class="btn btn-primary btn-md" type="submit" name="action" value="searchVersion"><fmt:message key="br.cefetrj.webdep.jsp.vs.search" /></button>
 			</div>
 		</form>
 		
 		<div class="tab-pane fade in active" id="1a">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th><fmt:message key="br.cefetrj.webdep.jsp.vs.system" /></th>
-						<th><fmt:message key="br.cefetrj.webdep.jsp.vs.version" /></th>
-						<th><fmt:message key="br.cefetrj.webdep.jsp.vs.dateTime" /></th>
-						<th><fmt:message key="br.cefetrj.webdep.jsp.vs.change" /></th>
-						<th><fmt:message key="br.cefetrj.webdep.jsp.vs.delete" /></th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${ list }" var="item">
-							<tr>
-								<td>${ item.sistema }</td>
-								<td>${ item.nome }</td>
-								<td>${ item.timestampLiberacao.format(DateTimeFormatter.ofPattern(dateTime)) }</td>
-								<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#changeModal"><span class="glyphicon glyphicon-edit"></span></button></td>
-								<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteModal"><span class="glyphicon glyphicon-remove"></span></button></td>
-								<td><span class="glyphicon glyphicon-edit"></span></td>
-								<td><span class="glyphicon glyphicon-remove"></span></td>
-							</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			
-			 <div class="row text-center">		
+			<form class="form-horizontal" method="post" action="FrontControllerServlet">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th><fmt:message key="br.cefetrj.webdep.jsp.vs.system" /></th>
+							<th><fmt:message key="br.cefetrj.webdep.jsp.vs.version" /></th>
+							<th><fmt:message key="br.cefetrj.webdep.jsp.vs.dateTime" /></th>
+							<th><fmt:message key="br.cefetrj.webdep.jsp.vs.change" /></th>
+							<th><fmt:message key="br.cefetrj.webdep.jsp.vs.delete" /></th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${ list }" var="item">
+								
+								<input type="hidden" name="versionID" value="${ item.id }"/>	
+								
+								<tr>
+									<td>${ item.sistema }</td>
+									<td>${ item.nome }</td>
+									<td>${ item.timestampLiberacao.format(DateTimeFormatter.ofPattern(dateTime)) }</td>
+									<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#changeModal"><span class="glyphicon glyphicon-edit"></span></button></td>
+									<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteModal"><span class="glyphicon glyphicon-remove"></span></button></td>
+								</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</form>
+			<div class="row text-center">		
 			<button type="submit" class="btn btn-primary btn-md"><fmt:message key="br.cefetrj.webdep.jsp.vs.back" /></button>
 			</div>
 	
@@ -131,7 +133,7 @@
 										</div>
 								</div>
                                 <div class="modal-footer col-sm-6">
-                                    <button id="submit-padrao-url" name="action" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.save" /></button>
+                                    <button id="submit-padrao-url" name="action" type="submit" class="btn btn-primary" ><fmt:message key="br.cefetrj.webdep.jsp.vs.save" /></button>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
                                 </div>
                             </form>
