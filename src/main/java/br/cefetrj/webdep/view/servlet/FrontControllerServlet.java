@@ -11,10 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.cefetrj.webdep.view.command.Command;
+import br.cefetrj.webdep.view.command.DeleteSistemaCommand;
+import br.cefetrj.webdep.view.command.InsertPadraoURLCommand;
+import br.cefetrj.webdep.view.command.InsertSistemaCommand;
 import br.cefetrj.webdep.view.command.InsertVersionCommand;
+import br.cefetrj.webdep.view.command.ListSistemaCommand;
 import br.cefetrj.webdep.view.command.SearchVersionCommand;
+import br.cefetrj.webdep.view.command.UpdateSistemaCommand;
 import br.cefetrj.webdep.view.command.ValidaHttpReportCommand;
 import br.cefetrj.webdep.view.command.ObterUsuarioCommand;
+import br.cefetrj.webdep.view.command.RegexPadraoURLCommand;
 
 /**
  * Servlet implementation class FrontControllerServlet
@@ -30,6 +36,12 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("searchVersion", new SearchVersionCommand());
 		commands.put("getUsuario", new ObterUsuarioCommand());
 		commands.put("errorParameter", new ValidaHttpReportCommand());
+		commands.put("insertSistema", new InsertSistemaCommand());
+		commands.put("updateSistema", new UpdateSistemaCommand());
+		commands.put("listSistema", new ListSistemaCommand());
+		commands.put("deleteSistema", new DeleteSistemaCommand());
+		commands.put("insertPadraoURL", new InsertPadraoURLCommand());
+		commands.put("regexPadraoURL", new RegexPadraoURLCommand());
 
 	}
 	

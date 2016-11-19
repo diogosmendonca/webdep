@@ -22,25 +22,35 @@ public class SistemaServices {
 
 	}
 	
-	public static List<Servidor> searchServidor(String s) {
+	public static void updateSistema(Sistema s) {
 		PersistenceManager pm = PersistenceManager.getInstance();
-		try {
-			Query q = pm.createQuery("FROM Servidor WHERE nome LIKE :param ");
-			
-			q.setParameter("param", "%"+s+"%");
 
-			return q.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		pm.beginTransaction();
+
+		GenericDAO<Sistema> dao = pm.createGenericDAO(Sistema.class);
+		dao.update(s);
+
+		pm.commitTransaction();
+
+	}
+	
+	public static void deleteSistema(Sistema s){
+		PersistenceManager pm = PersistenceManager.getInstance();
+
+		pm.beginTransaction();
+
+		GenericDAO<Sistema> dao = pm.createGenericDAO(Sistema.class);
+		dao.delete(s);
+
+		pm.commitTransaction();
 	}
 	
 	public static List<Sistema> searchSistema(String s) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 		try {
 			Query q = pm.createQuery("FROM Sistema WHERE nome LIKE :param "
-					+ " OR servidor LIKE :param ");
+					+ " OR servidor LIKE :param "
+					+ " OR id LIKE :param ");
 			
 			q.setParameter("param", "%"+s+"%");
 

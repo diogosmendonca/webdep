@@ -15,15 +15,16 @@ $(document).ready(function () {
 		} else {
 			$.ajax({
                 type: "POST",
-                url: "GerenciadorSistema",
+                url: "FrontControllerServlet",
                 data: {
-                    action: "buscaSistema",
+                    action: "listSistema",
                     filtro: filtro
                 },
                 success: function (response) {
                         var sistemas = response.sistemas;
                 		var erro = response.Erro;
                         if (response.hasOwnProperty("sistemas")){
+                        	$("#table-sistemas").children().remove();
                         sistemas.forEach(function (el) {
                         	$("#table-sistemas").append("<tr><td>" 
                         			+ el.nome + "</td><td>" 
@@ -58,20 +59,20 @@ $(document).ready(function () {
             $("#div-regex").removeClass("has-error");
             $.ajax({
                 type: "POST",
-                url: "PadraoURL",
+                url: "FrontControllerServlet",
                 data: {
-                    action: "buscaRegex",
+                    action: "regexPadraoURL",
                     regex: regex
                 },
                 success: function (response) {
-                    if (response.indexOf("url") > -1) {
-                        var urls = JSON.parse(response).url;
+                    if (response.hasOwnProperty("url")) {
+                        var urls = response.url;
                         urls.forEach(function (el) {
                             $("#table-url").append("<tr><td>" + el + "</td></tr>");
                         });
                         refresh = false;
-                    } else if (response.indexOf("Erro")) {
-
+                    } else if (response.hasOwnProperty("Erro")) {
+                    	alert(response.Erro);
                     }
                 }
             });
@@ -91,21 +92,18 @@ $(document).ready(function () {
             $("#div-nome").removeClass("has-error");
             $.ajax({
                 type: "POST",
-                url: "PadraoURL",
+                url: "FrontControllerServlet",
                 data: {
-                    action: "salvarPadrao",
+                    action: "insertPadraoURL",
                     nome: nome,
                     regex: regex
                 },
                 success: function (response) {
-                    if (response.indexOf("url") > -1) {
-                        var urls = JSON.parse(response).url;
-                        console.log(urls);
-                        urls.forEach(function (el) {
-                            $("#table-url").append("<tr><td>" + el + "</td></tr>");
-                        });
+                    if (response.hasOwnProperty("mensagem") > -1) {
+                        var mensagem = response.mensagem;
+                        alert(mensagem);
                     } else if (response.indexOf("Erro")) {
-
+                    	alert("Erro de conexão com o servidor");
                     }
                 }
             });
@@ -174,12 +172,13 @@ $(document).ready(function () {
 			$("#div-nova").toggleClass("has-error");
 		}
 		else {
+			console.log(sistemaForm);
 			$.ajax({
 	            type: "POST",
-	            url: "CadastroSistema",
-	            data: sistemaForm,
+	            url: "FrontControllerServlet",
+	            data: sistemaForm, //action fica no jsp porque o form está sendo serializado(o action está dentro de sistemaForm)
 	            success: function (response) {
-	                if (response.indexOf("mensagem") > -1) {
+	                if (response.hasOwnProperty("mensagem")) {
 	                    var mensagem = response.mensagem;
 	                    alert(mensagem);
 	                }
@@ -196,19 +195,20 @@ function alterar(nome){
 }
 
 function excluir(nome){
-	decisao = confirm("Tem certeza que deseja excluir o sistema?\nTodos os registros de logs serão apagados.");
+	decisao = confirm("Tem certeza que deseja excluir "+ nome +"?\nTodos os registros de logs serão apagados.");
 	              if(decisao){
-	              $.ajax({
+	            	  alert("Não disponível");
+	              /*$.ajax({
 	                      type: "POST",
-	                       url: "GerenciadorSistema",
+	                       url: "FrontControllerServlet",
 	                      data: {
-	                      action: "excluirSistema",
+	                      action: "deleteSistema",
 	                      filtro: nome
 	                  },
 	                  success: function (response) {
-	                	  alert("O Sistema " + nome + "foi excluído com sucesso!" );
+	                	  alert("O Sistema \"" + nome + "\" foi excluído com sucesso!" );
 	                  }
-	              });
+	              });*/
 	              } else {
 	            	  
 	              }

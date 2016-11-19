@@ -90,8 +90,9 @@
             </div>
             <div class="row text-center">
             <span id="mensagem"></span>
-            <input id="update" type="hidden" value="false"/>
-            <input id="id-sistema-update" type="hidden" value=""/>
+            <input id="update" name="update" type="hidden" value="false"/>
+            <input id="id-sistema-update" name="id-sistema-update" type="hidden" value=""/>
+            <input id="action" name="action" type="hidden" value="insertSistema"/>
             <button id="cadastro-sistema-submit" type="submit" class="btn btn-primary "><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnSalvar" /></button>
             <button class="btn btn-secondary "type="button"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnCancelar" /></button>
             </div>
