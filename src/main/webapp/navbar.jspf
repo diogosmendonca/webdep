@@ -1,7 +1,4 @@
-
-
-<!-- 
-links barra menu -->
+<!-- links barra menu -->
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
 
@@ -80,8 +77,7 @@ links barra menu -->
 </nav>
 
 <div class="modal fade" id="logoutModal" role="dialog">
-    <div class="modal-dialog">
-    
+    <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -97,6 +93,5 @@ links barra menu -->
         </form>
         </div>
       </div>
-      
     </div>
 </div>
