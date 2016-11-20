@@ -223,6 +223,7 @@
 							zippedData.push(data.series[j].values[i]);
 						}
 					}
+					
 
 					// Color scale
 					var color = d3.scale.category20();

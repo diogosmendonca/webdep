@@ -32,6 +32,7 @@ public class ValidaHttpReportCommand implements Command {
 			request.setAttribute("erorValidate", errorValidate);
 		}
 		
+		
 		if(request.getParameterValues("okList") != null){
 			String versionList[] = request.getParameterValues("okList");
 		} else {
