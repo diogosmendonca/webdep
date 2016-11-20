@@ -41,20 +41,6 @@ public class VersionServices {
 		}
 	}
 	
-	public static List<Versao> searchVersion(Long id){
-		PersistenceManager pm = PersistenceManager.getInstance();
-		try {
-			Query q = pm.createQuery("FROM Versao WHERE id LIKE :param");
-			
-			q.setParameter("param", "%"+id+"%");
-
-			return q.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
 	public static void deleteVersion(Versao v){
 		PersistenceManager pm = PersistenceManager.getInstance();
 		
@@ -64,5 +50,16 @@ public class VersionServices {
 		dao.delete(v);
 
 		pm.commitTransaction();
-	} 
+	}
+	
+	public static void changeVersion(Versao v){
+		PersistenceManager pm = PersistenceManager.getInstance();
+		
+		pm.beginTransaction();
+
+		GenericDAO<Versao> dao = pm.createGenericDAO(Versao.class);
+		dao.update(v);
+
+		pm.commitTransaction();
+	}
 }

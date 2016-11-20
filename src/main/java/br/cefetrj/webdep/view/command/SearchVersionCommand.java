@@ -16,7 +16,7 @@ public class SearchVersionCommand implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Versao> l = VersionServices.searchVersion(request.getParameter("arg"));
-		request.setAttribute("list", l);
+		request.getSession(true).setAttribute("list", l);
 		request.getRequestDispatcher("versionSearch.jsp").forward(request, response);
 		
 	}

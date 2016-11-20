@@ -77,7 +77,7 @@
 				<label class="control-label col-sm-2" for="pwd"></label> 
 				<label class="control-label col-sm-2" for="pwd"></label>
 				<div class="col-xs-4">
-					<button type="submit" class="btn btn-primary btn-md">
+					<button type="submit" class="btn btn-primary btn-md" name="action" value="insertVersion">
 						<fmt:message key="br.cefetrj.webdep.jsp.vr.save" />
 					</button>
 					<button type="reset" class="btn btn-danger btn-md">

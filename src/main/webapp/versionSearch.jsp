@@ -54,14 +54,14 @@
 					<tbody>
 						<c:forEach items="${ list }" var="item">
 								
-								<input type="hidden" name="versionID" value="${ item.id }"/>	
+								<input type="hidden" name="versionID" value="${ list.indexOf(item) }"/>	
 								
 								<tr>
 									<td>${ item.sistema }</td>
 									<td>${ item.nome }</td>
 									<td>${ item.timestampLiberacao.format(DateTimeFormatter.ofPattern(dateTime)) }</td>
-									<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#changeModal"><span class="glyphicon glyphicon-edit"></span></button></td>
-									<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteModal"><span class="glyphicon glyphicon-remove"></span></button></td>
+									<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#changeModal" onclick="getIndex(${ list.indexOf(item) })"><span class="glyphicon glyphicon-edit"></span></button></td>
+									<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteModal" onclick="getIndex(${ list.indexOf(item) })"><span class="glyphicon glyphicon-remove"></span></button></td>
 								</tr>
 						</c:forEach>
 					</tbody>
@@ -133,8 +133,9 @@
 										</div>
 								</div>
                                 <div class="modal-footer col-sm-6">
-                                    <button id="submit-padrao-url" name="action" type="submit" class="btn btn-primary" ><fmt:message key="br.cefetrj.webdep.jsp.vs.save" /></button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
+	                                	<input type="hidden" id="index" name="index">
+	                                    <button id="submit-padrao-url" name="action" value="changeVersion" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" /></button>
+	                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
                                 </div>
                             </form>
                         </div>
@@ -158,20 +159,27 @@
           <p><fmt:message key="br.cefetrj.webdep.jsp.vs.deleteMessage" /></p>
         </div>
         <div class="modal-footer">
-          <button id="submit-padrao-url" name="action" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" /></button>
-          <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
+	        <form class="form-horizontal" method="post" action="FrontControllerServlet">
+	          <input type="hidden" id="index" name="index">
+	          <button id="submit-padrao-url" name="action" value="deleteVersion" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" /></button>
+	          <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
+	        </form>
         </div>
       </div>
       
     </div>
   </div>
   
-  
+  <script type="text/javascript">
+  function getIndex(index){
+	  document.getElementById("index").value = index;
+  }
+  </script>
   <script type="text/javascript" src="jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.<fmt:message key="br.cefetrj.webdep.jsp.datepicker" />.js" charset="UTF-8"></script>
-	<script type="text/javascript">
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="js/locales/bootstrap-datetimepicker.<fmt:message key="br.cefetrj.webdep.jsp.datepicker" />.js" charset="UTF-8"></script>
+  <script type="text/javascript">
 	
 		$('.form_date').datetimepicker({
 			language : 'pt-BR',

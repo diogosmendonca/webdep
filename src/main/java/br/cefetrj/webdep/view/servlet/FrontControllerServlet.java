@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.cefetrj.webdep.view.command.ChangeVersionCommand;
 import br.cefetrj.webdep.view.command.Command;
 import br.cefetrj.webdep.view.command.DeleteSistemaCommand;
+import br.cefetrj.webdep.view.command.DeleteVersionCommand;
 import br.cefetrj.webdep.view.command.InsertPadraoURLCommand;
 import br.cefetrj.webdep.view.command.InsertSistemaCommand;
 import br.cefetrj.webdep.view.command.InsertVersionCommand;
@@ -34,6 +36,8 @@ public class FrontControllerServlet extends HttpServlet {
 	static{
 		commands.put("insertVersion", new InsertVersionCommand());
 		commands.put("searchVersion", new SearchVersionCommand());
+		commands.put("deleteVersion", new DeleteVersionCommand());
+		commands.put("changeVersion", new ChangeVersionCommand());
 		commands.put("getUsuario", new ObterUsuarioCommand());
 		commands.put("errorParameter", new ValidaHttpReportCommand());
 		commands.put("insertSistema", new InsertSistemaCommand());
