@@ -48,7 +48,7 @@ links barra menu -->
 							<li><a href="#"><fmt:message key="br.cefetrj.webdep.jsp.navbar.relatorios.perfildeacesso" /></a></li>
 							<li><a href="HTTPreport.jsp"><fmt:message key="br.cefetrj.webdep.jsp.navbar.relatorios.confiabilidadeurls" /></a></li>
 						</ul></li>
-				<!-- END Relat�rios -->
+				<!-- END Relatórios -->
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
@@ -69,7 +69,8 @@ links barra menu -->
 
 					</ul></li>
 
-				<li><button type="button" class="btn  navbar-btn "><fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.sair" /></button></li>
+				<li><button type="button" class="btn  navbar-btn " data-toggle="modal" data-target="#logoutModal" >
+				<fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.sair" /></button></li>
 			</ul>
 			
 		</div>
@@ -77,3 +78,25 @@ links barra menu -->
 	</div>
 	<!-- /.container-fluid -->
 </nav>
+
+<div class="modal fade" id="logoutModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmação</h4>
+        </div>
+        <div class="modal-body">
+          <p>Confirma sair do sistema?</p>
+        </div>
+        <div class="modal-footer">
+        <form method="post" action="FrontControllerServlet">
+          <button id="submit-padrao-url" name="action" value="deslogaUsuario" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" /></button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
+        </form>
+        </div>
+      </div>
+      
+    </div>
+</div>
