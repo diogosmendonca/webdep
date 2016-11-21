@@ -73,7 +73,8 @@
 	<!-- Campo de Filtros -->
 
 
-	<form class="form-horizontal" action="FrontControllerServlet" method="POST">
+	<form class="form-horizontal" action="FrontControllerServlet"
+		method="POST">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h5>
@@ -97,12 +98,13 @@
 					<label class="control-label col-sm-2" for="pwd"><fmt:message
 							key="br.cefetrj.webdep.jsp.http.HTTPerror" /></label>
 					<div class="col-xs-2">
-						<select name="errorList" class="selectpicker" multiple title="" id="errorList">
+						<select name="errorList" class="selectpicker" multiple title=""
+							id="errorList">
 							<option>500</option>
 							<option>400</option>
 							<option>404</option>
 						</select>
-						
+
 					</div>
 				</div>
 
@@ -110,7 +112,8 @@
 					<label class="control-label col-sm-2" for="pwd"><fmt:message
 							key="br.cefetrj.webdep.jsp.http.version" /></label>
 					<div class="col-xs-2">
-						<select class="selectpicker" multiple title="">
+						<select name="versionList" class="selectpicker" multiple title=""
+							id="versionlist">
 							<option>1.7.1</option>
 							<option>1.7.2</option>
 							<option>1.8.0</option>
@@ -120,17 +123,38 @@
 					<label class="control-label col-sm-2" for="pwd"><fmt:message
 							key="br.cefetrj.webdep.jsp.http.CodeHTTPok" /></label>
 					<div class="col-xs-2">
-						<select class="selectpicker" multiple title="">
+						<select name="okList" class="selectpicker" multiple title=""
+							id="oklist">
 							<option>300</option>
 							<option>200</option>
 						</select>
 						<div>
-							<button name="action" value="errorParameter" type="submit" class="btn btn-primary btn-md pull-right">
+							<button name="action" value="errorParameter" type="submit"
+								class="btn btn-primary btn-md pull-right">
 								<fmt:message key="br.cefetrj.webdep.jsp.apr.search" />
 							</button>
 						</div>
 					</div>
+
 				</div>
+				<c:if test="${ not empty versionValidate and not versionValidate }">
+					<div class="alert alert-danger fade in alert-dismissible">
+						 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Atenção!</strong> O campo Versões precisa ser preenchido.
+					</div>
+				</c:if>
+				<c:if test="${ not empty okValidate and not okValidate }">
+					<div class="alert alert-danger fade in alert-dismissible">
+						 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Atenção!</strong> O campo Código HTTP OK precisa ser preenchido.
+					</div>
+				</c:if>
+				<c:if test="${ not empty erorValidate and not errorValidate }">
+					<div class="alert alert-danger fade in alert-dismissible">
+						 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Atenção!</strong> O campo Código HTTP de Erro precisa ser preenchido.
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</form>
@@ -199,6 +223,7 @@
 							zippedData.push(data.series[j].values[i]);
 						}
 					}
+					
 
 					// Color scale
 					var color = d3.scale.category20();
