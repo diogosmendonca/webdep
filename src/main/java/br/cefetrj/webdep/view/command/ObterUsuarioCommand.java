@@ -19,9 +19,14 @@ public class ObterUsuarioCommand implements Command{
 		
 		Usuario u = new Usuario();
 		
-		u.setId((Long) request.getAttribute("id"));
+		u.setId(Long.parseLong(request.getParameter("id")));
 
 		Usuario uSaida = UsuarioService.getUsuario(u);
+		
+		request.setAttribute("usuario", uSaida);
+		
+		request.getRequestDispatcher("/testehome.jsp").forward(request, response);
+		
 		
 	}
 

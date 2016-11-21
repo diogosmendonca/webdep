@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- <!-- Variável criada para auxiliar na identificação do locale -->
 
@@ -36,7 +36,7 @@
 
 				<jsp:forward page="/FrontControllerServlet">
 					<jsp:param name="action" value="getUsuario" />
-					<jsp:param name="id" value="2" />
+					<jsp:param name="id" value="1" />
 				</jsp:forward>
 
 
@@ -59,7 +59,7 @@ links barra menu -->
 
 				<ul class="nav navbar-nav">
 					<!-- Testar perfil do usuário -->
-					<c:if test="${usuario.admGeral==true && usuario.perfil=='Administrador' }">
+					<c:if test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> WebDep <span class="caret"></span>
@@ -75,7 +75,7 @@ links barra menu -->
 					</c:if>
 					<!-- END WEBDEP -->
 					<!-- Testar perfil do usuário -->
-					<c:if test="${usuario.admGeral==true && usuario.perfil=='Administrador' }">
+					<c:if test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> <fmt:message
@@ -98,7 +98,7 @@ links barra menu -->
 					<c:if test="${usuario.admGeral==true && usuario.perfil=='Administrador' }">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false"> Logs<span class="caret"></span>
+						aria-expanded="false"/> Logs<span class="caret"></span>
 							<ul class="dropdown-menu">
 								<li><a href="#"><fmt:message
 											key="br.cefetrj.webdep.jsp.navbar.logs.importarlogs" /></a></li>
@@ -161,19 +161,19 @@ links barra menu -->
 		<!-- /.container-fluid -->
 	</nav>
 
-	Vamos começar ?</br></br>
-	1- Inicie cadastrando um sistema a monitorar - Clique aqui para cadastrar</br>
-	2- Selecione um sistema para trabalhar</br>
-	3- Registre uma versão do sistema</br>
-	4- Importe manualmente os dados de logs históricos</br>
-	5- Emita Relatórios de Perfil de Acesso e Analise os Erros no Sistema (Código HTTP)</br>
-	
-	Outras ações que você pode querer realizar</br>
-	<ul>
-		<li>Cadastre usuários e atribua permissões a eles</li>
-		<li>Selecione exclua dados históricos de logs</li>
-	
-	</ul>
+ <h5>Vamos começar?</h5>
+	  <ol>
+	    <li>Inicie cadastrando um sistema a monitorar - <a href="/cadastrousuario">Clique aqui para cadastrar</a></li>
+	    <li><a href="#">Selecione um sistema para trabalhar</a></li>
+	    <li><a href="#">Registre uma versão do sistema</a></li>
+	    <li><a href="#">Importe manualmente os dados de logs históricos</a></li>
+	    <li><a href="#">Emita Relatórios de Perfil de Acesso e Analise os Erros no Sistema (Código HTTP)</a></li>
+	  </ol>
+	  <h5>Outras ações que você pode querer realizar</h5>
+	  <ul>
+	    <li><a href="#">Cadastre usuários e atribua permissões a eles</a></li>
+	    <li><a href="#">Selecione exclua dados históricos de logs</a></li>
+	  </ul>
 
 
 
