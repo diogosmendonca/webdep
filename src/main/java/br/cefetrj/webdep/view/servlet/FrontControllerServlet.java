@@ -18,7 +18,6 @@ import br.cefetrj.webdep.view.command.InsertPadraoURLCommand;
 import br.cefetrj.webdep.view.command.InsertSistemaCommand;
 import br.cefetrj.webdep.view.command.InsertVersionCommand;
 import br.cefetrj.webdep.view.command.ListSistemaCommand;
-import br.cefetrj.webdep.view.command.ListarPermissaoUsuarioCommand;
 import br.cefetrj.webdep.view.command.SearchVersionCommand;
 import br.cefetrj.webdep.view.command.UpdateSistemaCommand;
 import br.cefetrj.webdep.view.command.ValidaHttpReportCommand;
@@ -51,7 +50,6 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("regexPadraoURL", new RegexPadraoURLCommand());
 		commands.put("autenticaUsuario", new AutenticaUsuarioCommand());
 		commands.put("deslogaUsuario", new DeslogaUsuarioCommand());
-		commands.put("listarPemissaoUsuario", new ListarPermissaoUsuarioCommand());
 
 	}
 	
