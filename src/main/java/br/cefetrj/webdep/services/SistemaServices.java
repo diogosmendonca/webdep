@@ -6,6 +6,7 @@ import javax.persistence.Query;
 
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
+import br.cefetrj.webdep.model.dao.SistemaDAO;
 import br.cefetrj.webdep.model.entity.Servidor;
 import br.cefetrj.webdep.model.entity.Sistema;
 
@@ -60,4 +61,16 @@ public class SistemaServices {
 			return null;
 		}
 	}
+	
+	/**
+	 * Lista os sistemas que um determinado usuário tem permissão.
+	 * 
+	 * @param idUsuario
+	 * @return lista de sistemas que o usuário tem permissão.
+	 */
+	public static List<Sistema> listByPermissaoUsuario(Integer idUsuario){
+		return SistemaDAO.listByPermissaoUsuario(idUsuario);
+	}
+	
+	
 }

@@ -2,6 +2,7 @@
 	<persistence-unit name="WebDepHSQLDBPU">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		
+<<<<<<< HEAD
 		<!-- Fiz essa mesma estrutura em um projeto simples com um src simples e esta passando, com src/main/java nao  -->
 		
 		<class>br.cefetrj.webdep.model.entity.Sistema</class>
@@ -16,6 +17,8 @@
 		<class>br.cefetrj.webdep.model.entity.Versao</class>
 		
 		
+=======
+>>>>>>> branch 'master' of https://github.com/diogosmendonca/webdep
 		<properties>
 		  <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
 	      <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost/webdep"/>
@@ -30,8 +33,13 @@
 		
 		<properties>
 		  <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+<<<<<<< HEAD
 	      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/webdep"/>
 	      <property name="javax.persistence.jdbc.user" value="sa"/>
+=======
+	      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/webdep"/>
+	      <property name="javax.persistence.jdbc.user" value=""/>
+>>>>>>> branch 'master' of https://github.com/diogosmendonca/webdep
 	      <property name="javax.persistence.jdbc.password" value=""/>
 	      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 	      <property name="hibernate.hbm2ddl.auto" value="update"/>
@@ -42,7 +50,7 @@
 		
 		<properties>
 		  <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-	      <property name="javax.persistence.jdbc.url" value=""/>
+	      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/webdep"/>
 	      <property name="javax.persistence.jdbc.user" value=""/>
 	      <property name="javax.persistence.jdbc.password" value=""/>
 	      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
