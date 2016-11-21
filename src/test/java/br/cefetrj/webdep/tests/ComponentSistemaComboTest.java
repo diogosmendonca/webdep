@@ -1,12 +1,8 @@
 package br.cefetrj.webdep.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -99,22 +95,6 @@ public class ComponentSistemaComboTest {
 		
 		adminGeralId = u1.getId();
 		usuarioNormalId = u2.getId();
-		
-		List<Usuario> usuarios = usuarioDao.listAll();
-		for (Usuario usuario : usuarios) {
-			System.out.println("usuario = " + usuario.getId());
-		}
-		
-		List<Sistema> sistemas = sistemaDao.listAll();
-		for (Sistema sistema : sistemas) {
-			System.out.println("sistema = " + sistema.getId());
-		}
-		
-		List<Permissao> permissao = permissaoDao.listAll();
-		for (Permissao permissao2 : permissao) {
-			System.out.println("permissao usuario = "+ permissao2.getUsuario().getId() + 
-					" sistema = " + permissao2.getSistema().getId());
-		}
 		
         if (System.getProperty("os.name").contains("Windows")){
         	System.setProperty("webdriver.gecko.driver", "src\\test\\resources\\geckodriver.exe");
