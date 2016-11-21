@@ -2,24 +2,10 @@
 	<persistence-unit name="WebDepHSQLDBPU">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		
-		<!-- Fiz essa mesma estrutura em um projeto simples com um src simples e esta passando, com src/main/java nao  -->
-		<!-- 
-		<class>br.cefetrj.webdep.model.entity.Sistema</class>
-		<class>br.cefetrj.webdep.model.entity.Usuario</class>
-		<class>br.cefetrj.webdep.model.entity.Permissao</class>
-		<class>br.cefetrj.webdep.model.entity.ConfiguracaoSistema</class>
-		<class>br.cefetrj.webdep.model.FormatoLog</class>
-		<class>br.cefetrj.webdep.model.PadraoURL</class>
-		<class>br.cefetrj.webdep.model.RegistroLogAcesso</class>
-		<class>br.cefetrj.webdep.model.RegistroLogErro</class>
-		<class>br.cefetrj.webdep.model.Servidor</class>
-		<class>br.cefetrj.webdep.model.Versao</class>
-		-->
-		
 		<properties>
 		  <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
-	      <property name="javax.persistence.jdbc.url" value=""/>
-	      <property name="javax.persistence.jdbc.user" value=""/>
+	      <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost/webdep"/>
+	      <property name="javax.persistence.jdbc.user" value="sa"/>
 	      <property name="javax.persistence.jdbc.password" value=""/>
 	      <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
 	      <property name="hibernate.hbm2ddl.auto" value="update"/>
@@ -30,7 +16,7 @@
 		
 		<properties>
 		  <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-	      <property name="javax.persistence.jdbc.url" value=""/>
+	      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/webdep"/>
 	      <property name="javax.persistence.jdbc.user" value=""/>
 	      <property name="javax.persistence.jdbc.password" value=""/>
 	      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
@@ -42,7 +28,7 @@
 		
 		<properties>
 		  <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-	      <property name="javax.persistence.jdbc.url" value=""/>
+	      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/webdep"/>
 	      <property name="javax.persistence.jdbc.user" value=""/>
 	      <property name="javax.persistence.jdbc.password" value=""/>
 	      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>

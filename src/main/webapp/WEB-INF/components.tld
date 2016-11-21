@@ -1,0 +1,28 @@
+<taglib>
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>2.0</jsp-version>
+  <short-name>Componentes TLD</short-name>
+  <tag>
+    <name>ComboSistema</name>
+    <tag-class>br.cefetrj.webdep.view.tag.SistemaComboTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+      <name>userId</name>
+      <required>true</required>
+      <type>java.lang.Integer</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>classCss</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>style</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>
