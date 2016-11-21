@@ -13,14 +13,26 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	    <title></title>
+	    <title>Home</title>
 		<jsp:include page="head.jspf"/>
   	</head>
 	<body>
-		<h2></h2>
-		<jsp:include page="scripts.jspf"/>
+	  <%@include file="navbar.jspf"%>
 		
+	  <h5>Vamos começar?</h5>
+	  <ol>
+	    <li>Inicie cadastrando um sistema a monitorar - <a href="#">Clique aqui para cadastrar</a></li>
+	    <li><a href="#">Selecione um sistema para trabalhar</a></li>
+	    <li><a href="#">Registre uma versão do sistema</a></li>
+	    <li><a href="#">Importe manualmente os dados de logs históricos</a></li>
+	    <li><a href="#">Emita Relatórios de Perfil de Acesso e Analise os Erros no Sistema (Código HTTP)</a></li>
+	  </ol>
+	  <h5>Outras ações que você pode querer realizar</h5>
+	  <ul>
+	    <li><a href="#">Cadastre usuários e atribua permissões a eles</a></li>
+	    <li><a href="#">Selecione exclua dados históricos de logs</a></li>
+	  </ul>
 		
-		<%@include file="navbar.jspf"%>
+	  <jsp:include page="scripts.jspf"/>
 	</body>
 </html>
