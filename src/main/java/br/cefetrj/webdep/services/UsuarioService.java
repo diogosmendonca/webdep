@@ -1,5 +1,9 @@
 package br.cefetrj.webdep.services;
 
+import java.util.List;
+
+import javax.persistence.TypedQuery;
+
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.entity.Usuario;
