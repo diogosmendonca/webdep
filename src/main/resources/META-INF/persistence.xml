@@ -3,7 +3,7 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		
 		<!-- Fiz essa mesma estrutura em um projeto simples com um src simples e esta passando, com src/main/java nao  -->
-		
+		<!-- 
 		<class>br.cefetrj.webdep.model.entity.Sistema</class>
 		<class>br.cefetrj.webdep.model.entity.Usuario</class>
 		<class>br.cefetrj.webdep.model.entity.Permissao</class>
@@ -14,7 +14,7 @@
 		<class>br.cefetrj.webdep.model.entity.RegistroLogErro</class>
 		<class>br.cefetrj.webdep.model.entity.Servidor</class>
 		<class>br.cefetrj.webdep.model.entity.Versao</class>
-
+		 -->
 		<properties>
 		  <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
 	      <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost/webdep"/>
