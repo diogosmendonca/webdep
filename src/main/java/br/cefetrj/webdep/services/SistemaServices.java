@@ -73,4 +73,39 @@ public class SistemaServices {
 	}
 	
 	
+	
+	public static Sistema obterPorId(Long id){
+		Sistema sistema = null;
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			
+			GenericDAO<Sistema> permissaoDAO = pManager.createGenericDAO(Sistema.class);
+			sistema = permissaoDAO.get(id);
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+		
+		return 	sistema;
+	}
+	
+	public static List<Sistema> listarTodos(){
+		List<Sistema> sistemas = null;
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			
+			GenericDAO<Sistema> permissaoDAO = pManager.createGenericDAO(Sistema.class);
+			sistemas = permissaoDAO.listAll();
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+		
+		return 	sistemas;			
+	}
+	
 }
