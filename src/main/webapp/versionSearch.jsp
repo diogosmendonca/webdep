@@ -53,9 +53,6 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${ list }" var="item">
-								
-								<input type="hidden" name="versionID" value="${ list.indexOf(item) }"/>	
-								
 								<tr>
 									<td>${ item.sistema }</td>
 									<td>${ item.nome }</td>
@@ -100,7 +97,7 @@
 										<div class="form-group">
 											<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.versionName" /></label>
 											<div class="col-xs-4">
-												<input type="text" class="form-control" name="nome" id="nome" >
+												<input type="text" class="form-control" name="nome" id="nome">
 											</div>
 										</div>
 										<div class="form-group">

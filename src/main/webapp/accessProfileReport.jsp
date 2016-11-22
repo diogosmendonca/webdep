@@ -53,7 +53,7 @@
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.apr.initialTime" /></label>
-						<div style="float: left" class="input-group date form_time col-sm-2" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+						<div style="float: left" class="input-group date form_time col-sm-2" data-date="" data-date-format="hh:ii:ss" data-link-field="dtp_input3" data-link-format="hh:ii:ss">
 							<div class="input-group">
 								<input class="form-control" type="text" readonly />
 								<span class="input-group-addon"> 
@@ -65,7 +65,7 @@
 							</div>
 						</div>
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.apr.finalTime" /></label>
-						<div style="float: left" class="input-group date form_time col-sm-2" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+						<div style="float: left" class="input-group date form_time col-sm-2" data-date="" data-date-format="hh:ii:ss" data-link-field="dtp_input3" data-link-format="hh:ii:ss">
 							<div class="input-group">
 								<input class="form-control" type="text" readonly />
 								<span class="input-group-addon"> 
@@ -134,7 +134,8 @@
 			startView : 1,
 			minView : 0,
 			maxView : 1,
-			forceParse : 0
+			forceParse : 0,
+			format : "hh:ii:ss"
 		});
 	</script>
 </body>
