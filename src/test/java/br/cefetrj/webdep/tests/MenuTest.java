@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,8 +26,9 @@ public class MenuTest {
 		this.driver = new FirefoxDriver();
 		this.auxMenu = new TestSupport(driver);
 	}
+	
 	//TC01
-	@Test
+	//@Test
 	public void cadastrarSistemaLinkDaPrincipalComAdministradorGeral() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
@@ -37,7 +37,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC02
-	@Test
+	//@Test
 	public void cadastrarSistemaLinkDaPrincipalComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -46,7 +46,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC03
-	@Test
+	//@Test
 	public void cadastrarSistemaLinkDaPrincipalComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -54,7 +54,7 @@ public class MenuTest {
 		assertNull(semLink);
 	}
 	//TC04
-	@Test
+	//@Test
 	public void selecionarSistemaLinkDaPrincipalComAdministradorGeral(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
@@ -65,7 +65,7 @@ public class MenuTest {
 		assertTrue(sistema);
 	}
 	//TC05
-	@Test
+	//@Test
 	public void selecionarSistemaLinkDaPrincipalComAdministrador(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -74,7 +74,7 @@ public class MenuTest {
 		assertTrue(sistema);
 	}
 	//TC06
-	@Test
+	//@Test
 	public void selecionarSistemaLinkDaPrincipalComAnalista(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -83,7 +83,7 @@ public class MenuTest {
 		assertTrue(sistema);
 	}
 	//TC07
-	@Test
+	//@Test
 	public void registrarVersaoLinkDaPrincipalComAdministradorGeral(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
@@ -92,7 +92,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC08
-	@Test
+	//@Test
 	public void registrarVersaoLinkDaPrincipalComAdministrador(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -101,7 +101,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC09
-	@Test
+	//@Test
 	public void registrarVersaoLinkDaPrincipalComAnalista(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -109,7 +109,7 @@ public class MenuTest {
 		assertNull(semLink);
 	}
 	//TC10
-	@Test
+	//@Test
 	public void importarLogsLinkDaPrincipalComAdministradorGeral() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
@@ -118,7 +118,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC11
-	@Test
+	//@Test
 	public void importarLogsLinkDaPrincipalComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -127,7 +127,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC12
-	@Test
+	//@Test
 	public void importarLogsLinkDaPrincipalComAnalista(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -135,7 +135,7 @@ public class MenuTest {
 		assertNull(semLink);
 	}
 	//TC13
-	@Test
+	//@Test
 	public void relatoriosPerfilLinkDaPrincipalComAdministradorGeral() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
@@ -144,6 +144,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC14
+	//@Teste
 	public void relatoriosPerfilLinkDaPrincipalComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -152,6 +153,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC15
+	//@Teste
 	public void relatoriosPerfilLinkDaPrincipalComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -160,7 +162,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC16
-	@Test
+	//@Test
 	public void relatoriosErrosLinkDaPrincipalComAdministradorGeral() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
@@ -169,7 +171,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC17
-	@Test
+	//@Test
 	public void relatoriosErrosLinkDaPrincipalComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -178,7 +180,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC18
-	@Test
+	//@Test
 	public void relatoriosErrosLinkDaPrincipalComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -187,7 +189,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC19
-	@Test
+	//@Test
 	public void menuWebdepComAdministradorGeral() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
@@ -198,6 +200,7 @@ public class MenuTest {
 		assertTrue(menuCorreto);
 	}
 	//TC20
+	//@Teste
 	public void menuWebdepComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -205,6 +208,7 @@ public class MenuTest {
 		assertNull(semLink);
 	}
 	//TC21
+	//@Teste
 	public void menuWebdepCadastrarUsuario(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -214,6 +218,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC22
+	//@Teste
 	public void menuWebDepListarUsuarios() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -223,6 +228,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC23
+	//@Teste
 	public void menuWebdepConfiguracoes() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
@@ -232,6 +238,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC24
+	//@Teste
 	public void menuSistemasComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -243,6 +250,7 @@ public class MenuTest {
 		assertTrue(menuCorreto);
 	}
 	//TC25
+	//@Teste
 	public void menuSistemasComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -250,6 +258,7 @@ public class MenuTest {
 		assertNull(semLink);
 	}
 	//TC26
+	//@Teste
 	public void menuSistemasCadastrar() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -259,6 +268,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC27
+	//@Teste
 	public void menuSistemasListar(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -268,6 +278,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC28
+	//@Teste
 	public void menuSistemasVersao(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -277,6 +288,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC29
+	//@Teste
 	public void menuSistemasListarVersao(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -286,6 +298,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC30
+	//@Teste
 	public void menuLogsComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -296,6 +309,7 @@ public class MenuTest {
 		assertTrue(menuCorreto);
 	}
 	//TC31
+	//@Teste
 	public void menuLogsComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -303,6 +317,7 @@ public class MenuTest {
 		assertNull(semLink);
 	}
 	//TC32
+	//@Teste
 	public void menuLogsImportar(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -312,6 +327,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC33
+	//@Teste
 	public void menuLogsConsultarAcesso(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -322,7 +338,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC34 -- ERRO
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void menuLogsConsultarAcessoSemSistemaSelecionado(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -330,7 +346,7 @@ public class MenuTest {
 		auxMenu.clicaLink("Consultar/Excluir Registros de Acesso");
 	}
 	//TC35 -- ERRO
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void menuLogsConsultarAcessoSemNenhumSistema(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -338,6 +354,7 @@ public class MenuTest {
 		auxMenu.clicaLink("Consultar/Excluir Registros de Acesso");
 	}
 	//TC36
+	//@Teste
 	public void menuLogsConsultarErro(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -348,7 +365,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC37 -- ERRO
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void menuLogsConsultarErroSemSistemaSelecionado(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -356,7 +373,7 @@ public class MenuTest {
 		auxMenu.clicaLink("Consultar/Excluir Registros de Erro");
 	}
 	//TC38 -- ERRO
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void menuLogsConsultarErroSemNenhumSistema(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -364,6 +381,7 @@ public class MenuTest {
 		auxMenu.clicaLink("Consultar/Excluir Registros de Erro");
 	}
 	//TC39
+	//@Teste
 	public void menuRelatorioComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -373,6 +391,7 @@ public class MenuTest {
 		assertTrue(menuCorreto);
 	}
 	//TC40
+	//@Teste
 	public void menuRelatorioComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -382,6 +401,7 @@ public class MenuTest {
 		assertTrue(menuCorreto);
 	}
 	//TC41
+	//@Teste
 	public void menuRelatoriosPerfilAcessoComAdministrador(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -392,7 +412,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC42 -- ERRO
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void menuRelatoriosPerfilAcessoSemSistemaSelecionado(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -400,7 +420,7 @@ public class MenuTest {
 		auxMenu.clicaLink("Perfil de Acesso");
 	}
 	//TC43 -- ERRO
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void menuRelatoriosPerfilAcessoSemNenhumSistema(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -408,6 +428,7 @@ public class MenuTest {
 		auxMenu.clicaLink("Perfil de Acesso");
 	}
 	//TC44
+	//@Teste
 	public void menuRelatoriosConfiabilidadeURLComAdministrador(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -418,6 +439,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC45
+	//@Teste
 	public void menuRelatoriosPerfilAcessoComAnalista(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -428,6 +450,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC46
+	//@Teste
 	public void menuRelatoriosConfiabilidadeURLComAnalista(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -438,7 +461,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC47 -- ERRO
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void menuRelatoriosConfiabilidadeURLSemSistemaSelecionado(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -446,7 +469,7 @@ public class MenuTest {
 		auxMenu.clicaLink("Confiabilidade das URLs");
 	}
 	//TC48 -- ERRO
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void menuRelatoriosConfiabilidadeURLSemNenhumSistema(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -454,6 +477,7 @@ public class MenuTest {
 		auxMenu.clicaLink("Confiabilidade das URLs");
 	}
 	//TC49
+	//@Teste
 	public void menuIdiomaComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -463,6 +487,7 @@ public class MenuTest {
 		assertTrue(menuCorreto);
 	}
 	//TC50
+	//@Teste
 	public void menuIdiomaComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -472,6 +497,7 @@ public class MenuTest {
 		assertTrue(menuCorreto);
 	}
 	//TC51
+	//@Teste
 	public void menuIdiomaInglesComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -481,6 +507,7 @@ public class MenuTest {
 		assertTrue(traduziu);
 	}
 	//TC52
+	//@Teste
 	public void menuIdiomaPortuguesComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -492,6 +519,7 @@ public class MenuTest {
 		assertTrue(traduziu);
 	}
 	//TC53
+	//@Teste
 	public void menuIdiomaInglesComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -501,6 +529,7 @@ public class MenuTest {
 		assertTrue(traduziu);
 	}
 	//TC54
+	//@Teste
 	public void menuIdiomaPortuguesComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -512,6 +541,7 @@ public class MenuTest {
 		assertTrue(traduziu);
 	}
 	//TC55
+	//@Teste
 	public void menuSair() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -520,6 +550,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC56 -- BOTAO
+	//@Teste
 	public void menuSairBotaoNao(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -530,6 +561,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC57 -- BOTAO
+	//@Teste
 	public void menuSairBotaoSim(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -540,6 +572,7 @@ public class MenuTest {
 		assertTrue(paginaCerta);
 	}
 	//TC58
+	//@Teste
 	public void componenteSeletorSistemaComAdministrador(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -551,6 +584,7 @@ public class MenuTest {
 		assertFalse(sistemaErro);
 	}
 	//TC59
+	//@Teste
 	public void componenteSeletorSistemaComAnalista(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -562,6 +596,7 @@ public class MenuTest {
 		assertFalse(sistemaErro);
 	}
 	//TC60
+	//@Teste
 	public void componenteSeletorSistemaSemNenhumSistema(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");

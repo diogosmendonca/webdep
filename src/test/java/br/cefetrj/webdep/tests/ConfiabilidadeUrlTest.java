@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,7 +27,7 @@ public class ConfiabilidadeUrlTest {
 	}
 	
 	//TC61
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void tabelaBuscarSemSelecoes(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
@@ -37,7 +36,7 @@ public class ConfiabilidadeUrlTest {
 		//assertEquals(0, linhas.size());
 	}
 	//TC62
-	@Test
+	//@Test
 	public void tabelaSeletorVersoes(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select versoes = new Select(driver.findElement(By.id("versoes")));
@@ -45,7 +44,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(0, valores.size());
 	}
 	//TC63
-	@Test
+	//@Test
 	public void tabelaVersoesComPadraoURL(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -59,7 +58,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(2, valores.size());
 	}
 	//TC64
-	@Test
+	//@Test
 	public void tabelaCodigosHTTPErro(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select http = new Select(driver.findElement(By.id("codigo-erro")));
@@ -67,7 +66,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(0, valores.size());
 	}
 	//TC65
-	@Test
+	//@Test
 	public void tabelaCodigosHTTPErroComPadraoUrl(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -77,7 +76,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(0, valores.size());
 	}
 	//TC66
-	@Test
+	//@Test
 	public void tabelaCodigosHTTPErroComPadraoUrlUmaVersao(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -91,7 +90,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(1, valores.size());
 	}
 	//TC67
-	@Test
+	//@Test
 	public void tabelaCodigosHTTPErroComPadraoUrlMaisDeUmaVersao(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -108,7 +107,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(2, valores.size());
 	}
 	//TC68
-	@Test
+	//@Test
 	public void tabelaCodigosHTTPOk() {
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select http = new Select(driver.findElement(By.id("codigo-ok")));
@@ -116,7 +115,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(0, valores.size());
 	}
 	//TC69
-	@Test
+	//@Test
 	public void tabelaCodigosHTTPOkComPadraoUrl(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -126,7 +125,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(0, valores.size());
 	}
 	//TC70
-	@Test
+	//@Test
 	public void tabelaCodigosHTTPOkComPadraoUrlUmaVersao(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -140,7 +139,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(1, valores.size());
 	}
 	//TC71
-	@Test
+	//@Test
 	public void tabelaCodigosHTTPOkComPadraoUrlMaisDeUmaVersao(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -155,7 +154,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(1, valores.size());
 	}
 	//TC72
-	@Test
+	//@Test
 	public void tabelaCodigosHTTPOkComPadraoUrlUmaVersaoCodigoErro(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -171,7 +170,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(1, valores.size());
 	}
 	//TC73
-	@Test
+	//@Test
 	public void tabelaCodigosHTTPOkComPadraoUrlUmaVersaoMaisDeUmCodigoErro(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -188,7 +187,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(1, valores.size());
 	}
 	//TC74 -- ERRO
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void tabelaBuscarComPadraoUrl() {
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -197,7 +196,7 @@ public class ConfiabilidadeUrlTest {
 		botaoBuscar.click();
 	}
 	//TC75 -- ERRO
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void tabelaBuscarComVersoes(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -208,7 +207,7 @@ public class ConfiabilidadeUrlTest {
 		botaoBuscar.click();
 	}
 	//TC76 -- ERRO
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void tabelaBuscarComCodigoErro(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -221,7 +220,7 @@ public class ConfiabilidadeUrlTest {
 		botaoBuscar.click();
 	}
 	//TC77 -- ERRO
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void tabelaBuscarComCodigoOk(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -234,7 +233,7 @@ public class ConfiabilidadeUrlTest {
 		botaoBuscar.click();
 	}
 	//TC78
-	@Test
+	//@Test
 	public void tabelaBuscarComTodosOsSeletores(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -253,7 +252,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(1, linhas.size());
 	}
 	//TC79
-	@Test
+	//@Test
 	public void tabelaBuscarComTodosOsSeletoresMaisDeUmaVersao(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -273,7 +272,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(1, linhas.size());
 	}
 	//TC80
-	@Test
+	//@Test
 	public void tabelaBuscarComTodosOsSeletoresMaisDeUmCodigoErro(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -294,7 +293,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(1, linhas.size());
 	}
 	//TC81
-	@Test
+	//@Test
 	public void tabelaBuscarComTodosOsSeletoresMaisDeUmCodigoOk(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -316,7 +315,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(1, linhas.size());
 	}
 	//TC82
-	@Test
+	//@Test
 	public void conferenciaDadosDaTabela(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -339,7 +338,7 @@ public class ConfiabilidadeUrlTest {
 		assertEquals(1, linhas.size());
 	}
 	//TC83
-	@Test
+	//@Test
 	public void tabelaVoltar(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		WebElement botaoVoltar = driver.findElement(By.id("voltar"));
@@ -348,7 +347,7 @@ public class ConfiabilidadeUrlTest {
 		assertTrue(pagina);
 	}
 	//TC84 -- GRAFICO
-	@Test
+	//@Test
 	public void conferenciaDadosGrafico(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -370,7 +369,7 @@ public class ConfiabilidadeUrlTest {
 		assertTrue(probabilidade);
 	}
 	//TC85 -- GRAFICO
-	@Test
+	//@Test
 	public void graficoBuscarComTodosOsSeletoresMaisDeUmaVersao(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -393,7 +392,7 @@ public class ConfiabilidadeUrlTest {
 		assertTrue(probabilidade);
 	}
 	//TC86 -- GRAFICO
-	@Test
+	//@Test
 	public void graficoBuscarComTodosOsSeletoresMaisDeUmCodigoErro(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -417,7 +416,7 @@ public class ConfiabilidadeUrlTest {
 		assertTrue(probabilidade);
 	}
 	//TC87 -- GRAFICO
-	@Test
+	//@Test
 	public void graficoBuscarComTodosOsSeletoresMaisDeUmCodigoOk(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
@@ -442,7 +441,7 @@ public class ConfiabilidadeUrlTest {
 		assertTrue(probabilidade);
 	}
 	//TC88
-	@Test
+	//@Test
 	public void graficoVoltar(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		auxTest.clicaLink("Gráfico");
