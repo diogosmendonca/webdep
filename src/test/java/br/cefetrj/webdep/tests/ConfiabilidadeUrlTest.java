@@ -1,26 +1,12 @@
 package br.cefetrj.webdep.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
-import org.junit.After;
-import org.junit.Before;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
-
-import br.cefetrj.webdep.tests.support.TestSupport;
-
 public class ConfiabilidadeUrlTest {
 
+	/*
 	private WebDriver driver;
 	private TestSupport auxTest;
 	
-	@Before
+	//@Before
 	public void inicializa(){
 		this.driver = new FirefoxDriver();
 		this.auxTest = new TestSupport(driver);
@@ -451,8 +437,9 @@ public class ConfiabilidadeUrlTest {
 		assertTrue(pagina);
 	}
 	
-	@After
+	//@After
 	public void encerra(){
 		this.driver.close();
 	}
+	*/
 }

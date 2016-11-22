@@ -1,27 +1,11 @@
 package br.cefetrj.webdep.tests;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
-import org.junit.After;
-import org.junit.Before;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
-
-import br.cefetrj.webdep.tests.support.TestSupport;
-
 public class MenuTest {
-	
+	/*
 	private WebDriver driver;
 	private TestSupport auxMenu;
 	
-	@Before
+	//@Before
 	public void inicializa(){
 		this.driver = new FirefoxDriver();
 		this.auxMenu = new TestSupport(driver);
@@ -605,9 +589,9 @@ public class MenuTest {
 		boolean sistema = opcoes.isEmpty();
 		assertTrue(sistema);
 	}
-	@After
+	//@After
 	public void encerra(){
 		this.driver.close();
 	}
-
+	*/
 }
