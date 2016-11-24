@@ -57,14 +57,14 @@ public class CadastraUsuarioCommand implements Command {
 
 		final String senha1;
 		if(request.getParameter("senha") != null){
-			senha1 = this.sha512(request.getParameter("senha"));
+			senha1 = AutenticaUsuarioCommand.sha512(request.getParameter("senha"));
 		}else{
 			senha1 = "";
 		}
 		
 		final String senha2;
 		if(request.getParameter("senha2") != null){
-			senha2 = this.sha512(request.getParameter("senha2"));
+			senha2 = AutenticaUsuarioCommand.sha512(request.getParameter("senha2"));
 		}else{
 			senha2 = "";
 		}
@@ -183,24 +183,6 @@ public class CadastraUsuarioCommand implements Command {
 		}else{
 			doPost(request, response);
 		}
-	}
-	
-	private String sha512(String passwordToHash) {
-		try {
-	        MessageDigest digest = MessageDigest.getInstance("SHA-512");
-	        byte[] hash = digest.digest(passwordToHash.getBytes("UTF-8"));
-	        StringBuffer hexString = new StringBuffer();
-
-	        for (int i = 0; i < hash.length; i++) {
-	            String hex = Integer.toHexString(0xff & hash[i]);
-	            if(hex.length() == 1) hexString.append('0');
-	            hexString.append(hex);
-	        }
-	        return hexString.toString();
-	        
-	    } catch(Exception ex) {
-	       throw new RuntimeException(ex);
-	    }
 	}
 
 }
