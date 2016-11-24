@@ -16,51 +16,53 @@ public class AutenticaUsuarioCommand implements Command {
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		boolean valido = false;
-		boolean loginValido = false;
-		boolean senhaValida = false;
-		String msg ="";
-		String login = request.getParameter("login");
-		String senha = request.getParameter("senha");
+		boolean autenticado = false;
+		String msg ="Login ou senha incorretos.<br/>";
+		String loginUsuario = request.getParameter("login");
+		String senhaUsuario = request.getParameter("senha");
+		String senhaCriptografada = this.sha512(senhaUsuario);
+		System.out.println(senhaCriptografada);
 		
-		if((login == null) || login.trim().equals("") ||
-				(senha == null) || senha.trim().equals("")){
-			loginValido = false;
-			senhaValida = false;
-			msg += "Login ou senha incorretos.<br/>";
+		Usuario login = null;
+		String senha = null;
+		try {
+			login = UsuarioServices.validarLogin(loginUsuario);
+			senha = login != null? login.getSenha(): null;
+			System.out.println(senha);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		if(login != null) {
-			if (login.trim().equals("adminGeral")){
-				loginValido = true;
-			}
-		}
-		
-		if(loginValido) {
-			if((senha == null) || senha.trim().equals("")){
-				senhaValida = false;
-			}
-			else if(senha.equals("ZYM681")) {
-				senhaValida = true;
-			}
-		}
-		
-		if(loginValido && senhaValida) {
-			valido = true;
-		}
-		//request.setAttribute("validou", true);
-		//request.setAttribute("loginValido", loginValido);
-		//request.setAttribute("senhaValida", senhaValida);
-		
-		if(valido){
-			//System.out.println("validou");
-			//request.getRequestDispatcher("home.jsp").forward(request, response);
-			request.getSession().setAttribute("login", login);
+
+		if(login != null && senha != null) {
+			//O banco esta salvando a senha "cortada", mesmo apos atualizar o tamanho dela em Usuario
+			//if(senha.equals(senhaCriptografada)) autenticado = true;
+			if(senha.equals(senhaUsuario)) autenticado = true;
+			else autenticado = false;
+		} else autenticado = false;
+
+		if(autenticado) {
             response.sendRedirect("home.jsp");
-		}else{
+		} else {
 			request.setAttribute("msg", msg);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
-			//response.sendError(HttpServletResponse.SC_FORBIDDEN, "Login failed.");
 		}	
+	}
+	
+	private String sha512(String passwordToHash) {
+		try {
+	        MessageDigest digest = MessageDigest.getInstance("SHA-512");
+	        byte[] hash = digest.digest(passwordToHash.getBytes("UTF-8"));
+	        StringBuffer hexString = new StringBuffer();
+
+	        for (int i = 0; i < hash.length; i++) {
+	            String hex = Integer.toHexString(0xff & hash[i]);
+	            if(hex.length() == 1) hexString.append('0');
+	            hexString.append(hex);
+	        }
+	        return hexString.toString();
+	        
+	    } catch(Exception ex) {
+	       throw new RuntimeException(ex);
+	    }
 	}
 }
