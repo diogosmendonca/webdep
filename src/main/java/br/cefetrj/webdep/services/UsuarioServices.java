@@ -8,7 +8,7 @@ import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.entity.Usuario;
 
-public class UsuarioService {
+public class UsuarioServices {
 
 	private static Usuario usuario;
 	

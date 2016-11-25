@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.services.SistemaServices;
-import br.cefetrj.webdep.services.UsuarioService;
+import br.cefetrj.webdep.services.UsuarioServices;
 
 public class ObterUsuarioCommand implements Command{
 
@@ -23,7 +23,7 @@ public class ObterUsuarioCommand implements Command{
 		
 		Long id =Long.parseLong(request.getParameter("id"));
 
-		Usuario uSaida = UsuarioService.obterPorId(id);
+		Usuario uSaida = UsuarioServices.obterPorId(id);
 		
 		request.setAttribute("usuario", uSaida);
 		
