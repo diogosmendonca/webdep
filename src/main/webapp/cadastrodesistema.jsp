@@ -105,7 +105,7 @@
 					<br> <label class="text-right col-sm-6"><fmt:message
 							key="br.cefetrj.webdep.jsp.form.sistema.hora" /></label>
 					<div class="input-group date form_time col-sm-6" data-date=""
-						data-date-format="hh:mm:ss" data-link-field="dtp_input3"
+						data-date-format="hh:ii" data-link-field="dtp_input3"
 						data-link-format="hh:ii">
 						<div id="div-time" class="input-group">
 							<input class="form-control" type="text" id="time" name="time"
@@ -118,7 +118,7 @@
 					<br> <label class="text-right col-sm-6"><fmt:message
 							key="br.cefetrj.webdep.jsp.form.sistema.nova" /></label>
 					<div class="input-group date form_time col-sm-6" data-date=""
-						data-date-format="hh:mm:ss" data-link-field="dtp_input3"
+						data-date-format="hh:ii" data-link-field="dtp_input3"
 						data-link-format="hh:ii">
 						<div id="div-nova" class="input-group">
 							<input class="form-control" type="text" id="novaData"
