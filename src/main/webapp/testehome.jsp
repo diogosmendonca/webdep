@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
 <!-- <!-- Variável criada para auxiliar na identificação do locale -->
 
 <c:set var="lang" scope="session"
@@ -138,12 +138,7 @@ links barra menu -->
 
 					<li><form name="barralistbox" class="navbar-form navbar-left">
 							<div class="form-group">
-								<select class="form-control">
-								
-								
-								
-									<option value="sistema">Sistema</option>
-								</select>
+								<cmp:ComboSistema  userId="${id}" classCss="form-control"/>
 							</div>
 						</form></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -196,9 +191,7 @@ links barra menu -->
 
 
 
-	<H1>logado como ${usuario.nome} ${usuario.admGeral}
-		${usuario.perfil }</H1>
+	
 		
-		${lista}
 </body>
 </html>

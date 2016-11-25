@@ -1,97 +1,94 @@
-	<%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
-  
-	
-	<c:if test="${empty usuario }">
 
-		<c:choose>
-			<c:when test="${sessionScope.id==null && empty sessionScope.user}">
-				<jsp:forward page="/index.jsp" />
-			</c:when>
-
-			<c:otherwise>
-
-				<jsp:forward page="/FrontControllerServlet">
-					<jsp:param name="action" value="getUsuario" />
-					<jsp:param name="id" value="1" />
-				</jsp:forward>
-
-				<jsp:forward page="/FrontControllerServlet">
-					<jsp:param name="action" value="listarPemissaoUsuario" />
-					<jsp:param name="id" value="1" />
-				</jsp:forward>
+<%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
 
 
-			</c:otherwise>
+<c:if test="${empty usuario }">
 
-		</c:choose>
-	</c:if>
+	<c:choose>
+		<c:when test="${sessionScope.id==null && empty sessionScope.user}">
+			<jsp:forward page="/index.jsp" />
+		</c:when>
 
-	<!-- 
+		<c:otherwise>
+
+			<jsp:forward page="/FrontControllerServlet">
+				<jsp:param name="action" value="getUsuario" />
+				<jsp:param name="id" value="${sessionScope.id}" />
+			</jsp:forward>
+			
+		</c:otherwise>
+
+	</c:choose>
+</c:if>
+
+
+<!-- 
 links barra menu -->
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
 
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
 
-				<ul class="nav navbar-nav">
-					<!-- Testar perfil do usuário -->
-					<c:if
-						test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false"> WebDep <span class="caret"></span>
-						</a>
+			<ul class="nav navbar-nav">
+				<!-- Testar perfil do usuário -->
+				<c:if
+					test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false"> WebDep <span class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="/cadastrarUsuario"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.webdep.cadastrarusuario" /></a></li>
+							<li><a href="#"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.webdep.listaralterarexcluir" /></a></li>
+							<li><a href="#"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.webdep.configuracoes" /></a></li>
+						</ul></li>
+				</c:if>
+				<!-- END WEBDEP -->
+				<!-- Testar perfil do usuário -->
+				<c:if
+					test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false"> <fmt:message
+								key="br.cefetrj.webdep.jsp.navbar.sistemas" /><span
+							class="caret"></span>
 							<ul class="dropdown-menu">
-								<li><a href="#"><fmt:message
-											key="br.cefetrj.webdep.jsp.navbar.webdep.cadastrarusuario" /></a></li>
-								<li><a href="#"><fmt:message
-											key="br.cefetrj.webdep.jsp.navbar.webdep.listaralterarexcluir" /></a></li>
-								<li><a href="#"><fmt:message
-											key="br.cefetrj.webdep.jsp.navbar.webdep.configuracoes" /></a></li>
-							</ul></li>
-					</c:if>
-					<!-- END WEBDEP -->
-					<!-- Testar perfil do usuário -->
-					<c:if
-						test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false"> <fmt:message
-									key="br.cefetrj.webdep.jsp.navbar.sistemas" /><span
-								class="caret"></span>
-								<ul class="dropdown-menu">
-									<li><a href='cadastrodesistema.jsp'><fmt:message
-												key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarsistema" /></a></li>
-									<li><a href="gerenciadorsistema.jsp"><fmt:message
-												key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluir" /></a></li>
-									<li><a href="versionRegistration.jsp"><fmt:message
-												key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarnovaversao" /></a></li>
-									<li><a href="versionSearch.jsp"><fmt:message
-												key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluirversoes" /></a></li>
-
-								</ul></li>
-					</c:if>
-					<!-- END SISTEMAS -->
-					<!-- Testar perfil do usuário -->
-					<c:if
-						test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false" /> Logs<span class="caret"></span>
-							<ul class="dropdown-menu">
-								<li><a href="#"><fmt:message
-											key="br.cefetrj.webdep.jsp.navbar.logs.importarlogs" /></a></li>
-								<li><a href="#"><fmt:message
-											key="br.cefetrj.webdep.jsp.navbar.logs.consultarexcluirregistrosdeacesso" /></a></li>
-								<li><a href="#"><fmt:message
-											key="br.cefetrj.webdep.jsp.navbar.logs.consultarexcluirregistrosdeerro" /></a></li>
+								<li><a href="cadastrodesistema.jsp"><fmt:message
+											key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarsistema" /></a></li>
+								<li><a href="gerenciadorsistema.jsp"><fmt:message
+											key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluir" /></a></li>
+								<li><a href="versionRegistration.jsp"><fmt:message
+											key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarnovaversao" /></a></li>
+								<li><a href="versionSearch.jsp"><fmt:message
+											key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluirversoes" /></a></li>
 
 							</ul></li>
-					</c:if>
-					<!-- END LOGS -->
-					<c:if test="${usuario.admGeral==true || usuario.perfil=='Administrador' || usuario.perfil=='Analista'}">
+				</c:if>
+				<!-- END SISTEMAS -->
+				<!-- Testar perfil do usuário -->
+				<c:if
+					test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false" /> Logs<span class="caret"></span>
+						<ul class="dropdown-menu">
+							<li><a href="#"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.logs.importarlogs" /></a></li>
+							<li><a href="#"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.logs.consultarexcluirregistrosdeacesso" /></a></li>
+							<li><a href="#"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.logs.consultarexcluirregistrosdeerro" /></a></li>
+
+						</ul></li>
+				</c:if>
+				<!-- END LOGS -->
+				<c:if
+					test="${usuario.admGeral==true || usuario.perfil=='Administrador' || usuario.perfil=='Analista'}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> <fmt:message
@@ -103,35 +100,79 @@ links barra menu -->
 								<li><a href="HTTPreport.jsp"><fmt:message
 											key="br.cefetrj.webdep.jsp.navbar.relatorios.confiabilidadeurls" /></a></li>
 							</ul></li>
-					</c:if>
-					<!-- END Relatórios  -->
-				</ul>
-
-				<ul class="nav navbar-nav navbar-right">
-					<li><form name="barralistbox" class="navbar-form navbar-left">
-							<div class="form-group">
-								<cmp:ComboSistema userId="${ id }"/>
-								
-
-							</div>
-						</form></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false"><fmt:message
-								key="br.cefetrj.webdep.jsp.navbar.idioma" /> <span
-							class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="./home.jsp?lang=en_US"><fmt:message
-										key="br.cefetrj.webdep.jsp.navbar.idioma.ingles" /></a></li>
-							<li><a href="./home.jsp?lang=pt_BR"><fmt:message
-										key="br.cefetrj.webdep.jsp.navbar.idioma.portugues" /></a></li>
-
-						</ul></li>
-
-					<li><button type="button" class="btn  navbar-btn " data-toggle="modal" data-target="#logoutModal" >
-				<fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.sair" /></button></li>
+				</c:if>
+				<!-- END Relatórios  -->
 			</ul>
-			
+
+			<ul class="nav navbar-nav navbar-right">
+				<li><form name="barralistbox" class="navbar-form navbar-left">
+						<div class="form-group">
+
+<%-- 							<cmp:ComboSistema userId="${ id }" classCss="form-control" /> --%>
+							<script type="text/javascript">
+							function post(path, params, method) {
+								method = method || "post"; // Set method to post by default if not specified.
+
+								// The rest of this code assumes you are not using a library.
+								// It can be made less wordy if you use one.
+								var form = document.createElement("form");
+								form.setAttribute("method", method);
+								form.setAttribute("action", path);
+
+								for ( var key in params) {
+									if (params.hasOwnProperty(key)) {
+										var hiddenField = document.createElement("input");
+										hiddenField.setAttribute("type", "hidden");
+										hiddenField.setAttribute("name", key);
+										hiddenField.setAttribute("value", params[key]);
+
+										form.appendChild(hiddenField);
+									}
+								}
+
+								document.body.appendChild(form);
+								form.submit();
+							}
+
+							function pegarID() {
+								//post('/contact/', {name: 'Johnny Bravo'});
+								
+								var e = document.getElementById("versionlist");
+								var itemSelecionado = e.options[e.selectedIndex].value;
+								
+								post('#', {idsistema : itemSelecionado }, 'get');
+
+							}
+							</script>
+
+
+							<select name="sistema" class="form-control" 
+								id="versionlist">
+								<c:forEach items="${listasistema}" var="sistema">
+									<option value="${ sistema.id }" onclick="pegarID();">${ sistema.nome }</option>
+								</c:forEach>
+							</select>
+
+						</div>
+					</form></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false"><fmt:message
+							key="br.cefetrj.webdep.jsp.navbar.idioma" /> <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="./home.jsp?lang=en_US"><fmt:message
+									key="br.cefetrj.webdep.jsp.navbar.idioma.ingles" /></a></li>
+						<li><a href="./home.jsp?lang=pt_BR"><fmt:message
+									key="br.cefetrj.webdep.jsp.navbar.idioma.portugues" /></a></li>
+
+					</ul></li>
+
+				<li><button type="button" class="btn  navbar-btn "
+						data-toggle="modal" data-target="#logoutModal">
+						<fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.sair" />
+					</button></li>
+			</ul>
+
 		</div>
 		<!-- /.navbar-collapse -->
 	</div>
@@ -139,21 +180,32 @@ links barra menu -->
 </nav>
 
 <div class="modal fade" id="logoutModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"><fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.sair.title.confirmacao" /></h4>
-        </div>
-        <div class="modal-body">
-          <p><fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.sair.title.confirmacao.?" /></p>
-        </div>
-        <div class="modal-footer">
-        <form method="post" action="FrontControllerServlet">
-          <button id="submit-padrao-url" name="action" value="deslogaUsuario" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" /></button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
-        </form>
-        </div>
-      </div>
-    </div>
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<fmt:message
+						key="br.cefetrj.webdep.jsp.navbar.idioma.sair.title.confirmacao" />
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message
+						key="br.cefetrj.webdep.jsp.navbar.idioma.sair.title.confirmacao.?" />
+				</p>
+			</div>
+			<div class="modal-footer">
+				<form method="post" action="FrontControllerServlet">
+					<button id="submit-padrao-url" name="action" value="deslogaUsuario"
+						type="submit" class="btn btn-primary">
+						<fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" />
+					</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">
+						<fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" />
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
