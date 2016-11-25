@@ -36,7 +36,13 @@ import br.cefetrj.webdep.view.command.ValidaBanco;
 import br.cefetrj.webdep.view.command.ValidaConfig;
 import br.cefetrj.webdep.view.command.ValidaEmail;
 
-
+import br.cefetrj.webdep.view.command.ValidaLogErroCommand;
+import br.cefetrj.webdep.view.command.ValidaLogAcessoCommand;
+import br.cefetrj.webdep.view.command.ImportarLogCommand;
+import br.cefetrj.webdep.view.command.ExcluirLogErroCommand;
+import br.cefetrj.webdep.view.command.ExcluirLogAcessoCommand;
+import br.cefetrj.webdep.view.command.BuscarLogAcessoCommand;
+import br.cefetrj.webdep.view.command.BuscarLogErroCommand;
 /**
  * Servlet implementation class FrontControllerServlet
  */
@@ -69,6 +75,14 @@ public class FrontControllerServlet extends HttpServlet {
  		commands.put("deleteSistema", new DeleteSistemaCommand());
  		commands.put("insertPadraoURL", new InsertPadraoURLCommand());
  		commands.put("regexPadraoURL", new RegexPadraoURLCommand());
+		
+		commands.put("buscarLogErro", new BuscarLogErroCommand());
+		commands.put("buscarLogAcesso", new BuscarLogAcessoCommand());
+		commands.put("excluirLogAcesso", new ExcluirLogAcessoCommand());
+		commands.put("excluirLogErro", new ExcluirLogErroCommand());
+		commands.put("importaLog", new ImportarLogCommand());
+		commands.put("validaLogAcesso", new ValidaLogAcessoCommand());
+		commands.put("validaLogErro", new ValidaLogErroCommand());
 		
 		commands.put("ValidaEmail", new ValidaEmail());
         	commands.put("ValidaBanco", new ValidaBanco());
