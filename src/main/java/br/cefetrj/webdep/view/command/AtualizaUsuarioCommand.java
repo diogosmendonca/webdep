@@ -98,14 +98,14 @@ public class AtualizaUsuarioCommand implements Command {
 
 		final String senha1;
 		if(request.getParameter("senha") != null){
-			senha1 = request.getParameter("senha");
+			senha1 = AutenticaUsuarioCommand.sha512(request.getParameter("senha"));
 		}else{
 			senha1 = "";
 		}
 		
 		final String senha2;
 		if(request.getParameter("senha2") != null){
-			senha2 = request.getParameter("senha2");
+			senha2 = AutenticaUsuarioCommand.sha512(request.getParameter("senha2"));
 		}else{
 			senha2 = "";
 		}
@@ -197,6 +197,7 @@ public class AtualizaUsuarioCommand implements Command {
 		}else{
 			
 			Usuario usu = new Usuario();
+			usu.setId(Long.valueOf(id));
 			usu.setNome(nome);
 			usu.setEmail(email);
 			usu.setLogin(login);
