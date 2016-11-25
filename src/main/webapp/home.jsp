@@ -18,7 +18,7 @@
   	</head>
 	<body>
 		<!-- PARA TESTAR A PÁGINA SAIR NA FINALIZAÇÃO  -->
-		<c:set var="id" scope="session" value="2" />
+		<c:set var="id" scope="session" value="1" />
 	
 	  <%@include file="navbar.jspf"%>
 		
@@ -44,6 +44,10 @@
 
 	</c:if>
 
+		<H1>logado como ${usuario.nome} ${usuario.admGeral}
+		${usuario.perfil }</H1>
+		${lista}</br>
+		ID SISTEMA ${param.idsistema} ${sessionScope.idsistema}
 		
 	  <jsp:include page="scripts.jspf"/>
 	</body>

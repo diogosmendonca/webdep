@@ -1,12 +1,15 @@
 package br.cefetrj.webdep.view.command;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Usuario;
+import br.cefetrj.webdep.services.SistemaServices;
 import br.cefetrj.webdep.services.UsuarioService;
 
 public class ObterUsuarioCommand implements Command{
@@ -16,16 +19,21 @@ public class ObterUsuarioCommand implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+			
 		
-		Usuario u = new Usuario();
-		
-		u.setId(Long.parseLong(request.getParameter("id")));
+		Long id =Long.parseLong(request.getParameter("id"));
 
-		Usuario uSaida = UsuarioService.getUsuario(u);
+		Usuario uSaida = UsuarioService.obterPorId(id);
 		
 		request.setAttribute("usuario", uSaida);
 		
-		request.getRequestDispatcher("/testehome.jsp").forward(request, response);
+		
+		List<Sistema> permissaoSistemaLista= SistemaServices.listByPermissaoUsuario(id.intValue());
+		
+		request.setAttribute("listasistema", permissaoSistemaLista);
+		
+		
+		request.getRequestDispatcher("/home.jsp").forward(request, response);
 		
 		
 	}
