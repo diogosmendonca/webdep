@@ -14,7 +14,7 @@ import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.services.UsuarioServices;
 
 /**
- * Classe responsavel por remover usuarios do sistema.
+ * Classe responsavel por listar usuarios do sistema.
  * 
  * @author Lawrence Fernandes
  * @author Iury
