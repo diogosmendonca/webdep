@@ -213,3 +213,20 @@ function excluir(nome){
 	            	  
 	              }
 }
+//Teste acesso
+$("#pxLogs-teste-btn").click(function () {
+	var pxLogs = $("#pxLogs").val();
+	if (pxLogs === "") {
+		$("#div-prefixo-acesso").toggleClass("has-error");
+	} else {
+		alert("Função em construção")
+	}
+});
+$("#pxLogs2-teste-btn").click(function () {
+	var pxLogs2 = $("#pxLogs2").val();
+	if (pxLogs2 === "") {
+		$("#div-prefixo-erro").toggleClass("has-error");
+	} else {
+		alert("Função em construção")
+	}
+});

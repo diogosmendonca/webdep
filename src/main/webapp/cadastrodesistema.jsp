@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
+
 <!-- Variável criada para auxiliar na identificação do locale -->
 <c:set var="lang" scope="session"
 	value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}" />
@@ -17,7 +17,7 @@
 <jsp:include page="head.jspf" />
 </head>
 <body>
-	<%@include file="navbar.jspf"%>
+	<!-- <@include file="navbar.jspf"%> -->
 	<form id="sistema-form" class="form-horizontal container">
 		<div class="row">
 			<fieldset class="form-group">
@@ -58,7 +58,7 @@
 					<div id="div-prefixo-acesso" class="input-group">
 						<input type="text" id="pxLogs" name="pxLogs" class="form-control">
 						<span class="input-group-btn">
-							<button class="btn btn-info" type="button">
+							<button id="pxLogs-teste-btn" class="btn btn-info" type="button">
 								<fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnTeste" />
 							</button>
 						</span>
@@ -74,7 +74,7 @@
 					<div id="div-prefixo-erro" class="input-group">
 						<input type="text" class="form-control" id="pxLogs2"
 							name="pxLogs2"> <span class="input-group-btn">
-							<button class="btn btn-info" type="button">
+							<button id="pxLogs2-teste-btn" class="btn btn-info" type="button">
 								<fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnTeste" />
 							</button>
 						</span>
