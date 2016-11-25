@@ -17,7 +17,7 @@
 <jsp:include page="head.jspf" />
 </head>
 <body>
-	<!-- <@include file="navbar.jspf"%> -->
+	<%@include file="navbar.jspf"%>
 	<form id="sistema-form" class="form-horizontal container">
 		<div class="row">
 			<fieldset class="form-group">
