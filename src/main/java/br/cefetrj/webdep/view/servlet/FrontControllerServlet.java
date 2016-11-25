@@ -32,6 +32,10 @@ import br.cefetrj.webdep.view.command.DeletaUsuarioCommand;
 import br.cefetrj.webdep.view.command.DeslogaUsuarioCommand;
 import br.cefetrj.webdep.view.command.ListaUsuarioCommand;
 
+import br.cefetrj.webdep.view.command.ValidaBanco;
+import br.cefetrj.webdep.view.command.ValidaConfig;
+import br.cefetrj.webdep.view.command.ValidaEmail;
+
 
 /**
  * Servlet implementation class FrontControllerServlet
@@ -65,6 +69,10 @@ public class FrontControllerServlet extends HttpServlet {
  		commands.put("deleteSistema", new DeleteSistemaCommand());
  		commands.put("insertPadraoURL", new InsertPadraoURLCommand());
  		commands.put("regexPadraoURL", new RegexPadraoURLCommand());
+		
+		commands.put("ValidaEmail", new ValidaEmail());
+        	commands.put("ValidaBanco", new ValidaBanco());
+        	commands.put("ValidaConfig", new ValidaConfig());
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
