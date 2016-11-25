@@ -56,7 +56,7 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("listaUsuario", new ListaUsuarioCommand());
 		commands.put("alteraUsuario", new AtualizaUsuarioCommand());
 		commands.put("deletaUsuario", new DeletaUsuarioCommand());
-		commands.put("listarPemissaoUsuario", new ListaPermissaoUsuarioCommand());
+		commands.put("listarPemissaoUsuario", new ListarPermissaoUsuarioCommand());
 		
 		commands.put("insertVersion", new InsertVersionCommand());
  		commands.put("searchVersion", new SearchVersionCommand());
