@@ -18,7 +18,7 @@
   	</head>
 	<body>
 		<!-- PARA TESTAR A PÁGINA SAIR NA FINALIZAÇÃO  -->
-		<c:set var="id" scope="session" value="1" />
+		<c:set var="id" scope="session" value="2" />
 	
 	  <%@include file="navbar.jspf"%>
 		
