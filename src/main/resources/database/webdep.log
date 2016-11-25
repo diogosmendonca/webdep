@@ -1,0 +1,79 @@
+/*C4*/SET SCHEMA PUBLIC
+create table FormatoLog (id bigint not null, nome varchar(50) not null, primary key (id))
+create table PadraoURL (id bigint not null, expressaoRegular varchar(255) not null, nome varchar(50) not null, usuario_id bigint, primary key (id))
+create table Permissao (id bigint not null, sistema_id bigint, usuario_id bigint, primary key (id))
+create table RegistroLogAcesso (id bigint not null, agente varchar(1024) not null, bytes integer not null, codigo integer not null, ip varchar(50) not null, origem varchar(4096) not null, timestamp timestamp not null, url varchar(4096) not null, usuario varbinary(100) not null, sistema_id bigint, primary key (id))
+create table RegistroLogErro (id bigint not null, ip varchar(50) not null, mensagem varchar(1024) not null, nivel varchar(50) not null, timestamp timestamp not null, sistema_id bigint, primary key (id))
+create table Servidor (id bigint not null, nome varchar(100) not null, formatoLog_id bigint, primary key (id))
+create table Sistema (id bigint not null, nome varchar(100) not null, pastaLogAcesso varchar(255) not null, pastaLogErro varchar(255) not null, periodicidadeLeitura bigint not null, prefixoLogAcesso varchar(100) not null, prefixoLogErro varchar(100) not null, primeiraLeitura timestamp not null, servidor_id bigint, primary key (id))
+create table Usuario (id bigint not null, admGeral boolean not null, email varchar(100) not null, login varchar(50) not null, nome varchar(100) not null, perfil varchar(50) not null, senha varchar(128) not null, primary key (id))
+create table Versao (id bigint not null, nome varchar(100) not null, timestampLiberacao timestamp not null, sistema_id bigint, primary key (id))
+create sequence hibernate_sequence start with 1 increment by 1
+alter table PadraoURL add constraint FKemqil8qrhx0p3u7tg79svogp foreign key (usuario_id) references Usuario
+alter table Permissao add constraint FKjjmjn1dqo9gqhoqbws0t5mya foreign key (sistema_id) references Sistema
+alter table Permissao add constraint FKcndaad0gk3ktufn3y5n9053b7 foreign key (usuario_id) references Usuario
+alter table RegistroLogAcesso add constraint FKj4xujkuk8e2vylsukusasf00k foreign key (sistema_id) references Sistema
+alter table RegistroLogErro add constraint FKhlrddwlwqyeleucqfov8u8g2l foreign key (sistema_id) references Sistema
+alter table Servidor add constraint FKbv5v64r281tavaitjhvvg927e foreign key (formatoLog_id) references FormatoLog
+alter table Sistema add constraint FK9hvx8raxxqmeeano3dt3umoi7 foreign key (servidor_id) references Servidor
+alter table Versao add constraint FKpaqehmhob2dbnnep23l7khudi foreign key (sistema_id) references Sistema
+/*C5*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/SET SCHEMA PUBLIC
+INSERT INTO USUARIO VALUES(1,TRUE,'teste@teste.com','admin','Admin','Admin','c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec')
+COMMIT
+/*C4*/DISCONNECT
+/*C7*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/INSERT INTO FORMATOLOG VALUES(1,'Common')
+COMMIT
+INSERT INTO FORMATOLOG VALUES(2,'Combined')
+COMMIT
+INSERT INTO SERVIDOR VALUES(1,'Apache Httpd',1)
+COMMIT
+/*C8*/SET SCHEMA PUBLIC
+INSERT INTO SISTEMA VALUES(1,'Sistema 1','/home/diogo/','/home/diogo',10800000,'log_acesso','log_erro','2016-11-25 23:50:00.000000',1)
+COMMIT
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+INSERT INTO SISTEMA VALUES(2,'Sistema 1','/home/diogo/','/home/diogo',10800000,'log_acesso','log_erro','2016-11-25 23:50:00.000000',1)
+COMMIT
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+INSERT INTO SISTEMA VALUES(3,'Sistema 1','/home/diogo/','/home/diogo',10800000,'log_acesso','log_erro','2016-11-25 23:50:00.000000',1)
+COMMIT
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+/*C6*/DELETE FROM SISTEMA WHERE ID=2
+INSERT INTO SISTEMA VALUES(2,'Sistema 2','/home/diogo/','/home/diogo',10800000,'log_acesso','log_erro','2016-11-25 23:50:00.000000',1)
+COMMIT
+DELETE FROM SISTEMA WHERE ID=3
+INSERT INTO SISTEMA VALUES(3,'Sistema 3','/home/diogo/','/home/diogo',10800000,'log_acesso','log_erro','2016-11-25 23:50:00.000000',1)
+COMMIT
+DISCONNECT
+/*C8*/DISCONNECT
+/*C10*/SET SCHEMA PUBLIC
+INSERT INTO USUARIO VALUES(4,FALSE,'admin@admin.com','admin1','admin1','Admin','58b5444cf1b6253a4317fe12daff411a78bda0a95279b1d5768ebf5ca60829e78da944e8a9160a0b6d428cb213e813525a72650dac67b88879394ff624da482f')
+COMMIT
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+INSERT INTO USUARIO VALUES(5,FALSE,'analista@admin.com','analista','analista','Analyst','659b83afdc290b9e794af4fb2bec4ebb416ebeecc6efd3f0d957e1f1923e5b088e97bfa41e2385c77d24da9e7f0fd0ca716213052154f7bbc58ecaef45e55843')
+COMMIT
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+DELETE FROM USUARIO WHERE ID=5
+COMMIT
+INSERT INTO VERSAO VALUES(6,'Vers\u00c3\u00a3o','2016-11-25 20:45:00.000000',NULL)
+COMMIT
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+DISCONNECT
+/*C11*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C9*/SET SCHEMA PUBLIC
+INSERT INTO REGISTROLOGACESSO VALUES(1,'1',1,200,'200.000.000.1','a','2013-10-10 10:00:01.000000','localhost','dacd',1)
+COMMIT
+DISCONNECT
+/*C12*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C15*/SET SCHEMA PUBLIC
+INSERT INTO PADRAOURL VALUES(8,'sadsad','asdsadas',1)
+COMMIT
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+DISCONNECT
+/*C14*/SET SCHEMA PUBLIC
+DISCONNECT

@@ -1,7 +1,9 @@
 <%@ page import="br.cefetrj.webdep.services.SistemaServices" %>
 <%@ page import="br.cefetrj.webdep.services.ServidorServices" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="lang" scope="session" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}"/>
 <fmt:setLocale value="${ lang }"/>
 <fmt:setBundle basename="Messages" />
@@ -13,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 </head>
 <body>
-
+<%@include file="navbar.jspf"%>
 <div class="col-lg-8">
     <div class="panel-body">
         <form action="FrontControllerServlet" class="form-horizontal" >
@@ -92,5 +94,6 @@
         <fmt:message key="br.cefetrj.psw.importaLog.sucesso" />
     </c:if>
 </div>
+<jsp:include page="scripts.jspf"/>
 </body>
 </html>

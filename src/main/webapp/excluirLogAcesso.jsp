@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="lang" scope="session" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}"/>
 <fmt:setLocale value="${ lang }"/>
 <fmt:setBundle basename="Messages" />
@@ -10,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 </head>
 <body>
+<%@include file="navbar.jspf"%>
 <div class="col-lg-8">
     <form action="FrontControllerServlet">
         <fieldset class="form-group">
@@ -76,5 +78,6 @@
         <input type="submit" class="btn btn-primary btn-sm" value="Voltar" onclick="history.back();">
     </form>
 </div>
+<jsp:include page="scripts.jspf"/>
 </body>
 </html>

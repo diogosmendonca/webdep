@@ -16,7 +16,7 @@
 
 
 <body>
-
+	<%@include file="navbar.jspf"%>
 	<div class="col-lg-8">
 	<p><font size="10"><fmt:message key="br.cefetrj.webdep.config.head.titulo"/></font></p>
 	</div>
@@ -332,5 +332,6 @@
 	}
 
 </script>
+<jsp:include page="scripts.jspf"/>
 </body>
 </html>

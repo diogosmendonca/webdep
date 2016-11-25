@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
 
 <!-- Testando se o usuario esta vazio para joga-lo na sessao atravez do id passado no login  -->
@@ -40,33 +39,33 @@ links barra menu -->
 			<ul class="nav navbar-nav">
 				<!-- Testar perfil do usuário -->
 				<c:if
-					test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
+					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' }">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> WebDep <span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href="./cadastraUsuario.jsp"><fmt:message
+							<li><a href="FrontControllerServlet?action=cadastraUsuario&get=true"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.webdep.cadastrarusuario" /></a></li>
-							<li><a href="./alteraUsuario.jsp"><fmt:message
+							<li><a href="FrontControllerServlet?action=listaUsuario&get=true"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.webdep.listaralterarexcluir" /></a></li>
-							<li><a href="./configuracoes"><fmt:message
+							<li><a href="./config.jsp"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.webdep.configuracoes" /></a></li>
 						</ul></li>
 				</c:if>
 				<!-- END WEBDEP -->
 				<!-- Testar perfil do usuário -->
 				<c:if
-					test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
+					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' }">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> <fmt:message
 								key="br.cefetrj.webdep.jsp.navbar.sistemas" /><span
 							class="caret"></span>
 							<ul class="dropdown-menu">
-								<li><a href="./cadastrodesistema.jsp"><fmt:message
+								<li><a href="cadastrodesistema.jsp"><fmt:message
 											key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarsistema" /></a></li>
-								<li><a href="./gerenciadorsistema.jsp"><fmt:message
+								<li><a href="gerenciadorsistema.jsp"><fmt:message
 											key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluir" /></a></li>
 								<li><a href="./versionRegistration.jsp"><fmt:message
 											key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarnovaversao" /></a></li>
@@ -78,30 +77,30 @@ links barra menu -->
 				<!-- END SISTEMAS -->
 				<!-- Testar perfil do usuário -->
 				<c:if
-					test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
+					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' }">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false" /> Logs<span class="caret"></span>
 						<ul class="dropdown-menu">
-							<li><a href="./importarLogs.jsp"><fmt:message
+							<li><a href="./importarLog.jsp"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.logs.importarlogs" /></a></li>
-							<li><a href="./consultarExcluirRegistrosdeAcesso.jsp"><fmt:message
+							<li><a href="./excluirLogAcesso.jsp"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.logs.consultarexcluirregistrosdeacesso" /></a></li>
-							<li><a href="./consultarExcluirRegistrosdeErro.jsp"><fmt:message
+							<li><a href="./excluirLogErro.jsp"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.logs.consultarexcluirregistrosdeerro" /></a></li>
 
 						</ul></li>
 				</c:if>
 				<!-- END LOGS -->
 				<c:if
-					test="${usuario.admGeral==true || usuario.perfil=='Administrador' || usuario.perfil=='Analista'}">
+					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' || sessionScope.usuario.perfil=='Analista'}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> <fmt:message
 								key="br.cefetrj.webdep.jsp.navbar.relatorios" /><span
 							class="caret"></span>
 							<ul class="dropdown-menu">
-								<li><a href="./relatorioPerfilAcesso"><fmt:message
+								<li><a href="./accessProfileReport.jsp"><fmt:message
 											key="br.cefetrj.webdep.jsp.navbar.relatorios.perfildeacesso" /></a></li>
 								<li><a href="./HTTPreport.jsp"><fmt:message
 											key="br.cefetrj.webdep.jsp.navbar.relatorios.confiabilidadeurls" /></a></li>
@@ -115,8 +114,7 @@ links barra menu -->
 						<div class="form-group">
 
 							<!-- Tag do select customizada -->
-
-<%-- 							<cmp:ComboSistema userId="${ id }" classCss="form-control" /> --%>
+ 							<cmp:ComboSistema userId="${ id }" classCss="form-control" />
 							
 							
 							<!-- Script para submissão do select -->
@@ -156,14 +154,14 @@ links barra menu -->
 							}
 							</script>
 
-
+<!-- 
 						<select name="sistema" class="form-control" 
 								id="versionlist">
 								<c:forEach items="${listasistema}" var="sistema">
 									<option value="${ sistema.id }" onclick="pegarID();" <c:if test="${ sistema.id == param.idsistema}" >  selected </c:if > > ${ sistema.nome }</option>
 								</c:forEach>
 							</select> 
-							
+							 -->
 		<!-- <%-- 						<select name="sistema" class="form-control" 
 								id="versionlist">
 								<c:forEach items="${listasistema}" var="sistema">

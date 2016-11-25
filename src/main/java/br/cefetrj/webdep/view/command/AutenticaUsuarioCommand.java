@@ -54,6 +54,8 @@ public class AutenticaUsuarioCommand implements Command {
 			//request.getSession().setAttribute("id", id);
 			
 			request.getSession().setAttribute("id", id);
+			login.setSenha(null);
+			request.getSession().setAttribute("usuario", login);
 			//request.setAttribute("usuario.nome", login.getNome());
             response.sendRedirect(request.getContextPath() + "/home.jsp"); 
             //response.sendRedirect("home.jsp");
