@@ -2,7 +2,7 @@ package br.cefetrj.webdep.teste;
 
 import br.cefetrj.webdep.model.entity.Permissao;
 import br.cefetrj.webdep.model.entity.Usuario;
-import br.cefetrj.webdep.services.UsuarioService;
+import br.cefetrj.webdep.services.UsuarioServices;
 
 //Class de teste para chegar a nivel do servico
 
@@ -14,7 +14,7 @@ public class TesteUsuario {
 		
 		u.setId(1L);
 
-		Usuario uSaida = UsuarioService.getUsuario(u);
+		Usuario uSaida = UsuarioServices.getUsuario(u);
 		
 		System.out.println(uSaida.getNome());
 		

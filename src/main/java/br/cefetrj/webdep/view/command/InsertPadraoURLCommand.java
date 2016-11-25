@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import br.cefetrj.webdep.model.entity.PadraoURL;
 import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.services.PadraoURLServices;
-import br.cefetrj.webdep.services.UsuarioService;
+import br.cefetrj.webdep.services.UsuarioServices;
 
 public class InsertPadraoURLCommand implements Command{
 
@@ -27,7 +27,7 @@ public class InsertPadraoURLCommand implements Command{
         if (session != null) {
         	usuario_id = (Long)session.getAttribute("id");
         	u.setId(usuario_id);
-        	usuarioLogado = UsuarioService.getUsuario(u);
+        	usuarioLogado = UsuarioServices.getUsuario(u);
         }
         //retrieving URL Pattern form fields
         String nome = request.getParameter("nome");

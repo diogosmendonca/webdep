@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.services.RegistroLogAcessoService;
-import br.cefetrj.webdep.services.UsuarioService;
+import br.cefetrj.webdep.services.UsuarioServices;
 
 public class RegexPadraoURLCommand implements Command{
 
@@ -32,7 +32,7 @@ public class RegexPadraoURLCommand implements Command{
         if (session != null) {
         	usuario_id = (Long)session.getAttribute("id");
         	u.setId(usuario_id);
-        	usuarioLogado = UsuarioService.getUsuario(u);
+        	usuarioLogado = UsuarioServices.getUsuario(u);
         }
         
         try{
