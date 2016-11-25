@@ -65,7 +65,7 @@ public class DeletaUsuarioCommand implements Command {
 			
 			if(usu != null){
 				usuSe.remover(usu);
-				request.getRequestDispatcher("ListaUsuarioCommand").forward(request, response);	
+				request.getRequestDispatcher("FrontControllerServlet?action=listaUsuario&get=true").forward(request, response);	
 			}else{
 				request.setAttribute("AlterErroUsu", true);
 				request.getRequestDispatcher("alteraUsuario.jsp").forward(request, response);
