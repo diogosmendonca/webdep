@@ -24,7 +24,6 @@ public class AutenticaUsuarioCommand implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		boolean autenticado = false;
-		String msg ="Login ou senha incorretos.<br/>";
 		//Login e senha inseridos no index.jsp
 		String loginUsuario = request.getParameter("login");
 		String senhaUsuario = request.getParameter("senha");
@@ -33,10 +32,12 @@ public class AutenticaUsuarioCommand implements Command {
 		//Login e senha existentes no banco de dados
 		Usuario login = null;
 		String senha = null;
+		Long id = null;
 		
 		try {
 			login = UsuarioServices.validarLogin(loginUsuario);
 			senha = login != null? login.getSenha(): null;
+			id = login != null? login.getId(): null;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,10 +48,20 @@ public class AutenticaUsuarioCommand implements Command {
 		} else autenticado = false;
 
 		if(autenticado) {
-            response.sendRedirect("home.jsp");
+			//HttpSession session = request.getSession(true);
+			//session.setAttribute("id", id);        
+			//String nme=(String) session.getAttribute("id");
+			//request.getSession().setAttribute("id", id);
+			
+			request.getSession().setAttribute("id", id);
+			//request.setAttribute("usuario.nome", login.getNome());
+            response.sendRedirect(request.getContextPath() + "/home.jsp"); 
+            //response.sendRedirect("home.jsp");
+            return;
 		} else {
+			String msg ="Login ou senha incorretos!";
 			request.setAttribute("msg", msg);
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}	
 	}
 	
