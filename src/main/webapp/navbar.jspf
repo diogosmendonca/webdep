@@ -1,7 +1,7 @@
 
 <%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
 
-
+<!-- Testando se o usuario esta vazio para joga-lo na sessao atravez do id passado no login  -->
 <c:if test="${empty usuario }">
 
 	<c:choose>
@@ -21,6 +21,12 @@
 	</c:choose>
 </c:if>
 
+<!-- Jogando na sessao o id do sistema marcado combobox -->
+<c:if test="${!empty param.idsistema }">
+
+	<c:set var="idsistema" scope="session" value="${param.idsistema}" />
+
+</c:if>
 
 <!-- 
 links barra menu -->
