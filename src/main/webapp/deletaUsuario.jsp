@@ -1,94 +1,36 @@
-package br.cefetrj.webdep.view.command;
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+<c:set var="lang" scope="session" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}"/>
+<fmt:setLocale value="${ lang }"/>
+<fmt:setBundle basename="Messages" />
 
-import br.cefetrj.webdep.model.entity.Usuario;
-import br.cefetrj.webdep.services.UsuarioServices;
-
-/**
- * Classe responsavel por remover usuarios do sistema.
- * 
- * @author Lawrence Fernandes
- * @author Iury
- * @author Leonardo
- * @version 0.1
- * @since   22-11-2016 
- */
-
-public class DeletaUsuarioCommand implements Command {
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Long id = null;
-		if(request.getParameter("id") != null){
-			try{
-				id = Long.valueOf(request.getParameter("id"));
-			}catch (Exception e) {
-				e.printStackTrace();
-			}			
-		}
-		
-		if(id != null){
-			UsuarioServices usuSe = new UsuarioServices();
-			 
-			Usuario usu =usuSe.obterPorId(id);			
-			if(usu != null){
-				request.setAttribute("usuario", usu);
-				request.getRequestDispatcher("deletaUsuario.jsp").forward(request, response);	
-			}else{
-				request.setAttribute("AlterErroUsu", true);
-				request.getRequestDispatcher("alteraUsuario.jsp").forward(request, response);
-			}
-			
-		}else{
-			request.setAttribute("AlterErroUsu", true);
-			request.getRequestDispatcher("alteraUsuario.jsp").forward(request, response);	
-		}
-	}
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Long id = null;
-		if(request.getParameter("id") != null){
-			try{
-				id = Long.valueOf(request.getParameter("id"));
-			}catch (Exception e) {
-				e.printStackTrace();
-			}			
-		}
-		
-		if(id != null){
-			Usuario usu = null;
-
-			UsuarioServices usuSe = new UsuarioServices();
-			usu =usuSe.obterPorId(id);	
-			
-			if(usu != null){
-				usuSe.remover(usu);
-				request.getRequestDispatcher("listaUsuario.jsp").forward(request, response);	
-			}else{
-				request.setAttribute("AlterErroUsu", true);
-				request.getRequestDispatcher("alteraUsuario.jsp").forward(request, response);
-			}
-			
-		}else{
-			request.setAttribute("AlterErroUsu", true);
-			request.getRequestDispatcher("alteraUsuario.jsp").forward(request, response);	
-		}
-	}
-	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final Boolean get;
-		if(request.getParameter("get") != null){
-			get = Boolean.valueOf(request.getParameter("get"));
-		}else{
-			get = false;
-		}
-		
-		if(get == null || get == true){
-			doGet(request, response);
-		}else{
-			doPost(request, response);
-		}	
-	}
-}
+<!DOCTYPE html>
+<html>
+<head>
+	<jsp:include page="head.jspf"/>
+	<title><fmt:message key="br.cefetrj.psw.user.label.deletehead"/></title>
+</head>
+<body>
+    <%@include file="navbar.jspf"%>
+	<div style="padding: 5%">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><fmt:message key="br.cefetrj.psw.user.label.deletehead" /></div>
+		  <div class="panel-body">
+			<div class="form-group" >
+				<p><fmt:message key="br.cefetrj.psw.user.label.delete"/></p>
+				<form action="FrontControllerServlet" method="POST" >			
+					<input type="hidden" name="action" value="deletaUsuario" />
+					<input type="hidden" name="id" value="${ usuario.id }">
+					<input type="submit" class="btn btn btn-primary" value="<fmt:message key="br.cefetrj.psw.user.bt_delete_sim"/>">
+					<a href="FrontControllerServlet?action=listaUsuario&get=true" class="btn btn btn-danger" style="margin-left: 5px;"><fmt:message key="br.cefetrj.psw.user.bt_delete_nao"/></a>
+				</form>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+	<jsp:include page="scripts.jspf"/>
+</body>
+</html>
