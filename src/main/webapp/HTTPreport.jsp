@@ -33,9 +33,13 @@
 </head>
 <body class="container-full">
 	<%@include file="navbar.jspf"%>
+	
+	<form id="hidden_form" action="FrontControllerServlet" method="POST">
+		<input type="hidden" name="getListsParameter" value="getListsParameter"
+			id="hidden-form" onLoad="document.getElementById('hidden_form').submit()"/>
+	</form>
 
 	<!-- Campo de Filtros -->
-
 
 	<form class="form-horizontal" action="FrontControllerServlet"
 		method="POST">
@@ -64,9 +68,9 @@
 					<div class="col-xs-2">
 						<select name="errorList" class="selectpicker" multiple title=""
 							id="errorList">
-							<option>500</option>
-							<option>400</option>
-							<option>404</option>
+							<c:forEach items="${ errorList }" var="error">
+								<option value="${ error.id }">${ error.codigo }</option>
+							</c:forEach>
 						</select>
 
 					</div>
@@ -78,9 +82,9 @@
 					<div class="col-xs-2">
 						<select name="versionList" class="selectpicker" multiple title=""
 							id="versionlist">
-							<option>1.7.1</option>
-							<option>1.7.2</option>
-							<option>1.8.0</option>
+							<c:forEach items="${ versionList }" var="version">
+								<option value="${ version.id }">${ version.nome }</option>
+							</c:forEach>
 						</select>
 					</div>
 
@@ -89,8 +93,9 @@
 					<div class="col-xs-2">
 						<select name="okList" class="selectpicker" multiple title=""
 							id="oklist">
-							<option>300</option>
-							<option>200</option>
+							<c:forEach items="${ okList }" var="ok">
+								<option value="${ ok.id }">${ ok.codigo }</option>
+							</c:forEach>
 						</select>
 						<div>
 							<button name="action" value="errorParameter" type="submit"

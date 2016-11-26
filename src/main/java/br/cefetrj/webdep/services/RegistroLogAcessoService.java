@@ -50,5 +50,22 @@ public class RegistroLogAcessoService {
 
 		pm.commitTransaction();
 	}
+
+	public static List<RegistroLogAcesso> listAllRegisters() {
+		List<RegistroLogAcesso> reg = null;
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+
+			GenericDAO<RegistroLogAcesso> permissaoDAO = pManager.createGenericDAO(RegistroLogAcesso.class);
+			reg = permissaoDAO.listAll();
+
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+
+		return reg;
+	}
 	
 }
