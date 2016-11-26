@@ -20,7 +20,10 @@ $(document).ready(function () {
             	$("#ptLogs").val(response.sistema.ptLogs);
             	$("#pxLogs").val(response.sistema.pxLogs);
             	$("#ptLogs2").val(response.sistema.ptLogs2);
-            	$("#pxLogs2").val(response.sistema.pxLogs);
+            	$("#pxLogs2").val(response.sistema.pxLogs2);
+            	$("#data").val(response.sistema.data);
+            	$("#time").val(response.sistema.time);
+            	$("#novaData").val(response.sistema.novaData);
             }
 		});
 	}
@@ -197,6 +200,7 @@ $(document).ready(function () {
 	            url: "FrontControllerServlet",
 	            data: sistemaForm, //action fica no jsp porque o form está sendo serializado(o action está dentro de sistemaForm)
 	            success: function (response) {
+	            	alert(response.mensagem);
 	                if (response.hasOwnProperty("mensagem")) {
 	                    var mensagem = response.mensagem;
 	                    alert(mensagem);
