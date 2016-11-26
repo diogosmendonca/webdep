@@ -12,6 +12,12 @@ import br.cefetrj.webdep.model.entity.Versao;
 import br.cefetrj.webdep.services.VersionServices;
 
 public class SearchVersionCommand implements Command{
+	
+	/*
+	 * Adicionar validação quando não for digitado nada e adicionar
+	 * mensagem quando a busca não houver resultados
+	 * 
+	 */
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
