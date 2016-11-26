@@ -86,6 +86,7 @@ public class ValidaBanco implements Command	{
 			req.getRequestDispatcher("config.jsp").forward(req, resp);
 		}else{
 			ConfigurationDAO config = new ConfigurationDAO();
+			
 			boolean validouBanco = true;			
 			if(bd.equals("HSQL")){
 				validouBanco = config.changeDatabaseConfig("C:/Users/Gabriel/git/webdep/src/main/resources/META-INF/persistence.xml", DatabaseType.HSQL, url, user, password);
@@ -95,7 +96,18 @@ public class ValidaBanco implements Command	{
 				validouBanco = config.changeDatabaseConfig("C:/Users/Gabriel/git/webdep/src/main/resources/META-INF/persistence.xml", DatabaseType.Postgres, url, user, password);
 			}
 			
-						
+			ConfiguracaoSistema adm = new ConfiguracaoSistema();
+			String senhaAdmin = req.getParameter("senhaAdmin");
+			String usuarioAdmin = req.getParameter("usuarioAdmin");
+			adm.setBanco(bd);
+			adm.setSenhaBanco(password);
+			adm.setSenhaEmail(senhaAdmin);
+			adm.setUrlBanco(url);
+			adm.setUsuarioBanco(user);
+			adm.setUsuarioEmail(usuarioAdmin);
+			config.store(adm, "C:/Users/Gabriel/git/webdep/src/main/resources/database/config.properties");
+			
+			
 			
 			req.setAttribute("bdValido", bdValido);
 			req.setAttribute("urlValida", urlValida);
