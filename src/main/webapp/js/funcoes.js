@@ -1,9 +1,28 @@
 $(document).ready(function () {
-	if (window.location.href.indexOf("cadastrodesistema.jsp?u")){
+	if (window.location.href.indexOf("cadastrodesistema.jsp?u=") > -1){
 		$("#update").val("update");
-		var url = window.location;
-		//alert(url)
-		//$("id-sistema-update").val(id);
+		var url = window.location.href;
+		var id = url.substring(url.length -1, url.length)
+		$("#id-sistema-update").val(id);
+		$("#action").val("updateSistema");
+		$.ajax({
+            type: "POST",
+            url: "FrontControllerServlet",
+            data: {
+                action: "fillSistema",
+                filtro: id
+            },
+            success: function (response) {
+            	console.log(response.sistema)
+            	$("#nome").val(response.sistema.nome);
+            	$("#servidor option").val(response.sistema.servidor);
+            	$("#formatoLog option").val(response.sistema.formatolog);
+            	$("#ptLogs").val(response.sistema.ptLogs);
+            	$("#pxLogs").val(response.sistema.pxLogs);
+            	$("#ptLogs2").val(response.sistema.ptLogs2);
+            	$("#pxLogs2").val(response.sistema.pxLogs);
+            }
+		});
 	}
 	
 	/*LISTAGEM DE SISTEMA*/
