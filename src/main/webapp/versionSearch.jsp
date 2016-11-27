@@ -157,7 +157,7 @@
         </div>
         <div class="modal-footer">
 	        <form class="form-horizontal" method="post" action="FrontControllerServlet">
-	          <input type="hidden" id="index" name="index">
+	          <input type="hidden" id="index2" name="index">
 	          <button id="submit-padrao-url" name="action" value="deleteVersion" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" /></button>
 	          <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
 	        </form>
@@ -170,6 +170,7 @@
   <script type="text/javascript">
   function getIndex(index){
 	  document.getElementById("index").value = index;
+	  document.getElementById("index2").value = index;
   }
   </script>
   <script type="text/javascript" src="jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>

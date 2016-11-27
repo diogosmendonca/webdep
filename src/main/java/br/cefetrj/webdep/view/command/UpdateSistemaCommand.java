@@ -23,7 +23,8 @@ public class UpdateSistemaCommand implements Command{
 			PrintWriter pw = response.getWriter();
 			
 			Sistema s = new Sistema();
-			String id = request.getParameter("id");
+			String id = request.getParameter("id-sistema-update");
+			s = SistemaServices.searchSistema(id).get(0);
 			String nome = request.getParameter("nome");
 			String server = request.getParameter("servidor");
 			String ptLogs = request.getParameter("ptLogs");
@@ -31,15 +32,13 @@ public class UpdateSistemaCommand implements Command{
 			String ptLogs2 = request.getParameter("ptLogs2");
 			String pxLogs2 = request.getParameter("pxLogs2");
 			String nova = request.getParameter("novaData");
-			LocalDate ld = LocalDate.parse(request.getParameter("date"));
+			LocalDate ld = LocalDate.parse(request.getParameter("data"));
 			LocalTime lt = LocalTime.parse(request.getParameter("time"));
 			LocalDateTime l = LocalDateTime.of(ld, lt);
 			String mensagem = "";
 		try{	
-			s.setId(Long.parseLong(id));
 			s.setNome(nome);
 			s.setServidor(ServidorServices.searchServidor(server).get(0));
-			//s.setPermissoes(permissoes);
 			s.setPastaLogAcesso(ptLogs);
 			s.setPrefixoLogAcesso(pxLogs);
 			s.setPrefixoLogErro(pxLogs2);

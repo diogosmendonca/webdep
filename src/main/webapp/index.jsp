@@ -30,30 +30,30 @@
                 <div class="container " style="margin-top: 10%; margin-bottom: 10%;">
                 	<div class="panel panel-default" style="max-width: 35%;" align="left">
                         <div class="panel-heading form-group">
-                            <b><font color="black" style= "font-family: Times; font-size: 18px">Autenticação</font> </b>
+                            <b><font color="black" style= "font-family: Times; font-size: 18px"><fmt:message key="br.cefetrj.webdep.jsp.index.nomeformulario" /></font></b>
                         </div>
-                    
                         <div class="panel-body" >
-
+                        <p style="color:red">${msg}</p>
                         <form class="form-horizontal" action="FrontControllerServlet" method="post" >
                             <div class="form-group">
-    							<label class="control-label col-sm-2" for="login">Login</label>
+    							<label class="control-label col-sm-2" for="login"><fmt:message key="br.cefetrj.webdep.jsp.index.login" /></label>
     							<div class="col-sm-10">
       								<input type="text" class="form-control" name="login" id="login" required="required">
     							</div>
   							</div>
   							<div class="form-group">
-    							<label class="control-label col-sm-2" for="senha">Senha</label>
+    							<label class="control-label col-sm-2" for="senha"><fmt:message key="br.cefetrj.webdep.jsp.index.senha" /></label>
     							<div class="col-sm-10"> 
       								<input type="password" class="form-control" name="senha" id="senha" required="required">
     							</div>
   							</div>
   							
-                            <button type="submit" style="width: 50%; font-size:1.1em;" class="btn btn-default" name="action" value ="autenticaUsuario" ><b>Entrar</b></button>
+                            <button type="submit" style="width: 50%; font-size:1.1em;" class="btn btn-primary" name="action" value ="autenticaUsuario" >
+                            <b><fmt:message key="br.cefetrj.webdep.jsp.index.entrar" /></b></button>
 							
 							<div class="container">
 								<br/>
-      							<span class="psw"><a href="#">Esqueci minha senha</a></span>
+      							<span class="psw"><a href="#"><fmt:message key="br.cefetrj.webdep.jsp.index.esqueci" /></a></span>
     						</div>
                         </form>
                         </div>

@@ -16,6 +16,10 @@ public class InsertVersionCommand implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		/*
+		 * Validação dos campos e inserção da combo de sistemas do professor
+		 * */
 		Versao v = new Versao();
 		LocalDate ld = LocalDate.parse(request.getParameter("date"));
 		LocalTime lt = LocalTime.parse(request.getParameter("time"));
@@ -26,7 +30,7 @@ public class InsertVersionCommand implements Command{
 		v.setTimestampLiberacao(l);
 		VersionServices.insertVersion(v);
 		
-		
+		request.getRequestDispatcher("versionRegistration.jsp").forward(request, response);
 	}
 
 }

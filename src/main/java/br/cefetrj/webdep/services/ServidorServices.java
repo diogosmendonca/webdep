@@ -31,8 +31,8 @@ public class ServidorServices {
 	public static List<Servidor> searchServidor(String s) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 		try {
-			Query q = pm.createQuery("FROM Servidor WHERE nome LIKE :param ");
-			
+			Query q = pm.createQuery("FROM Servidor WHERE nome LIKE :param "
+			+ " OR id LIKE :param ");
 			q.setParameter("param", "%"+s+"%");
 
 			return q.getResultList();

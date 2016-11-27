@@ -1,9 +1,31 @@
 $(document).ready(function () {
-	if (window.location.href.indexOf("cadastrodesistema.jsp?u")){
+	if (window.location.href.indexOf("cadastrodesistema.jsp?u=") > -1){
 		$("#update").val("update");
-		var url = window.location;
-		//alert(url)
-		//$("id-sistema-update").val(id);
+		var url = window.location.href;
+		var id = url.substring(url.length -1, url.length)
+		$("#id-sistema-update").val(id);
+		$("#action").val("updateSistema");
+		$.ajax({
+            type: "POST",
+            url: "FrontControllerServlet",
+            data: {
+                action: "fillSistema",
+                filtro: id
+            },
+            success: function (response) {
+            	console.log(response.sistema)
+            	$("#nome").val(response.sistema.nome);
+            	$("#servidor option").val(response.sistema.servidor);
+            	$("#formatoLog option").val(response.sistema.formatolog);
+            	$("#ptLogs").val(response.sistema.ptLogs);
+            	$("#pxLogs").val(response.sistema.pxLogs);
+            	$("#ptLogs2").val(response.sistema.ptLogs2);
+            	$("#pxLogs2").val(response.sistema.pxLogs2);
+            	$("#data").val(response.sistema.data);
+            	$("#time").val(response.sistema.time);
+            	$("#novaData").val(response.sistema.novaData);
+            }
+		});
 	}
 	
 	/*LISTAGEM DE SISTEMA*/
@@ -178,6 +200,7 @@ $(document).ready(function () {
 	            url: "FrontControllerServlet",
 	            data: sistemaForm, //action fica no jsp porque o form está sendo serializado(o action está dentro de sistemaForm)
 	            success: function (response) {
+	            	alert(response.mensagem);
 	                if (response.hasOwnProperty("mensagem")) {
 	                    var mensagem = response.mensagem;
 	                    alert(mensagem);
@@ -213,3 +236,20 @@ function excluir(nome){
 	            	  
 	              }
 }
+//Teste acesso
+$("#pxLogs-teste-btn").click(function () {
+	var pxLogs = $("#pxLogs").val();
+	if (pxLogs === "") {
+		$("#div-prefixo-acesso").toggleClass("has-error");
+	} else {
+		alert("Função em construção")
+	}
+});
+$("#pxLogs2-teste-btn").click(function () {
+	var pxLogs2 = $("#pxLogs2").val();
+	if (pxLogs2 === "") {
+		$("#div-prefixo-erro").toggleClass("has-error");
+	} else {
+		alert("Função em construção")
+	}
+});

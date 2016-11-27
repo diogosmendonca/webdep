@@ -22,7 +22,7 @@ public class InsertSistemaCommand implements Command{
 			PrintWriter pw = response.getWriter();
 			Sistema s = new Sistema();
 			String nome = request.getParameter("nome");
-			String server = request.getParameter("selection");
+			String server = request.getParameter("servidor");
 			String ptLogs = request.getParameter("ptLogs");
 			String pxLogs = request.getParameter("pxLogs");
 			String ptLogs2 = request.getParameter("ptLogs2");

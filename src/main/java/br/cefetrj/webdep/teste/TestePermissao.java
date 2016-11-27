@@ -5,7 +5,7 @@ import br.cefetrj.webdep.model.entity.Servidor;
 import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.services.PermissaoService;
-import br.cefetrj.webdep.services.UsuarioService;
+import br.cefetrj.webdep.services.UsuarioServices;
 
 public class TestePermissao {
 

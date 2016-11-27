@@ -62,4 +62,21 @@ public class VersionServices {
 
 		pm.commitTransaction();
 	}
+
+	public static List<Versao> listAllVersions() {
+		List<Versao> versao = null;
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+
+			GenericDAO<Versao> permissaoDAO = pManager.createGenericDAO(Versao.class);
+			versao = permissaoDAO.listAll();
+
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+
+		return versao;
+	}
 }

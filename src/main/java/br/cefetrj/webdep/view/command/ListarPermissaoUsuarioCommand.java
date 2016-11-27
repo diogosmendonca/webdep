@@ -7,20 +7,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.cefetrj.webdep.model.entity.Permissao;
-import br.cefetrj.webdep.services.PermissaoService;
+import br.cefetrj.webdep.model.entity.Sistema;
+import br.cefetrj.webdep.services.SistemaServices;
 
 public class ListarPermissaoUsuarioCommand implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Long id = Long.parseLong(request.getParameter("id"));
-		List<Permissao> permissaoLista= PermissaoService.PermissaoUsuario(id);
+		int id = Integer.parseInt(request.getParameter("id"));
+		List<Sistema> permissaoSistemaLista= SistemaServices.listByPermissaoUsuario(id);
 		
-		request.setAttribute("lista", permissaoLista);
+		request.setAttribute("lista", permissaoSistemaLista);
 		
-		request.getRequestDispatcher("/testehome.jsp").forward(request, response);
+		request.getRequestDispatcher("/home.jsp").forward(request, response);
 		
 	}
 

@@ -12,7 +12,7 @@ public class DeslogaUsuarioCommand implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Invalida sessão e redireciona para login
 		//System.out.println("aqui");
-        //request.getSession().invalidate();
+        request.getSession().invalidate();
         response.sendRedirect("index.jsp");
 	}
  

@@ -24,54 +24,22 @@
 <fmt:setBundle basename="Messages" />
 
 <!DOCTYPE html>
-
-<style>
-/*
-.chart rect {
-  fill: steelblue;
-}
-*/
-.chart .legend {
-	fill: black;
-	font: 14px sans-serif;
-	text-anchor: start;
-	font-size: 12px;
-}
-
-.chart text {
-	fill: white;
-	font: 10px sans-serif;
-	text-anchor: end;
-}
-
-.chart .label {
-	fill: black;
-	font: 14px sans-serif;
-	text-anchor: end;
-}
-
-.bar:hover {
-	fill: brown;
-}
-
-.axis path, .axis line {
-	fill: none;
-	stroke: #000;
-	shape-rendering: crispEdges;
-}
-</style>
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="css/http-report.css">
 <title><fmt:message key="br.cefetrj.webdep.jsp.http.title" /></title>
 <jsp:include page="head.jspf" />
 </head>
 <body class="container-full">
 	<%@include file="navbar.jspf"%>
+	
+	<form id="hidden_form" action="FrontControllerServlet" method="POST">
+		<input type="hidden" name="getListsParameter" value="getListsParameter"
+			id="hidden-form" onLoad="document.getElementById('hidden_form').submit()"/>
+	</form>
 
 	<!-- Campo de Filtros -->
-
 
 	<form class="form-horizontal" action="FrontControllerServlet"
 		method="POST">
@@ -100,9 +68,9 @@
 					<div class="col-xs-2">
 						<select name="errorList" class="selectpicker" multiple title=""
 							id="errorList">
-							<option>500</option>
-							<option>400</option>
-							<option>404</option>
+							<c:forEach items="${ errorList }" var="error">
+								<option value="${ error.id }">${ error.codigo }</option>
+							</c:forEach>
 						</select>
 
 					</div>
@@ -114,9 +82,9 @@
 					<div class="col-xs-2">
 						<select name="versionList" class="selectpicker" multiple title=""
 							id="versionlist">
-							<option>1.7.1</option>
-							<option>1.7.2</option>
-							<option>1.8.0</option>
+							<c:forEach items="${ versionList }" var="version">
+								<option value="${ version.id }">${ version.nome }</option>
+							</c:forEach>
 						</select>
 					</div>
 
@@ -125,8 +93,9 @@
 					<div class="col-xs-2">
 						<select name="okList" class="selectpicker" multiple title=""
 							id="oklist">
-							<option>300</option>
-							<option>200</option>
+							<c:forEach items="${ okList }" var="ok">
+								<option value="${ ok.id }">${ ok.codigo }</option>
+							</c:forEach>
 						</select>
 						<div>
 							<button name="action" value="errorParameter" type="submit"

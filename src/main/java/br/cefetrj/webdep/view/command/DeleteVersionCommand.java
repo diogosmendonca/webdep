@@ -15,6 +15,8 @@ public class DeleteVersionCommand implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		/* Tratamento de exceções
+		*/
 		ArrayList <Versao> l = (ArrayList) request.getSession().getAttribute("list");
 		int index = Integer.parseInt(request.getParameter("index"));
 		
@@ -22,6 +24,7 @@ public class DeleteVersionCommand implements Command {
 		Versao v = l.get(index);
 		VersionServices.deleteVersion(v);
 		
+		request.getRequestDispatcher("versionSearch.jsp").forward(request, response);
 		
 	}
 	
