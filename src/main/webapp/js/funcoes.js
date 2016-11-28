@@ -115,14 +115,15 @@ $(document).ready(function () {
                     regex: regex
                 },
                 success: function (response) {
-                    if (response.hasOwnProperty("url")) {
-                        var urls = response.url;
+                	var resposta = $.parseJSON(response);
+                    if (resposta.hasOwnProperty("url")) {
+                        var urls = resposta.url;
                         urls.forEach(function (el) {
                             $("#table-url").append("<tr><td>" + el + "</td></tr>");
                         });
                         refresh = false;
-                    } else if (response.hasOwnProperty("Erro")) {
-                    	alert(response.Erro);
+                    } else if (resposta.hasOwnProperty("Erro")) {
+                    	alert(resposta.Erro);
                     }
                 }
             });
@@ -248,22 +249,21 @@ function alterar(nome){
 }
 
 function excluir(nome){
-	decisao = confirm("Tem certeza que deseja excluir "+ nome +"?\nTodos os registros de logs serão apagados.");
+	decisao = confirm("Tem certeza que deseja excluir este sistema?\nTodos os registros de logs serão apagados.");
 	              if(decisao){
-	            	  alert("Não disponível");
-	              /*$.ajax({
-	                      type: "POST",
-	                       url: "FrontControllerServlet",
-	                      data: {
-	                      action: "deleteSistema",
-	                      filtro: nome
-	                  },
-	                  success: function (response) {
-	                	  alert("O Sistema \"" + nome + "\" foi excluído com sucesso!" );
-	                  }
-	              });*/
-	              } else {
-	            	  
+	            	  //alert("Não disponível");
+		              $.ajax({
+		                      type: "POST",
+		                       url: "FrontControllerServlet",
+		                      data: {
+		                      action: "deleteSistema",
+		                      filtro: nome
+		                  },
+		                  success: function (response) {
+		                	  var resposta = $.parseJSON(response);
+		                	  alert(resposta.mensagem);
+		                  }
+		              });
 	              }
 }
 //Teste acesso
