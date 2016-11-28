@@ -47,8 +47,7 @@ public class InsertSistemaCommand implements Command{
 		} catch (Exception e) {
 			mensagem = "Erro no cadastro: " + e.getMessage();
 		} finally {
-			String json = "{\"mensagem\": \"" + mensagem + "\"]}";
-			response.setContentType("application/json");
+			String json = "{\"mensagem\": \"" + mensagem + "\"}";
 			pw.write(json);
 		}
 	}

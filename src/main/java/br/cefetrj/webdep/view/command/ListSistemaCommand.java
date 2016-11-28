@@ -26,7 +26,13 @@ public class ListSistemaCommand implements Command{
 		String filtro = request.getParameter("filtro");
 		PrintWriter pw = response.getWriter();
 		String json = "";
-		List<Sistema> sistemasFiltrados = SistemaServices.searchSistema(filtro);
+		List<Sistema> sistemasFiltrados = null;
+		if (filtro.equals("all")){
+			sistemasFiltrados = SistemaServices.listarTodos();
+		} else {
+			sistemasFiltrados = SistemaServices.searchSistema(filtro);
+		}
+		
 		if (sistemasFiltrados.size() > 0) {
 			json = "{\"sistemas\": [";
 			for (Sistema s : sistemasFiltrados) {
