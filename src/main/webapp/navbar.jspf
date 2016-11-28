@@ -27,6 +27,15 @@
 
 </c:if>
 
+<!-- Alerta para expiração de sessão -->
+<script>
+    var secondsBeforeExpire = ${pageContext.session.maxInactiveInterval};
+    var timeToDecide = 15; // Give client 15 seconds to choose.
+    setTimeout(function() {
+    	$("#sessionTimeout").modal("show");
+    }, (secondsBeforeExpire - timeToDecide) * 1000);
+</script>
+
 <!-- 
 links barra menu -->
 <nav class="navbar navbar-default">
@@ -195,6 +204,7 @@ links barra menu -->
 	<!-- /.container-fluid -->
 </nav>
 
+<!-- Logout -->
 <div class="modal fade" id="logoutModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -214,3 +224,24 @@ links barra menu -->
       </div>  
     </div>
 </div>
+
+<!-- Session Timeout -->
+  <div class="modal fade" id="sessionTimeout" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.titulo" /></h4>
+        </div>
+        <div class="modal-body">
+          <p><fmt:message key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.mensagem" /></p>
+        </div>
+        <div class="modal-footer">
+        <form method="post" action="FrontControllerServlet">
+          <button id="submit-padrao-url" name="action" value="deslogaUsuario" type="submit" class="btn btn-defailt"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.sair" /></button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.permanecer" /></button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
