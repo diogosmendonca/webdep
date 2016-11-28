@@ -12,5 +12,9 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 	    <el-ignored>false</el-ignored>
 	  </jsp-property-group>
   </jsp-config>
+	
+  <session-config>
+  	<session-timeout>1</session-timeout>
+  </session-config>
   
 </web-app>
