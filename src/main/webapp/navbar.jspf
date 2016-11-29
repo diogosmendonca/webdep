@@ -27,6 +27,15 @@
 
 </c:if>
 
+<!-- Alerta para expiração de sessão -->
+<script>
+    var secondsBeforeExpire = ${pageContext.session.maxInactiveInterval};
+    var timeToDecide = 15; // Give client 15 seconds to choose.
+    setTimeout(function() {
+    	$("#sessionTimeout").modal("show");
+    }, (secondsBeforeExpire - timeToDecide) * 1000);
+</script>
+
 <!-- 
 links barra menu -->
 <nav class="navbar navbar-default">
@@ -37,7 +46,7 @@ links barra menu -->
 			id="bs-example-navbar-collapse-1">
 
 			<ul class="nav navbar-nav">
-				<!-- Testar perfil do usu�rio -->
+				<!-- Testar perfil do usuário -->
 				<c:if
 					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' }">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -54,7 +63,7 @@ links barra menu -->
 						</ul></li>
 				</c:if>
 				<!-- END WEBDEP -->
-				<!-- Testar perfil do usu�rio -->
+				<!-- Testar perfil do usuário -->
 				<c:if
 					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' }">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -75,7 +84,7 @@ links barra menu -->
 							</ul></li>
 				</c:if>
 				<!-- END SISTEMAS -->
-				<!-- Testar perfil do usu�rio -->
+				<!-- Testar perfil do usuário -->
 				<c:if
 					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' }">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -106,7 +115,7 @@ links barra menu -->
 											key="br.cefetrj.webdep.jsp.navbar.relatorios.confiabilidadeurls" /></a></li>
 							</ul></li>
 				</c:if>
-				<!-- END Relat�rios  -->
+				<!-- END Relatórios  -->
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
@@ -117,7 +126,7 @@ links barra menu -->
  							<cmp:ComboSistema userId="${ id }" classCss="form-control" />
 							
 							
-							<!-- Script para submiss�o do select -->
+							<!-- Script para submissão do select -->
 							<script type="text/javascript">
 							function post(path, params, method) {
 								method = method || "post"; // Set method to post by default if not specified.
@@ -195,33 +204,44 @@ links barra menu -->
 	<!-- /.container-fluid -->
 </nav>
 
+<!-- Logout -->
 <div class="modal fade" id="logoutModal" role="dialog">
-	<div class="modal-dialog modal-sm">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">
-					<fmt:message
-						key="br.cefetrj.webdep.jsp.navbar.idioma.sair.title.confirmacao" />
-				</h4>
-			</div>
-			<div class="modal-body">
-				<p>
-					<fmt:message
-						key="br.cefetrj.webdep.jsp.navbar.idioma.sair.title.confirmacao.?" />
-				</p>
-			</div>
-			<div class="modal-footer">
-				<form method="post" action="FrontControllerServlet">
-					<button id="submit-padrao-url" name="action" value="deslogaUsuario"
-						type="submit" class="btn btn-primary">
-						<fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" />
-					</button>
-					<button type="button" class="btn btn-danger" data-dismiss="modal">
-						<fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" />
-					</button>
-				</form>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.confirmacao" /></h4>
+        </div>
+        <div class="modal-body">
+          <p><fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.confirmasair" /></p>
+        </div>
+        <div class="modal-footer">
+        <form method="post" action="FrontControllerServlet">
+          <button id="submit-padrao-url" name="action" value="deslogaUsuario" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" /></button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
+        </form>
+        </div>
+      </div>  
+    </div>
 </div>
+
+<!-- Session Timeout -->
+  <div class="modal fade" id="sessionTimeout" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.titulo" /></h4>
+        </div>
+        <div class="modal-body">
+          <p><fmt:message key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.mensagem" /></p>
+        </div>
+        <div class="modal-footer">
+        <form method="post" action="FrontControllerServlet">
+          <button id="submit-padrao-url" name="action" value="deslogaUsuario" type="submit" class="btn btn-defailt"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.sair" /></button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.permanecer" /></button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>

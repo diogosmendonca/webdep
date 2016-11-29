@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
+import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.services.RegistroLogAcessoService;
+import br.cefetrj.webdep.services.SistemaServices;
 import br.cefetrj.webdep.services.UsuarioServices;
 
 public class RegexPadraoURLCommand implements Command{
@@ -22,23 +24,18 @@ public class RegexPadraoURLCommand implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String json = "";
-        response.setContentType("application/json");
         PrintWriter pw = response.getWriter();
-        HttpSession session = request.getSession();  
-        Long usuario_id;
-        Usuario u = new Usuario();
-        Usuario usuarioLogado = u;
+        HttpSession session = request.getSession();
+        Usuario usuarioLogado = new Usuario();
+        Long sistema_id = 1L;
         String mensagem;
         if (session != null) {
-        	usuario_id = (Long)session.getAttribute("id");
-        	u.setId(usuario_id);
-        	usuarioLogado = UsuarioServices.getUsuario(u);
+        	usuarioLogado = (Usuario)session.getAttribute("usuario");
         }
-        
         try{
             Pattern p = Pattern.compile(request.getParameter("regex"));
             List<String> URLsRegex = new ArrayList<String>();
-            List<RegistroLogAcesso> registrosLogAcessoPermitidos = RegistroLogAcessoService.searchRegistroLogAcessoByUsuario(usuarioLogado);
+            List<RegistroLogAcesso> registrosLogAcessoPermitidos = RegistroLogAcessoService.listAllRegisters();
             for (RegistroLogAcesso registroLogAcesso: registrosLogAcessoPermitidos){
             	String url = registroLogAcesso.getUrl();
             	Matcher m = p.matcher(url);

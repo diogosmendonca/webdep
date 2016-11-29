@@ -26,6 +26,34 @@ $(document).ready(function () {
             	$("#novaData").val(response.sistema.novaData);
             }
 		});
+	} else if (window.location.href.indexOf("gerenciadorsistema.jsp") > -1) {
+			$.ajax({
+                type: "POST",
+                url: "FrontControllerServlet",
+                data: {
+                    action: "listSistema",
+                    filtro: "all"
+                },
+                success: function (response) {
+                        var sistemas = response.sistemas;
+                		var erro = response.Erro;
+                        if (response.hasOwnProperty("sistemas")){
+                        	$("#table-sistemas").children().remove();
+                        sistemas.forEach(function (el) {
+                        	$("#table-sistemas").append("<tr><td>" 
+                        			+ el.nome + "</td><td>" 
+                        			+ el.servidor + "</td><td>" 
+                        			+ el.formatolog + "</td><td>" 
+                        			+ el.periodicidade + "</td><td>" 
+                        			+ el.proximaleitura + "</td>" +
+                        					"<td><a onclick=alterar(\""+ el.id +"\"); id=\""+ el.id +"-alterar\" class=\"alterar-sistema\">Alterar</a></td>" +
+                        					"<td><a onclick=excluir(\""+ el.id +"\"); id=\""+ el.id +"-excluir\" class=\"excluir-sistema\">Excluir</a></td></tr>");
+                        });
+                        } else if (response.hasOwnProperty("Erro")){
+                        	alert(response.Erro);
+                        }
+                }
+            });
 	}
 	
 	/*LISTAGEM DE SISTEMA*/
@@ -87,14 +115,15 @@ $(document).ready(function () {
                     regex: regex
                 },
                 success: function (response) {
-                    if (response.hasOwnProperty("url")) {
-                        var urls = response.url;
+                	var resposta = $.parseJSON(response);
+                    if (resposta.hasOwnProperty("url")) {
+                        var urls = resposta.url;
                         urls.forEach(function (el) {
                             $("#table-url").append("<tr><td>" + el + "</td></tr>");
                         });
                         refresh = false;
-                    } else if (response.hasOwnProperty("Erro")) {
-                    	alert(response.Erro);
+                    } else if (resposta.hasOwnProperty("Erro")) {
+                    	alert(resposta.Erro);
                     }
                 }
             });
@@ -194,16 +223,18 @@ $(document).ready(function () {
 			$("#div-nova").toggleClass("has-error");
 		}
 		else {
-			console.log(sistemaForm);
 			$.ajax({
 	            type: "POST",
 	            url: "FrontControllerServlet",
 	            data: sistemaForm, //action fica no jsp porque o form está sendo serializado(o action está dentro de sistemaForm)
 	            success: function (response) {
-	            	alert(response.mensagem);
-	                if (response.hasOwnProperty("mensagem")) {
-	                    var mensagem = response.mensagem;
+	            	var resposta = $.parseJSON(response);
+	                if (resposta.hasOwnProperty("mensagem")) {
+	                    var mensagem = resposta.mensagem;
 	                    alert(mensagem);
+	                    if (!confirm("Você deseja cadastrar outro Sistema? \n Sim, para cadastrar outro Sistema \nNão, para ser sair desta página.")){
+	                    	window.location.replace("gerenciadorsistema.jsp");
+	                    }
 	                }
                 }
             });
@@ -218,38 +249,64 @@ function alterar(nome){
 }
 
 function excluir(nome){
-	decisao = confirm("Tem certeza que deseja excluir "+ nome +"?\nTodos os registros de logs serão apagados.");
+	decisao = confirm("Tem certeza que deseja excluir este sistema?\nTodos os registros de logs serão apagados.");
 	              if(decisao){
-	            	  alert("Não disponível");
-	              /*$.ajax({
-	                      type: "POST",
-	                       url: "FrontControllerServlet",
-	                      data: {
-	                      action: "deleteSistema",
-	                      filtro: nome
-	                  },
-	                  success: function (response) {
-	                	  alert("O Sistema \"" + nome + "\" foi excluído com sucesso!" );
-	                  }
-	              });*/
-	              } else {
-	            	  
+	            	  //alert("Não disponível");
+		              $.ajax({
+		                      type: "POST",
+		                       url: "FrontControllerServlet",
+		                      data: {
+		                      action: "deleteSistema",
+		                      filtro: nome
+		                  },
+		                  success: function (response) {
+		                	  var resposta = $.parseJSON(response);
+		                	  alert(resposta.mensagem);
+		                  }
+		              });
 	              }
 }
 //Teste acesso
 $("#pxLogs-teste-btn").click(function () {
 	var pxLogs = $("#pxLogs").val();
-	if (pxLogs === "") {
+	var ptLogs = $("#ptLogs").val();
+	if (pxLogs === "" || ptLogs === "") {
 		$("#div-prefixo-acesso").toggleClass("has-error");
 	} else {
-		alert("Função em construção")
+		$.ajax({
+            type: "POST",
+            url: "FrontControllerServlet",
+            data: {
+            	action: "testAccessLogFolder",
+            	pxLogs: pxLogs,
+            	ptLogs: ptLogs
+        },
+        success: function (response) {
+        	var resposta = $.parseJSON(response);
+      	  	alert(resposta.mensagem);
+        }
+    });
 	}
 });
+
 $("#pxLogs2-teste-btn").click(function () {
 	var pxLogs2 = $("#pxLogs2").val();
-	if (pxLogs2 === "") {
+	var ptLogs2 = $("#ptLogs2").val();
+	if (pxLogs2 === "" || ptLogs2 === "") {
 		$("#div-prefixo-erro").toggleClass("has-error");
 	} else {
-		alert("Função em construção")
+		$.ajax({
+            type: "POST",
+            url: "FrontControllerServlet",
+            data: {
+            action: "testErrorLogFolder",
+            pxLogs2: pxLogs2,
+            ptLogs2: ptLogs2
+        },
+        success: function (response) {
+        	var resposta = $.parseJSON(response);
+      	  	alert(resposta.mensagem);
+        }
+    });
 	}
 });

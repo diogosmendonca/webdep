@@ -36,8 +36,8 @@ public class SistemaServices {
 	}
 	
 	public static void deleteSistema(Sistema s){
+		
 		PersistenceManager pm = PersistenceManager.getInstance();
-
 		pm.beginTransaction();
 
 		GenericDAO<Sistema> dao = pm.createGenericDAO(Sistema.class);

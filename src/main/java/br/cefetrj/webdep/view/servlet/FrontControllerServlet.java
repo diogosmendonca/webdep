@@ -20,6 +20,8 @@ import br.cefetrj.webdep.view.command.InsertVersionCommand;
 import br.cefetrj.webdep.view.command.ListSistemaCommand;
 import br.cefetrj.webdep.view.command.ListarPermissaoUsuarioCommand;
 import br.cefetrj.webdep.view.command.SearchVersionCommand;
+import br.cefetrj.webdep.view.command.TestaLogAcessoCommand;
+import br.cefetrj.webdep.view.command.TestaLogErroCommand;
 import br.cefetrj.webdep.view.command.UpdateSistemaCommand;
 import br.cefetrj.webdep.view.command.ValidaHttpReportCommand;
 import br.cefetrj.webdep.view.command.ObterUsuarioCommand;
@@ -79,6 +81,8 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("listSistema", new ListSistemaCommand());
 		commands.put("deleteSistema", new DeleteSistemaCommand());
 		commands.put("fillSistema", new FillSistemaCommand());
+		commands.put("testAccessLogFolder", new TestaLogAcessoCommand());
+		commands.put("testErrorLogFolder", new TestaLogErroCommand());
 
 		commands.put("insertPadraoURL", new InsertPadraoURLCommand());
 		commands.put("regexPadraoURL", new RegexPadraoURLCommand());

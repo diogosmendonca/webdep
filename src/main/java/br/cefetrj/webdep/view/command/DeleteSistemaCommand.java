@@ -20,24 +20,22 @@ public class DeleteSistemaCommand implements Command{
 		String id = request.getParameter("filtro");
 		Sistema sistemaFiltrado = SistemaServices.searchSistema(id).get(0);
 		PrintWriter pw = response.getWriter();
-		response.setContentType("application/json");
 		String mensagem = "";
 		try {
-			List<RegistroLogAcesso> rLAs = RegistroLogAcessoService.searchRegistroLogAcessoBySistema(sistemaFiltrado);
+			/*List<RegistroLogAcesso> rLAs = RegistroLogAcessoService.searchRegistroLogAcessoBySistema(sistemaFiltrado);
 			if (rLAs.size() > 0){
 				for (RegistroLogAcesso r : rLAs) {
 					RegistroLogAcessoService.deleteRegistroLogAcesso(r);
 				}
-			}
+			}*/
 			SistemaServices.deleteSistema(sistemaFiltrado);
-			
 			mensagem = "Sistema excluído com sucesso";
 		} catch (Exception e) {
-			mensagem = "Erro na exclusão!";
-			e.printStackTrace();
+			mensagem = "Erro na exclusão: " + e.getMessage();
+			
+			
 		} finally {
-			String json = "{\"mensagem\": \"" + mensagem + "\"]}";
-			response.setContentType("application/json");
+			String json = "{\"mensagem\": \"" + mensagem + "\"}";
 			pw.write(json);
 		}
 	}
