@@ -1,7 +1,8 @@
 <%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
 
+<!-- O LOGIN JÁ ESTÁ PASSANDO OS VALORES-->
 <!-- Testando se o usuario esta vazio para joga-lo na sessao atravez do id passado no login  -->
-<c:if test="${empty usuario }">
+<!-- <c:if test="${empty usuario }">
 
 	<c:choose>
 		<c:when test="${sessionScope.id==null && empty sessionScope.user}">
@@ -18,7 +19,7 @@
 		</c:otherwise>
 
 	</c:choose>
-</c:if>
+</c:if> -->
 
 <!-- Jogando na sessao o id do sistema marcado combobox -->
 <c:if test="${!empty param.idsistema }">
@@ -86,7 +87,7 @@ links barra menu -->
 				<!-- END SISTEMAS -->
 				<!-- Testar perfil do usuÃ¡rio -->
 				<c:if
-					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' }">
+					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador'  }">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false" /> Logs<span class="caret"></span>
