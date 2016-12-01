@@ -18,10 +18,11 @@ response.setDateHeader("Expires",-1);
 <!-- Necessário para utilizar o i18N, informar o locale e o bundle -->
 <fmt:setLocale value="${ lang }" />
 <fmt:setBundle basename="Messages" />
-
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>Home</title>
 <jsp:include page="head.jspf" />
 </head>
@@ -32,41 +33,48 @@ response.setDateHeader("Expires",-1);
 	<%@include file="navbar.jspf"%>
 
 
-	<h5>Vamos começar?</h5>
+	<h5>
+		<fmt:message key="br.cefetrj.webdep.jsp.home.vamoscomecar" />
+	</h5>
 	<ol>
 		<c:if
 			test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
 			<li>Inicie cadastrando um sistema a monitorar - <a
-				href="cadastrodesistema.jsp">Clique aqui para cadastrar</a></li>
+				href="cadastrodesistema.jsp"><fmt:message
+						key="br.cefetrj.webdep.jsp.home.iniciecadastrandoumsistemaamonitorar" /></a></li>
 		</c:if>
 		<c:if
 			test="${usuario.admGeral==true || usuario.perfil=='Administrador'|| usuario.perfil=='Analista' }">
-			<li><a href="./cadastrodesistema.jsp">Selecione um sistema
-					para trabalhar</a></li>
+			<li><a href="./cadastrodesistema.jsp"><fmt:message
+						key="br.cefetrj.webdep.jsp.home.cliqueaquiparacadastrar" /></a></li>
 		</c:if>
 		<c:if
 			test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
-			<li><a href="./versionRegistration.jsp">Registre uma versão
-					do sistema</a></li>
+			<li><a href="./versionRegistration.jsp"><fmt:message
+						key="br.cefetrj.webdep.jsp.home.selecioneumsistemaparatrabalhar" /></a></li>
 		</c:if>
 		<c:if
 			test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
-			<li><a href="./importarLog.jsp">Importe manualmente os
-					dados de logs históricos</a></li>
+			<li><a href="./importarLog.jsp"><fmt:message
+						key="br.cefetrj.webdep.jsp.home.registreumaversaodosistema" /></a></li>
 		</c:if>
 		<c:if
 			test="${usuario.admGeral==true || usuario.perfil=='Administrador'|| usuario.perfil=='Analista' }">
-			<li><a href="./accessProfileReport.jsp">Emita Relatórios de
-					Perfil de Acesso </a>e <a href="../HTTPreport.jsp"> Analise os Erros no Sistema (Código HTTP)</a></li>
+			<li><a href="./accessProfileReport.jsp"><fmt:message
+						key="br.cefetrj.webdep.jsp.home.importemanualmenteosdadosdelogshistoricos" />
+			</a>
+			<fmt:message key="br.cefetrj.webdep.jsp.home.e" /> <a
+				href="./HTTPreport.jsp"> <fmt:message
+						key="br.cefetrj.webdep.jsp.home.analiseoserrosnosistema" /></a></li>
 		</c:if>
 	</ol>
 	<h5>Outras ações que você pode querer realizar</h5>
 	<ul>
 		<li><a
-			href="FrontControllerServlet?action=cadastraUsuario&get=true">Cadastre
-				usuários e atribua permissões a eles</a></li>
-		<li><a href="./excluirLogErro.jsp">Selecione exclua dados
-				históricos de logs</a></li>
+			href="FrontControllerServlet?action=cadastraUsuario&get=true"><fmt:message
+					key="br.cefetrj.webdep.jsp.home.cadastreusuarioseatribuapermissoesaeles" /></a></li>
+		<li><a href="./excluirLogErro.jsp"><fmt:message
+					key="br.cefetrj.webdep.jsp.home.selecioneexcluadadoshistoricosdelogs" /></a></li>
 	</ul>
 
 

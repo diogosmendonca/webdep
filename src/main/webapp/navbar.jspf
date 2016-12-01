@@ -1,6 +1,6 @@
 <%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
 
-<!-- O LOGIN JÁ ESTÁ PASSANDO OS VALORES-->
+<!-- O LOGIN JÃ ESTÃ PASSANDO OS VALORES-->
 <!-- Testando se o usuario esta vazio para joga-lo na sessao atravez do id passado no login  -->
 <!-- <c:if test="${empty usuario }">
 
@@ -128,7 +128,7 @@ links barra menu -->
 							
 							
 							<!-- Script para submissÃ£o do select -->
-							<script type="text/javascript">
+<!--  							<script type="text/javascript">
 							function post(path, params, method) {
 								method = method || "post"; // Set method to post by default if not specified.
 
@@ -162,8 +162,8 @@ links barra menu -->
 								post('#', {idsistema : itemSelecionado }, 'get');
 
 							}
-							</script>
-
+							</script>-->
+                                      
 <!-- 
 						<select name="sistema" class="form-control" 
 								id="versionlist">
