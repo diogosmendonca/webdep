@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.security.MessageDigest;
+import java.util.Locale;
 
 import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.services.UsuarioServices;
@@ -46,7 +47,6 @@ public class AutenticaUsuarioCommand implements Command {
 			login = UsuarioServices.validarLogin(loginUsuario);
 			senha = login != null? login.getSenha(): null;
 			id = login != null? login.getId(): null;
-			//System.out.println(login.getLogin() + senha + id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
