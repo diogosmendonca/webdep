@@ -29,6 +29,17 @@ response.setDateHeader("Expires",-1);
 <body>
 	<!-- PARA TESTAR A PÁGINA SAIR NA FINALIZAÇÃO  -->
 	<%--<c:set var="id" scope="session" value="3" />  --%>
+	<!-- Código que marca a caixa de seleção do sistema operacional -->
+	<script type="text/javascript">
+	
+		function selecinarSistema(){
+			
+			document.getElementById("sistema").focus();
+			
+		}	
+	
+	
+	</script>
 
 	<%@include file="navbar.jspf"%>
 
@@ -50,7 +61,7 @@ response.setDateHeader("Expires",-1);
 		</c:if>
 		<c:if
 			test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
-			<li><a href="./versionRegistration.jsp"><fmt:message
+			<li><a href="javascript:void(0);" onclick="selecinarSistema();"><fmt:message
 						key="br.cefetrj.webdep.jsp.home.selecioneumsistemaparatrabalhar" /></a></li>
 		</c:if>
 		<c:if
@@ -62,8 +73,7 @@ response.setDateHeader("Expires",-1);
 			test="${usuario.admGeral==true || usuario.perfil=='Administrador'|| usuario.perfil=='Analista' }">
 			<li><a href="./accessProfileReport.jsp"><fmt:message
 						key="br.cefetrj.webdep.jsp.home.importemanualmenteosdadosdelogshistoricos" />
-			</a>
-			<fmt:message key="br.cefetrj.webdep.jsp.home.e" /> <a
+			</a> <fmt:message key="br.cefetrj.webdep.jsp.home.e" /> <a
 				href="./HTTPreport.jsp"> <fmt:message
 						key="br.cefetrj.webdep.jsp.home.analiseoserrosnosistema" /></a></li>
 		</c:if>

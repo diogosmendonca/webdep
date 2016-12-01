@@ -124,7 +124,7 @@ links barra menu -->
 						<div class="form-group">
 
 							<!-- Tag do select customizada -->
- 							<cmp:ComboSistema userId="${ id }" classCss="form-control" />
+ 							<cmp:ComboSistema  userId="${ id }" classCss="form-control" />
 							
 							
 							<!-- Script para submissão do select -->
