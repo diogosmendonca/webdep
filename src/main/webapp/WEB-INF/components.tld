@@ -24,6 +24,18 @@
       <type>java.lang.String</type>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
+    <attribute>
+      <name>selectedList</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>attributes</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
   </tag>
   <tag>
     <name>ComboCadastroSistemaServidor</name>
