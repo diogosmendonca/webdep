@@ -1,3 +1,6 @@
+<!-- Taglib necessária para acessar as funções de formatação -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
 
 <!-- O LOGIN JÁ ESTÁ PASSANDO OS VALORES-->
