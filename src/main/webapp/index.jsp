@@ -43,7 +43,7 @@
                             <div class="form-group">
     							<label class="control-label col-sm-2" for="login"><fmt:message key="br.cefetrj.webdep.jsp.index.login" /></label>
     							<div class="col-sm-10">
-      								<input type="text" class="form-control" name="login" id="login" required="required">
+      								<input type="text" class="form-control" name="login" id="login" required="required" value="${usuario}" >
     							</div>
   							</div>
   							<div class="form-group">
