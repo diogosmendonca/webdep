@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.security.MessageDigest;
+import java.util.Locale;
 
 import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.services.UsuarioServices;
@@ -34,6 +35,14 @@ public class AutenticaUsuarioCommand implements Command {
 		String senha = null;
 		Long id = null;
 		
+		//User Locale - i18n
+		Locale currentLocale = request.getLocale();
+		String msg = "";
+		if(currentLocale.getDisplayCountry().equals("Brazil")) {
+			msg = "Login ou senha incorretos!";
+		} else msg = "Incorrect username or password!";
+		
+		//Validando usuario
 		try {
 			login = UsuarioServices.validarLogin(loginUsuario);
 			senha = login != null? login.getSenha(): null;
@@ -46,25 +55,26 @@ public class AutenticaUsuarioCommand implements Command {
 			if(senha.equals(senhaCriptografada)) autenticado = true;
 			else autenticado = false;
 		} else autenticado = false;
-
+		
 		if(autenticado) {
-			//HttpSession session = request.getSession(true);
-			//session.setAttribute("id", id);        
-			//String nme=(String) session.getAttribute("id");
-			//request.getSession().setAttribute("id", id);
-			
 			request.getSession().setAttribute("id", id);
 			login.setSenha(null);
 			request.getSession().setAttribute("usuario", login);
-			//request.setAttribute("usuario.nome", login.getNome());
-            response.sendRedirect(request.getContextPath() + "/home.jsp"); 
-            //response.sendRedirect("home.jsp");
-            return;
+			response.sendRedirect(request.getContextPath() + "/home.jsp");
+			return;
 		} else {
-			String msg ="Login ou senha incorretos!";
-			request.setAttribute("msg", msg);
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
-		}	
+			if(login != null) {
+				request.setAttribute("msg", msg);
+				request.getSession().setAttribute("usuario", login.getLogin());
+				request.getRequestDispatcher("/index.jsp").forward(request, response);
+			} else {
+				if(currentLocale.getDisplayCountry().equals("Brazil")) {
+					msg = "Usuário não cadastrado!";
+				} else msg = "User doesn't exist!";
+				request.setAttribute("msg", msg);
+				request.getRequestDispatcher("/index.jsp").forward(request, response);
+			}
+		}
 	}
 	
 	public static String sha512(String passwordToHash) {
