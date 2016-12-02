@@ -85,7 +85,7 @@
         <br>
     </div>
     <c:if test="${ not empty testarAcesso and not testarAcesso }">
-        <fmt:message key="br.cefetrj.psw.importaLog.logInvalid" />
+        <fmt:message key="br.cefetrj.psw.importaLog.logInvalido" />
     </c:if>
     <c:if test="${ not empty erro and not erro }">
         <fmt:message key="br.cefetrj.psw.importaLog.erro" />
