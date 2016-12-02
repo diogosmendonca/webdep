@@ -30,14 +30,31 @@
 <link rel="stylesheet" type="text/css" href="css/http-report.css">
 <title><fmt:message key="br.cefetrj.webdep.jsp.http.title" /></title>
 <jsp:include page="head.jspf" />
+
+	
+	<!--  Verificando se existe a variavel de lista versoes -->
+	<c:if test="${empty versionList || versionList ==null}">
+			<jsp:forward page="/FrontControllerServlet">
+				<jsp:param name="action" value="getListsParameter" />
+
+			</jsp:forward>
+
+	</c:if>
+	
+
+
+
 </head>
 <body class="container-full">
 	<%@include file="navbar.jspf"%>
-	
-	<form id="hidden_form" action="FrontControllerServlet" method="POST">
-		<input type="hidden" name="getListsParameter" value="getListsParameter"
-			id="hidden-form" onLoad="document.getElementById('hidden_form').submit()"/>
-	</form>
+
+
+
+
+	<!-- 	<form id="hidden_form" action="FrontControllerServlet" method="POST"> -->
+<!-- 		<input type="hidden" name="getListsParameter" value="getListsParameter" -->
+<!-- 			id="hidden-form" onLoad="document.getElementById('hidden_form').submit()"/> -->
+<!-- 	</form> -->
 
 	<!-- Campo de Filtros -->
 
@@ -333,6 +350,8 @@
 			</div>
 		</div>
 	</div>
+	
+	
 	<jsp:include page="scripts.jspf" />
 </body>
 </html>
