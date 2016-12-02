@@ -52,6 +52,7 @@
 
 
 
+
 	<!-- 	<form id="hidden_form" action="FrontControllerServlet" method="POST"> -->
 	<!-- 		<input type="hidden" name="getListsParameter" value="getListsParameter" -->
 	<!-- 			id="hidden-form" onLoad="document.getElementById('hidden_form').submit()"/> -->
