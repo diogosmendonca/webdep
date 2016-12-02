@@ -171,7 +171,7 @@
 					</tbody>
 				</table>
 
-				<button type="submit" class="btn btn-primary btn-md">
+				<button type="submit" class="btn btn-primary btn-md" onclick="location.href = 'index.jsp';">
 					<fmt:message key="br.cefetrj.webdep.jsp.http.back" />
 				</button>
 
@@ -282,6 +282,10 @@
 							"translate(" + spaceForLabels + ", "
 									+ -gapBetweenGroups / 2 + ")").call(yAxis);
 				</script>
+				<button type="submit" class="btn btn-primary btn-md" onclick="location.href = 'index.jsp';">
+					<fmt:message key="br.cefetrj.webdep.jsp.http.back" />
+				</button>
+				
 			</div>
 		</div>
 	</div>
