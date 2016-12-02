@@ -24,7 +24,7 @@ public class UpdateSistemaCommand implements Command{
 			
 			Sistema s = new Sistema();
 			String id = request.getParameter("id-sistema-update");
-			s = SistemaServices.searchSistema(id).get(0);
+			s = SistemaServices.obterPorId(Long.parseLong(id));
 			String nome = request.getParameter("nome");
 			String server = request.getParameter("servidor");
 			String ptLogs = request.getParameter("ptLogs");
@@ -52,7 +52,6 @@ public class UpdateSistemaCommand implements Command{
 			mensagem = "Não foi possível cadastrar o sistema!";
 		} finally {
 			String json = "{\"mensagem\": \"" + mensagem + "\"]}";
-			response.setContentType("application/json");
 			pw.write(json);
 		}
 	}

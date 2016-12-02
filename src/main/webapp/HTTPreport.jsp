@@ -31,266 +31,272 @@
 <title><fmt:message key="br.cefetrj.webdep.jsp.http.title" /></title>
 <jsp:include page="head.jspf" />
 
-	
-	<!--  Verificando se existe a variavel de lista versoes -->
-	<c:if test="${empty versionList || versionList ==null}">
-			<jsp:forward page="/FrontControllerServlet">
-				<jsp:param name="action" value="getListsParameter" />
 
-			</jsp:forward>
+<!--  Verificando se existe a variavel de lista versoes -->
+<c:if test="${empty versionList || versionList ==null}">
+	<jsp:forward page="/FrontControllerServlet">
+		<jsp:param name="action" value="getListsParameter" />
 
-	</c:if>
-	
+	</jsp:forward>
+
+</c:if>
+
 
 
 
 </head>
 <body class="container-full">
 	<%@include file="navbar.jspf"%>
-	
+
+
 
 
 
 
 	<!-- 	<form id="hidden_form" action="FrontControllerServlet" method="POST"> -->
-<!-- 		<input type="hidden" name="getListsParameter" value="getListsParameter" -->
-<!-- 			id="hidden-form" onLoad="document.getElementById('hidden_form').submit()"/> -->
-<!-- 	</form> -->
+	<!-- 		<input type="hidden" name="getListsParameter" value="getListsParameter" -->
+	<!-- 			id="hidden-form" onLoad="document.getElementById('hidden_form').submit()"/> -->
+	<!-- 	</form> -->
 
 	<!-- Campo de Filtros -->
-
-	<form class="form-horizontal" action="FrontControllerServlet"
-		method="POST">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h5>
-					<fmt:message key="br.cefetrj.webdep.jsp.apr.header" />
-				</h5>
-			</div>
-
-			<div class="panel-body">
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="pwd"><fmt:message
-							key="br.cefetrj.webdep.jsp.http.URLpattern" /></label>
-					<div class="col-xs-2">
-						<select class="form-control">
-							<option>URLs Sistema</option>
-						</select>
-						<button class="btn btn-primary" type="button" data-toggle="modal"
-							data-target="#myModal">+</button>
-					</div>
-
-
-					<label class="control-label col-sm-2" for="pwd"><fmt:message
-							key="br.cefetrj.webdep.jsp.http.HTTPerror" /></label>
-					<div class="col-xs-2">
-						<select name="errorList" class="selectpicker" multiple title=""
-							id="errorList">
-							<c:forEach items="${ errorList }" var="error">
-								<option value="${ error.id }">${ error.codigo }</option>
-							</c:forEach>
-						</select>
-
-					</div>
+	<div class="container">
+		<form class="form-horizontal" action="FrontControllerServlet"
+			method="POST">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h5>
+						<fmt:message key="br.cefetrj.webdep.jsp.apr.header" />
+					</h5>
 				</div>
 
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="pwd"><fmt:message
-							key="br.cefetrj.webdep.jsp.http.version" /></label>
-					<div class="col-xs-2">
-						<select name="versionList" class="selectpicker" multiple title=""
-							id="versionlist">
-							<c:forEach items="${ versionList }" var="version">
-								<option value="${ version.id }">${ version.nome }</option>
-							</c:forEach>
-						</select>
-					</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="pwd"><fmt:message
+								key="br.cefetrj.webdep.jsp.http.URLpattern" /></label>
+						<div class="col-xs-2">
+							<select class="form-control">
+								<option>URLs Sistema</option>
+							</select>
+							<button class="btn btn-primary" type="button" data-toggle="modal"
+								data-target="#myModal">+</button>
+						</div>
 
-					<label class="control-label col-sm-2" for="pwd"><fmt:message
-							key="br.cefetrj.webdep.jsp.http.CodeHTTPok" /></label>
-					<div class="col-xs-2">
-						<select name="okList" class="selectpicker" multiple title=""
-							id="oklist">
-							<c:forEach items="${ okList }" var="ok">
-								<option value="${ ok.id }">${ ok.codigo }</option>
-							</c:forEach>
-						</select>
-						<div>
-							<button name="action" value="errorParameter" type="submit"
-								class="btn btn-primary btn-md pull-right">
-								<fmt:message key="br.cefetrj.webdep.jsp.apr.search" />
-							</button>
+
+						<label class="control-label col-sm-2" for="pwd"><fmt:message
+								key="br.cefetrj.webdep.jsp.http.HTTPerror" /></label>
+						<div class="col-xs-2">
+							<select name="errorList" class="selectpicker" multiple title=""
+								id="errorList">
+								<c:forEach items="${ errorList }" var="error">
+									<option value="${ error.id }">${ error.codigo }</option>
+								</c:forEach>
+							</select>
+
 						</div>
 					</div>
 
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="pwd"><fmt:message
+								key="br.cefetrj.webdep.jsp.http.version" /></label>
+						<div class="col-xs-2">
+							<select name="versionList" class="selectpicker" multiple title=""
+								id="versionlist">
+								<c:forEach items="${ versionList }" var="version">
+									<option value="${ version.id }">${ version.nome }</option>
+								</c:forEach>
+							</select>
+						</div>
+
+						<label class="control-label col-sm-2" for="pwd"><fmt:message
+								key="br.cefetrj.webdep.jsp.http.CodeHTTPok" /></label>
+						<div class="col-xs-2">
+							<select name="okList" class="selectpicker" multiple title=""
+								id="oklist">
+								<c:forEach items="${ okList }" var="ok">
+									<option value="${ ok.id }">${ ok.codigo }</option>
+								</c:forEach>
+							</select>
+							<div>
+								<button name="action" value="errorParameter" type="submit"
+									class="btn btn-primary btn-md pull-right">
+									<fmt:message key="br.cefetrj.webdep.jsp.apr.search" />
+								</button>
+							</div>
+						</div>
+
+					</div>
+					<c:if test="${ not empty versionValidate and not versionValidate }">
+						<div class="alert alert-danger fade in alert-dismissible">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Atenção!</strong> O campo Versões precisa ser preenchido.
+						</div>
+					</c:if>
+					<c:if test="${ not empty okValidate and not okValidate }">
+						<div class="alert alert-danger fade in alert-dismissible">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Atenção!</strong> O campo Código HTTP OK precisa ser
+							preenchido.
+						</div>
+					</c:if>
+					<c:if test="${ not empty erorValidate and not errorValidate }">
+						<div class="alert alert-danger fade in alert-dismissible">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Atenção!</strong> O campo Código HTTP de Erro precisa ser
+							preenchido.
+						</div>
+					</c:if>
 				</div>
-				<c:if test="${ not empty versionValidate and not versionValidate }">
-					<div class="alert alert-danger fade in alert-dismissible">
-						 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atenção!</strong> O campo Versões precisa ser preenchido.
-					</div>
-				</c:if>
-				<c:if test="${ not empty okValidate and not okValidate }">
-					<div class="alert alert-danger fade in alert-dismissible">
-						 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atenção!</strong> O campo Código HTTP OK precisa ser preenchido.
-					</div>
-				</c:if>
-				<c:if test="${ not empty erorValidate and not errorValidate }">
-					<div class="alert alert-danger fade in alert-dismissible">
-						 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atenção!</strong> O campo Código HTTP de Erro precisa ser preenchido.
-					</div>
-				</c:if>
 			</div>
-		</div>
-	</form>
+		</form>
 
-	<!-- Tabela  -->
+		<!-- Tabela  -->
 
-	<div id="exTab1" class="panel panel-default">
-		<ul class="nav nav-tabs ">
-			<li class="active"><a href="#1a" data-toggle="tab"><fmt:message
-						key="br.cefetrj.webdep.jsp.apr.table" /></a></li>
-			<li><a href="#2a" data-toggle="tab"><fmt:message
-						key="br.cefetrj.webdep.jsp.apr.graphic" /></a></li>
-		</ul>
-		<div class="tab-content clearfix">
-			<div class="tab-pane fade in active" id="1a">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>URLs</th>
-							<th><fmt:message key="br.cefetrj.webdep.jsp.http.access" /></th>
-							<th><fmt:message key="br.cefetrj.webdep.jsp.http.fail" /></th>
-							<th><fmt:message key="br.cefetrj.webdep.jsp.http.probFail" /></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-						</tr>
-					</tbody>
-				</table>
+		<div id="exTab1" class="panel panel-default">
+			<ul class="nav nav-tabs ">
+				<li class="active"><a href="#1a" data-toggle="tab"><fmt:message
+							key="br.cefetrj.webdep.jsp.apr.table" /></a></li>
+				<li><a href="#2a" data-toggle="tab"><fmt:message
+							key="br.cefetrj.webdep.jsp.apr.graphic" /></a></li>
+			</ul>
+			<div class="tab-content clearfix">
+				<div class="tab-pane fade in active" id="1a">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>URLs</th>
+								<th><fmt:message key="br.cefetrj.webdep.jsp.http.access" /></th>
+								<th><fmt:message key="br.cefetrj.webdep.jsp.http.fail" /></th>
+								<th><fmt:message key="br.cefetrj.webdep.jsp.http.probFail" /></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							</tr>
+						</tbody>
+					</table>
 
-				<button type="submit" class="btn btn-primary btn-md" onclick="location.href = 'index.jsp';">
-					<fmt:message key="br.cefetrj.webdep.jsp.http.back" />
-				</button>
+					<button type="submit" class="btn btn-primary btn-md"
+						onclick="location.href = 'index.jsp';">
+						<fmt:message key="br.cefetrj.webdep.jsp.http.back" />
+					</button>
 
-			</div>
+				</div>
 
-			<!-- Gráfico -->
+				<!-- Gráfico -->
 
-			<div class="tab-pane fade" id="2a">
-				<svg class="chart"></svg>
-				<script src="http://d3js.org/d3.v3.min.js"></script>
-				<script>
-					var data = {
-						labels : [ 'resilience', 'maintainability',
-								'accessibility', 'uptime', 'functionality',
-								'impact' ],
-						series : [ {
-							label : '2012',
-							values : [ 4, 8, 15, 16, 23, 42 ]
-						}, {
-							label : '2013',
-							values : [ 12, 43, 22, 11, 73, 25 ]
-						}, {
-							label : '2014',
-							values : [ 31, 28, 14, 8, 15, 21 ]
-						}, ]
-					};
+				<div class="tab-pane fade" id="2a">
+					<svg class="chart"></svg>
+					<script src="http://d3js.org/d3.v3.min.js"></script>
+					<script>
+						var data = {
+							labels : [ 'resilience', 'maintainability',
+									'accessibility', 'uptime', 'functionality',
+									'impact' ],
+							series : [ {
+								label : '2012',
+								values : [ 4, 8, 15, 16, 23, 42 ]
+							}, {
+								label : '2013',
+								values : [ 12, 43, 22, 11, 73, 25 ]
+							}, {
+								label : '2014',
+								values : [ 31, 28, 14, 8, 15, 21 ]
+							}, ]
+						};
 
-					var chartWidth = 300, barHeight = 20, groupHeight = barHeight
-							* data.series.length, gapBetweenGroups = 10, spaceForLabels = 150, spaceForLegend = 150;
+						var chartWidth = 300, barHeight = 20, groupHeight = barHeight
+								* data.series.length, gapBetweenGroups = 10, spaceForLabels = 150, spaceForLegend = 150;
 
-					// Zip the series data together (first values, second values, etc.)
-					var zippedData = [];
-					for (var i = 0; i < data.labels.length; i++) {
-						for (var j = 0; j < data.series.length; j++) {
-							zippedData.push(data.series[j].values[i]);
+						// Zip the series data together (first values, second values, etc.)
+						var zippedData = [];
+						for (var i = 0; i < data.labels.length; i++) {
+							for (var j = 0; j < data.series.length; j++) {
+								zippedData.push(data.series[j].values[i]);
+							}
 						}
-					}
-					
 
-					// Color scale
-					var color = d3.scale.category20();
-					var chartHeight = barHeight * zippedData.length
-							+ gapBetweenGroups * data.labels.length;
+						// Color scale
+						var color = d3.scale.category20();
+						var chartHeight = barHeight * zippedData.length
+								+ gapBetweenGroups * data.labels.length;
 
-					var x = d3.scale.linear().domain([ 0, d3.max(zippedData) ])
-							.range([ 0, chartWidth ]);
+						var x = d3.scale.linear().domain(
+								[ 0, d3.max(zippedData) ]).range(
+								[ 0, chartWidth ]);
 
-					var y = d3.scale.linear().range(
-							[ chartHeight + gapBetweenGroups, 0 ]);
+						var y = d3.scale.linear().range(
+								[ chartHeight + gapBetweenGroups, 0 ]);
 
-					var yAxis = d3.svg.axis().scale(y).tickFormat('').tickSize(
-							0).orient("left");
+						var yAxis = d3.svg.axis().scale(y).tickFormat('')
+								.tickSize(0).orient("left");
 
-					// Specify the chart area and dimensions
-					var chart = d3.select(".chart").attr("width",
-							spaceForLabels + chartWidth + spaceForLegend).attr(
-							"height", chartHeight);
+						// Specify the chart area and dimensions
+						var chart = d3.select(".chart").attr("width",
+								spaceForLabels + chartWidth + spaceForLegend)
+								.attr("height", chartHeight);
 
-					// Create bars
-					var bar = chart
-							.selectAll("g")
-							.data(zippedData)
-							.enter()
-							.append("g")
-							.attr(
-									"transform",
-									function(d, i) {
-										return "translate("
-												+ spaceForLabels
-												+ ","
-												+ (i * barHeight + gapBetweenGroups
-														* (0.5 + Math
-																.floor(i
-																		/ data.series.length)))
-												+ ")";
-									});
+						// Create bars
+						var bar = chart
+								.selectAll("g")
+								.data(zippedData)
+								.enter()
+								.append("g")
+								.attr(
+										"transform",
+										function(d, i) {
+											return "translate("
+													+ spaceForLabels
+													+ ","
+													+ (i * barHeight + gapBetweenGroups
+															* (0.5 + Math
+																	.floor(i
+																			/ data.series.length)))
+													+ ")";
+										});
 
-					// Create rectangles of the correct width
-					bar.append("rect").attr("fill", function(d, i) {
-						return color(i % data.series.length);
-					}).attr("class", "bar").attr("width", x).attr("height",
-							barHeight - 1);
+						// Create rectangles of the correct width
+						bar.append("rect").attr("fill", function(d, i) {
+							return color(i % data.series.length);
+						}).attr("class", "bar").attr("width", x).attr("height",
+								barHeight - 1);
 
-					// Add text label in bar
-					bar.append("text").attr("x", function(d) {
-						return x(d) - 3;
-					}).attr("y", barHeight / 2).attr("fill", "red").attr("dy",
-							".35em").text(function(d) {
-						return d;
-					});
+						// Add text label in bar
+						bar.append("text").attr("x", function(d) {
+							return x(d) - 3;
+						}).attr("y", barHeight / 2).attr("fill", "red").attr(
+								"dy", ".35em").text(function(d) {
+							return d;
+						});
 
-					// Draw labels
-					bar.append("text").attr("class", "label").attr("x",
-							function(d) {
-								return -10;
-							}).attr("y", groupHeight / 2).attr("dy", ".35em")
-							.text(
-									function(d, i) {
-										if (i % data.series.length === 0)
-											return data.labels[Math.floor(i
-													/ data.series.length)];
-										else
-											return ""
-									});
+						// Draw labels
+						bar.append("text").attr("class", "label").attr("x",
+								function(d) {
+									return -10;
+								}).attr("y", groupHeight / 2).attr("dy",
+								".35em").text(
+								function(d, i) {
+									if (i % data.series.length === 0)
+										return data.labels[Math.floor(i
+												/ data.series.length)];
+									else
+										return ""
+								});
 
-					chart.append("g").attr("class", "y axis").attr(
-							"transform",
-							"translate(" + spaceForLabels + ", "
-									+ -gapBetweenGroups / 2 + ")").call(yAxis);
-				</script>
-				<button type="submit" class="btn btn-primary btn-md" onclick="location.href = 'index.jsp';">
-					<fmt:message key="br.cefetrj.webdep.jsp.http.back" />
-				</button>
-				
+						chart.append("g").attr("class", "y axis").attr(
+								"transform",
+								"translate(" + spaceForLabels + ", "
+										+ -gapBetweenGroups / 2 + ")").call(
+								yAxis);
+					</script>
+					<button type="submit" class="btn btn-primary btn-md"
+						onclick="location.href = 'index.jsp';">
+						<fmt:message key="br.cefetrj.webdep.jsp.http.back" />
+					</button>
+
+				</div>
 			</div>
 		</div>
 	</div>
-
 	<!-- MODAL NOVO PADRAO URL -->
 
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -355,8 +361,8 @@
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<jsp:include page="scripts.jspf" />
 </body>
 </html>

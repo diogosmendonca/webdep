@@ -26,7 +26,7 @@ public class FillSistemaCommand implements Command{
 		String filtro = request.getParameter("filtro");
 		PrintWriter pw = response.getWriter();
 		String json = "";
-		Sistema s = SistemaServices.searchSistema(filtro).get(0);
+		Sistema s = SistemaServices.obterPorId(Long.parseLong(filtro));
 		if (s != null){
 			json = "{\"sistema\":";
 				json += "{";
@@ -48,7 +48,6 @@ public class FillSistemaCommand implements Command{
 		} else {
 			json = "{\"Erro\": \"Nenhum resultado encontrado\"}";
 		}
-		response.setContentType("application/json");
 		pw.write(json);
 	}
 }
