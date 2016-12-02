@@ -201,10 +201,9 @@ $(document).ready(function () {
 	
 		
 	$("#cadastro-sistema-submit").click(function () {
-		var sistemaForm = $("#sistema-form").serialize();
 		var nome = $("#nome").val();
 		var servidor = $("#selection").val();
-		var fmtLogs = $("#fmtLogs").val();
+		var formatoLog = $("#formatoLog").val();
 		var ptLogs = $("#ptLogs").val();
 		var pxLogs = $("#pxLogs").val();
 		var ptLogs2 = $("#ptLogs2").val();
@@ -229,7 +228,19 @@ $(document).ready(function () {
 			$.ajax({
 	            type: "POST",
 	            url: "FrontControllerServlet",
-	            data: sistemaForm, //action fica no jsp porque o form está sendo serializado(o action está dentro de sistemaForm)
+	            data: {
+		    	nome: nome,
+			servidor:servidor,
+			    formatoLog: formatoLog,
+			    ptLogs: ptLogs,
+			    pxLogs: pxLogs,
+			    ptLogs2: ptLogs2,
+			    pxLogs2: pxLogs2,
+			    data: data,
+			    nova: nova,
+			    hora: hora,
+			    action: "insertSistema"
+		    }, //action fica no jsp porque o form está sendo serializado(o action está dentro de sistemaForm)
 	            success: function (response) {
 	            	var resposta = $.parseJSON(response);
 	                if (resposta.hasOwnProperty("mensagem")) {
@@ -290,6 +301,14 @@ $("#pxLogs-teste-btn").click(function () {
         }
     });
 	}
+});
+
+$("#cancela-btn").click(function(){
+	window.location.replace("home.jsp?");
+});
+
+$("#volta-btn").click(function(){
+	window.location.replace("home.jsp?");
 });
 
 $("#pxLogs2-teste-btn").click(function () {
