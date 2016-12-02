@@ -18,7 +18,7 @@
 </head>
 <body>
 	<%@include file="navbar.jspf"%>
-	<form id="sistema-form" class="form-horizontal container">
+	<div id="sistema-form" class="form-horizontal container">
 		<div class="row">
 			<fieldset class="form-group">
 				<legend>
@@ -146,7 +146,7 @@
 			</button>
 		</div>
 
-	</form>
+	</div>
 
 	<jsp:include page="scripts.jspf" />
 </body>
