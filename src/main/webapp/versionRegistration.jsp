@@ -30,7 +30,7 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="name"><fmt:message key="br.cefetrj.webdep.jsp.vr.system" /></label>
 						<div class="col-xs-2">
-							<cmp:ComboSistema userId="${ id }" classCss="form-control" />
+							<cmp:ComboSistema userId="${ id }" selectedList="${ sys }" classCss="form-control"/>	
 						</div>
 					</div>
 					<div class="form-group">

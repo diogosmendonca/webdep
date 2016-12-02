@@ -18,13 +18,13 @@ public class InsertVersionCommand implements Command{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/*
-		 * Validação dos campos e inserção da combo de sistemas do professor
+		 * Validaï¿½ï¿½o dos campos e inserï¿½ï¿½o da combo de sistemas do professor
 		 * */
 		Versao v = new Versao();
 		LocalDate ld = LocalDate.parse(request.getParameter("date"));
 		LocalTime lt = LocalTime.parse(request.getParameter("time"));
 		LocalDateTime l = LocalDateTime.of(ld, lt);
-		
+		System.out.println(request.getParameter("sistema"));
 		v.setNome(request.getParameter("nome"));
 		//v.setSistema();
 		v.setTimestampLiberacao(l);
