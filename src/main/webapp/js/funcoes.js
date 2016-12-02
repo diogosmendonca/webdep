@@ -13,17 +13,17 @@ $(document).ready(function () {
                 filtro: id
             },
             success: function (response) {
-            	console.log(response.sistema)
-            	$("#nome").val(response.sistema.nome);
-            	$("#servidor option").val(response.sistema.servidor);
-            	$("#formatoLog option").val(response.sistema.formatolog);
-            	$("#ptLogs").val(response.sistema.ptLogs);
-            	$("#pxLogs").val(response.sistema.pxLogs);
-            	$("#ptLogs2").val(response.sistema.ptLogs2);
-            	$("#pxLogs2").val(response.sistema.pxLogs2);
-            	$("#data").val(response.sistema.data);
-            	$("#time").val(response.sistema.time);
-            	$("#novaData").val(response.sistema.novaData);
+            	var resposta = $.parseJSON(response);
+            	$("#nome").val(resposta.sistema.nome);
+            	$("#servidor option").val(resposta.sistema.servidor);
+            	$("#formatoLog option").val(resposta.sistema.formatolog);
+            	$("#ptLogs").val(resposta.sistema.ptLogs);
+            	$("#pxLogs").val(resposta.sistema.pxLogs);
+            	$("#ptLogs2").val(resposta.sistema.ptLogs2);
+            	$("#pxLogs2").val(resposta.sistema.pxLogs2);
+            	$("#data").val(resposta.sistema.data);
+            	$("#time").val(resposta.sistema.time);
+            	$("#novaData").val(resposta.sistema.novaData);
             }
 		});
 	} else if (window.location.href.indexOf("gerenciadorsistema.jsp") > -1) {
@@ -72,9 +72,10 @@ $(document).ready(function () {
                     filtro: filtro
                 },
                 success: function (response) {
-                        var sistemas = response.sistemas;
-                		var erro = response.Erro;
-                        if (response.hasOwnProperty("sistemas")){
+                		var resposta = $.parseJSON(response);
+                        var sistemas = resposta.sistemas;
+                		var erro = resposta.Erro;
+                        if (resposta.hasOwnProperty("sistemas")){
                         	$("#table-sistemas").children().remove();
                         sistemas.forEach(function (el) {
                         	$("#table-sistemas").append("<tr><td>" 
@@ -86,8 +87,8 @@ $(document).ready(function () {
                         					"<td><a onclick=alterar(\""+ el.id +"\"); id=\""+ el.id +"-alterar\" class=\"alterar-sistema\">Alterar</a></td>" +
                         					"<td><a onclick=excluir(\""+ el.id +"\"); id=\""+ el.id +"-excluir\" class=\"excluir-sistema\">Excluir</a></td></tr>");
                         });
-                        } else if (response.hasOwnProperty("Erro")){
-                        	alert(response.Erro);
+                        } else if (resposta.hasOwnProperty("Erro")){
+                        	alert(resposta.Erro);
                         }
                 }
             });
@@ -151,10 +152,11 @@ $(document).ready(function () {
                     regex: regex
                 },
                 success: function (response) {
-                    if (response.hasOwnProperty("mensagem") > -1) {
-                        var mensagem = response.mensagem;
+                	var resposta = $.parseJSON(response);
+                    if (resposta.hasOwnProperty("mensagem") > -1) {
+                        var mensagem = resposta.mensagem;
                         alert(mensagem);
-                    } else if (response.indexOf("Erro")) {
+                    } else if (resposta.indexOf("Erro")) {
                     	alert("Erro de conexão com o servidor");
                     }
                 }
