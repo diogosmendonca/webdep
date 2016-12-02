@@ -26,10 +26,9 @@ public class ListSistemaCommand implements Command{
 		String filtro = request.getParameter("filtro");
 		PrintWriter pw = response.getWriter();
 		String json = "";
-		Long idUsuario = (Long)request.getSession().getAttribute("id");
 		List<Sistema> sistemasFiltrados = null;
 		if (filtro.equals("all")) {
-			sistemasFiltrados = SistemaServices.listByPermissaoUsuario(idUsuario.intValue());
+			sistemasFiltrados = SistemaServices.listarTodos();
 		} else {
 			sistemasFiltrados = SistemaServices.searchSistema(filtro);
 		}
