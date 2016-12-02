@@ -26,14 +26,7 @@ public class ListSistemaCommand implements Command{
 		String filtro = request.getParameter("filtro");
 		PrintWriter pw = response.getWriter();
 		String json = "";
-		List<Sistema> sistemasFiltrados = null;
-		
-		if (filtro.equals("all")){
-			sistemasFiltrados = SistemaServices.listarTodos();
-		} else {
-			sistemasFiltrados = SistemaServices.searchSistema(filtro);
-		}
-		
+		List<Sistema> sistemasFiltrados = SistemaServices.searchSistema(filtro);
 		if (sistemasFiltrados.size() > 0) {
 			json = "{\"sistemas\": [";
 			for (Sistema s : sistemasFiltrados) {
@@ -69,7 +62,7 @@ public class ListSistemaCommand implements Command{
 				json += "\"nome\":\"" + s.getNome() + "\",";
 				json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
 				json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
-				json += "\"periodicidade\":\"" + Periodicidade.toString() + "\",";
+				json += "\"periodicidade\":\"" + s.getPeriodicidadeLeitura().toString() + "\",";
 				json += "\"proximaleitura\":\"" + novaLeitura + "\"";
 				json += "},";
 			}
