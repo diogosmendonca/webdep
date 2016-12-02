@@ -26,10 +26,10 @@ public class ListSistemaCommand implements Command{
 		String filtro = request.getParameter("filtro");
 		PrintWriter pw = response.getWriter();
 		String json = "";
+		Long idUsuario = (Long)request.getSession().getAttribute("id");
 		List<Sistema> sistemasFiltrados = null;
-		
-		if (filtro.equals("all")){
-			sistemasFiltrados = SistemaServices.listarTodos();
+		if (filtro.equals("all")) {
+			sistemasFiltrados = SistemaServices.listByPermissaoUsuario(idUsuario.intValue());
 		} else {
 			sistemasFiltrados = SistemaServices.searchSistema(filtro);
 		}
@@ -78,7 +78,6 @@ public class ListSistemaCommand implements Command{
 		} else {
 			json = "{\"Erro\": \"Nenhum resultado encontrado\"}";
 		}
-		response.setContentType("application/json");
 		pw.write(json);
 	}
 }
