@@ -1,7 +1,6 @@
 package br.cefetrj.webdep.view.command;
 
 import java.io.IOException;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,8 @@ import br.cefetrj.webdep.services.UsuarioServices;
 public class CadastraUsuarioCommand implements Command {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Sistema> sis = new SistemaServices().listarTodos();
+		new SistemaServices();
+		List<Sistema> sis = SistemaServices.listarTodos();
 		request.setAttribute("sistemas", sis);
 		request.getRequestDispatcher("cadastraUsuario.jsp").forward(request, response);
 	}
@@ -81,8 +81,7 @@ public class CadastraUsuarioCommand implements Command {
 			String string[] = request.getParameterValues("sistema");
 			for (String var : string) {
 				Sistema sis = new Sistema();
-				SistemaServices sisSe = new SistemaServices();
-				sis = sisSe.obterPorId(Long.valueOf(var));
+				sis = SistemaServices.obterPorId(Long.valueOf(var));
 				sistema.add(sis);
 			}
 		}else{
@@ -124,13 +123,11 @@ public class CadastraUsuarioCommand implements Command {
 			request.setAttribute("emailValido", emailValido);
 		}
 		
-		UsuarioServices usuSe = new UsuarioServices();
-		 
 		String rLogin = null, rEmail = null;
 		Usuario urLogin = null, urEmail = null;
 		
-		urLogin = usuSe.validarLogin(login);
-		urEmail = usuSe.validarEmail(email);
+		urLogin = UsuarioServices.validarLogin(login);
+		urEmail = UsuarioServices.validarEmail(email);
 		rLogin = urLogin != null? urLogin.getLogin(): null;
 		rEmail = urEmail != null? urEmail.getEmail(): null;
 		
@@ -159,11 +156,15 @@ public class CadastraUsuarioCommand implements Command {
 				Permissao permissao = new Permissao();
 				permissao.setSistema(sis);
 				permissao.setUsuario(usu);
+				permissao.setPerfil(usu.getPerfil());
 				permisseos.add(permissao);
 			}
 			usu.setPermissoes(permisseos);
+			UsuarioServices.salvar(usu);
 			
-			usuSe.salvar(usu);
+			for (Permissao permissao : permisseos) {
+				UsuarioServices.salvarPermissao(permissao);
+			}
 			
 			request.getRequestDispatcher("home.jsp").forward(request, response);	
 		}

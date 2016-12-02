@@ -29,6 +29,17 @@ response.setDateHeader("Expires",-1);
 <body>
 	<!-- PARA TESTAR A PÁGINA SAIR NA FINALIZAÇÃO  -->
 	<%--<c:set var="id" scope="session" value="3" />  --%>
+	<!-- Código que marca a caixa de seleção do sistema operacional -->
+	<script type="text/javascript">
+	
+		function selecinarSistema(){
+			
+			document.getElementById("sistema").focus();
+			
+		}	
+	
+	
+	</script>
 
 	<%@include file="navbar.jspf"%>
 
@@ -39,36 +50,39 @@ response.setDateHeader("Expires",-1);
 	<ol>
 		<c:if
 			test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
-			<li>Inicie cadastrando um sistema a monitorar - <a
-				href="cadastrodesistema.jsp"><fmt:message
-						key="br.cefetrj.webdep.jsp.home.iniciecadastrandoumsistemaamonitorar" /></a></li>
-		</c:if>
-		<c:if
-			test="${usuario.admGeral==true || usuario.perfil=='Administrador'|| usuario.perfil=='Analista' }">
-			<li><a href="./cadastrodesistema.jsp"><fmt:message
+			<li><fmt:message
+						key="br.cefetrj.webdep.jsp.home.iniciecadastrandoumsistemaamonitorar" /> - <a href="./cadastrodesistema.jsp"><fmt:message
 						key="br.cefetrj.webdep.jsp.home.cliqueaquiparacadastrar" /></a></li>
 		</c:if>
+		
 		<c:if
 			test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
-			<li><a href="./versionRegistration.jsp"><fmt:message
+			<li><a href="javascript:void(0);" onclick="selecinarSistema();"><fmt:message
 						key="br.cefetrj.webdep.jsp.home.selecioneumsistemaparatrabalhar" /></a></li>
 		</c:if>
 		<c:if
 			test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
-			<li><a href="./importarLog.jsp"><fmt:message
+			<li><a href="./versionRegistration.jsp"><fmt:message
 						key="br.cefetrj.webdep.jsp.home.registreumaversaodosistema" /></a></li>
 		</c:if>
 		<c:if
 			test="${usuario.admGeral==true || usuario.perfil=='Administrador'|| usuario.perfil=='Analista' }">
-			<li><a href="./accessProfileReport.jsp"><fmt:message
+			<li><a href="./importarLog.jsp"><fmt:message
 						key="br.cefetrj.webdep.jsp.home.importemanualmenteosdadosdelogshistoricos" />
-			</a>
-			<fmt:message key="br.cefetrj.webdep.jsp.home.e" /> <a
+			</a> </li>
+		</c:if>
+		<c:if
+			test="${usuario.admGeral==true || usuario.perfil=='Administrador'|| usuario.perfil=='Analista' }">
+			<li><a href="./accessProfileReport.jsp"><fmt:message
+						key="br.cefetrj.webdep.jsp.home.emitarelatoriosdeperfildeacesso" />
+			</a> <fmt:message key="br.cefetrj.webdep.jsp.home.e" /> <a
 				href="./HTTPreport.jsp"> <fmt:message
 						key="br.cefetrj.webdep.jsp.home.analiseoserrosnosistema" /></a></li>
 		</c:if>
+		
 	</ol>
-	<h5>Outras ações que você pode querer realizar</h5>
+	<h5><fmt:message
+					key="br.cefetrj.webdep.jsp.home.outrasacoesquevocepodequererrealizar" /></h5>
 	<ul>
 		<li><a
 			href="FrontControllerServlet?action=cadastraUsuario&get=true"><fmt:message

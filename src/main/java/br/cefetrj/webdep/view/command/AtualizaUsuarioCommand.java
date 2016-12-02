@@ -37,18 +37,19 @@ public class AtualizaUsuarioCommand implements Command {
 		}
 		
 		if(id != null){
-			List<Sistema> sis = new SistemaServices().listarTodos();
+			new SistemaServices();
+			List<Sistema> sis = SistemaServices.listarTodos();
 			request.setAttribute("sistemas", sis);
-			
-			UsuarioServices usuSe = new UsuarioServices();			
+
 			Usuario usu = null;
-			usu = usuSe.obterPorId(id);
-			List<Permissao> lp = usu.getPermissoes();
-			String valor = null;
+			usu = UsuarioServices.obterPorId(id);
+			new UsuarioServices();
+			List<Permissao> lp = UsuarioServices.getPermissao(usu);
+			String valor = "";
 			for (Permissao permissao : lp) {
-				valor = (permissao.getSistema().getId() + ";");
+				valor += (permissao.getSistema().getId() + ";");
 			}
-			
+
 			if(usu != null){
 				request.setAttribute("AlterErroUsu", false);
 				request.setAttribute("usuario", usu);	
@@ -122,8 +123,7 @@ public class AtualizaUsuarioCommand implements Command {
 			String string[] = request.getParameterValues("sistema");
 			for (String var : string) {
 				Sistema sis = new Sistema();
-				SistemaServices sisSe = new SistemaServices();
-				sis = sisSe.obterPorId(Long.valueOf(var));
+				sis = SistemaServices.obterPorId(Long.valueOf(var));
 				sistema.add(sis);
 			}
 		}else{
@@ -164,14 +164,12 @@ public class AtualizaUsuarioCommand implements Command {
 			emailValido = false;
 			request.setAttribute("emailValido", emailValido);
 		}
-		UsuarioServices usuSevice = new UsuarioServices();
-		 
 		String rLogin = null, rEmail = null, auxEmail = null , auxLogin = null ;
 		Usuario urLogin = null, urEmail = null, urAux = null;
 		
-		urAux = usuSevice.obterPorId(Long.valueOf(id));
-		urLogin = usuSevice.validarLogin(login);
-		urEmail = usuSevice.validarEmail(email);
+		urAux = UsuarioServices.obterPorId(Long.valueOf(id));
+		urLogin = UsuarioServices.validarLogin(login);
+		urEmail = UsuarioServices.validarEmail(email);
 		rLogin = urLogin != null? urLogin.getLogin(): null;
 		auxLogin = urAux != null? urAux.getLogin(): null;
 		auxEmail = urAux != null? urAux.getEmail(): null;
@@ -188,9 +186,7 @@ public class AtualizaUsuarioCommand implements Command {
 				emailValido = false;
 				request.setAttribute("emailValido", emailValido);
 			}
-		}
-		
-		
+		}	
 							
 		if(nomeValido == false || emailValido == false || loginValido == false || senhaValido1 == false || senhaValido2 == false || id == null){
 			request.getRequestDispatcher("alteraUsuario.jsp").forward(request, response);
@@ -210,12 +206,40 @@ public class AtualizaUsuarioCommand implements Command {
 				Permissao permissao = new Permissao();
 				permissao.setSistema(sis);
 				permissao.setUsuario(usu);
+				permissao.setPerfil(usu.getPerfil());
 				permisseos.add(permissao);
 			}
 			usu.setPermissoes(permisseos);
+			UsuarioServices.update(usu);
 			
-			UsuarioServices usuSe = new UsuarioServices();	
-			usuSe.update(usu);
+			new UsuarioServices();
+			List<Permissao> lp = UsuarioServices.getPermissao(usu);
+			
+			for (Permissao permissao : permisseos) {
+				int cont = 0;
+				for (Permissao perm : lp) {
+					if(perm.getSistema().getId() == permissao.getSistema().getId()){
+						cont++;
+					} 
+				}
+				if(cont == 0){
+					UsuarioServices.salvarPermissao(permissao);
+				}				
+			}
+			
+			for (Permissao perm : lp) {
+				int cont = 0;
+				for (Permissao permissao : permisseos) {
+					if(perm.getSistema().getId() == permissao.getSistema().getId()){
+						cont++;
+					}
+				} 
+				if(cont == 0){
+					UsuarioServices usuSePe = new UsuarioServices();
+					usuSePe.removerPermissao(perm);
+				}				
+			}
+			
 			request.getRequestDispatcher("home.jsp").forward(request, response);	
 		}	
 	}

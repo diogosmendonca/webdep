@@ -39,8 +39,8 @@ public class AutenticaUsuarioCommand implements Command {
 		Locale currentLocale = request.getLocale();
 		String msg = "";
 		if(currentLocale.getDisplayCountry().equals("Brazil")) {
-			msg = "Login ou senha incorretos!";
-		} else msg = "Incorrect username or password!";
+			msg += "Login ou senha incorretos!";
+		} else msg += "Incorrect username or password!";
 		
 		//Validando usuario
 		try {
@@ -63,17 +63,9 @@ public class AutenticaUsuarioCommand implements Command {
 			response.sendRedirect(request.getContextPath() + "/home.jsp");
 			return;
 		} else {
-			if(login != null) {
-				request.setAttribute("msg", msg);
-				request.getSession().setAttribute("usuario", login.getLogin());
-				request.getRequestDispatcher("/index.jsp").forward(request, response);
-			} else {
-				if(currentLocale.getDisplayCountry().equals("Brazil")) {
-					msg = "Usuário não cadastrado!";
-				} else msg = "User doesn't exist!";
-				request.setAttribute("msg", msg);
-				request.getRequestDispatcher("/index.jsp").forward(request, response);
-			}
+			request.getSession().setAttribute("msg", msg);
+			request.getSession().setAttribute("usuario", loginUsuario);
+			response.sendRedirect(request.getContextPath() + "/index.jsp");
 		}
 	}
 	

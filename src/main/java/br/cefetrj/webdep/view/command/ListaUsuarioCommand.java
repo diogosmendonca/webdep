@@ -1,12 +1,9 @@
 package br.cefetrj.webdep.view.command;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,7 +11,7 @@ import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.services.UsuarioServices;
 
 /**
- * Classe responsavel por listar usuarios do sistema.
+ * Classe responsavel por remover usuarios do sistema.
  * 
  * @author Lawrence Fernandes
  * @author Iury
@@ -26,9 +23,8 @@ import br.cefetrj.webdep.services.UsuarioServices;
 public class ListaUsuarioCommand implements Command {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-			UsuarioServices userSe = new UsuarioServices();
 			List<Usuario> usu = null;	
-			usu = userSe.listarTodos();
+			usu = UsuarioServices.listarTodos();
 		
 			request.setAttribute("usuario", usu);				
 			request.getRequestDispatcher("listaUsuario.jsp").forward(request, response);	
@@ -41,12 +37,17 @@ public class ListaUsuarioCommand implements Command {
 		}
 		
 		if(search != null && search.trim().length() != 0){
-			UsuarioServices userSe = new UsuarioServices();
 			List<Usuario> usu = null;	
-			usu = userSe.buscaTodos(search.trim());
 		
-			request.setAttribute("usuario", usu);				
-			request.getRequestDispatcher("listaUsuario.jsp").forward(request, response);	
+			try {
+				usu = UsuarioServices.buscaTodos(search.trim());
+				request.setAttribute("usuario", usu);				
+				request.getRequestDispatcher("listaUsuario.jsp").forward(request, response);	
+			} catch (Exception e) {
+				doGet(request, response);
+			}
+		}else{
+			doGet(request, response);
 		}
 	}
 

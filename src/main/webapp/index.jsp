@@ -43,7 +43,14 @@
                             <div class="form-group">
     							<label class="control-label col-sm-2" for="login"><fmt:message key="br.cefetrj.webdep.jsp.index.login" /></label>
     							<div class="col-sm-10">
-      								<input type="text" class="form-control" name="login" id="login" required="required" value="${usuario}" >
+    							<c:choose>
+								    <c:when test="${!empty sessionScope.usuario}">
+								        <input type="text" class="form-control" name="login" id="login" required="required" value="<%=session.getAttribute("usuario")%>" >
+								    </c:when>    
+								    <c:otherwise>
+								        <input type="text" class="form-control" name="login" id="login" required="required" >
+								    </c:otherwise>
+								</c:choose>
     							</div>
   							</div>
   							<div class="form-group">
@@ -60,7 +67,7 @@
 								<br/>
       							<span class="psw"><a href="#"><fmt:message key="br.cefetrj.webdep.jsp.index.esqueci" /></a></span>
     						</div>
-                        </form>
+     					</form>
                         </div>
                     </div>  
                 </div>

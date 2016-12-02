@@ -1,35 +1,17 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!-- Taglib necessária para acessar as funções de formatação -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
 
-<!-- O LOGIN JÁ ESTÁ PASSANDO OS VALORES-->
-<!-- Testando se o usuario esta vazio para joga-lo na sessao atravez do id passado no login  -->
-<!-- <c:if test="${empty usuario }">
-
-	<c:choose>
-		<c:when test="${sessionScope.id==null && empty sessionScope.user}">
-			<jsp:forward page="/index.jsp" />
-		</c:when>
-
-		<c:otherwise>
-
-			<jsp:forward page="/FrontControllerServlet">
-				<jsp:param name="action" value="getUsuario" />
-				<jsp:param name="id" value="${sessionScope.id}" />
-			</jsp:forward>
-			
-		</c:otherwise>
-
-	</c:choose>
-</c:if> -->
 
 <!-- Jogando na sessao o id do sistema marcado combobox -->
-<c:if test="${!empty param.idsistema }">
-
-	<c:set var="idsistema" scope="session" value="${param.idsistema}" />
-
-</c:if>
+<%-- <c:if test="${!empty param.idsistema }"> --%>
+<%-- 	<c:set var="idsistema" scope="session" value="${param.idsistema}" /> --%>
+<%-- </c:if> --%>
 
 <!-- Alerta para expiração de sessão -->
 <script>
@@ -51,8 +33,7 @@ links barra menu -->
 
 			<ul class="nav navbar-nav">
 				<!-- Testar perfil do usuário -->
-				<c:if
-					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' }">
+				<c:if test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador'}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> WebDep <span class="caret"></span>
@@ -68,13 +49,12 @@ links barra menu -->
 				</c:if>
 				<!-- END WEBDEP -->
 				<!-- Testar perfil do usuário -->
-				<c:if
-					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' }">
+				<c:if test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador'}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> <fmt:message
 								key="br.cefetrj.webdep.jsp.navbar.sistemas" /><span
-							class="caret"></span>
+							class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="cadastrodesistema.jsp"><fmt:message
 											key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarsistema" /></a></li>
@@ -84,16 +64,15 @@ links barra menu -->
 											key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarnovaversao" /></a></li>
 								<li><a href="./versionSearch.jsp"><fmt:message
 											key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluirversoes" /></a></li>
-
 							</ul></li>
 				</c:if>
 				<!-- END SISTEMAS -->
 				<!-- Testar perfil do usuário -->
-				<c:if
-					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador'  }">
+				<c:if test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador'}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false" /> Logs<span class="caret"></span>
+						aria-expanded="false" ><fmt:message
+										key="br.cefetrj.psw.importaLog.logs" /><span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="./importarLog.jsp"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.logs.importarlogs" /></a></li>
@@ -111,7 +90,7 @@ links barra menu -->
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> <fmt:message
 								key="br.cefetrj.webdep.jsp.navbar.relatorios" /><span
-							class="caret"></span>
+							class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="./accessProfileReport.jsp"><fmt:message
 											key="br.cefetrj.webdep.jsp.navbar.relatorios.perfildeacesso" /></a></li>
@@ -230,7 +209,7 @@ links barra menu -->
 </div>
 
 <!-- Session Timeout -->
-  <div class="modal fade" id="sessionTimeout" role="dialog">
+<div class="modal fade" id="sessionTimeout" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -248,4 +227,4 @@ links barra menu -->
         </div>
       </div>
     </div>
-  </div>
+</div>

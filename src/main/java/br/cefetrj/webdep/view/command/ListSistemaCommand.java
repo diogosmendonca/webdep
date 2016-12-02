@@ -27,8 +27,7 @@ public class ListSistemaCommand implements Command{
 		PrintWriter pw = response.getWriter();
 		String json = "";
 		List<Sistema> sistemasFiltrados = null;
-		
-		if (filtro.equals("all")){
+		if (filtro.equals("all")) {
 			sistemasFiltrados = SistemaServices.listarTodos();
 		} else {
 			sistemasFiltrados = SistemaServices.searchSistema(filtro);
@@ -78,7 +77,6 @@ public class ListSistemaCommand implements Command{
 		} else {
 			json = "{\"Erro\": \"Nenhum resultado encontrado\"}";
 		}
-		response.setContentType("application/json");
 		pw.write(json);
 	}
 }

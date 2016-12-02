@@ -16,15 +16,39 @@
     <form action="FrontControllerServlet">
         <fieldset class="form-group">
             <legend><fmt:message key="br.cefetrj.psw.excluirLog.sistema" /></legend>
-            <label><fmt:message key="br.cefetrj.psw.excluirLog.dataInicial" />:</label><input type="date" name="dataInicial" value="${ dataInicial }">
-            <label><fmt:message key="br.cefetrj.psw.excluirLog.dataFinal" />:</label><input type="date" name="dataFinal" value="${ dataFinal }">
+            <label><fmt:message key="br.cefetrj.psw.excluirLog.dataInicial" />:</label>
+            <div class="input-group date form_date col-sm-6" data-date=""
+                 data-date-format="yyyy-mm-dd" data-link-field="dtp_input2"
+                 data-link-format="yyyy-mm-dd">
+                <div id="div-data" class="input-group">
+                    <input class="form-control" type="text" name="dataInicial" value="${ dataInicial }"
+                           readonly /> <span class="input-group-addon"><span
+                        class="glyphicon glyphicon-remove"></span></span> <span
+                        class="input-group-addon"><span
+                        class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+            <label><fmt:message key="br.cefetrj.psw.excluirLog.dataFinal" />:</label>
+            <div class="input-group date form_date col-sm-6" data-date=""
+                 data-date-format="yyyy-mm-dd" data-link-field="dtp_input2"
+                 data-link-format="yyyy-mm-dd">
+                <div id="div-data" class="input-group">
+                    <input class="form-control" type="text" name="dataFinal" value="${ dataFinal }"
+                           readonly /> <span class="input-group-addon"><span
+                        class="glyphicon glyphicon-remove"></span></span> <span
+                        class="input-group-addon"><span
+                        class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
             <br>
             <c:if test="${ not empty dataInvalida and not dataInvalida }">
                 <fmt:message key="br.cefetrj.psw.excluirLog.dataInvalida" />
             </c:if>
             <br>
-            <label><fmt:message key="br.cefetrj.psw.excluirLog.horaInicial" />:</label><input type="time" name="horaInicial" value="${ horaInicial }">
-            <label><fmt:message key="br.cefetrj.psw.excluirLog.horaFinal" />:</label><input type="time" name="horaFinal" value="${ horaFinal }">
+            <label><fmt:message key="br.cefetrj.psw.excluirLog.horaInicial" />:</label>
+            <input type="time" name="horaInicial" value="${ horaInicial }">
+            <label><fmt:message key="br.cefetrj.psw.excluirLog.horaFinal" />:</label>
+            <input type="time" name="horaFinal" value="${ horaFinal }">
             <br>
             <c:if test="${ not empty horaInvalida and not horaInvalida }">
                 <fmt:message key="br.cefetrj.psw.excluirLog.horaInvalida" />

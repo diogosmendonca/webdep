@@ -1,10 +1,13 @@
 package br.cefetrj.webdep.view.command;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.cefetrj.webdep.model.entity.Permissao;
 import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.services.UsuarioServices;
 
@@ -31,9 +34,7 @@ public class DeletaUsuarioCommand implements Command {
 		}
 		
 		if(id != null){
-			UsuarioServices usuSe = new UsuarioServices();
-			 
-			Usuario usu =usuSe.obterPorId(id);			
+			Usuario usu = UsuarioServices.obterPorId(id);			
 			if(usu != null){
 				request.setAttribute("usuario", usu);
 				request.getRequestDispatcher("deletaUsuario.jsp").forward(request, response);	
@@ -59,12 +60,16 @@ public class DeletaUsuarioCommand implements Command {
 		
 		if(id != null){
 			Usuario usu = null;
-
-			UsuarioServices usuSe = new UsuarioServices();
-			usu =usuSe.obterPorId(id);	
+			usu =UsuarioServices.obterPorId(id);	
 			
 			if(usu != null){
-				usuSe.remover(usu);
+				new UsuarioServices();
+				List<Permissao> lp = UsuarioServices.getPermissao(usu);
+				for (Permissao permissao : lp) {
+					UsuarioServices usuSePe = new UsuarioServices();
+					usuSePe.removerPermissao(permissao);
+				}
+				UsuarioServices.remover(usu);
 				request.getRequestDispatcher("FrontControllerServlet?action=listaUsuario&get=true").forward(request, response);	
 			}else{
 				request.setAttribute("AlterErroUsu", true);
