@@ -47,6 +47,7 @@
 </head>
 <body class="container-full">
 	<%@include file="navbar.jspf"%>
+	
 
 
 
