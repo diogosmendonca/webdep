@@ -35,9 +35,10 @@ $(document).ready(function () {
                     filtro: "all"
                 },
                 success: function (response) {
-                        var sistemas = response.sistemas;
-                		var erro = response.Erro;
-                        if (response.hasOwnProperty("sistemas")){
+                		var resposta = $.parseJSON(response);
+                        var sistemas = resposta.sistemas;
+                		var erro = resposta.Erro;
+                        if (resposta.hasOwnProperty("sistemas")){
                         	$("#table-sistemas").children().remove();
                         sistemas.forEach(function (el) {
                         	$("#table-sistemas").append("<tr><td>" 
@@ -49,8 +50,8 @@ $(document).ready(function () {
                         					"<td><a onclick=alterar(\""+ el.id +"\"); id=\""+ el.id +"-alterar\" class=\"alterar-sistema\">Alterar</a></td>" +
                         					"<td><a onclick=excluir(\""+ el.id +"\"); id=\""+ el.id +"-excluir\" class=\"excluir-sistema\">Excluir</a></td></tr>");
                         });
-                        } else if (response.hasOwnProperty("Erro")){
-                        	alert(response.Erro);
+                        } else if (resposta.hasOwnProperty("Erro")){
+                        	alert(resposta.Erro);
                         }
                 }
             });
