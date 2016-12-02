@@ -9,6 +9,7 @@
 <fmt:setBundle basename="Messages" />
 <c:set var="sistemas" scope="session" value="<%=SistemaServices.listarTodos()%>"/>
 <c:set var="servidores" scope="session" value="<%=ServidorServices.listAllServidor()%>"/>
+<c:set var="logs" scope="session" value="<%=FormatoLogServices.listAllFormatoLog()%>"/>
 <html>
 <head>
     <title>WebDep</title>
@@ -24,14 +25,14 @@
                 <label><fmt:message key="br.cefetrj.psw.importaLog.nomeSistema" />:</label>
                 <select name="sistema">
                     <c:forEach items="${ sistemas }" var="sis">
-                        <option value="${ sis }" ${ sistema == sis ? 'selected' : '' }>${ sis.nome }</option>
+                        <option value="${ sis.id }" ${ sistema == sis.nome ? 'selected' : '' }>${ sis.nome }</option>
                     </c:forEach>
                 </select>
                 <br><br>
                 <label><fmt:message key="br.cefetrj.psw.importaLog.servidor" /></label>
                 <select name="servidor">
                     <c:forEach items="${ servidores }" var="serv">
-                        <option value="${ serv }" ${ servidor == serv ? 'selected' : '' }>${ serv.nome }</option>
+                        <option value="${ serv.id }" ${ servidor == serv.nome ? 'selected' : '' }>${ serv.nome }</option>
                     </c:forEach>
                 </select>
                 <br>
@@ -40,8 +41,9 @@
                 <legend><fmt:message key="br.cefetrj.psw.importaLog.logs" /></legend>
                 <label><fmt:message key="br.cefetrj.psw.importaLog.formatoLog" />:</label>
                 <select name="log">
-                    <option value="common" ${ log == 'common' ? 'selected' : ''}>Common</option>
-                    <option value="combined" ${ log == 'combined' ? 'selected' : ''}>Combined</option>
+                    <c:forEach items="${ logs }" var="l">
+                        <option value="${ l.id }" ${ servidor == l.nome ? 'selected' : '' }>${ l.nome }</option>
+                    </c:forEach>
                 </select>
                 <br><br>
                 <label><fmt:message key="br.cefetrj.psw.importaLog.logAcesso" />:</label><input type="text" name="logAcesso" value="${ logAcesso }">
