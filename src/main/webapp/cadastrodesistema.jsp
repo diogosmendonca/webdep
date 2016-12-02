@@ -141,7 +141,7 @@
 				class="btn btn-primary ">
 				<fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnSalvar" />
 			</button>
-			<button class="btn btn-secondary " type="button">
+			<button id="cancela-btn" class="btn btn-secondary " type="button">
 				<fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnCancelar" />
 			</button>
 		</div>
