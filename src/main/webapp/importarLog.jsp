@@ -42,7 +42,7 @@
                 <label><fmt:message key="br.cefetrj.psw.importaLog.formatoLog" />:</label>
                 <select name="log">
                     <c:forEach items="${ logs }" var="l">
-                        <option value="${ l.id }" ${ servidor == l.nome ? 'selected' : '' }>${ l.nome }</option>
+                        <option value="${ l.id }" ${ log == l.nome ? 'selected' : '' }>${ l.nome }</option>
                     </c:forEach>
                 </select>
                 <br><br>
