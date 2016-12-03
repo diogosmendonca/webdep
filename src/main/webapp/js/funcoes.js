@@ -348,10 +348,13 @@ $(document)
 																	.hasOwnProperty("mensagem")) {
 																var mensagem = resposta.mensagem;
 																alert(mensagem);
-																if (!confirm("Você deseja cadastrar outro Sistema? \n Sim, para cadastrar outro Sistema \nNão, para ser sair desta página.")) {
+																if (!confirm("Você deseja cadastrar outro Sistema? \n Ok, para cadastrar outro Sistema \n Cancelar, para ser sair desta página.")) {
 																	window.location
 																			.replace("gerenciadorsistema.jsp");
-																}
+																} else {
+																	window.location
+																			.replace("cadastrodesistema.jsp");
+																	}
 															}
 														}
 													});
