@@ -24,6 +24,7 @@ public class Permissao implements Serializable {
 	private Long id;
 
 	@ManyToOne
+	@JoinColumn(name="permissoes")
 	private Sistema sistema;
 	
 	@ManyToOne
