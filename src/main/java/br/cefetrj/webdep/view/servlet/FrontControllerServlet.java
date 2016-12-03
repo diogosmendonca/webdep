@@ -15,6 +15,7 @@ import br.cefetrj.webdep.view.command.Command;
 import br.cefetrj.webdep.view.command.DeleteSistemaCommand;
 import br.cefetrj.webdep.view.command.DeleteVersionCommand;
 import br.cefetrj.webdep.view.command.InsertPadraoURLCommand;
+import br.cefetrj.webdep.view.command.InsertSelectIdSistemaCommand;
 import br.cefetrj.webdep.view.command.InsertSistemaCommand;
 import br.cefetrj.webdep.view.command.InsertVersionCommand;
 import br.cefetrj.webdep.view.command.ListSistemaCommand;
@@ -59,6 +60,9 @@ public class FrontControllerServlet extends HttpServlet {
 	private static Map<String, Command> commands = new HashMap<>();
 
 	static {
+		
+		commands.put("insertselectidsistema", new InsertSelectIdSistemaCommand ());
+		
 		commands.put("errorParameter", new ValidaHttpReportCommand());
 
 		commands.put("autenticaUsuario", new AutenticaUsuarioCommand());

@@ -1,19 +1,20 @@
 package br.cefetrj.webdep.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
 
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
+import br.cefetrj.webdep.model.entity.Permissao;
 import br.cefetrj.webdep.model.entity.Usuario;
 
 public class UsuarioServices {
 
 	private static Usuario usuario;
 	
-	public static Usuario getUsuario(Usuario _usuario){
-		
+	public static Usuario getUsuario(Usuario _usuario) {
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		pManager.beginTransaction();
 		
@@ -26,7 +27,7 @@ public class UsuarioServices {
 	}
 	
 	
-	public static Usuario obterPorId(Long id){
+	public static Usuario obterPorId(Long id) {
 		Usuario usuario = null;
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
@@ -39,11 +40,10 @@ public class UsuarioServices {
 		} catch (Exception e) {
 			pManager.rollbackTransaction();
 		}
-		
-		return 	usuario;
+		return usuario;
 	}
 	
-	public static void salvar(Usuario usuario){
+	public static void salvar(Usuario usuario) {
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
 			pManager.beginTransaction();
@@ -57,7 +57,53 @@ public class UsuarioServices {
 		}
 	}
 	
-	public static void update(Usuario usuario){
+	public static void salvarPermissao(Permissao permissao) {
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			
+			GenericDAO<Permissao> permissaoDAO = pManager.createGenericDAO(Permissao.class);
+			permissaoDAO.insert(permissao);
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+	}
+	
+	public static List<Permissao> getPermissao(Usuario usu){
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		List<Permissao> list = new ArrayList<Permissao>(); 
+		
+		try {
+			pManager.beginTransaction();
+			
+			TypedQuery	<Permissao> query = (TypedQuery<Permissao>) pManager.createQuery("SELECT p FROM Permissao p where p.usuario = :usu");
+			list = query.setParameter("usu", usu).getResultList();
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+		return list;
+	}
+	
+	public void removerPermissao(Permissao per) {
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		
+		try {
+			pManager.beginTransaction();
+						
+			GenericDAO<Permissao> permissaoDAO = pManager.createGenericDAO(Permissao.class);
+			permissaoDAO.delete(per);
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+	}
+	
+	public static void update(Usuario usuario) {
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
 			pManager.beginTransaction();
@@ -71,7 +117,7 @@ public class UsuarioServices {
 		}
 	}
 	
-	public static void remover(Usuario usuario){
+	public static void remover(Usuario usuario) {
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
 			pManager.beginTransaction();
@@ -85,7 +131,7 @@ public class UsuarioServices {
 		}
 	}
 	
-	public static List<Usuario> listarTodos(){
+	public static List<Usuario> listarTodos() {
 		List<Usuario> usuarios = null;
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
@@ -98,11 +144,10 @@ public class UsuarioServices {
 		} catch (Exception e) {
 			pManager.rollbackTransaction();
 		}
-		
-		return 	usuarios;			
+		return usuarios;			
 	}
 	
-	public static List<Usuario> buscaTodos(String busca){
+	public static List<Usuario> buscaTodos(String busca) {
 		List<Usuario> usuarios = null;
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
@@ -115,11 +160,10 @@ public class UsuarioServices {
 		} catch (Exception e) {
 			pManager.rollbackTransaction();
 		}
-		
-		return 	usuarios;			
+		return usuarios;			
 	}
 	
-	public static Usuario validarLogin(String Login){
+	public static Usuario validarLogin(String Login) {
 		Usuario usuario = null;
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
@@ -131,11 +175,10 @@ public class UsuarioServices {
 		} catch (Exception e) {
 			pManager.rollbackTransaction();
 		}
-		
-		return 	usuario;
+		return usuario;
 	}
 	
-	public static Usuario validarEmail(String Email){
+	public static Usuario validarEmail(String Email) {
 		Usuario usuario = null;
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
@@ -147,8 +190,7 @@ public class UsuarioServices {
 		} catch (Exception e) {
 			pManager.rollbackTransaction();
 		}
-		
-		return 	usuario;
+		return usuario;
 	}
 	
 }

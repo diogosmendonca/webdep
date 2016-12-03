@@ -1,25 +1,28 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- Taglib necessária para acessar as funções de formatação -->
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
 
 
 <!-- Jogando na sessao o id do sistema marcado combobox -->
-<c:if test="${!empty param.idsistema }">
-	<c:set var="idsistema" scope="session" value="${param.idsistema}" />
-</c:if>
+<%-- <c:if test="${!empty param.idsistema }"> --%>
+<%-- 	<c:set var="idsistema" scope="session" value="${param.idsistema}" /> --%>
+<%-- </c:if> --%>
 
 <!-- Alerta para expiração de sessão -->
 <script>
-    var secondsBeforeExpire = ${pageContext.session.maxInactiveInterval};
-    var timeToDecide = 15; // Give client 15 seconds to choose.
-    setTimeout(function() {
-    	$("#sessionTimeout").modal("show");
-    }, (secondsBeforeExpire - timeToDecide) * 1000);
+	var secondsBeforeExpire = $
+	{
+		pageContext.session.maxInactiveInterval
+	};
+	var timeToDecide = 15; // Give client 15 seconds to choose.
+	setTimeout(function() {
+		$("#sessionTimeout").modal("show");
+	}, (secondsBeforeExpire - timeToDecide) * 1000);
 </script>
 
 <!-- 
@@ -33,15 +36,18 @@ links barra menu -->
 
 			<ul class="nav navbar-nav">
 				<!-- Testar perfil do usuário -->
-				<c:if test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador'}">
+				<c:if
+					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' || sessionScope.usuario.perfil=='Admin'}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> WebDep <span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href="FrontControllerServlet?action=cadastraUsuario&get=true"><fmt:message
+							<li><a
+								href="FrontControllerServlet?action=cadastraUsuario&get=true"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.webdep.cadastrarusuario" /></a></li>
-							<li><a href="FrontControllerServlet?action=listaUsuario&get=true"><fmt:message
+							<li><a
+								href="FrontControllerServlet?action=listaUsuario&get=true"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.webdep.listaralterarexcluir" /></a></li>
 							<li><a href="./config.jsp"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.webdep.configuracoes" /></a></li>
@@ -49,30 +55,32 @@ links barra menu -->
 				</c:if>
 				<!-- END WEBDEP -->
 				<!-- Testar perfil do usuário -->
-				<c:if test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador'}">
+				<c:if
+					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' || sessionScope.usuario.perfil=='Admin'}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> <fmt:message
 								key="br.cefetrj.webdep.jsp.navbar.sistemas" /><span
 							class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="cadastrodesistema.jsp"><fmt:message
-											key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarsistema" /></a></li>
-								<li><a href="gerenciadorsistema.jsp"><fmt:message
-											key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluir" /></a></li>
-								<li><a href="./versionRegistration.jsp"><fmt:message
-											key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarnovaversao" /></a></li>
-								<li><a href="./versionSearch.jsp"><fmt:message
-											key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluirversoes" /></a></li>
-							</ul></li>
+						<ul class="dropdown-menu">
+							<li><a href="cadastrodesistema.jsp"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarsistema" /></a></li>
+							<li><a href="gerenciadorsistema.jsp"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluir" /></a></li>
+							<li><a href="./versionRegistration.jsp"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.sistemas.cadastrarnovaversao" /></a></li>
+							<li><a href="./versionSearch.jsp"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.sistemas.listaratualizarexcluirversoes" /></a></li>
+						</ul></li>
 				</c:if>
 				<!-- END SISTEMAS -->
 				<!-- Testar perfil do usuário -->
-				<c:if test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador'}">
+				<c:if
+					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' || sessionScope.usuario.perfil=='Admin' }">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false" ><fmt:message
-										key="br.cefetrj.psw.importaLog.logs" /><span class="caret"></span></a>
+						aria-expanded="false"><fmt:message
+								key="br.cefetrj.psw.importaLog.logs" /><span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="./importarLog.jsp"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.logs.importarlogs" /></a></li>
@@ -85,18 +93,18 @@ links barra menu -->
 				</c:if>
 				<!-- END LOGS -->
 				<c:if
-					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' || sessionScope.usuario.perfil=='Analista'}">
+					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' || sessionScope.usuario.perfil=='Admin' || sessionScope.usuario.perfil=='Analista'}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> <fmt:message
 								key="br.cefetrj.webdep.jsp.navbar.relatorios" /><span
 							class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="./accessProfileReport.jsp"><fmt:message
-											key="br.cefetrj.webdep.jsp.navbar.relatorios.perfildeacesso" /></a></li>
-								<li><a href="./HTTPreport.jsp"><fmt:message
-											key="br.cefetrj.webdep.jsp.navbar.relatorios.confiabilidadeurls" /></a></li>
-							</ul></li>
+						<ul class="dropdown-menu">
+							<li><a href="./accessProfileReport.jsp"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.relatorios.perfildeacesso" /></a></li>
+							<li><a href="./HTTPreport.jsp"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.relatorios.confiabilidadeurls" /></a></li>
+						</ul></li>
 				</c:if>
 				<!-- END Relatórios  -->
 			</ul>
@@ -105,12 +113,35 @@ links barra menu -->
 				<li><form name="barralistbox" class="navbar-form navbar-left">
 						<div class="form-group">
 
+							
+							<!--  pegando os valores do combobox -->
+							<script>
+								function updateIdSistema() {
+									var selecionados = "";
+									
+									$("#sistema option:selected").each(
+											function(name, val) {
+												selecionados = val.value;
+											});
+
+									$
+											.ajax({
+												url : "FrontControllerServlet?action=insertselectidsistema&idSistema="+ selecionados,
+												success : function(result) {
+													
+												}
+											});
+								}
+							</script>
+
+
+
 							<!-- Tag do select customizada -->
- 							<cmp:ComboSistema userId="${ id }" classCss="form-control" />
-							
-							
+							<cmp:ComboSistema userId="${ id }" attributes=" onchange='javascript:updateIdSistema()'"  classCss="form-control" />
+
+
 							<!-- Script para submissão do select -->
-<!--  							<script type="text/javascript">
+							<!--  							<script type="text/javascript">
 							function post(path, params, method) {
 								method = method || "post"; // Set method to post by default if not specified.
 
@@ -145,8 +176,8 @@ links barra menu -->
 
 							}
 							</script>-->
-                                      
-<!-- 
+
+							<!-- 
 						<select name="sistema" class="form-control" 
 								id="versionlist">
 								<c:forEach items="${listasistema}" var="sistema">
@@ -154,7 +185,7 @@ links barra menu -->
 								</c:forEach>
 							</select> 
 							 -->
-		<!-- <%-- 						<select name="sistema" class="form-control" 
+							<!-- <%-- 						<select name="sistema" class="form-control" 
 								id="versionlist">
 								<c:forEach items="${listasistema}" var="sistema">
 									<option value="${ sistema.id }" onclick="pegarID();"> ${ sistema.nome }</option>
@@ -189,42 +220,64 @@ links barra menu -->
 
 <!-- Logout -->
 <div class="modal fade" id="logoutModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"><fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.confirmacao" /></h4>
-        </div>
-        <div class="modal-body">
-          <p><fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.confirmasair" /></p>
-        </div>
-        <div class="modal-footer">
-        <form method="post" action="FrontControllerServlet">
-          <button id="submit-padrao-url" name="action" value="deslogaUsuario" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" /></button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
-        </form>
-        </div>
-      </div>  
-    </div>
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.confirmacao" />
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="br.cefetrj.webdep.jsp.navbar.idioma.confirmasair" />
+				</p>
+			</div>
+			<div class="modal-footer">
+				<form method="post" action="FrontControllerServlet">
+					<button id="submit-padrao-url" name="action" value="deslogaUsuario"
+						type="submit" class="btn btn-primary">
+						<fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" />
+					</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">
+						<fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" />
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Session Timeout -->
 <div class="modal fade" id="sessionTimeout" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.titulo" /></h4>
-        </div>
-        <div class="modal-body">
-          <p><fmt:message key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.mensagem" /></p>
-        </div>
-        <div class="modal-footer">
-        <form method="post" action="FrontControllerServlet">
-          <button id="submit-padrao-url" name="action" value="deslogaUsuario" type="submit" class="btn btn-defailt"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.sair" /></button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.permanecer" /></button>
-        </form>
-        </div>
-      </div>
-    </div>
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<fmt:message
+						key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.titulo" />
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message
+						key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.mensagem" />
+				</p>
+			</div>
+			<div class="modal-footer">
+				<form method="post" action="FrontControllerServlet">
+					<button id="submit-padrao-url" name="action" value="deslogaUsuario"
+						type="submit" class="btn btn-defailt">
+						<fmt:message
+							key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.sair" />
+					</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">
+						<fmt:message
+							key="br.cefetrj.webdep.jsp.navbar.sessiontimeout.permanecer" />
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>

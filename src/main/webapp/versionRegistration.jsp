@@ -30,10 +30,7 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="name"><fmt:message key="br.cefetrj.webdep.jsp.vr.system" /></label>
 						<div class="col-xs-2">
-							<select class="form-control" name="sistema" id="sistema">
-								<option disabled selected><fmt:message key="br.cefetrj.webdep.jsp.vr.select" /></option>
-								<option value="Segmentation Fault">Segmentation Fault</option>
-							</select>
+							<cmp:ComboSistema userId="${ id }" selectedList="${ sys }" classCss="form-control"/>	
 						</div>
 					</div>
 					<div class="form-group">

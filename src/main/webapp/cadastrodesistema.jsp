@@ -18,7 +18,7 @@
 </head>
 <body>
 	<%@include file="navbar.jspf"%>
-	<form id="sistema-form" class="form-horizontal container">
+	<div id="sistema-form" class="form-horizontal container">
 		<div class="row">
 			<fieldset class="form-group">
 				<legend>
@@ -141,12 +141,12 @@
 				class="btn btn-primary ">
 				<fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnSalvar" />
 			</button>
-			<button class="btn btn-secondary " type="button">
+			<button id="cancela-btn" class="btn btn-secondary " type="button">
 				<fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnCancelar" />
 			</button>
 		</div>
 
-	</form>
+	</div>
 
 	<jsp:include page="scripts.jspf" />
 </body>

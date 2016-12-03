@@ -45,7 +45,7 @@
             </div>
             <br></br>
             <div class="row">
-                <button type="button" class="btn btn-secondary btn-lg center-block"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.voltar" /></button>
+                <button id="volta-btn" type="button" class="btn btn-secondary btn-lg center-block"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.voltar" /></button>
             </div>
         </div>
         <jsp:include page="scripts.jspf"/>
