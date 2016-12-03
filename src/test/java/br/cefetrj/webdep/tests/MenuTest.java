@@ -1,14 +1,157 @@
 package br.cefetrj.webdep.tests;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.persistence.Query;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import br.cefetrj.webdep.model.dao.GenericDAO;
+import br.cefetrj.webdep.model.dao.PersistenceManager;
+import br.cefetrj.webdep.model.entity.Permissao;
+import br.cefetrj.webdep.model.entity.Sistema;
+import br.cefetrj.webdep.model.entity.Usuario;
+import br.cefetrj.webdep.tests.support.TestSupport;
+
 public class MenuTest {
-	/*
-	private WebDriver driver;
-	private TestSupport auxMenu;
 	
-	//@Before
-	public void inicializa(){
-		this.driver = new FirefoxDriver();
-		this.auxMenu = new TestSupport(driver);
+	@SuppressWarnings("unused")
+	private static Long adminGeralId;
+	
+	@SuppressWarnings("unused")
+	private static Long adminId;
+	
+	@SuppressWarnings("unused")
+	private static Long analistaId;
+	
+	@SuppressWarnings("unused")
+	private static Long sistemaId;
+	
+	private static WebDriver driver;
+	private static PersistenceManager pm;
+	private static TestSupport auxMenu;
+	
+	
+	@AfterClass
+	public static void restoreDbConfig() throws IOException {
+		pm.beginTransaction();
+		Query q = pm.createNativeQuery("TRUNCATE SCHEMA public AND COMMIT");
+		q.executeUpdate();
+		pm.commitTransaction();
+		driver.quit();
+	}
+	
+	
+	@BeforeClass
+	public static void configureDb() throws IOException {
+		
+		pm = PersistenceManager.getInstance();
+		pm.beginTransaction();
+		
+		Sistema s1 = new Sistema();
+		s1.setNome("Sistema Teste");
+		s1.setPastaLogAcesso("/PastaLog/Acesso");
+		s1.setPrefixoLogAcesso("sistemaTesteAcesso");
+		s1.setPastaLogErro("/PastaLog/Erro");
+		s1.setPrefixoLogErro("sistemaTesteErro");
+		s1.setPrimeiraLeitura(LocalDateTime.now());
+		s1.setPeriodicidadeLeitura(1L);
+		
+		Sistema s2 = new Sistema();
+		s2.setNome("Sistema Teste 2");
+		s2.setPastaLogAcesso("/PastaLog/Acesso");
+		s2.setPrefixoLogAcesso("sistemaTeste2Acesso");
+		s2.setPastaLogErro("/PastaLog/Erro");
+		s2.setPrefixoLogErro("sistemaTeste2Erro");
+		s2.setPrimeiraLeitura(LocalDateTime.now());
+		s2.setPeriodicidadeLeitura(1L);
+		
+		Usuario u1 = new Usuario();
+		u1.setNome("Usuario Um");
+		u1.setLogin("usuario1");
+		u1.setSenha("123456");
+		u1.setPerfil("admin");
+		u1.setAdmGeral(true);
+		u1.setEmail("usuario_um@usuario.com");
+		
+		Usuario u2 = new Usuario();
+		u2.setNome("Usuario Dois");
+		u2.setLogin("usuario2");
+		u2.setSenha("123456");
+		u2.setPerfil("admin");
+		u2.setAdmGeral(false);
+		u2.setEmail("usuario_dois@outrousuario.com.br");
+		
+		Usuario u3 = new Usuario();
+		u3.setNome("Usuario Tres");
+		u3.setLogin("usuario3");
+		u3.setSenha("123456");
+		u3.setPerfil("analista");
+		u3.setAdmGeral(false);
+		u3.setEmail("usuario_tres@usuario.com");
+		
+		Permissao p1 = new Permissao();
+		p1.setSistema(s1);
+		p1.setUsuario(u2);
+		
+		Permissao p2 = new Permissao();
+		p2.setSistema(s1);
+		p2.setUsuario(u3);
+		
+		u2.setPermissoes(Arrays.asList(new Permissao[]{p1}));
+		u3.setPermissoes(Arrays.asList(new Permissao[]{p2}));
+		
+		GenericDAO<Usuario> usuarioDao = pm.createGenericDAO(Usuario.class);
+		GenericDAO<Sistema> sistemaDao = pm.createGenericDAO(Sistema.class);
+		GenericDAO<Permissao> permissaoDao = pm.createGenericDAO(Permissao.class);
+		
+		sistemaDao.insert(s1);
+		sistemaDao.insert(s2);
+		
+		usuarioDao.insert(u1);
+		usuarioDao.insert(u2);
+		usuarioDao.insert(u3);
+		
+		permissaoDao.insert(p1);
+		permissaoDao.insert(p2);
+		
+		pm.commitTransaction();
+		
+		adminGeralId = u1.getId();
+		adminId = u2.getId();
+		analistaId = u3.getId();
+		sistemaId = s1.getId();
+		
+		/*
+        if (System.getProperty("os.name").contains("Windows")){
+        	System.setProperty("webdriver.gecko.driver", "src\\test\\resources\\geckodriver.exe");
+        }else{
+        	System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver");
+        }
+        
+        driver = new FirefoxDriver();
+		*/
+		if (System.getProperty("os.name").contains("Windows")){
+        	System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\chromedriver.exe");
+        }else{
+        	System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver");
+        }
+        
+        driver = new ChromeDriver();
+        auxMenu = new TestSupport(driver);
 	}
 	
 	//TC01
@@ -589,9 +732,4 @@ public class MenuTest {
 		boolean sistema = opcoes.isEmpty();
 		assertTrue(sistema);
 	}
-	//@After
-	public void encerra(){
-		this.driver.close();
-	}
-	*/
 }
