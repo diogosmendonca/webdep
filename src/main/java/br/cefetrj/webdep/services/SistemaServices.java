@@ -1,5 +1,6 @@
 package br.cefetrj.webdep.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -7,8 +8,10 @@ import javax.persistence.Query;
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.dao.SistemaDAO;
+import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 import br.cefetrj.webdep.model.entity.Servidor;
 import br.cefetrj.webdep.model.entity.Sistema;
+import br.cefetrj.webdep.model.entity.Usuario;
 
 public class SistemaServices {
 	public static void insertSistema(Sistema s) {
@@ -36,13 +39,10 @@ public class SistemaServices {
 	}
 	
 	public static void deleteSistema(Sistema s){
-		
 		PersistenceManager pm = PersistenceManager.getInstance();
 		pm.beginTransaction();
-
 		GenericDAO<Sistema> dao = pm.createGenericDAO(Sistema.class);
 		dao.delete(s);
-
 		pm.commitTransaction();
 	}
 	

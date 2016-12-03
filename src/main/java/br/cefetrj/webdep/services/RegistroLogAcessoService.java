@@ -12,6 +12,30 @@ import br.cefetrj.webdep.model.entity.Usuario;
 
 public class RegistroLogAcessoService {
 	
+	public static void insertRegistroLogAcesso(RegistroLogAcesso s) {
+		PersistenceManager pm = PersistenceManager.getInstance();
+
+		pm.beginTransaction();
+
+		GenericDAO<RegistroLogAcesso> dao = pm.createGenericDAO(RegistroLogAcesso.class);
+		dao.insert(s);
+
+		pm.commitTransaction();
+
+	}
+	
+	public static void updateRegistroLogAcesso(RegistroLogAcesso s) {
+		PersistenceManager pm = PersistenceManager.getInstance();
+
+		pm.beginTransaction();
+
+		GenericDAO<RegistroLogAcesso> dao = pm.createGenericDAO(RegistroLogAcesso.class);
+		dao.update(s);
+
+		pm.commitTransaction();
+
+	}
+	
 	public static List<RegistroLogAcesso> searchRegistroLogAcessoByUsuario(Usuario u) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 		try {

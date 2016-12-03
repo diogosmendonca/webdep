@@ -38,7 +38,7 @@ public class RegistroLogErro  implements Serializable{
 	private String mensagem;
 	
 	@ManyToOne
-	@JoinColumn(name="erros")
+	@JoinColumn(name="sistema_id")
 	private Sistema sistema;
 
 	public Long getId() {
@@ -86,8 +86,23 @@ public class RegistroLogErro  implements Serializable{
 	}
 
 	public void setSistema(Sistema sistema) {
-		this.sistema = sistema;
-	}
+	    //prevent endless loop
+	    if (checarSeExiste(sistema))
+	      return ;
+	    //set new owner
+	    Sistema oldSistema = this.sistema;
+	    this.sistema = sistema;
+	    //remove from the old owner
+	    if (oldSistema!=null)
+	    	oldSistema.removeErro(this);
+	    //set myself into new owner
+	    if (sistema!=null)
+	    	sistema.addErro(this);
+	  }
+
+	  private boolean checarSeExiste(Sistema newSistema) {
+	    return sistema==null? newSistema == null : sistema.equals(newSistema);
+	  }
 	
 	
 

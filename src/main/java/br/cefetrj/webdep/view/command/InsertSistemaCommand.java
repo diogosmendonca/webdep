@@ -11,9 +11,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 import br.cefetrj.webdep.model.entity.Sistema;
+import br.cefetrj.webdep.services.RegistroLogAcessoService;
 import br.cefetrj.webdep.services.ServidorServices;
 import br.cefetrj.webdep.services.SistemaServices;
+import br.cefetrj.webdep.services.UsuarioServices;
 
 public class InsertSistemaCommand implements Command{
 
@@ -35,7 +38,6 @@ public class InsertSistemaCommand implements Command{
 		try{	
 			s.setNome(nome);
 			s.setServidor(ServidorServices.searchServidor(server).get(0));
-			//s.setPermissoes(permissoes);
 			s.setPastaLogAcesso(ptLogs);
 			s.setPrefixoLogAcesso(pxLogs);
 			s.setPrefixoLogErro(pxLogs2);
@@ -46,6 +48,7 @@ public class InsertSistemaCommand implements Command{
 			mensagem = "Sistema cadastrado com sucesso!";
 		} catch (Exception e) {
 			mensagem = "Erro no cadastro: " + e.getMessage();
+			e.printStackTrace();
 		} finally {
 			String json = "{\"mensagem\": \"" + mensagem + "\"}";
 			pw.write(json);

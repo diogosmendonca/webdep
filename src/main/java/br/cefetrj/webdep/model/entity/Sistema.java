@@ -2,6 +2,7 @@ package br.cefetrj.webdep.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -48,17 +49,17 @@ public class Sistema implements Serializable{
 	@Column(nullable = false)
 	private Long periodicidadeLeitura;
 	
-	@OneToMany(mappedBy="sistema", cascade=CascadeType.REMOVE)
-	private List<Versao> versoes; 
+	@OneToMany(mappedBy="sistema", cascade=CascadeType.REMOVE, targetEntity=Versao.class)
+	private List<Versao> versoes = new ArrayList<>(); 
 	
-	@OneToMany(mappedBy="sistema", cascade=CascadeType.REMOVE)
-	private List<Permissao> permissoes;
+	@OneToMany(mappedBy="sistema", cascade=CascadeType.REMOVE, targetEntity=Permissao.class)
+	private List<Permissao> permissoes = new ArrayList<>();
 	
-	@OneToMany(mappedBy="sistema", cascade=CascadeType.REMOVE)
-	private List<RegistroLogAcesso> acessos;
+	@OneToMany(mappedBy="sistema", cascade=CascadeType.REMOVE, targetEntity=RegistroLogAcesso.class)
+	private List<RegistroLogAcesso> acessos = new ArrayList<>(); 
 	
-	@OneToMany(mappedBy="sistema", cascade=CascadeType.REMOVE)
-	private List<RegistroLogErro> erros; 
+	@OneToMany(mappedBy="sistema", cascade=CascadeType.REMOVE, targetEntity=RegistroLogErro.class)
+	private List<RegistroLogErro> erros = new ArrayList<>(); 
 	
 	@ManyToOne
 	private Servidor servidor;
@@ -132,33 +133,73 @@ public class Sistema implements Serializable{
 		return versoes;
 	}
 
-	public void setVersoes(List<Versao> versoes) {
-		this.versoes = versoes;
-	}
+	public void addVersao(Versao versao) {
+	    if (versoes.contains(versao))
+	      return ;
+	    versoes.add(versao);
+	    versao.setSistema(this);
+	  }
+	
+	  public void removeVersao(Versao versao) {
+	    if (!versoes.contains(versao))
+	      return ;
+	    versoes.remove(versao);
+	    versao.setSistema(null);
+	  }
 
 	public List<Permissao> getPermissoes() {
 		return permissoes;
 	}
 
-	public void setPermissoes(List<Permissao> permissoes) {
-		this.permissoes = permissoes;
-	}
+	public void addPermissao(Permissao permissao) {
+	    if (permissoes.contains(permissao))
+	      return ;
+	    permissoes.add(permissao);
+	    permissao.setSistema(this);
+	  }
+	
+	  public void removePermissao(Permissao permissao) {
+	    if (!permissoes.contains(permissao))
+	      return ;
+	    permissoes.remove(permissao);
+	    permissao.setSistema(null);
+	  }
 
 	public List<RegistroLogAcesso> getAcessos() {
 		return acessos;
 	}
 
-	public void setAcessos(List<RegistroLogAcesso> acessos) {
-		this.acessos = acessos;
-	}
+	public void addAcesso(RegistroLogAcesso acesso) {
+	    if (acessos.contains(acesso))
+	      return ;
+	    acessos.add(acesso);
+	    acesso.setSistema(this);
+	  }
+	
+	  public void removeAcesso(RegistroLogAcesso acesso) {
+	    if (!acessos.contains(acesso))
+	      return ;
+	    acessos.remove(acesso);
+	    acesso.setSistema(null);
+	  }
 
 	public List<RegistroLogErro> getErros() {
 		return erros;
 	}
 
-	public void setErros(List<RegistroLogErro> erros) {
-		this.erros = erros;
-	}
+	public void addErro(RegistroLogErro erro) {
+	    if (erros.contains(erro))
+	      return ;
+	    erros.add(erro);
+	    erro.setSistema(this);
+	  }
+	
+	  public void removeErro(RegistroLogErro erro) {
+	    if (!acessos.contains(erro))
+	      return ;
+	    erros.remove(erro);
+	    erro.setSistema(null);
+	  }
 
 	public Servidor getServidor() {
 		return servidor;

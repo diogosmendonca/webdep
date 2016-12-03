@@ -50,7 +50,7 @@ public class RegistroLogAcesso implements Serializable{
 	private String agente;
 	
 	@ManyToOne
-	@JoinColumn(name="acessos")
+	@JoinColumn(name="sistema_id")
 	private Sistema sistema;
 
 	public Long getId() {
@@ -130,8 +130,21 @@ public class RegistroLogAcesso implements Serializable{
 	}
 
 	public void setSistema(Sistema sistema) {
-		this.sistema = sistema;
-	}
-	
-	
+	    //prevent endless loop
+	    if (checarSeExiste(sistema))
+	      return ;
+	    //set new owner
+	    Sistema oldSistema = this.sistema;
+	    this.sistema = sistema;
+	    //remove from the old owner
+	    if (oldSistema!=null)
+	    	oldSistema.removeAcesso(this);
+	    //set myself into new owner
+	    if (sistema!=null)
+	    	sistema.addAcesso(this);
+	  }
+
+	  private boolean checarSeExiste(Sistema newSistema) {
+	    return sistema==null? newSistema == null : sistema.equals(newSistema);
+	  }
 }

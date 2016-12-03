@@ -32,7 +32,7 @@ public class Versao  implements Serializable {
 	private LocalDateTime timestampLiberacao;
 
 	@ManyToOne
-	@JoinColumn(name="versoes")
+	@JoinColumn(name="sistema_id")
 	private Sistema sistema;
 	
 	public Long getId() {
@@ -64,8 +64,23 @@ public class Versao  implements Serializable {
 	}
 
 	public void setSistema(Sistema sistema) {
-		this.sistema = sistema;
-	}
+	    //prevent endless loop
+	    if (checarSeExiste(sistema))
+	      return ;
+	    //set new owner
+	    Sistema oldSistema = this.sistema;
+	    this.sistema = sistema;
+	    //remove from the old owner
+	    if (oldSistema!=null)
+	    	oldSistema.removeVersao(this);
+	    //set myself into new owner
+	    if (sistema!=null)
+	    	sistema.addVersao(this);
+	  }
+
+	  private boolean checarSeExiste(Sistema newSistema) {
+	    return sistema==null? newSistema == null : sistema.equals(newSistema);
+	  }
 	
 	
 	

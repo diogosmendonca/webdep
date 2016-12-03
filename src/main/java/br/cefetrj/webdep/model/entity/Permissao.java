@@ -24,7 +24,7 @@ public class Permissao implements Serializable {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name="permissoes")
+	@JoinColumn(name="sistema_id")
 	private Sistema sistema;
 	
 	@ManyToOne
@@ -43,8 +43,23 @@ public class Permissao implements Serializable {
 	}
 
 	public void setSistema(Sistema sistema) {
-		this.sistema = sistema;
-	}
+	    //prevent endless loop
+	    if (checarSeExiste(sistema))
+	      return ;
+	    //set new owner
+	    Sistema oldSistema = this.sistema;
+	    this.sistema = sistema;
+	    //remove from the old owner
+	    if (oldSistema!=null)
+	    	oldSistema.removePermissao(this);
+	    //set myself into new owner
+	    if (sistema!=null)
+	    	sistema.addPermissao(this);
+	  }
+
+	  private boolean checarSeExiste(Sistema newSistema) {
+	    return sistema==null? newSistema == null : sistema.equals(newSistema);
+	  }
 
 	public Usuario getUsuario() {
 		return usuario;
