@@ -37,6 +37,7 @@ public class RegistroLogErro  implements Serializable{
 	private String mensagem;
 	
 	@ManyToOne
+	@JoinColumn(name="erros")
 	private Sistema sistema;
 
 	public Long getId() {
