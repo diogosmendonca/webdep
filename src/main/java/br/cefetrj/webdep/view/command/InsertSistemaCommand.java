@@ -48,6 +48,7 @@ public class InsertSistemaCommand implements Command{
 			mensagem = "Sistema cadastrado com sucesso!";
 		} catch (Exception e) {
 			mensagem = "Erro no cadastro: " + e.getMessage();
+			//javax.persistence.EntityExistsException já existe
 			e.printStackTrace();
 		} finally {
 			String json = "{\"mensagem\": \"" + mensagem + "\"}";

@@ -23,7 +23,7 @@ public class UpdateSistemaCommand implements Command{
 			PrintWriter pw = response.getWriter();
 			
 			Sistema s = new Sistema();
-			String id = request.getParameter("id-sistema-update");
+			String id = request.getParameter("id_sistema_update");
 			s = SistemaServices.obterPorId(Long.parseLong(id));
 			String nome = request.getParameter("nome");
 			String server = request.getParameter("servidor");
@@ -50,8 +50,9 @@ public class UpdateSistemaCommand implements Command{
 			mensagem = "Sistema atualizado com sucesso!";
 		} catch (Exception e) {
 			mensagem = "Não foi possível cadastrar o sistema!";
+			e.printStackTrace();
 		} finally {
-			String json = "{\"mensagem\": \"" + mensagem + "\"]}";
+			String json = "{\"mensagem\": \"" + mensagem + "\"}";
 			pw.write(json);
 		}
 	}

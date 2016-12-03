@@ -297,6 +297,8 @@ $(document)
 										var data = $("#data").val();
 										var time = $("#time").val();
 										var novaData = $("#novaData").val();
+										var action = $("#action").val();
+										var id_sistema_update = $("#id-sistema-update").val();
 										// validação form
 										if (nome.trim() === "") {
 											$("#div-nome").toggleClass(
@@ -329,7 +331,8 @@ $(document)
 															data : data,
 															novaData : novaData,
 															time : time,
-															action : "insertSistema"
+															action : action,
+															id_sistema_update: id_sistema_update
 														}, // action fica no
 															// jsp porque o form
 															// está sendo
@@ -375,7 +378,11 @@ function excluir(nome) {
 			},
 			success : function(response) {
 				var resposta = $.parseJSON(response);
-				alert(resposta.mensagem);
+				if (resposta.mensagem.indexOf("sucesso")>-1){
+					alert(resposta.mensagem);
+					window.location.replace("gerenciadorsistema.jsp");
+				}
+				
 			}
 		});
 	}
