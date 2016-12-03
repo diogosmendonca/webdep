@@ -49,6 +49,7 @@ public class RegistroLogAcesso implements Serializable{
 	private String agente;
 	
 	@ManyToOne
+	@JoinColumn(name="acessos")
 	private Sistema sistema;
 
 	public Long getId() {
