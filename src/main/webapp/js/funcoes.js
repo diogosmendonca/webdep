@@ -152,40 +152,41 @@ $(document).ready(
 					return false;
 					});
 				// Salvar Padrão URL
-				$("#submit-padrao-url").click(
-						function() {
-							var regex = $("#regex").val();
-							var nome = $("#padrao-url-nome").val();
-							if (regex.trim() === "")
-								$("#div-regex").toggleClass("has-error");
-							if (nome.trim() === "")
-								$("#div-nome").toggleClass("has-error");
-							if (regex.trim() !== "" && nome.trim() !== "") {
-								$("#div-regex").removeClass("has-error");
-								$("#div-nome").removeClass("has-error");
-								$.ajax({
-									type : "POST",
-									url : "FrontControllerServlet",
-									data : {
-										action : "insertPadraoURL",
-										nome : nome,
-										regex : regex
-										},
-										success : function(response) {
-											var resposta = $.parseJSON(response);
-											if (resposta.hasOwnProperty("mensagem") > -1) {
-												var mensagem = resposta.mensagem;
-												alert(mensagem);
-												} else if (resposta.indexOf("Erro")) {
-													alert("Erro de conexão com o servidor");
-													}
-											}
-										});
-								}
-							return false;
-							});
+				$("#submitpadraourl").on("click", function() {
+					var regex = $("#regex").val();
+					var nome = $("#padrao-url-nome").val();
+					if (regex.trim() === ""){
+						$("#div-regex").toggleClass("has-error");
+					}else if (nome.trim() === ""){
+						$("#div-nome").toggleClass("has-error");
+					}else if (regex.trim() !== "" && nome.trim() !== "") {
+						$("#div-regex").removeClass("has-error");
+						$("#div-nome").removeClass("has-error");
+						$.ajax({
+							type : "POST",
+							url : "FrontControllerServlet",
+							data : {
+								action : "insertPadraoURL",
+								nome : nome,
+								regex : regex
+								},
+								success : function(response) {
+									var resposta = $.parseJSON(response);
+									if (resposta.hasOwnProperty("mensagem") > -1) {
+										var mensagem = resposta.mensagem;
+										alert(mensagem);
+										window.location.replace("HTTPreport.jsp");
+									} else if (resposta.indexOf("Erro")) {
+										alert("Erro de conexão com o servidor");
+										}
+									}
+								});
+						}
+					return false;
+					});
 				/* FIM PADRAO URL */
-				/* DATEPICKER */// não é necessário cada grupo colocar os
+				/* DATEPICKER */
+				// não é necessário cada grupo colocar os
 				// codigos javascript em cada página
 				// isoladamente
 				$('.form_datetime').datetimepicker({
@@ -220,7 +221,7 @@ $(document).ready(
 					maxView : 1,
 					forceParse : 0
 				});
-
+				/* FIM DATEPICKER */
 				$("#cadastro-sistema-submit")
 						.click(
 								function() {
@@ -299,7 +300,6 @@ $(document).ready(
 											return false;
 										}
 									});
-
 				});
 
 function alterar(nome) {
@@ -380,3 +380,103 @@ if (pxLogs2 === "" || ptLogs2 === "") {
 		});
 	}
 });
+$("#svg-chart").on("load", reportCharts());
+function reportCharts(){
+	var data = {
+			labels : [ 'resilience', 'maintainability',
+					'accessibility', 'uptime', 'functionality',
+					'impact' ],
+			series : [ {
+				label : '2012',
+				values : [ 4, 8, 15, 16, 23, 42 ]
+			}, {
+				label : '2013',
+				values : [ 12, 43, 22, 11, 73, 25 ]
+			}, {
+				label : '2014',
+				values : [ 31, 28, 14, 8, 15, 21 ]
+			}, ]
+		};
+
+		var chartWidth = 300, barHeight = 20, groupHeight = barHeight
+				* data.series.length, gapBetweenGroups = 10, spaceForLabels = 150, spaceForLegend = 150;
+
+		// Zip the series data together (first values, second values, etc.)
+		var zippedData = [];
+		for (var i = 0; i < data.labels.length; i++) {
+			for (var j = 0; j < data.series.length; j++) {
+				zippedData.push(data.series[j].values[i]);
+			}
+		}
+
+		// Color scale
+		var color = d3.scale.category20();
+		var chartHeight = barHeight * zippedData.length
+				+ gapBetweenGroups * data.labels.length;
+
+		var x = d3.scale.linear().domain([ 0, d3.max(zippedData) ])
+				.range([ 0, chartWidth ]);
+
+		var y = d3.scale.linear().range(
+				[ chartHeight + gapBetweenGroups, 0 ]);
+
+		var yAxis = d3.svg.axis().scale(y).tickFormat('').tickSize(
+				0).orient("left");
+
+		// Specify the chart area and dimensions
+		var chart = d3.select(".chart").attr("width",
+				spaceForLabels + chartWidth + spaceForLegend).attr(
+				"height", chartHeight);
+
+		// Create bars
+		var bar = chart
+				.selectAll("g")
+				.data(zippedData)
+				.enter()
+				.append("g")
+				.attr(
+						"transform",
+						function(d, i) {
+							return "translate("
+									+ spaceForLabels
+									+ ","
+									+ (i * barHeight + gapBetweenGroups
+											* (0.5 + Math
+													.floor(i
+															/ data.series.length)))
+									+ ")";
+						});
+
+		// Create rectangles of the correct width
+		bar.append("rect").attr("fill", function(d, i) {
+			return color(i % data.series.length);
+		}).attr("class", "bar").attr("width", x).attr("height",
+				barHeight - 1);
+
+		// Add text label in bar
+		bar.append("text").attr("x", function(d) {
+			return x(d) - 3;
+		}).attr("y", barHeight / 2).attr("fill", "red").attr("dy",
+				".35em").text(function(d) {
+			return d;
+		});
+
+		// Draw labels
+		bar.append("text").attr("class", "label").attr("x",
+				function(d) {
+					return -10;
+				}).attr("y", groupHeight / 2).attr("dy", ".35em")
+				.text(
+						function(d, i) {
+							if (i % data.series.length === 0)
+								return data.labels[Math.floor(i
+										/ data.series.length)];
+							else
+								return ""
+						});
+
+		chart.append("g").attr("class", "y axis").attr(
+				"transform",
+				"translate(" + spaceForLabels + ", "
+						+ -gapBetweenGroups / 2 + ")").call(yAxis);
+}
