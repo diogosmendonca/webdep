@@ -61,11 +61,15 @@
 					<label class="control-label col-sm-2" for="pwd"><fmt:message
 							key="br.cefetrj.webdep.jsp.http.URLpattern" /></label>
 					<div class="col-xs-2">
-						<select class="form-control">
-							<option>URLs Sistema</option>
+						<select id="selectPadraoURL" class="form-control">
+						<!-- favor manter o id do select como está -->
+							<option value="5">URLs Sistema</option>
+							<!-- favor colocar o id do padrao resgatado do banco no value do option -->
 						</select>
 						<button class="btn btn-primary" type="button" data-toggle="modal"
 							data-target="#myModal">+</button>
+							<button id="deletePadraoURL" name="deletepadraourl" class="btn btn-primary" 
+							onclick=':javascript' type="button">-</button>
 					</div>
 					<label class="control-label col-sm-2" for="pwd"><fmt:message
 							key="br.cefetrj.webdep.jsp.http.HTTPerror" /></label>

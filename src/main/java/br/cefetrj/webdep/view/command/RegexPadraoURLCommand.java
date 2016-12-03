@@ -26,8 +26,8 @@ public class RegexPadraoURLCommand implements Command{
         Sistema sistemaSession = null;
         String mensagem;
         if (session != null) {
-        	//Long idsistema = (Long)session.getAttribute("idsistema");
-        	sistemaSession = SistemaServices.obterPorId(2L);
+        	Long idsistema = (Long)session.getAttribute("idsistema");
+        	sistemaSession = SistemaServices.obterPorId(idsistema);
         }
         try{
             Pattern p = Pattern.compile(request.getParameter("regex"));

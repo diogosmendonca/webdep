@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.entity.PadraoURL;
+import br.cefetrj.webdep.model.entity.Sistema;
 
 public class PadraoURLServices {
 	public static void insertPadraoURL(PadraoURL p) {
@@ -46,5 +47,22 @@ public class PadraoURLServices {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static PadraoURL obterPorId(Long id){
+		PadraoURL padrao = null;
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			
+			GenericDAO<PadraoURL> padraoDAO = pManager.createGenericDAO(PadraoURL.class);
+			padrao = padraoDAO.get(id);
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+		
+		return 	padrao;
 	}
 }

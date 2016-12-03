@@ -184,6 +184,29 @@ $(document).ready(
 						}
 					return false;
 					});
+				
+				$("#deletePadraoURL").on("click", function() {
+					var idPadrao = $("#selectPadraoURL").val();
+					$.ajax({
+						type : "POST",
+						url : "FrontControllerServlet",
+						data : {
+							action : "deletePadraoURL",
+							id : idPadrao
+							},
+							success : function(response) {
+								var resposta = $.parseJSON(response);
+								if (resposta.hasOwnProperty("mensagem") > -1) {
+									var mensagem = resposta.mensagem;
+									alert(mensagem);
+									window.location.replace("HTTPreport.jsp");
+								} else if (resposta.indexOf("Erro")) {
+									alert("Erro de conexão com o servidor");
+									}
+								}
+							});
+					alert("boom");
+				});
 				/* FIM PADRAO URL */
 				/* DATEPICKER */
 				// não é necessário cada grupo colocar os

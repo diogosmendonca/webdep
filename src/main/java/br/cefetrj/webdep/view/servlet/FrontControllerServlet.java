@@ -32,6 +32,7 @@ import br.cefetrj.webdep.view.command.AtualizaUsuarioCommand;
 import br.cefetrj.webdep.view.command.AutenticaUsuarioCommand;
 import br.cefetrj.webdep.view.command.CadastraUsuarioCommand;
 import br.cefetrj.webdep.view.command.DeletaUsuarioCommand;
+import br.cefetrj.webdep.view.command.DeletePadraoURLCommand;
 import br.cefetrj.webdep.view.command.DeslogaUsuarioCommand;
 import br.cefetrj.webdep.view.command.ListaUsuarioCommand;
 
@@ -92,6 +93,7 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("testErrorLogFolder", new TestaLogErroCommand());
 
 		commands.put("insertPadraoURL", new InsertPadraoURLCommand());
+		commands.put("deletePadraoURL", new DeletePadraoURLCommand());
 		commands.put("regexPadraoURL", new RegexPadraoURLCommand());
 
 		commands.put("buscarLogErro", new BuscarLogErroCommand());
