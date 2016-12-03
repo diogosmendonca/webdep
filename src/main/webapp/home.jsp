@@ -56,23 +56,23 @@ response.setDateHeader("Expires",-1);
 		</c:if>
 		
 		<c:if
-			test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
+			test="${usuario.admGeral==true || usuario.perfil=='Administrador' || sessionScope.usuario.perfil=='Admin' || usuario.perfil=='Analista'}">
 			<li><a href="javascript:void(0);" onclick="selecinarSistema();"><fmt:message
 						key="br.cefetrj.webdep.jsp.home.selecioneumsistemaparatrabalhar" /></a></li>
 		</c:if>
 		<c:if
-			test="${usuario.admGeral==true || usuario.perfil=='Administrador' }">
+			test="${usuario.admGeral==true || usuario.perfil=='Administrador' || sessionScope.usuario.perfil=='Admin' }">
 			<li><a href="./versionRegistration.jsp"><fmt:message
 						key="br.cefetrj.webdep.jsp.home.registreumaversaodosistema" /></a></li>
 		</c:if>
 		<c:if
-			test="${usuario.admGeral==true || usuario.perfil=='Administrador'|| usuario.perfil=='Analista' }">
+			test="${usuario.admGeral==true || usuario.perfil=='Administrador'|| sessionScope.usuario.perfil=='Admin'|| usuario.perfil=='Analista' }">
 			<li><a href="./importarLog.jsp"><fmt:message
 						key="br.cefetrj.webdep.jsp.home.importemanualmenteosdadosdelogshistoricos" />
 			</a> </li>
 		</c:if>
 		<c:if
-			test="${usuario.admGeral==true || usuario.perfil=='Administrador'|| usuario.perfil=='Analista' }">
+			test="${usuario.admGeral==true || usuario.perfil=='Administrador' || sessionScope.usuario.perfil=='Admin' || usuario.perfil=='Analista' }">
 			<li><a href="./accessProfileReport.jsp"><fmt:message
 						key="br.cefetrj.webdep.jsp.home.emitarelatoriosdeperfildeacesso" />
 			</a> <fmt:message key="br.cefetrj.webdep.jsp.home.e" /> <a
@@ -97,7 +97,7 @@ response.setDateHeader("Expires",-1);
 <%-- 		${usuario.perfil }</H1> --%>
 <%-- 		${lista}</br> --%>
 <%-- 		ID SISTEMA ${param.idsistema} ${sessionScope.idsistema} --%>-->
-
+${sessionScope.idsistema}
 	<jsp:include page="scripts.jspf" />
 </body>
 </html>
