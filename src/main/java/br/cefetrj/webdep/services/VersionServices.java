@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import org.hsqldb.persist.PersistentStoreCollectionSession;
 
 import br.cefetrj.webdep.model.dao.GenericDAO;
+import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Versao;
 
 public class VersionServices {
@@ -78,5 +79,22 @@ public class VersionServices {
 		}
 
 		return versao;
+	}
+	
+	public static Versao obterPorId(Long id){
+		Versao v = null;
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			
+			GenericDAO<Versao> permissaoDAO = pManager.createGenericDAO(Versao.class);
+			v = permissaoDAO.get(id);
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+		
+		return 	v;
 	}
 }
