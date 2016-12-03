@@ -14,10 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 import br.cefetrj.webdep.model.entity.Sistema;
-import br.cefetrj.webdep.model.entity.Usuario;
-import br.cefetrj.webdep.services.RegistroLogAcessoService;
 import br.cefetrj.webdep.services.SistemaServices;
-import br.cefetrj.webdep.services.UsuarioServices;
 
 public class RegexPadraoURLCommand implements Command{
 
@@ -26,34 +23,31 @@ public class RegexPadraoURLCommand implements Command{
 		String json = "";
         PrintWriter pw = response.getWriter();
         HttpSession session = request.getSession();
-        Usuario usuarioLogado = new Usuario();
-        Long sistema_id = 1L;
+        Sistema sistemaSession = null;
         String mensagem;
         if (session != null) {
-        	usuarioLogado = (Usuario)session.getAttribute("usuario");
+        	//Long idsistema = (Long)session.getAttribute("idsistema");
+        	sistemaSession = SistemaServices.obterPorId(2L);
         }
         try{
             Pattern p = Pattern.compile(request.getParameter("regex"));
             List<String> URLsRegex = new ArrayList<String>();
-            List<RegistroLogAcesso> registrosLogAcessoPermitidos = RegistroLogAcessoService.listAllRegisters();
+            List<RegistroLogAcesso> registrosLogAcessoPermitidos = sistemaSession.getAcessos();
             for (RegistroLogAcesso registroLogAcesso: registrosLogAcessoPermitidos){
             	String url = registroLogAcesso.getUrl();
             	Matcher m = p.matcher(url);
             	if (m.matches()) URLsRegex.add(url);
         	}
-            //Transformar as URLs filtradas em JSON pra mandar de volta 
-            //pra página
-            json = "{\"url\": [";
+            json = "{\"url\":[";
             for (String url: URLsRegex){
                 json += "\"";
                 json += url; //talvez tenha que add um "/" no inicio
-                json += "\", ";
+                json += "\",";
             }
             json += "]}";
-            json = json.replace(",]}", "]}");
-            pw.write(json);
+            json = json.replace(",]}","]}");
         }catch (Exception e){
-        	mensagem = "Não foi possível completar a ação";
+        	mensagem = "NÃ£o foi possÃ­vel completar a aÃ§Ã£o";
         	json = "{\"Erro\": \"" + mensagem + "\"}";
         	e.printStackTrace();
         }finally{
