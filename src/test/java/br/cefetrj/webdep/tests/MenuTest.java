@@ -1,5 +1,6 @@
 package br.cefetrj.webdep.tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -13,6 +14,7 @@ import javax.persistence.Query;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,7 +29,7 @@ import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.tests.support.TestSupport;
 
 public class MenuTest {
-	
+	/*
 	@SuppressWarnings("unused")
 	private static Long adminGeralId;
 	
@@ -135,15 +137,15 @@ public class MenuTest {
 		analistaId = u3.getId();
 		sistemaId = s1.getId();
 		
-		/*
-        if (System.getProperty("os.name").contains("Windows")){
-        	System.setProperty("webdriver.gecko.driver", "src\\test\\resources\\geckodriver.exe");
-        }else{
-        	System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver");
-        }
-        
-        driver = new FirefoxDriver();
-		*/
+		
+        //if (System.getProperty("os.name").contains("Windows")){
+        //	System.setProperty("webdriver.gecko.driver", "src\\test\\resources\\geckodriver.exe");
+        //}else{
+        //	System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver");
+        //}
+        //
+        //driver = new FirefoxDriver();
+		
 		if (System.getProperty("os.name").contains("Windows")){
         	System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\chromedriver.exe");
         }else{
@@ -154,169 +156,254 @@ public class MenuTest {
         auxMenu = new TestSupport(driver);
 	}
 	
-	//TC01
-	//@Test
+	//TC01 -- PAGINA SEM TITULO
+	@Test
 	public void cadastrarSistemaLinkDaPrincipalComAdministradorGeral() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
 		auxMenu.clicaLink("Clique aqui para cadastrar");
-		boolean paginaCerta = driver.getTitle().contains("Cadastrar Sistema");
-		assertTrue(paginaCerta);
+		
+		boolean legendaSistema = driver.getPageSource().contains("Sistema");
+		boolean legendaLog = driver.getPageSource().contains("Log");
+		
+		assertTrue(legendaSistema);
+		assertTrue(legendaLog);
 	}
+	
 	//TC02
-	//@Test
+	@Test
 	public void cadastrarSistemaLinkDaPrincipalComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.clicaLink("Clique aqui para cadastrar");
-		boolean paginaCerta = driver.getTitle().contains("Cadastrar Sistema");
-		assertTrue(paginaCerta);
+
+		boolean legendaSistema = driver.getPageSource().contains("Sistema");
+		boolean legendaLog = driver.getPageSource().contains("Log");
+		
+		assertTrue(legendaSistema);
+		assertTrue(legendaLog);
 	}
+	
 	//TC03
-	//@Test
+	@Test
 	public void cadastrarSistemaLinkDaPrincipalComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
-		WebElement semLink = driver.findElement(By.linkText("Clique aqui para cadastrar"));
-		assertNull(semLink);
+		
+		boolean semLink = driver.getPageSource().contains("Clique aqui para cadastrar");
+		assertFalse(semLink);
 	}
+	
 	//TC04
-	//@Test
+	@Test
 	public void selecionarSistemaLinkDaPrincipalComAdministradorGeral(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
-		auxMenu.clicaLink("Selecione um sistema");
+		auxMenu.clicaLink("Selecione um sistema para trabalhar");
 		Select seletor = new Select(driver.findElement(By.id("sistema")));
 		List<WebElement> opcoes = seletor.getOptions();
-		boolean sistema = opcoes.contains("Sistema Teste");
-		assertTrue(sistema);
+		
+		boolean sistema1 = false;
+		boolean sistema2 = false;
+		
+		for (WebElement webElement : opcoes) {
+				if(webElement.getText().contains("Sistema Teste")){
+				sistema1 = true;
+			}
+			if(webElement.getText().contains("Sistema Teste 2")){
+				sistema2 = true;
+			}
+		}
+		
+		assertTrue(sistema1);
+		assertTrue(sistema2);
+		assertEquals(2, opcoes.size());
 	}
+	
 	//TC05
-	//@Test
+	@Test
 	public void selecionarSistemaLinkDaPrincipalComAdministrador(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
-		auxMenu.clicaLink("Selecione um sistema");
-		boolean sistema = driver.findElements(By.id("sistema")).contains("Sistema Teste");
-		assertTrue(sistema);
+		auxMenu.clicaLink("Selecione um sistema para trabalhar");
+		Select seletor = new Select(driver.findElement(By.id("sistema")));
+		List<WebElement> opcoes = seletor.getOptions();
+
+		boolean sistema1 = false;
+		boolean sistema2 = false;
+		
+		for (WebElement webElement : opcoes) {
+				if(webElement.getText().contains("Sistema Teste")){
+				sistema1 = true;
+			}
+			if(webElement.getText().contains("Sistema Teste 2")){
+				sistema2 = true;
+			}
+		}
+		
+		assertTrue(sistema1);
+		assertFalse(sistema2);
+		assertEquals(1, opcoes.size());
 	}
+	
 	//TC06
-	//@Test
+	@Test
 	public void selecionarSistemaLinkDaPrincipalComAnalista(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
-		auxMenu.clicaLink("Selecione um sistema");
-		boolean sistema = driver.findElements(By.id("sistema")).contains("Sistema Teste");
-		assertTrue(sistema);
+		auxMenu.clicaLink("Selecione um sistema para trabalhar");
+		Select seletor = new Select(driver.findElement(By.id("sistema")));
+		List<WebElement> opcoes = seletor.getOptions();
+
+		boolean sistema1 = false;
+		boolean sistema2 = false;
+		
+		for (WebElement webElement : opcoes) {
+				if(webElement.getText().contains("Sistema Teste")){
+				sistema1 = true;
+			}
+			if(webElement.getText().contains("Sistema Teste 2")){
+				sistema2 = true;
+			}
+		}
+		
+		assertTrue(sistema1);
+		assertFalse(sistema2);
+		assertEquals(1, opcoes.size());
 	}
+	
 	//TC07
-	//@Test
+	@Test
 	public void registrarVersaoLinkDaPrincipalComAdministradorGeral(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
-		auxMenu.clicaLink("Registre uma versão");
-		boolean paginaCerta = driver.getTitle().contains("Cadastrar Nova Versão");
+		auxMenu.clicaLink("Registre uma versão do sistema");
+		boolean paginaCerta = driver.getTitle().contains("Registro de Versão");
 		assertTrue(paginaCerta);
 	}
+	
 	//TC08
-	//@Test
+	@Test
 	public void registrarVersaoLinkDaPrincipalComAdministrador(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
-		auxMenu.clicaLink("Registre uma versão");
-		boolean paginaCerta = driver.getTitle().contains("Cadastrar Nova Versão");
+		auxMenu.clicaLink("Registre uma versão do sistema");
+		boolean paginaCerta = driver.getTitle().contains("Registro de Versão");
 		assertTrue(paginaCerta);
 	}
+	
 	//TC09
-	//@Test
+	@Test
 	public void registrarVersaoLinkDaPrincipalComAnalista(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
-		WebElement semLink = driver.findElement(By.linkText("Registre uma versão"));
-		assertNull(semLink);
+		
+		boolean semLink = driver.getPageSource().contains("Registre uma versão do sistema");
+		assertFalse(semLink);
 	}
-	//TC10
-	//@Test
+	
+	//TC10 -- PAGINA SEM TITULO
+	@Test
 	public void importarLogsLinkDaPrincipalComAdministradorGeral() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
-		auxMenu.clicaLink("Importe manualmente");
-		boolean paginaCerta = driver.getTitle().contains("Importar Logs");
-		assertTrue(paginaCerta);
+		auxMenu.clicaLink("Importe manualmente os dados de logs históricos");
+		
+		boolean legendaSistema = driver.getPageSource().contains("Sistema");
+		boolean legendaLog = driver.getPageSource().contains("Log");
+		boolean textFormato = driver.getPageSource().contains("Formato logs de acesso:");
+		
+		assertTrue(legendaSistema);
+		assertTrue(legendaLog);
+		assertTrue(textFormato);
 	}
-	//TC11
-	//@Test
+	
+	//TC11 -- PAGINA SEM TITULO
+	@Test
 	public void importarLogsLinkDaPrincipalComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
-		auxMenu.clicaLink("Importe manualmente");
-		boolean paginaCerta = driver.getTitle().contains("Importar Logs");
-		assertTrue(paginaCerta);
+		auxMenu.clicaLink("Importe manualmente os dados de logs históricos");
+
+		boolean legendaSistema = driver.getPageSource().contains("Sistema");
+		boolean legendaLog = driver.getPageSource().contains("Log");
+		boolean textFormato = driver.getPageSource().contains("Formato logs de acesso:");
+		
+		assertTrue(legendaSistema);
+		assertTrue(legendaLog);
+		assertTrue(textFormato);
 	}
+	
 	//TC12
-	//@Test
+	@Test
 	public void importarLogsLinkDaPrincipalComAnalista(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
-		WebElement semLink = driver.findElement(By.linkText("Importar Logs"));
-		assertNull(semLink);
+		
+		boolean semLink = driver.getPageSource().contains("Importe manualmente os dados de logs históricos");
+		assertFalse(semLink);
 	}
+	
 	//TC13
-	//@Test
+	@Test
 	public void relatoriosPerfilLinkDaPrincipalComAdministradorGeral() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
-		auxMenu.clicaLink("Perfil de Acesso");
-		boolean paginaCerta = driver.getTitle().contains("Perfil de Acesso");
+		auxMenu.clicaLink("Emita Relatórios de Perfil de Acesso");
+		boolean paginaCerta = driver.getTitle().contains("Relatório de perfil de acesso");
 		assertTrue(paginaCerta);
 	}
+	
 	//TC14
-	//@Teste
+	@Test
 	public void relatoriosPerfilLinkDaPrincipalComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
-		auxMenu.clicaLink("Perfil de Acesso");
-		boolean paginaCerta = driver.getTitle().contains("Perfil de Acesso");
+		auxMenu.clicaLink("Emita Relatórios de Perfil de Acesso");
+		boolean paginaCerta = driver.getTitle().contains("Relatório de perfil de acesso");
 		assertTrue(paginaCerta);
 	}
+	
 	//TC15
-	//@Teste
+	@Test
 	public void relatoriosPerfilLinkDaPrincipalComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
-		auxMenu.clicaLink("Perfil de Acesso");
-		boolean paginaCerta = driver.getTitle().contains("Perfil de Acesso");
+		auxMenu.clicaLink("Emita Relatórios de Perfil de Acesso");
+		boolean paginaCerta = driver.getTitle().contains("Relatório de perfil de acesso");
 		assertTrue(paginaCerta);
 	}
+	
 	//TC16
-	//@Test
+	@Test
 	public void relatoriosErrosLinkDaPrincipalComAdministradorGeral() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
-		auxMenu.clicaLink("Erros no Sistema");
-		boolean paginaCerta = driver.getTitle().contains("Confiabilidade das URLs");
+		auxMenu.clicaLink("Analise os Erros no Sistema (Código HTTP)");
+		boolean paginaCerta = driver.getTitle().contains("Relatório Códigos HTTP");
 		assertTrue(paginaCerta);
 	}
 	//TC17
-	//@Test
+	@Test
 	public void relatoriosErrosLinkDaPrincipalComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
-		auxMenu.clicaLink("Erros no Sistema");
-		boolean paginaCerta = driver.getTitle().contains("Confiabilidade das URLs");
+		auxMenu.clicaLink("Analise os Erros no Sistema (Código HTTP)");
+		boolean paginaCerta = driver.getTitle().contains("Relatório Códigos HTTP");
 		assertTrue(paginaCerta);
 	}
 	//TC18
-	//@Test
+	@Test
 	public void relatoriosErrosLinkDaPrincipalComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
-		auxMenu.clicaLink("Erros no Sistema");
-		boolean paginaCerta = driver.getTitle().contains("Confiabilidade das URLs");
+		auxMenu.clicaLink("Analise os Erros no Sistema (Código HTTP)");
+		boolean paginaCerta = driver.getTitle().contains("Relatório Códigos HTTP");
 		assertTrue(paginaCerta);
 	}
+	
 	//TC19
-	//@Test
+	@Test
 	public void menuWebdepComAdministradorGeral() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
@@ -326,46 +413,57 @@ public class MenuTest {
 				driver.getPageSource().contains("Configurações");
 		assertTrue(menuCorreto);
 	}
-	//TC20
-	//@Teste
+	
+	//TC20 -- VERIFICAR SE RETORNA NULL
+	@Test
 	public void menuWebdepComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
 		WebElement semLink = driver.findElement(By.linkText("WebDep"));
 		assertNull(semLink);
 	}
+	
 	//TC21
-	//@Teste
+	@Test
 	public void menuWebdepCadastrarUsuario(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.clicaLink("WebDep");
 		auxMenu.clicaLink("Cadastrar Usuário");
-		boolean paginaCerta = driver.getTitle().contains("Cadastrar Usuário");
+		boolean paginaCerta = driver.getTitle().contains("Usuário");
 		assertTrue(paginaCerta);
 	}
-	//TC22
-	//@Teste
+	
+	//TC22 -- PÁGINA ESTÁ COM TITULO USUÁRIO
+	@Test
 	public void menuWebDepListarUsuarios() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.clicaLink("WebDep");
 		auxMenu.clicaLink("Listar/Alterar/Excluir Usuários");
-		boolean paginaCerta = driver.getTitle().contains("Listar/Alterar/Excluir Usuários");
-		assertTrue(paginaCerta);
+		boolean tabelaUsuario = driver.getPageSource().contains("Usuário");
+		boolean tabelaEmail = driver.getPageSource().contains("E-mail");
+		boolean tabelaPermissao = driver.getPageSource().contains("Alterar/Permissões");
+		
+		assertTrue(tabelaUsuario);
+		assertTrue(tabelaEmail);
+		assertTrue(tabelaPermissao);
 	}
-	//TC23
-	//@Teste
+	
+	//TC23 -- PAGINA SEM TITULO
+	@Test
 	public void menuWebdepConfiguracoes() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
 		auxMenu.clicaLink("WebDep");
 		auxMenu.clicaLink("Configurações");
-		boolean paginaCerta = driver.getTitle().contains("Configurações");
+		boolean paginaCerta = driver.getPageSource().contains("Configuração Inicial do Web Dep");
+		
 		assertTrue(paginaCerta);
 	}
+	
 	//TC24
-	//@Teste
+	@Test
 	public void menuSistemasComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -376,56 +474,74 @@ public class MenuTest {
 				driver.getPageSource().contains("Listar/Atualizar/Excluir Versões");
 		assertTrue(menuCorreto);
 	}
-	//TC25
-	//@Teste
+	
+	//TC25 -- VERIFICAR SE RETORNA NULL
+	@Test
 	public void menuSistemasComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
 		WebElement semLink = driver.findElement(By.linkText("Sistemas"));
 		assertNull(semLink);
 	}
-	//TC26
-	//@Teste
+	
+	//TC26 -- PAGINA SEM TITULO
+	@Test
 	public void menuSistemasCadastrar() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.clicaLink("Sistemas");
 		auxMenu.clicaLink("Cadastrar Sistema");
-		boolean paginaCerta = driver.getTitle().contains("Cadastrar Sistema");
-		assertTrue(paginaCerta);
+		
+		boolean paginaSistema = driver.getPageSource().contains("Sistema");
+		boolean paginaLogs = driver.getPageSource().contains("Logs");
+		boolean paginaPeriodicidade = driver.getPageSource().contains("Periodicidade de Leitura dos Logs");
+		
+		assertTrue(paginaSistema);
+		assertTrue(paginaLogs);
+		assertTrue(paginaPeriodicidade);
 	}
-	//TC27
-	//@Teste
+	
+	//TC27 -- PAGINA SEM TITULO
+	@Test
 	public void menuSistemasListar(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.clicaLink("Sistemas");
 		auxMenu.clicaLink("Listar/Atualizar/Excluir Sistema");
-		boolean paginaCerta = driver.getTitle().contains("Listar/Atualizar/Excluir Sistema");
-		assertTrue(paginaCerta);
+		
+		boolean paginaServidor = driver.getPageSource().contains("Servidor");
+		boolean paginaLeitura = driver.getPageSource().contains("Próxima Leitura");
+		boolean paginaLog = driver.getPageSource().contains("Formato do Log");
+		
+		assertTrue(paginaServidor);
+		assertTrue(paginaLeitura);
+		assertTrue(paginaLog);
 	}
+	
 	//TC28
-	//@Teste
+	@Test
 	public void menuSistemasVersao(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.clicaLink("Sistemas");
 		auxMenu.clicaLink("Cadastrar Nova Versão");
-		boolean paginaCerta = driver.getTitle().contains("Cadastrar Nova Versão");
+		boolean paginaCerta = driver.getTitle().contains("Registro de Versão");
 		assertTrue(paginaCerta);
 	}
+	
 	//TC29
-	//@Teste
+	@Test
 	public void menuSistemasListarVersao(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.clicaLink("Sistemas");
 		auxMenu.clicaLink("Listar/Atualizar/Excluir Versões");
-		boolean paginaCerta = driver.getTitle().contains("Listar/Atualizar/Excluir Versões");
+		boolean paginaCerta = driver.getTitle().contains("Buscar Versão");
 		assertTrue(paginaCerta);
 	}
+	
 	//TC30
-	//@Teste
+	@Test
 	public void menuLogsComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -435,80 +551,71 @@ public class MenuTest {
 				driver.getPageSource().contains("Consultar/Excluir Registros de Erro");
 		assertTrue(menuCorreto);
 	}
-	//TC31
-	//@Teste
+	
+	//TC31 -- VERIFICAR SE RETORNA NULL
+	@Test
 	public void menuLogsComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
 		WebElement semLink = driver.findElement(By.linkText("Logs"));
 		assertNull(semLink);
 	}
+	
 	//TC32
-	//@Teste
+	@Test
 	public void menuLogsImportar(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.clicaLink("Logs");
 		auxMenu.clicaLink("Importar Logs");
-		boolean paginaCerta = driver.getTitle().contains("Importar Logs");
-		assertTrue(paginaCerta);
+		
+		boolean paginaServidor = driver.getPageSource().contains("Servidor");
+		boolean paginaSistema = driver.getPageSource().contains("Nome do Sistema");
+		boolean paginaLog = driver.getPageSource().contains("Caminho log de acesso");
+		
+		assertTrue(paginaServidor);
+		assertTrue(paginaSistema);
+		assertTrue(paginaLog);
 	}
-	//TC33
-	//@Teste
+	
+	//TC33 -- PÁGINA SEM TITULO
+	@Test
 	public void menuLogsConsultarAcesso(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.acionaSelectSistema("Sistema Teste");
 		auxMenu.clicaLink("Logs");
 		auxMenu.clicaLink("Consultar/Excluir Registros de Acesso");
-		boolean paginaCerta = driver.getTitle().contains("Consultar/Excluir Registros de Acesso");
-		assertTrue(paginaCerta);
+
+		boolean paginaIp = driver.getPageSource().contains("IP");
+		boolean paginaUsuario = driver.getPageSource().contains("Usuário");
+		boolean paginaBytes = driver.getPageSource().contains("Bytes transferidos");
+		
+		assertTrue(paginaIp);
+		assertTrue(paginaUsuario);
+		assertTrue(paginaBytes);
 	}
-	//TC34 -- ERRO
-	//@Test(expected=IllegalArgumentException.class)
-	public void menuLogsConsultarAcessoSemSistemaSelecionado(){
-		auxMenu.visita();
-		auxMenu.efetuaLogin("usuario2", "123456");
-		auxMenu.clicaLink("Logs");
-		auxMenu.clicaLink("Consultar/Excluir Registros de Acesso");
-	}
-	//TC35 -- ERRO
-	//@Test(expected=IllegalArgumentException.class)
-	public void menuLogsConsultarAcessoSemNenhumSistema(){
-		auxMenu.visita();
-		auxMenu.efetuaLogin("usuario2", "123456");
-		auxMenu.clicaLink("Logs");
-		auxMenu.clicaLink("Consultar/Excluir Registros de Acesso");
-	}
+	
 	//TC36
-	//@Teste
+	@Test
 	public void menuLogsConsultarErro(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.acionaSelectSistema("Sistema Teste");
 		auxMenu.clicaLink("Logs");
 		auxMenu.clicaLink("Consultar/Excluir Registros de Erro");
-		boolean paginaCerta = driver.getTitle().contains("Consultar/Excluir Registros de Erro");
-		assertTrue(paginaCerta);
+
+		boolean paginaIp = driver.getPageSource().contains("IP");
+		boolean paginaData = driver.getPageSource().contains("Data e Hora");
+		boolean paginaMsg = driver.getPageSource().contains("Mensagem");
+		
+		assertTrue(paginaIp);
+		assertTrue(paginaData);
+		assertTrue(paginaMsg);
 	}
-	//TC37 -- ERRO
-	//@Test(expected=IllegalArgumentException.class)
-	public void menuLogsConsultarErroSemSistemaSelecionado(){
-		auxMenu.visita();
-		auxMenu.efetuaLogin("usuario2", "123456");
-		auxMenu.clicaLink("Logs");
-		auxMenu.clicaLink("Consultar/Excluir Registros de Erro");
-	}
-	//TC38 -- ERRO
-	//@Test(expected=IllegalArgumentException.class)
-	public void menuLogsConsultarErroSemNenhumSistema(){
-		auxMenu.visita();
-		auxMenu.efetuaLogin("usuario2", "123456");
-		auxMenu.clicaLink("Logs");
-		auxMenu.clicaLink("Consultar/Excluir Registros de Erro");
-	}
+	
 	//TC39
-	//@Teste
+	@Test
 	public void menuRelatorioComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -517,8 +624,9 @@ public class MenuTest {
 				driver.getPageSource().contains("Confiabilidade das URLs");
 		assertTrue(menuCorreto);
 	}
+	
 	//TC40
-	//@Teste
+	@Test
 	public void menuRelatorioComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -527,84 +635,57 @@ public class MenuTest {
 				driver.getPageSource().contains("Confiabilidade das URLs");
 		assertTrue(menuCorreto);
 	}
+	
 	//TC41
-	//@Teste
+	@Test
 	public void menuRelatoriosPerfilAcessoComAdministrador(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.acionaSelectSistema("Sistema Teste");
 		auxMenu.clicaLink("Relatórios");
 		auxMenu.clicaLink("Perfil de Acesso");
-		boolean paginaCerta = driver.getTitle().contains("Perfil de Acesso");
+		boolean paginaCerta = driver.getTitle().contains("Relatório de perfil de acesso");
 		assertTrue(paginaCerta);
 	}
-	//TC42 -- ERRO
-	//@Test(expected=IllegalArgumentException.class)
-	public void menuRelatoriosPerfilAcessoSemSistemaSelecionado(){
-		auxMenu.visita();
-		auxMenu.efetuaLogin("usuario2", "123456");
-		auxMenu.clicaLink("Relatórios");
-		auxMenu.clicaLink("Perfil de Acesso");
-	}
-	//TC43 -- ERRO
-	//@Test(expected=IllegalArgumentException.class)
-	public void menuRelatoriosPerfilAcessoSemNenhumSistema(){
-		auxMenu.visita();
-		auxMenu.efetuaLogin("usuario2", "123456");
-		auxMenu.clicaLink("Relatórios");
-		auxMenu.clicaLink("Perfil de Acesso");
-	}
+	
 	//TC44
-	//@Teste
+	@Test
 	public void menuRelatoriosConfiabilidadeURLComAdministrador(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.acionaSelectSistema("Sistema Teste");
 		auxMenu.clicaLink("Relatórios");
 		auxMenu.clicaLink("Confiabilidade das URLs");
-		boolean paginaCerta = driver.getTitle().contains("Confiabilidade das URLs");
+		boolean paginaCerta = driver.getTitle().contains("Relatório Códigos HTTP");
 		assertTrue(paginaCerta);
 	}
+	
 	//TC45
-	//@Teste
+	@Test
 	public void menuRelatoriosPerfilAcessoComAnalista(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
 		auxMenu.acionaSelectSistema("Sistema Teste");
 		auxMenu.clicaLink("Relatórios");
 		auxMenu.clicaLink("Perfil de Acesso");
-		boolean paginaCerta = driver.getTitle().contains("Perfil de Acesso");
+		boolean paginaCerta = driver.getTitle().contains("Relatório de perfil de acesso");
 		assertTrue(paginaCerta);
 	}
+	
 	//TC46
-	//@Teste
+	@Test
 	public void menuRelatoriosConfiabilidadeURLComAnalista(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
 		auxMenu.acionaSelectSistema("Sistema Teste");
 		auxMenu.clicaLink("Relatórios");
 		auxMenu.clicaLink("Confiabilidade das URLs");
-		boolean paginaCerta = driver.getTitle().contains("Confiabilidade das URLs");
+		boolean paginaCerta = driver.getTitle().contains("Relatório Códigos HTTP");
 		assertTrue(paginaCerta);
 	}
-	//TC47 -- ERRO
-	//@Test(expected=IllegalArgumentException.class)
-	public void menuRelatoriosConfiabilidadeURLSemSistemaSelecionado(){
-		auxMenu.visita();
-		auxMenu.efetuaLogin("usuario3", "123456");
-		auxMenu.clicaLink("Relatórios");
-		auxMenu.clicaLink("Confiabilidade das URLs");
-	}
-	//TC48 -- ERRO
-	//@Test(expected=IllegalArgumentException.class)
-	public void menuRelatoriosConfiabilidadeURLSemNenhumSistema(){
-		auxMenu.visita();
-		auxMenu.efetuaLogin("usuario3", "123456");
-		auxMenu.clicaLink("Relatórios");
-		auxMenu.clicaLink("Confiabilidade das URLs");
-	}
+	
 	//TC49
-	//@Teste
+	@Test
 	public void menuIdiomaComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
@@ -613,8 +694,9 @@ public class MenuTest {
 				driver.getPageSource().contains("Português");
 		assertTrue(menuCorreto);
 	}
+	
 	//TC50
-	//@Teste
+	@Test
 	public void menuIdiomaComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
@@ -623,107 +705,288 @@ public class MenuTest {
 				driver.getPageSource().contains("Português");
 		assertTrue(menuCorreto);
 	}
+	
 	//TC51
-	//@Teste
+	@Test
 	public void menuIdiomaInglesComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.clicaLink("Idioma");
 		auxMenu.clicaLink("Inglês");
-		boolean traduziu = driver.getPageSource().contains("Language");
-		assertTrue(traduziu);
+		boolean traduzido = driver.getPageSource().contains("Language");
+		assertTrue(traduzido);
 	}
+	
 	//TC52
-	//@Teste
+	@Test
 	public void menuIdiomaPortuguesComAdministrador() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.clicaLink("Idioma");
 		auxMenu.clicaLink("Inglês");
+		boolean translate = driver.getPageSource().contains("Language");
+		assertTrue(translate);
 		auxMenu.clicaLink("Idioma");
 		auxMenu.clicaLink("Português");
-		boolean traduziu = driver.getPageSource().contains("Idioma");
-		assertTrue(traduziu);
+		boolean traduzido = driver.getPageSource().contains("Idioma");
+		assertTrue(traduzido);
 	}
+	
 	//TC53
-	//@Teste
+	@Test
 	public void menuIdiomaInglesComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
 		auxMenu.clicaLink("Idioma");
 		auxMenu.clicaLink("Inglês");
-		boolean traduziu = driver.getPageSource().contains("Language");
-		assertTrue(traduziu);
+		boolean traduzido = driver.getPageSource().contains("Language");
+		assertTrue(traduzido);
 	}
+	
 	//TC54
-	//@Teste
+	@Test
 	public void menuIdiomaPortuguesComAnalista() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
 		auxMenu.clicaLink("Idioma");
 		auxMenu.clicaLink("Inglês");
+		boolean translate = driver.getPageSource().contains("Language");
+		assertTrue(translate);
 		auxMenu.clicaLink("Idioma");
 		auxMenu.clicaLink("Português");
-		boolean traduziu = driver.getPageSource().contains("Idioma");
-		assertTrue(traduziu);
+		boolean traduzido = driver.getPageSource().contains("Idioma");
+		assertTrue(traduzido);
 	}
+	
 	//TC55
-	//@Teste
+	@Test
 	public void menuSair() {
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
 		auxMenu.clicaLink("Sair");
-		boolean paginaCerta = driver.getPageSource().contains("Tem certeza que deseja sair?");
+		boolean paginaCerta = driver.getPageSource().contains("Confirma sair do sistema?");
 		assertTrue(paginaCerta);
 	}
-	//TC56 -- BOTAO
-	//@Teste
-	public void menuSairBotaoNao(){
+	
+	//TC56 -- BOTAO CANCELAR
+	@Test
+	public void menuSairBotaoCancelar(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		auxMenu.clicaLink("Sair");
-		WebElement botaoNao = driver.findElement(By.id("botao-nao"));
+		WebElement botaoNao = driver.findElement(By.className("btn-danger"));
 		botaoNao.click();
-		boolean paginaCerta = driver.getTitle().contains("WebDep");
+		boolean paginaCerta = driver.getPageSource().contains("Idioma");
 		assertTrue(paginaCerta);
 	}
-	//TC57 -- BOTAO
-	//@Teste
+	
+	//TC57 -- BOTAO CONFIRMAR
+	@Test
 	public void menuSairBotaoSim(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
 		auxMenu.clicaLink("Sair");
-		WebElement botaoSim = driver.findElement(By.id("botao-sim"));
+		WebElement botaoSim = driver.findElement(By.id("submit-padrao-url"));
 		botaoSim.click();
 		boolean paginaCerta = driver.getPageSource().contains("Autenticação");
 		assertTrue(paginaCerta);
 	}
-	//TC58
-	//@Teste
+	
+	//TC58 -- SELETOR DE SISTEMA
+	@Test
 	public void componenteSeletorSistemaComAdministrador(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario2", "123456");
 		Select seletor = new Select(driver.findElement(By.id("sistema")));
 		List<WebElement> opcoes = seletor.getOptions();
-		boolean sistemaCerto = opcoes.contains("Sistema Teste");
-		boolean sistemaErro = opcoes.contains("Sistema Teste 2");
-		assertTrue(sistemaCerto);
-		assertFalse(sistemaErro);
+		
+		boolean sistema1 = false;
+		boolean sistema2 = false;
+		
+		for (WebElement webElement : opcoes) {
+				if(webElement.getText().contains("Sistema Teste")){
+				sistema1 = true;
+			}
+			if(webElement.getText().contains("Sistema Teste 2")){
+				sistema2 = true;
+			}
+		}
+		
+		assertTrue(sistema1);
+		assertFalse(sistema2);
+		assertEquals(1, opcoes.size());
 	}
-	//TC59
-	//@Teste
+	
+	//TC59 -- SELETOR DE SISTEMA
+	@Test
 	public void componenteSeletorSistemaComAnalista(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario3", "123456");
 		Select seletor = new Select(driver.findElement(By.id("sistema")));
 		List<WebElement> opcoes = seletor.getOptions();
-		boolean sistemaCerto = opcoes.contains("Sistema Teste");
-		boolean sistemaErro = opcoes.contains("Sistema Teste 2");
-		assertTrue(sistemaCerto);
-		assertFalse(sistemaErro);
+		
+		boolean sistema1 = false;
+		boolean sistema2 = false;
+		
+		for (WebElement webElement : opcoes) {
+				if(webElement.getText().contains("Sistema Teste")){
+				sistema1 = true;
+			}
+			if(webElement.getText().contains("Sistema Teste 2")){
+				sistema2 = true;
+			}
+		}
+		
+		assertTrue(sistema1);
+		assertFalse(sistema2);
+		assertEquals(1, opcoes.size());
 	}
-	//TC60
-	//@Teste
+	
+	//TCextra01
+	@Test
+	public void cadastreUsuariosLinkDaPrincipalComAdministradorGeral() {
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario1", "123456");
+		auxMenu.clicaLink("Cadastre usuários e atribua permissões a eles");
+		boolean paginaCerta = driver.getTitle().contains("Usuário");
+		assertTrue(paginaCerta);
+	}
+	
+	//TCextra02
+	@Test
+	public void cadastreUsuariosLinkDaPrincipalComAdministrador() {
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario2", "123456");
+		auxMenu.clicaLink("Cadastre usuários e atribua permissões a eles");
+		boolean paginaCerta = driver.getTitle().contains("Usuário");
+		assertTrue(paginaCerta);
+	}
+	
+	//TCextra03
+	@Test
+	public void cadastreUsuariosLinkDaPrincipalComAnalista() {
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario3", "123456");
+		boolean semLink = driver.getPageSource().contains("Cadastre usuários e atribua permissões a eles");
+		assertFalse(semLink);
+	}
+	
+	//TCextra04
+	@Test
+	public void consultarExcluirLogLinkDaPrincipalComAdministradorGeral() {
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario1", "123456");
+		auxMenu.clicaLink("Selecione exclua dados históricos de logs");
+		
+		boolean paginaCerta = driver.getPageSource().contains("Sistema");
+		boolean tabelaData = driver.getPageSource().contains("Data e Hora");
+		boolean tabelaNivel = driver.getPageSource().contains("Nível");
+		
+		assertTrue(paginaCerta);
+		assertTrue(tabelaData);
+		assertTrue(tabelaNivel);
+	}
+	
+	//TCextra05
+	@Test
+	public void consultarExcluirLogLinkDaPrincipalComAdministrador() {
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario2", "123456");
+		auxMenu.clicaLink("Selecione exclua dados históricos de logs");
+
+		boolean paginaCerta = driver.getPageSource().contains("Sistema");
+		boolean tabelaData = driver.getPageSource().contains("Data e Hora");
+		boolean tabelaNivel = driver.getPageSource().contains("Nível");
+		
+		assertTrue(paginaCerta);
+		assertTrue(tabelaData);
+		assertTrue(tabelaNivel);
+	}
+	
+	//TCextra06
+	@Test
+	public void consultarExcluirLogLinkDaPrincipalComAnalista() {
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario3", "123456");
+		boolean semLink = driver.getPageSource().contains("Selecione exclua dados históricos de logs");
+		assertFalse(semLink);
+	}
+	*/
+	
+	/* TESTE SEM SISTEMA SELECIONADO E SEM SISTEMA NENHUM
+	//TC34 -- ERRO
+	@Test(expected=IllegalArgumentException.class)
+	public void menuLogsConsultarAcessoSemSistemaSelecionado(){
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario2", "123456");
+		auxMenu.clicaLink("Logs");
+		auxMenu.clicaLink("Consultar/Excluir Registros de Acesso");
+	}
+	//TC35 -- ERRO
+	@Test(expected=IllegalArgumentException.class)
+	public void menuLogsConsultarAcessoSemNenhumSistema(){
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario2", "123456");
+		auxMenu.clicaLink("Logs");
+		auxMenu.clicaLink("Consultar/Excluir Registros de Acesso");
+	}
+	
+	//TC37 -- ERRO
+	@Test(expected=IllegalArgumentException.class)
+	public void menuLogsConsultarErroSemSistemaSelecionado(){
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario2", "123456");
+		auxMenu.clicaLink("Logs");
+		auxMenu.clicaLink("Consultar/Excluir Registros de Erro");
+	}
+	
+	//TC38 -- ERRO
+	@Test(expected=IllegalArgumentException.class)
+	public void menuLogsConsultarErroSemNenhumSistema(){
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario2", "123456");
+		auxMenu.clicaLink("Logs");
+		auxMenu.clicaLink("Consultar/Excluir Registros de Erro");
+	}
+	
+	//TC42 -- ERRO
+	@Test(expected=IllegalArgumentException.class)
+	public void menuRelatoriosPerfilAcessoSemSistemaSelecionado(){
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario2", "123456");
+		auxMenu.clicaLink("Relatórios");
+		auxMenu.clicaLink("Perfil de Acesso");
+	}
+	
+	//TC43 -- ERRO
+	@Test(expected=IllegalArgumentException.class)
+	public void menuRelatoriosPerfilAcessoSemNenhumSistema(){
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario2", "123456");
+		auxMenu.clicaLink("Relatórios");
+		auxMenu.clicaLink("Perfil de Acesso");
+	}
+	
+	//TC47 -- ERRO
+	@Test(expected=IllegalArgumentException.class)
+	public void menuRelatoriosConfiabilidadeURLSemSistemaSelecionado(){
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario3", "123456");
+		auxMenu.clicaLink("Relatórios");
+		auxMenu.clicaLink("Confiabilidade das URLs");
+	}
+	
+	//TC48 -- ERRO
+	@Test(expected=IllegalArgumentException.class)
+	public void menuRelatoriosConfiabilidadeURLSemNenhumSistema(){
+		auxMenu.visita();
+		auxMenu.efetuaLogin("usuario3", "123456");
+		auxMenu.clicaLink("Relatórios");
+		auxMenu.clicaLink("Confiabilidade das URLs");
+	}
+	
+	//TC60 -- SELETOR DE SISTEMA ---- VERIFICAR SE RETORNA NULL OU VAZIO
+	@Test
 	public void componenteSeletorSistemaSemNenhumSistema(){
 		auxMenu.visita();
 		auxMenu.efetuaLogin("usuario1", "123456");
@@ -732,4 +995,5 @@ public class MenuTest {
 		boolean sistema = opcoes.isEmpty();
 		assertTrue(sistema);
 	}
+	*/
 }
