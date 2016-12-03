@@ -135,9 +135,9 @@ links barra menu -->
 							</script>
 
 
-
 							<!-- Tag do select customizada -->
-							<cmp:ComboSistema userId="${ id }" attributes=" onchange='javascript:updateIdSistema()'"  classCss="form-control" />
+														
+							<cmp:ComboSistema userId="${ id }" selectedList="${sessionScope.idsistema}" attributes=" onchange='javascript:updateIdSistema()'"  classCss="form-control" />
 
 
 							<!-- Script para submissão do select -->
