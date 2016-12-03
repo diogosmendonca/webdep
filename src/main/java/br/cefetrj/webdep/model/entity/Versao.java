@@ -31,6 +31,7 @@ public class Versao  implements Serializable {
 	private LocalDateTime timestampLiberacao;
 
 	@ManyToOne
+	@JoinColumn(name="versoes")
 	private Sistema sistema;
 	
 	public Long getId() {
