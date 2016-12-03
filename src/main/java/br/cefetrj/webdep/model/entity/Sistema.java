@@ -47,16 +47,16 @@ public class Sistema implements Serializable{
 	@Column(nullable = false)
 	private Long periodicidadeLeitura;
 	
-	@OneToMany(mappedBy="sistema")
+	@OneToMany(mappedBy="sistema", cascade=CascadeType.REMOVE)
 	private List<Versao> versoes; 
 	
-	@OneToMany(mappedBy="sistema")
+	@OneToMany(mappedBy="sistema", cascade=CascadeType.REMOVE)
 	private List<Permissao> permissoes;
 	
-	@OneToMany(mappedBy="sistema")
+	@OneToMany(mappedBy="sistema", cascade=CascadeType.REMOVE)
 	private List<RegistroLogAcesso> acessos;
 	
-	@OneToMany(mappedBy="sistema")
+	@OneToMany(mappedBy="sistema", cascade=CascadeType.REMOVE)
 	private List<RegistroLogErro> erros; 
 	
 	@ManyToOne
