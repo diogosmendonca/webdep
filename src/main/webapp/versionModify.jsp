@@ -37,6 +37,7 @@
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.versionName" /></label>
 						<div class="col-xs-4">
 							<input type="text" class="form-control" name="nome" id="nome" value="${ version.nome }">
+							<input type="hidden" class="form-control" name="id" id="nome" value="${ version.id }">
 						</div>
 					</div>
 					<div class="form-group">

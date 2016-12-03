@@ -21,14 +21,13 @@ public class ChangeVersionCommand implements Command {
 		
 		
 		/*
-		 *Validação dos campos e preenchimento dos campos com os dados atuais
-		 *da versão a ser alterada 
+		 *Validação dos campos
 		 * 
 		 */
 		
 
-		
-		Versao v = (Versao) request.getAttribute("versao");
+		Long idv = Long.parseLong(request.getParameter("id"));
+		Versao v = VersionServices.obterPorId(idv);
 		
 		LocalDate ld = LocalDate.parse(request.getParameter("date"));
 		LocalTime lt = LocalTime.parse(request.getParameter("time"));
@@ -38,8 +37,8 @@ public class ChangeVersionCommand implements Command {
 		if(nome.trim().length()>0 && nome.trim().length()<101)
 			v.setNome(nome);
 		
-		Long id = Long.parseLong(request.getParameter("sistema"));
-		Sistema s = SistemaServices.obterPorId(id);
+		Long ids = Long.parseLong(request.getParameter("sistema"));
+		Sistema s = SistemaServices.obterPorId(ids);
 		v.setSistema(s);
 		
 		v.setTimestampLiberacao(ldt);
