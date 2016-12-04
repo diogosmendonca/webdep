@@ -49,9 +49,9 @@ public class SistemaServices {
 	public static List<Sistema> searchSistema(String s) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 		try {
-			Query q = pm.createQuery("FROM Sistema WHERE nome LIKE :param "
-					+ " OR servidor LIKE :param "
-					+ " OR id LIKE :param ");
+			Query q = pm.createQuery("FROM Sistema sis WHERE sis.nome LIKE :param "
+					+ " OR (sis.servidor.nome LIKE :param )"
+					+ " OR (sis.servidor.formatoLog.nome LIKE :param )");
 			
 			q.setParameter("param", "%"+s+"%");
 

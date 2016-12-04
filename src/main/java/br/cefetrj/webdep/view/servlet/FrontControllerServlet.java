@@ -44,6 +44,7 @@ import br.cefetrj.webdep.view.command.ValidaLogErroCommand;
 import br.cefetrj.webdep.view.command.ValidaLogAcessoCommand;
 import br.cefetrj.webdep.view.command.ImportarLogCommand;
 import br.cefetrj.webdep.view.command.ExcluirLogErroCommand;
+import br.cefetrj.webdep.view.command.FillFormatoLogCommand;
 import br.cefetrj.webdep.view.command.FillSistemaCommand;
 import br.cefetrj.webdep.view.command.GetHttpReportListsCommand;
 import br.cefetrj.webdep.view.command.GetVersionCommand;
@@ -89,6 +90,7 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("listSistema", new ListSistemaCommand());
 		commands.put("deleteSistema", new DeleteSistemaCommand());
 		commands.put("fillSistema", new FillSistemaCommand());
+		commands.put("fillFormatoLog", new FillFormatoLogCommand());
 		commands.put("testAccessLogFolder", new TestaLogAcessoCommand());
 		commands.put("testErrorLogFolder", new TestaLogErroCommand());
 

@@ -156,7 +156,7 @@ public class CadastraUsuarioCommand implements Command {
 				Permissao permissao = new Permissao();
 				permissao.setSistema(sis);
 				permissao.setUsuario(usu);
-				permissao.setPerfil(usu.getPerfil());
+				//permissao.setPerfil(usu.getPerfil());
 				permisseos.add(permissao);
 			}
 			usu.setPermissoes(permisseos);

@@ -31,8 +31,8 @@ public class FillSistemaCommand implements Command{
 			json = "{\"sistema\":";
 				json += "{";
 				json += "\"nome\":\"" + s.getNome() + "\",";
-				json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
-				json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
+				json += "\"servidor\":" + s.getServidor().getId() + ",";
+				json += "\"formatolog\":" + s.getServidor().getFormatoLog().getId() + ",";
 				json += "\"ptLogs\":\"" + s.getPastaLogAcesso() + "\",";
 				json += "\"pxLogs\":\"" + s.getPrefixoLogAcesso() + "\",";
 				json += "\"ptLogs2\":\"" + s.getPastaLogErro() + "\",";

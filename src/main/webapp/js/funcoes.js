@@ -16,8 +16,8 @@ $(document).ready(
 						success : function(response) {
 							var resposta = $.parseJSON(response);
 							$("#nome").val(resposta.sistema.nome);
-							$("#servidor option").val(resposta.sistema.servidor);
-							$("#formatoLog option").val(resposta.sistema.formatolog);
+							$("#servidor").val(resposta.sistema.servidor);
+							$("#formatoLog").val(resposta.sistema.formatolog);
 							$("#ptLogs").val(resposta.sistema.ptLogs);
 							$("#pxLogs").val(resposta.sistema.pxLogs);
 							$("#ptLogs2").val(resposta.sistema.ptLogs2);
@@ -89,8 +89,8 @@ $(document).ready(
 											var resposta = $.parseJSON(response);
 											var sistemas = resposta.sistemas;
 											var erro = resposta.Erro;
+											$("#table-sistemas").children().remove();
 											if (resposta.hasOwnProperty("sistemas")) {
-												$("#table-sistemas").children().remove();
 												sistemas.forEach(function(el) {
 													$("#table-sistemas").append("<tr><td>"
 															+ el.nome
@@ -116,6 +116,7 @@ $(document).ready(
 													});
 												} else if (resposta.hasOwnProperty("Erro")) {
 													alert(resposta.Erro);
+													
 													}
 											}
 										});
@@ -254,6 +255,37 @@ $(document).ready(
 					forceParse : 0
 				});
 				/* FIM DATEPICKER */
+				/*CADASTRO DE SISTEMA*/
+				$("#servidor").on('change', function (){
+					var serverId = $("#servidor").val();
+					$.ajax({
+						type : "POST",
+						url : "FrontControllerServlet",
+						data : {
+							action: "fillFormatoLog",
+							filtro: serverId
+						}, // action fica no
+						// jsp porque o form
+						// está sendo
+						// serializado(o
+						// action está
+						// dentro de
+						// sistemaForm)
+						success : function(response) {
+							var resposta = $
+									.parseJSON(response);
+							if (resposta.hasOwnProperty("formatoLogs")) {
+								$("#formatoLog").children().remove();
+								var formatoLogs = resposta.formatoLogs;
+								for (var i = 0; i < formatoLogs.length; i += 1 ){
+									$("#formatoLog").append("<option value='"+
+											formatoLogs[i].id +"'>"+ 
+											formatoLogs[i].nome +"</option>");
+								}
+							}
+						}
+					});
+				});
 				$("#cadastro-sistema-submit")
 						.click(
 								function() {
@@ -287,8 +319,7 @@ $(document).ready(
 										$("#div-nova").toggleClass(
 												"has-error");
 									} else {
-										$
-												.ajax({
+										$.ajax({
 													type : "POST",
 													url : "FrontControllerServlet",
 													data : {

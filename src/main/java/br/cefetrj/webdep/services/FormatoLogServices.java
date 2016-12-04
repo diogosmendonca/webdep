@@ -27,6 +27,18 @@ public class FormatoLogServices {
 		return dao.listAll();
 	}
 	
+	public static List<FormatoLog> searchFormatoLogByServidor(Long servidorId) {
+		PersistenceManager pm = PersistenceManager.getInstance();
+		try {
+			Query q = pm.createQuery("SELECT fmt FROM FormatoLog fmt, Servidor ser WHERE ser.id = :param AND ser.formatoLog.nome LIKE fmt.nome");
+			q.setParameter("param", servidorId);
+			return q.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public static List<FormatoLog> searchFormatoLog(String s) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 		try {

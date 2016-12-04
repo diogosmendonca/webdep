@@ -46,7 +46,7 @@
 					<label class="text-right col-sm-6"><fmt:message
 							key="br.cefetrj.webdep.jsp.form.sistema.fmtLogs" /></label>
 					<div class="input-group">
-						<cmp:ComboCadastroSistemaFormatoLog formatoLogId="${ id }" classCss="form-control"/>
+						<select class="form-control" id="formatoLog" name="formatoLog"></select>
 					</div>
 					<br> <label class="text-right col-sm-6"><fmt:message
 							key="br.cefetrj.webdep.jsp.form.sistema.ptLogs" /></label>

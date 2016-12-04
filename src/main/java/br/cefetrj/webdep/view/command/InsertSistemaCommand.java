@@ -11,7 +11,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.cefetrj.webdep.model.entity.FormatoLog;
 import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
+import br.cefetrj.webdep.model.entity.Servidor;
 import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.services.RegistroLogAcessoService;
 import br.cefetrj.webdep.services.ServidorServices;
@@ -26,6 +28,12 @@ public class InsertSistemaCommand implements Command{
 			Sistema s = new Sistema();
 			String nome = request.getParameter("nome");
 			String server = request.getParameter("servidor");
+			String formatoLog = request.getParameter("formatoLog");
+			FormatoLog fmt = new FormatoLog();
+			fmt.setNome(formatoLog);
+			Servidor serv = new Servidor();
+			serv.setFormatoLog(fmt);
+			serv.setNome(server);
 			String ptLogs = request.getParameter("ptLogs");
 			String pxLogs = request.getParameter("pxLogs");
 			String ptLogs2 = request.getParameter("ptLogs2");
@@ -37,7 +45,7 @@ public class InsertSistemaCommand implements Command{
 			String mensagem = "";
 		try{	
 			s.setNome(nome);
-			s.setServidor(ServidorServices.searchServidor(server).get(0));
+			s.setServidor(ServidorServices.searchServidor(serv).get(0));
 			s.setPastaLogAcesso(ptLogs);
 			s.setPrefixoLogAcesso(pxLogs);
 			s.setPrefixoLogErro(pxLogs2);
@@ -48,7 +56,7 @@ public class InsertSistemaCommand implements Command{
 			mensagem = "Sistema cadastrado com sucesso!";
 		} catch (Exception e) {
 			mensagem = "Erro no cadastro: " + e.getMessage();
-			//javax.persistence.EntityExistsException já existe
+			//javax.persistence.EntityExistsException jï¿½ existe
 			e.printStackTrace();
 		} finally {
 			String json = "{\"mensagem\": \"" + mensagem + "\"}";
