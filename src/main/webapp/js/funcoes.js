@@ -67,51 +67,61 @@ $(document).ready(
 					var filtro = $("#filtro-busca-sistemas").val();
 					// validação form
 					if (filtro.trim() === "") {
-						$("#div-buscar-sistemas").toggleClass("has-error");
-						} else {
-							$.ajax({
-								type : "POST",
-								url : "FrontControllerServlet",
-								data : {
-									action : "listSistema",
-									filtro : filtro
-									},
-									success : function(response) {
-										var resposta = $.parseJSON(response);
-										var sistemas = resposta.sistemas;
-										var erro = resposta.Erro;
-										if (resposta.hasOwnProperty("sistemas")) {
-											$("#table-sistemas").children().remove();
-											sistemas.forEach(function(el) {
-												$("#table-sistemas").append("<tr><td>"
-														+ el.nome
-														+ "</td><td>"
-														+ el.servidor
-														+ "</td><td>"
-														+ el.formatolog
-														+ "</td><td>"
-														+ el.periodicidade
-														+ "</td><td>"
-														+ el.proximaleitura
-														+ "</td>"
-														+ "<td><a onclick=alterar(\""
-														+ el.id
-														+ "\"); id=\""
-														+ el.id
-														+ "-alterar\" class=\"alterar-sistema\">Alterar</a></td>"
-														+ "<td><a onclick=excluir(\""
-														+ el.id
-														+ "\"); id=\""
-														+ el.id
-														+ "-excluir\" class=\"excluir-sistema\">Excluir</a></td></tr>");
-												});
-											} else if (resposta.hasOwnProperty("Erro")) {
-												alert(resposta.Erro);
-												}
-										}
-									});
-							}
-					});
+						$("#div-buscar-sistemas").addClass("has-error");
+						$("#div-buscar-sistemas span").addClass("glyphicon glyphicon-remove form-control-feedback");
+						alert("Favor preencher o filtro de busca");
+					} else {
+						if (filtro.trim().length > 100) {
+							$("#div-buscar-sistemas").addClass("has-error");
+							$("#div-buscar-sistemas span").addClass("glyphicon glyphicon-remove form-control-feedback");
+							alert("Tamanho do filtro excedido. \nFavor não ultrapassar 100 caractéres");
+						}else{
+							$("#div-buscar-sistemas").removeClass("has-error");
+							$("#div-buscar-sistemas span").removeClass("glyphicon glyphicon-remove form-control-feedback");
+								$.ajax({
+									type : "POST",
+									url : "FrontControllerServlet",
+									data : {
+										action : "listSistema",
+										filtro : filtro
+										},
+										success : function(response) {
+											var resposta = $.parseJSON(response);
+											var sistemas = resposta.sistemas;
+											var erro = resposta.Erro;
+											if (resposta.hasOwnProperty("sistemas")) {
+												$("#table-sistemas").children().remove();
+												sistemas.forEach(function(el) {
+													$("#table-sistemas").append("<tr><td>"
+															+ el.nome
+															+ "</td><td>"
+															+ el.servidor
+															+ "</td><td>"
+															+ el.formatolog
+															+ "</td><td>"
+															+ el.periodicidade
+															+ "</td><td>"
+															+ el.proximaleitura
+															+ "</td>"
+															+ "<td><a onclick=alterar(\""
+															+ el.id
+															+ "\"); id=\""
+															+ el.id
+															+ "-alterar\" class=\"alterar-sistema\">Alterar</a></td>"
+															+ "<td><a onclick=excluir(\""
+															+ el.id
+															+ "\"); id=\""
+															+ el.id
+															+ "-excluir\" class=\"excluir-sistema\">Excluir</a></td></tr>");
+													});
+												} else if (resposta.hasOwnProperty("Erro")) {
+													alert(resposta.Erro);
+													}
+											}
+										});
+								}
+						}
+				});
 				/* FIM LISTAGEM DE SISTEMA */
 
 				/* MODAL PADRAO URL */
@@ -205,7 +215,6 @@ $(document).ready(
 									}
 								}
 							});
-					alert("boom");
 				});
 				/* FIM PADRAO URL */
 				/* DATEPICKER */
