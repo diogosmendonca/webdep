@@ -1,6 +1,7 @@
 package br.cefetrj.webdep.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -12,6 +13,7 @@ import javax.persistence.Query;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,7 +32,7 @@ import br.cefetrj.webdep.model.entity.Versao;
 import br.cefetrj.webdep.tests.support.TestSupport;
 
 public class ConfiabilidadeUrlTabelaTest {
-
+	/*
 	@SuppressWarnings("unused")
 	private static Long adminGeralId;
 	
@@ -252,15 +254,14 @@ public class ConfiabilidadeUrlTabelaTest {
 		analistaId = u3.getId();
 		sistemaId = s1.getId();
 		
-		/*
-        if (System.getProperty("os.name").contains("Windows")){
+        //if (System.getProperty("os.name").contains("Windows")){
         	System.setProperty("webdriver.gecko.driver", "src\\test\\resources\\geckodriver.exe");
-        }else{
+        //}else{
         	System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver");
-        }
+        //}
         
-        driver = new FirefoxDriver();
-		*/
+        //driver = new FirefoxDriver();
+		
 		if (System.getProperty("os.name").contains("Windows")){
         	System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\chromedriver.exe");
         }else{
@@ -271,428 +272,548 @@ public class ConfiabilidadeUrlTabelaTest {
         auxTest = new TestSupport(driver);
 	}
 	
-	//TC61
-	//@Test(expected=IllegalArgumentException.class)
+	//TC61 -- CONFIRMAR O ID DO BOTAO BUSCAR
+	@Test
 	public void tabelaBuscarSemSelecoes(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
-		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
+		WebElement botaoBuscar = driver.findElement(By.id("action"));
 		botaoBuscar.click();
-		//List<WebElement> linhas = driver.findElements(By.tagName("tr"));
-		//assertEquals(0, linhas.size());
+		boolean erroVersao = driver.getPageSource().contains("Atenção! O campo Versões precisa ser preenchido.");
+		boolean erroHttpOk = driver.getPageSource().contains("Atenção! O campo Código HTTP OK precisa ser preenchido.");
+		boolean erroHttp = driver.getPageSource().contains("Atenção! O campo Código HTTP de Erro precisa ser preenchido.");
+		
+		assertTrue(erroVersao);
+		assertTrue(erroHttpOk);
+		assertTrue(erroHttp);
 	}
+	
 	//TC62
-	//@Test
+	@Test
 	public void tabelaSeletorVersoes(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		List<WebElement> valores = versoes.getOptions();
-		assertEquals(0, valores.size());
+		
+		boolean versao1 = false;
+		boolean versao2 = false;
+		
+		for (WebElement webElement : valores) {
+				if(webElement.getText().contains("Versao1.01")){
+				versao1 = true;
+			}
+			if(webElement.getText().contains("Versao1.02")){
+				versao2 = true;
+			}
+		}
+		
+		assertTrue(versao1);
+		assertTrue(versao2);
+		assertEquals(2, valores.size());
 	}
-	//TC63
-	//@Test
+	
+	//TC63 -- PADRAO URL ESTA SEM ID E NAME
+	@Test
 	public void tabelaVersoesComPadraoURL(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		List<WebElement> valores = versoes.getOptions();
-		boolean versao101 = valores.contains("Versao1.01");
-		boolean versao102 = valores.contains("Versao1.02");
-		assertTrue(versao101);
-		assertTrue(versao102);
+		boolean versao1 = false;
+		boolean versao2 = false;
+		
+		for (WebElement webElement : valores) {
+				if(webElement.getText().contains("Versao1.01")){
+				versao1 = true;
+			}
+			if(webElement.getText().contains("Versao1.02")){
+				versao2 = true;
+			}
+		}
+		
+		assertTrue(versao1);
+		assertTrue(versao2);
 		assertEquals(2, valores.size());
 	}
+	
 	//TC64
-	//@Test
+	@Test
 	public void tabelaCodigosHTTPErro(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
-		Select http = new Select(driver.findElement(By.id("codigo-erro")));
+		Select http = new Select(driver.findElement(By.id("errorList")));
 		List<WebElement> valores = http.getOptions();
+		boolean erro1 = false;
+		boolean erro2 = false;
+		
+		for (WebElement webElement : valores) {
+				if(webElement.getText().contains("500")){
+				erro1 = true;
+			}
+			if(webElement.getText().contains("404")){
+				erro2 = true;
+			}
+		}
+		
+		assertFalse(erro1);
+		assertFalse(erro2);
 		assertEquals(0, valores.size());
 	}
-	//TC65
-	//@Test
+	
+	//TC65 --PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaCodigosHTTPErroComPadraoUrl(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select http = new Select(driver.findElement(By.id("codigo-erro")));
+		Select http = new Select(driver.findElement(By.id("errorList")));
 		List<WebElement> valores = http.getOptions();
-		assertEquals(0, valores.size());
+		boolean erro1 = false;
+		boolean erro2 = false;
+		
+		for (WebElement webElement : valores) {
+				if(webElement.getText().contains("500")){
+				erro1 = true;
+			}
+			if(webElement.getText().contains("404")){
+				erro2 = true;
+			}
+		}
+		
+		assertTrue(erro1);
+		assertTrue(erro2);
+		assertEquals(2, valores.size());
 	}
+	
 	//TC66
-	//@Test
+	@Test
 	public void tabelaCodigosHTTPErroComPadraoUrlUmaVersao(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
-		Select http = new Select(driver.findElement(By.id("codigo-erro")));
+		Select http = new Select(driver.findElement(By.id("errorList")));
 		List<WebElement> valores = http.getOptions();
-		boolean codigo = valores.contains("500");
-		assertTrue(codigo);
+		boolean erro1 = false;
+		boolean erro2 = false;
+		
+		for (WebElement webElement : valores) {
+				if(webElement.getText().contains("500")){
+				erro1 = true;
+			}
+			if(webElement.getText().contains("404")){
+				erro2 = true;
+			}
+		}
+		
+		assertTrue(erro1);
+		assertFalse(erro2);
 		assertEquals(1, valores.size());
 	}
+	
 	//TC67
-	//@Test
+	@Test
 	public void tabelaCodigosHTTPErroComPadraoUrlMaisDeUmaVersao(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
 		versoes.selectByVisibleText("Versao1.02");
-		Select http = new Select(driver.findElement(By.id("codigo-erro")));
+		Select http = new Select(driver.findElement(By.id("errorList")));
 		List<WebElement> valores = http.getOptions();
-		boolean codigo500 = valores.contains("500");
-		boolean codigo400 = valores.contains("400");
-		assertTrue(codigo500);
-		assertTrue(codigo400);
+		boolean erro1 = false;
+		boolean erro2 = false;
+		
+		for (WebElement webElement : valores) {
+				if(webElement.getText().contains("500")){
+				erro1 = true;
+			}
+			if(webElement.getText().contains("404")){
+				erro2 = true;
+			}
+		}
+		
+		assertTrue(erro1);
+		assertTrue(erro2);
 		assertEquals(2, valores.size());
 	}
+	
 	//TC68
-	//@Test
+	@Test
 	public void tabelaCodigosHTTPOk() {
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
-		Select http = new Select(driver.findElement(By.id("codigo-ok")));
+		Select http = new Select(driver.findElement(By.id("okList")));
 		List<WebElement> valores = http.getOptions();
+		boolean ok1 = false;
+		boolean ok2 = false;
+		
+		for (WebElement webElement : valores) {
+				if(webElement.getText().contains("200")){
+				ok1 = true;
+			}
+			if(webElement.getText().contains("302")){
+				ok2 = true;
+			}
+		}
+		
+		assertFalse(ok1);
+		assertFalse(ok2);
 		assertEquals(0, valores.size());
 	}
-	//TC69
-	//@Test
+	
+	//TC69 -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaCodigosHTTPOkComPadraoUrl(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select http = new Select(driver.findElement(By.id("codigo-ok")));
+		Select http = new Select(driver.findElement(By.id("okList")));
 		List<WebElement> valores = http.getOptions();
-		assertEquals(0, valores.size());
+		boolean ok1 = false;
+		boolean ok2 = false;
+		
+		for (WebElement webElement : valores) {
+				if(webElement.getText().contains("200")){
+				ok1 = true;
+			}
+			if(webElement.getText().contains("302")){
+				ok2 = true;
+			}
+		}
+		
+		assertTrue(ok1);
+		assertTrue(ok2);
+		assertEquals(2, valores.size());
 	}
-	//TC70
-	//@Test
+	
+	//TC70 -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaCodigosHTTPOkComPadraoUrlUmaVersao(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
-		Select http = new Select(driver.findElement(By.id("codigo-ok")));
+		Select http = new Select(driver.findElement(By.id("okList")));
 		List<WebElement> valores = http.getOptions();
-		boolean codigo = valores.contains("200");
-		assertTrue(codigo);
-		assertEquals(1, valores.size());
+		boolean ok1 = false;
+		boolean ok2 = false;
+		
+		for (WebElement webElement : valores) {
+				if(webElement.getText().contains("200")){
+				ok1 = true;
+			}
+			if(webElement.getText().contains("302")){
+				ok2 = true;
+			}
+		}
+		
+		assertTrue(ok1);
+		assertTrue(ok2);
+		assertEquals(2, valores.size());
 	}
-	//TC71
-	//@Test
+	
+	//TC71 -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaCodigosHTTPOkComPadraoUrlMaisDeUmaVersao(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
 		versoes.selectByVisibleText("Versao1.02");
-		Select http = new Select(driver.findElement(By.id("codigo-ok")));
+		Select http = new Select(driver.findElement(By.id("okList")));
 		List<WebElement> valores = http.getOptions();
-		boolean codigo = valores.contains("200");
-		assertTrue(codigo);
-		assertEquals(1, valores.size());
+		boolean ok1 = false;
+		boolean ok2 = false;
+		
+		for (WebElement webElement : valores) {
+				if(webElement.getText().contains("200")){
+				ok1 = true;
+			}
+			if(webElement.getText().contains("302")){
+				ok2 = true;
+			}
+		}
+		
+		assertTrue(ok1);
+		assertTrue(ok2);
+		assertEquals(2, valores.size());
 	}
-	//TC72
-	//@Test
+	
+	//TC72 -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaCodigosHTTPOkComPadraoUrlUmaVersaoCodigoErro(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
-		Select httpErro = new Select(driver.findElement(By.id("codigo-erro")));
+		Select httpErro = new Select(driver.findElement(By.id("errorList")));
 		httpErro.selectByVisibleText("500");
-		Select httpOk = new Select(driver.findElement(By.id("codigo-ok")));
+		Select httpOk = new Select(driver.findElement(By.id("okList")));
 		List<WebElement> valores = httpOk.getOptions();
-		boolean codigo = valores.contains("200");
-		assertTrue(codigo);
-		assertEquals(1, valores.size());
+		boolean ok1 = false;
+		boolean ok2 = false;
+		
+		for (WebElement webElement : valores) {
+				if(webElement.getText().contains("200")){
+				ok1 = true;
+			}
+			if(webElement.getText().contains("302")){
+				ok2 = true;
+			}
+		}
+		
+		assertTrue(ok1);
+		assertTrue(ok2);
+		assertEquals(2, valores.size());
 	}
-	//TC73
-	//@Test
+	
+	//TC73 -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaCodigosHTTPOkComPadraoUrlUmaVersaoMaisDeUmCodigoErro(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
-		Select httpErro = new Select(driver.findElement(By.id("codigo-erro")));
+		Select httpErro = new Select(driver.findElement(By.id("errorList")));
 		httpErro.selectByVisibleText("500");
 		httpErro.selectByVisibleText("404");
-		Select httpOk = new Select(driver.findElement(By.id("codigo-ok")));
+		Select httpOk = new Select(driver.findElement(By.id("okList")));
 		List<WebElement> valores = httpOk.getOptions();
-		boolean codigo = valores.contains("200");
-		assertTrue(codigo);
-		assertEquals(1, valores.size());
+		boolean ok1 = false;
+		boolean ok2 = false;
+		
+		for (WebElement webElement : valores) {
+				if(webElement.getText().contains("200")){
+				ok1 = true;
+			}
+			if(webElement.getText().contains("302")){
+				ok2 = true;
+			}
+		}
+		
+		assertTrue(ok1);
+		assertTrue(ok2);
+		assertEquals(2, valores.size());
 	}
-	//TC74 -- ERRO
-	//@Test(expected=IllegalArgumentException.class)
+	
+	//TC74 -- ERRO -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaBuscarComPadraoUrl() {
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
 		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
 		botaoBuscar.click();
+		boolean erroVersao = driver.getPageSource().contains("Atenção! O campo Versões precisa ser preenchido.");
+		boolean erroHttpOk = driver.getPageSource().contains("Atenção! O campo Código HTTP OK precisa ser preenchido.");
+		boolean erroHttp = driver.getPageSource().contains("Atenção! O campo Código HTTP de Erro precisa ser preenchido.");
+		
+		assertTrue(erroVersao);
+		assertTrue(erroHttpOk);
+		assertTrue(erroHttp);
 	}
-	//TC75 -- ERRO
-	//@Test(expected=IllegalArgumentException.class)
+	
+	//TC75 -- ERRO -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaBuscarComVersoes(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
 		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
 		botaoBuscar.click();
+		boolean erroVersao = driver.getPageSource().contains("Atenção! O campo Versões precisa ser preenchido.");
+		boolean erroHttpOk = driver.getPageSource().contains("Atenção! O campo Código HTTP OK precisa ser preenchido.");
+		boolean erroHttp = driver.getPageSource().contains("Atenção! O campo Código HTTP de Erro precisa ser preenchido.");
+		
+		assertFalse(erroVersao);
+		assertTrue(erroHttpOk);
+		assertTrue(erroHttp);
 	}
-	//TC76 -- ERRO
-	//@Test(expected=IllegalArgumentException.class)
+	
+	//TC76 -- ERRO -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaBuscarComCodigoErro(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
-		Select httpErro = new Select(driver.findElement(By.id("codigo-erro")));
+		Select httpErro = new Select(driver.findElement(By.id("errorList")));
 		httpErro.selectByVisibleText("500");
 		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
 		botaoBuscar.click();
+		boolean erroVersao = driver.getPageSource().contains("Atenção! O campo Versões precisa ser preenchido.");
+		boolean erroHttpOk = driver.getPageSource().contains("Atenção! O campo Código HTTP OK precisa ser preenchido.");
+		boolean erroHttp = driver.getPageSource().contains("Atenção! O campo Código HTTP de Erro precisa ser preenchido.");
+		
+		assertFalse(erroVersao);
+		assertTrue(erroHttpOk);
+		assertFalse(erroHttp);
 	}
-	//TC77 -- ERRO
-	//@Test(expected=IllegalArgumentException.class)
+	
+	//TC77 -- ERRO -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaBuscarComCodigoOk(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
-		Select httpOk = new Select(driver.findElement(By.id("codigo-ok")));
+		Select httpOk = new Select(driver.findElement(By.id("okList")));
 		httpOk.selectByVisibleText("200");
 		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
 		botaoBuscar.click();
+		
+		boolean erroVersao = driver.getPageSource().contains("Atenção! O campo Versões precisa ser preenchido.");
+		boolean erroHttpOk = driver.getPageSource().contains("Atenção! O campo Código HTTP OK precisa ser preenchido.");
+		boolean erroHttp = driver.getPageSource().contains("Atenção! O campo Código HTTP de Erro precisa ser preenchido.");
+		
+		assertFalse(erroVersao);
+		assertFalse(erroHttpOk);
+		assertTrue(erroHttp);
 	}
-	//TC78
-	//@Test
+	
+	//TC78 -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaBuscarComTodosOsSeletores(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
-		Select httpErro = new Select(driver.findElement(By.id("codigo-erro")));
+		Select httpErro = new Select(driver.findElement(By.id("errorList")));
 		httpErro.selectByVisibleText("500");
-		Select httpOk = new Select(driver.findElement(By.id("codigo-ok")));
+		Select httpOk = new Select(driver.findElement(By.id("okList")));
 		httpOk.selectByVisibleText("200");
 		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
 		botaoBuscar.click();
 		List<WebElement> linhas = driver.findElements(By.tagName("tr"));
-		boolean probabilidade = driver.getPageSource().contains("50%");
+		boolean acesso = driver.getPageSource().contains("3");
+		boolean falhas = driver.getPageSource().contains("1");
+		boolean probabilidade = driver.getPageSource().contains("25%");
 		assertTrue(probabilidade);
+		assertTrue(falhas);
+		assertTrue(acesso);
 		assertEquals(1, linhas.size());
 	}
-	//TC79
-	//@Test
+	
+	//TC79 -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaBuscarComTodosOsSeletoresMaisDeUmaVersao(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
 		versoes.selectByVisibleText("Versao1.02");
-		Select httpErro = new Select(driver.findElement(By.id("codigo-erro")));
+		Select httpErro = new Select(driver.findElement(By.id("errorList")));
 		httpErro.selectByVisibleText("500");
-		Select httpOk = new Select(driver.findElement(By.id("codigo-ok")));
+		Select httpOk = new Select(driver.findElement(By.id("okList")));
 		httpOk.selectByVisibleText("200");
 		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
 		botaoBuscar.click();
 		List<WebElement> linhas = driver.findElements(By.tagName("tr"));
-		boolean probabilidade = driver.getPageSource().contains("50%");
+		boolean acesso = driver.getPageSource().contains("5");
+		boolean falhas = driver.getPageSource().contains("1");
+		boolean probabilidade = driver.getPageSource().contains("16,6%");
 		assertTrue(probabilidade);
+		assertTrue(falhas);
+		assertTrue(acesso);
 		assertEquals(1, linhas.size());
 	}
-	//TC80
-	//@Test
+	
+	//TC80 -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaBuscarComTodosOsSeletoresMaisDeUmCodigoErro(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
 		versoes.selectByVisibleText("Versao1.02");
-		Select httpErro = new Select(driver.findElement(By.id("codigo-erro")));
+		Select httpErro = new Select(driver.findElement(By.id("errorList")));
 		httpErro.selectByVisibleText("500");
 		httpErro.selectByVisibleText("404");
-		Select httpOk = new Select(driver.findElement(By.id("codigo-ok")));
+		Select httpOk = new Select(driver.findElement(By.id("okList")));
 		httpOk.selectByVisibleText("200");
 		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
 		botaoBuscar.click();
 		List<WebElement> linhas = driver.findElements(By.tagName("tr"));
-		boolean probabilidade = driver.getPageSource().contains("66%");
+		boolean acesso = driver.getPageSource().contains("5");
+		boolean falhas = driver.getPageSource().contains("2");
+		boolean probabilidade = driver.getPageSource().contains("28,5%");
 		assertTrue(probabilidade);
+		assertTrue(falhas);
+		assertTrue(acesso);
 		assertEquals(1, linhas.size());
 	}
-	//TC81
-	//@Test
+	
+	//TC81 -- PADRAO URL SEM ID E NAME
+	@Test
 	public void tabelaBuscarComTodosOsSeletoresMaisDeUmCodigoOk(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
 		versoes.selectByVisibleText("Versao1.02");
-		Select httpErro = new Select(driver.findElement(By.id("codigo-erro")));
+		Select httpErro = new Select(driver.findElement(By.id("errorList")));
 		httpErro.selectByVisibleText("500");
 		httpErro.selectByVisibleText("404");
-		Select httpOk = new Select(driver.findElement(By.id("codigo-ok")));
+		Select httpOk = new Select(driver.findElement(By.id("okList")));
 		httpOk.selectByVisibleText("200");
 		httpOk.selectByVisibleText("302");
 		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
 		botaoBuscar.click();
 		List<WebElement> linhas = driver.findElements(By.tagName("tr"));
-		boolean probabilidade = driver.getPageSource().contains("50%");
+		boolean acesso = driver.getPageSource().contains("8");
+		boolean falhas = driver.getPageSource().contains("2");
+		boolean probabilidade = driver.getPageSource().contains("20%");
 		assertTrue(probabilidade);
+		assertTrue(falhas);
+		assertTrue(acesso);
 		assertEquals(1, linhas.size());
 	}
-	//TC82
-	//@Test
+	
+	//TC82  -- PADRAO URL SEM ID E NAME
+	@Test
 	public void conferenciaDadosDaTabela(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
 		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
+		Select versoes = new Select(driver.findElement(By.id("versionList")));
 		versoes.selectByVisibleText("Versao1.01");
-		Select httpErro = new Select(driver.findElement(By.id("codigo-erro")));
+		Select httpErro = new Select(driver.findElement(By.id("errorList")));
 		httpErro.selectByVisibleText("500");
-		Select httpOk = new Select(driver.findElement(By.id("codigo-ok")));
+		Select httpOk = new Select(driver.findElement(By.id("okList")));
 		httpOk.selectByVisibleText("200");
 		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
 		botaoBuscar.click();
 		List<WebElement> linhas = driver.findElements(By.tagName("tr"));
-		boolean acessos = driver.getPageSource().contains("5");
+		boolean acessos = driver.getPageSource().contains("3");
 		boolean falhas = driver.getPageSource().contains("1");
-		boolean probabilidade = driver.getPageSource().contains("17%");
+		boolean probabilidade = driver.getPageSource().contains("25%");
 		assertTrue(acessos);
 		assertTrue(falhas);
 		assertTrue(probabilidade);
 		assertEquals(1, linhas.size());
 	}
-	//TC83
-	//@Test
+	
+	//TC83 -- BOTAO VOLTAR SEM ID E SEM NAME
+	@Test
 	public void tabelaVoltar(){
 		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
 		WebElement botaoVoltar = driver.findElement(By.id("voltar"));
 		botaoVoltar.click();
-		boolean pagina = driver.getTitle().contains("WebDep");
+		boolean pagina = driver.getTitle().contains("Home");
 		assertTrue(pagina);
 	}
-	//TC84 -- GRAFICO
-	//@Test
-	public void conferenciaDadosGrafico(){
-		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
-		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
-		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
-		versoes.selectByVisibleText("Versao1.01");
-		Select httpErro = new Select(driver.findElement(By.id("codigo-erro")));
-		httpErro.selectByVisibleText("500");
-		Select httpOk = new Select(driver.findElement(By.id("codigo-ok")));
-		httpOk.selectByVisibleText("200");
-		auxTest.clicaLink("Gráfico");
-		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
-		botaoBuscar.click();
-		boolean acessos = driver.getPageSource().contains("5");
-		boolean falhas = driver.getPageSource().contains("1");
-		boolean probabilidade = driver.getPageSource().contains("17%");
-		assertTrue(acessos);
-		assertTrue(falhas);
-		assertTrue(probabilidade);
-	}
-	//TC85 -- GRAFICO
-	//@Test
-	public void graficoBuscarComTodosOsSeletoresMaisDeUmaVersao(){
-		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
-		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
-		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
-		versoes.selectByVisibleText("Versao1.01");
-		versoes.selectByVisibleText("Versao1.02");
-		Select httpErro = new Select(driver.findElement(By.id("codigo-erro")));
-		httpErro.selectByVisibleText("500");
-		Select httpOk = new Select(driver.findElement(By.id("codigo-ok")));
-		httpOk.selectByVisibleText("200");
-		auxTest.clicaLink("Gráfico");
-		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
-		botaoBuscar.click();
-		boolean acessos = driver.getPageSource().contains("8");
-		boolean falhas = driver.getPageSource().contains("2");
-		boolean probabilidade = driver.getPageSource().contains("20%");
-		assertTrue(acessos);
-		assertTrue(falhas);
-		assertTrue(probabilidade);
-	}
-	//TC86 -- GRAFICO
-	//@Test
-	public void graficoBuscarComTodosOsSeletoresMaisDeUmCodigoErro(){
-		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
-		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
-		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
-		versoes.selectByVisibleText("Versao1.01");
-		versoes.selectByVisibleText("Versao1.02");
-		Select httpErro = new Select(driver.findElement(By.id("codigo-erro")));
-		httpErro.selectByVisibleText("500");
-		httpErro.selectByVisibleText("404");
-		Select httpOk = new Select(driver.findElement(By.id("codigo-ok")));
-		httpOk.selectByVisibleText("200");
-		auxTest.clicaLink("Gráfico");
-		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
-		botaoBuscar.click();
-		boolean acessos = driver.getPageSource().contains("8");
-		boolean falhas = driver.getPageSource().contains("2");
-		boolean probabilidade = driver.getPageSource().contains("20%");
-		assertTrue(acessos);
-		assertTrue(falhas);
-		assertTrue(probabilidade);
-	}
-	//TC87 -- GRAFICO
-	//@Test
-	public void graficoBuscarComTodosOsSeletoresMaisDeUmCodigoOk(){
-		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
-		Select padroesURL = new Select(driver.findElement(By.id("padrao-url")));
-		padroesURL.selectByVisibleText("index_Sistema1");
-		Select versoes = new Select(driver.findElement(By.id("versoes")));
-		versoes.selectByVisibleText("Versao1.01");
-		versoes.selectByVisibleText("Versao1.02");
-		Select httpErro = new Select(driver.findElement(By.id("codigo-erro")));
-		httpErro.selectByVisibleText("500");
-		httpErro.selectByVisibleText("404");
-		Select httpOk = new Select(driver.findElement(By.id("codigo-ok")));
-		httpOk.selectByVisibleText("200");
-		httpOk.selectByVisibleText("302");
-		auxTest.clicaLink("Gráfico");
-		WebElement botaoBuscar = driver.findElement(By.id("buscar"));
-		botaoBuscar.click();
-		boolean acessos = driver.getPageSource().contains("8");
-		boolean falhas = driver.getPageSource().contains("2");
-		boolean probabilidade = driver.getPageSource().contains("20%");
-		assertTrue(acessos);
-		assertTrue(falhas);
-		assertTrue(probabilidade);
-	}
-	//TC88
-	//@Test
-	public void graficoVoltar(){
-		auxTest.logarIrAtePagina("usuario2", "123456", "Sistema Teste", "Relatórios", "Confiabilidade das URLs");
-		auxTest.clicaLink("Gráfico");
-		WebElement botaoVoltar = driver.findElement(By.id("voltar"));
-		botaoVoltar.click();
-		boolean pagina = driver.getTitle().contains("WebDep");
-		assertTrue(pagina);
-	}
+	*/
 }
