@@ -7,7 +7,6 @@ import javax.persistence.Query;
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.entity.PadraoURL;
-import br.cefetrj.webdep.model.entity.Sistema;
 
 public class PadraoURLServices {
 	public static void insertPadraoURL(PadraoURL p) {
@@ -64,5 +63,19 @@ public class PadraoURLServices {
 		}
 		
 		return 	padrao;
+	}
+	
+	public static List<PadraoURL> listarTodosPorUsuario(Long id){
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			Query q = pManager.createQuery("SELECT p FROM PadraoURL p WHERE p.usuario.id = :param ");
+			
+			q.setParameter("param", id);
+
+			return q.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}		
 	}
 }

@@ -60,6 +60,27 @@ $(document).ready(
 											}
 									}
 								});
+					} else if (window.location.href.indexOf("HTTPreport.jsp") > -1) {
+						$.ajax({
+							type : "POST",
+							url : "FrontControllerServlet",
+							data : {
+								action : "fillPadraoURL"
+							},
+							success : function(response) {
+								var resposta = $.parseJSON(response);
+								$("#selectPadraoURL").children().remove();
+								if (resposta.hasOwnProperty("padroes")) {
+									var padroes = resposta.padroes;
+									padroes.forEach(function (padrao){
+										$("#selectPadraoURL").append("<option value='"+padrao.id+"'>"+padrao.nome+"</option>");
+									});
+								} else if (resposta.hasOwnProperty("Erro")) {
+									$("#selectPadraoURL").append("<option>Adicione um Padrão URL<option>");
+									alert(resposta.Erro);
+								}
+							}
+						});
 					}
 			
 				/* LISTAGEM DE SISTEMA */
@@ -130,13 +151,40 @@ $(document).ready(
 				$('#myModal').on('shown.bs.modal', function() {
 					$('#myInput').focus();
 				});
+				
 				// Buscar Expressão Regular
 				$("#submit-regex").click(function() {
 					var regex = $("#regex").val();
-					if (regex.trim() === "") {
-						$("#div-regex").toggleClass("has-error");
-						} else {
+					var regex = $("#regex").val();
+					var nome = $("#padrao-url-nome").val();
+					if (regex.trim() === ""){
+						$("#div-regex").addClass("has-error");
+						$("#regex-error").html("Favor preencher este campo.");
+					} else {
+						$("#div-regex").removeClass("has-error");
+						$("#regex-error").html("");
+					}
+					if (nome.trim() === ""){
+						$("#div-nome").addClass("has-error");
+						$("#nome-error").html("Favor preencher este campo.");
+					} else {
+						$("#div-nome").removeClass("has-error");
+						$("#nome-error").html("");
+					}
+					if (regex.trim() !== "" && nome.trim() !== "") {
+						if (regex.length > 255){
+							$("#div-regex").addClass("has-error");
+							$("#regex-error").html("Limite de caractéres excedido.");
+						} 
+						if (nome.length > 50){
+							$("#div-nome").addClass("has-error");
+							$("#nome-error").html("Limite de caractéres excedido.");
+						} 
+						if (regex.length <= 255 && nome.length <= 50){
 							$("#div-regex").removeClass("has-error");
+							$("#regex-error").html("");
+							$("#div-nome").removeClass("has-error");
+							$("#nome-error").html("");
 							$.ajax({
 								type : "POST",
 								url : "FrontControllerServlet",
@@ -146,6 +194,7 @@ $(document).ready(
 									},
 									success : function(response) {
 										var resposta = $.parseJSON(response);
+										console.log(response)
 										if (resposta.hasOwnProperty("url")) {
 											var urls = resposta.url;
 											urls.forEach(function(el) {
@@ -157,30 +206,80 @@ $(document).ready(
 											} else if (resposta.hasOwnProperty("Erro")) {
 												alert(resposta.Erro);
 												}
-										}
-									});
-							}
+									}
+							});
+						}
+					}
 					return false;
-					});
+				});
 				// Salvar Padrão URL
 				$("#submitpadraourl").on("click", function() {
 					var regex = $("#regex").val();
+					var regex = $("#regex").val();
 					var nome = $("#padrao-url-nome").val();
 					if (regex.trim() === ""){
-						$("#div-regex").toggleClass("has-error");
-					}else if (nome.trim() === ""){
-						$("#div-nome").toggleClass("has-error");
-					}else if (regex.trim() !== "" && nome.trim() !== "") {
+						$("#div-regex").addClass("has-error");
+						$("#regex-error").html("Favor preencher este campo.");
+					} else {
 						$("#div-regex").removeClass("has-error");
+						$("#regex-error").html("");
+					}
+					if (nome.trim() === ""){
+						$("#div-nome").addClass("has-error");
+						$("#nome-error").html("Favor preencher este campo.");
+					} else {
 						$("#div-nome").removeClass("has-error");
-						$.ajax({
-							type : "POST",
-							url : "FrontControllerServlet",
-							data : {
-								action : "insertPadraoURL",
-								nome : nome,
-								regex : regex
-								},
+						$("#nome-error").html("");
+					}
+					if (regex.trim() !== "" && nome.trim() !== "") {
+						if (regex.length > 255){
+							$("#div-regex").addClass("has-error");
+							$("#regex-error").html("Limite de caractéres excedido.");
+						} 
+						if (nome.length > 50){
+							$("#div-nome").addClass("has-error");
+							$("#nome-error").html("Limite de caractéres excedido.");
+						} 
+						if (regex.length <= 255 && nome.length <= 50){
+							$("#div-regex").removeClass("has-error");
+							$("#regex-error").html("");
+							$("#div-nome").removeClass("has-error");
+							$("#nome-error").html("");
+							$.ajax({
+								type : "POST",
+								url : "FrontControllerServlet",
+								data : {
+									action : "insertPadraoURL",
+									nome : nome,
+									regex : regex
+									},
+									success : function(response) {
+										var resposta = $.parseJSON(response);
+										if (resposta.hasOwnProperty("mensagem") > -1) {
+											var mensagem = resposta.mensagem;
+											alert(mensagem);
+											window.location.replace("HTTPreport.jsp");
+										} else if (resposta.indexOf("Erro")) {
+											alert("Erro de conexão com o servidor");
+											}
+										}
+									});
+						}
+						return false;
+					}
+				});
+				
+				$("#deletePadraoURL").on("click", function() {
+					var idPadrao = $("#selectPadraoURL").val();
+					if(idPadrao != null){
+						if (confirm("Tem certeza que deseja excluir este padrão URL?")){
+							$.ajax({
+								type : "POST",
+								url : "FrontControllerServlet",
+								data : {
+									action : "deletePadraoURL",
+									id : idPadrao
+									},
 								success : function(response) {
 									var resposta = $.parseJSON(response);
 									if (resposta.hasOwnProperty("mensagem") > -1) {
@@ -190,32 +289,13 @@ $(document).ready(
 									} else if (resposta.indexOf("Erro")) {
 										alert("Erro de conexão com o servidor");
 										}
-									}
-								});
-						}
-					return false;
-					});
-				
-				$("#deletePadraoURL").on("click", function() {
-					var idPadrao = $("#selectPadraoURL").val();
-					$.ajax({
-						type : "POST",
-						url : "FrontControllerServlet",
-						data : {
-							action : "deletePadraoURL",
-							id : idPadrao
-							},
-							success : function(response) {
-								var resposta = $.parseJSON(response);
-								if (resposta.hasOwnProperty("mensagem") > -1) {
-									var mensagem = resposta.mensagem;
-									alert(mensagem);
-									window.location.replace("HTTPreport.jsp");
-								} else if (resposta.indexOf("Erro")) {
-									alert("Erro de conexão com o servidor");
-									}
 								}
 							});
+						}
+					} else {
+						alert("Exclusão não executada. Não há registros no banco.");
+					}
+					
 				});
 				/* FIM PADRAO URL */
 				/* DATEPICKER */

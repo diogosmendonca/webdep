@@ -62,14 +62,12 @@
 							key="br.cefetrj.webdep.jsp.http.URLpattern" /></label>
 					<div class="col-xs-2">
 						<select id="selectPadraoURL" class="form-control">
-						<!-- favor manter o id do select como está -->
-							<option value="5">URLs Sistema</option>
-							<!-- favor colocar o id do padrao resgatado do banco no value do option -->
+			<!-- essa parte está no meu caso de teste pode deixar que eu preencho conforme o usuario logado. Ass: Luan -->
 						</select>
 						<button class="btn btn-primary" type="button" data-toggle="modal"
 							data-target="#myModal">+</button>
 							<button id="deletePadraoURL" name="deletepadraourl" class="btn btn-primary" 
-							onclick=':javascript' type="button">-</button>
+							 type="button">-</button>
 					</div>
 					<label class="control-label col-sm-2" for="pwd"><fmt:message
 							key="br.cefetrj.webdep.jsp.http.HTTPerror" /></label>
@@ -195,25 +193,26 @@
 					<div class="container">
 						<div id="form-padrao-url" class="form-horizontal col-sm-11">
 							<div class="row">
-								<div id="div-nome" class="form-group">
-									<label class="col-sm-2 text-right control-label"
-										for="padrao-url-nome">Nome: </label>
+								<div id="div-nome" class="form-group has-feedback">
+									<label class="col-sm-2 text-right control-label" for="padrao-url-nome">Nome: </label>
 									<div class="col-sm-3">
-										<input name="padrao-url-nome" id="padrao-url-nome" type="text"
-											class="form-control" />
+										<input name="padrao-url-nome" placeholder="Por exemplo: 'Somente letras e números'" id="padrao-url-nome" type="text"
+											data-error="Favor preencher este campo." class="form-control" />
+											<div id="nome-error" class="text-center help-block with-errors"></div>
 									</div>
+									
 								</div>
-								<div id="div-regex" class="form-group">
-									<label class="col-sm-2 text-right control-label" for="regex">Expressão
-										Regular:</label>
-									<div class="col-sm-3 input-group">
-										<input id="regex" name="regex" type="text"
-											class="form-control" /> <span
-											class="input-group-btn text-right">
-											<button id="submit-regex" class="btn btn-primary"
-												type="button">Buscar</button>
-										</span>
+								<div id="div-regex" class="form-group has-feedback">
+									<label class="col-sm-2 text-right control-label" for="regex">Expressão Regular:</label>
+									<div class="col-sm-4 input-group">
+										<input id="regex" placeholder="Por exemplo: ^[a-zA-Z0-9]+$+" name="regex" type="text"
+											class="form-control" required>
+											<span class="input-group-btn text-right">
+												<button id="submit-regex" class="btn btn-primary"
+													type="button">Buscar</button>
+											</span>
 									</div>
+									<div id="regex-error" class="col-sm-7 text-center help-block with-errors"></div>
 								</div>
 							</div>
 							<div class="row">

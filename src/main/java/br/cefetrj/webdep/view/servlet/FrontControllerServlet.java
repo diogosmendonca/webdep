@@ -45,6 +45,7 @@ import br.cefetrj.webdep.view.command.ValidaLogAcessoCommand;
 import br.cefetrj.webdep.view.command.ImportarLogCommand;
 import br.cefetrj.webdep.view.command.ExcluirLogErroCommand;
 import br.cefetrj.webdep.view.command.FillFormatoLogCommand;
+import br.cefetrj.webdep.view.command.FillPadraoURLCommand;
 import br.cefetrj.webdep.view.command.FillSistemaCommand;
 import br.cefetrj.webdep.view.command.GetHttpReportListsCommand;
 import br.cefetrj.webdep.view.command.GetVersionCommand;
@@ -97,6 +98,7 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("insertPadraoURL", new InsertPadraoURLCommand());
 		commands.put("deletePadraoURL", new DeletePadraoURLCommand());
 		commands.put("regexPadraoURL", new RegexPadraoURLCommand());
+		commands.put("fillPadraoURL", new FillPadraoURLCommand());
 
 		commands.put("buscarLogErro", new BuscarLogErroCommand());
 		commands.put("buscarLogAcesso", new BuscarLogAcessoCommand());

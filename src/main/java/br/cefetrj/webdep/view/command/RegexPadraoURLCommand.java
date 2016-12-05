@@ -46,8 +46,16 @@ public class RegexPadraoURLCommand implements Command{
             }
             json += "]}";
             json = json.replace(",]}","]}");
+        }catch (java.util.regex.PatternSyntaxException e){
+        	mensagem = "Não foi possível completar a ação. Expressão Regular inválida.";
+        	json = "{\"Erro\": \"" + mensagem + "\"}";
+        	e.printStackTrace();
+        }catch (NullPointerException e){
+        	mensagem = "Não foi possível completar a ação. Selecione um Sistema acima.";
+        	json = "{\"Erro\": \"" + mensagem + "\"}";
+        	e.printStackTrace();
         }catch (Exception e){
-        	mensagem = "Não foi possível completar a ação";
+        	mensagem = "Não foi possível completar a ação.";
         	json = "{\"Erro\": \"" + mensagem + "\"}";
         	e.printStackTrace();
         }finally{

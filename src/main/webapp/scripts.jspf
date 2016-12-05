@@ -7,5 +7,5 @@
 	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.pt-BR.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="js/bootstrap-select.js" charset="UTF-8"></script>
 	
-	
+	<script src="js/validator.js"></script>
     <script src="js/funcoes.js"></script>
