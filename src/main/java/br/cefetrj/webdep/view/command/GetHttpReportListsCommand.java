@@ -21,16 +21,20 @@ public class GetHttpReportListsCommand implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String idSistema = (String) session.getAttribute("idsistema");
-		long idSistemaLong = (long) session.getAttribute("idsistema");
+		
+		try{
+		long idSistemaLong =(Long) session.getAttribute("idsistema");
+		String idSistema = String.valueOf(idSistemaLong); 
+		
 		
 		List<Versao> vers = new VersionServices().searchVersion(idSistema);
+		request.setAttribute("versionList", vers);		
+		
+		
 		
 		Sistema sis = new SistemaServices().SearchById(idSistemaLong);
 		List<RegistroLogAcesso> regLog = new RegistroLogAcessoService().searchRegistroLogAcessoBySistema(sis);		
-		
-		request.setAttribute("versionList", vers);
-		
+			
 		List<RegistroLogAcesso> codeOk = new ArrayList<RegistroLogAcesso>();
 		List<RegistroLogAcesso> codeError = new ArrayList<RegistroLogAcesso>();
 		
@@ -44,6 +48,10 @@ public class GetHttpReportListsCommand implements Command {
 		
 		request.setAttribute("errorList", codeError);
 		request.setAttribute("okList", codeOk);
+				
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		request.getRequestDispatcher("HTTPreport.jsp").forward(request, response);
 		
