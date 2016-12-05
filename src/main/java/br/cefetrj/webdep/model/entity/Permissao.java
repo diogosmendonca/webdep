@@ -2,10 +2,10 @@ package br.cefetrj.webdep.model.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
@@ -24,6 +24,7 @@ public class Permissao implements Serializable {
 	private Long id;
 
 	@ManyToOne
+	@JoinColumn(name="sistema_id")
 	private Sistema sistema;
 	
 	@ManyToOne
@@ -42,8 +43,23 @@ public class Permissao implements Serializable {
 	}
 
 	public void setSistema(Sistema sistema) {
-		this.sistema = sistema;
-	}
+	    //prevent endless loop
+	    if (checarSeExiste(sistema))
+	      return ;
+	    //set new owner
+	    Sistema oldSistema = this.sistema;
+	    this.sistema = sistema;
+	    //remove from the old owner
+	    if (oldSistema!=null)
+	    	oldSistema.removePermissao(this);
+	    //set myself into new owner
+	    if (sistema!=null)
+	    	sistema.addPermissao(this);
+	  }
+
+	  private boolean checarSeExiste(Sistema newSistema) {
+	    return sistema==null? newSistema == null : sistema.equals(newSistema);
+	  }
 
 	public Usuario getUsuario() {
 		return usuario;

@@ -2,6 +2,7 @@ package br.cefetrj.webdep.view.command;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.services.RegistroLogAcessoService;
 import br.cefetrj.webdep.services.SistemaServices;
+import br.cefetrj.webdep.services.UsuarioServices;
 
 public class DeleteSistemaCommand implements Command{
 

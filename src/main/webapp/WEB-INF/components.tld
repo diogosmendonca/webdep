@@ -60,27 +60,5 @@
       <rtexprvalue>true</rtexprvalue>
     </attribute>
   </tag>
-  <tag>
-    <name>ComboCadastroSistemaFormatoLog</name>
-    <tag-class>br.cefetrj.webdep.view.tag.CadastroSistemaFormatoLogComboTag</tag-class>
-    <body-content>empty</body-content>
-    <attribute>
-      <name>formatoLogId</name>
-      <required>true</required>
-      <type>java.lang.Integer</type>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-      <name>classCss</name>
-      <required>false</required>
-      <type>java.lang.String</type>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-      <name>style</name>
-      <required>false</required>
-      <type>java.lang.String</type>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-  </tag>
+  
 </taglib>

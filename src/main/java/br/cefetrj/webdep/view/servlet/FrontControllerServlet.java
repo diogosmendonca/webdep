@@ -32,6 +32,7 @@ import br.cefetrj.webdep.view.command.AtualizaUsuarioCommand;
 import br.cefetrj.webdep.view.command.AutenticaUsuarioCommand;
 import br.cefetrj.webdep.view.command.CadastraUsuarioCommand;
 import br.cefetrj.webdep.view.command.DeletaUsuarioCommand;
+import br.cefetrj.webdep.view.command.DeletePadraoURLCommand;
 import br.cefetrj.webdep.view.command.DeslogaUsuarioCommand;
 import br.cefetrj.webdep.view.command.ListaUsuarioCommand;
 
@@ -43,8 +44,11 @@ import br.cefetrj.webdep.view.command.ValidaLogErroCommand;
 import br.cefetrj.webdep.view.command.ValidaLogAcessoCommand;
 import br.cefetrj.webdep.view.command.ImportarLogCommand;
 import br.cefetrj.webdep.view.command.ExcluirLogErroCommand;
+import br.cefetrj.webdep.view.command.FillFormatoLogCommand;
+import br.cefetrj.webdep.view.command.FillPadraoURLCommand;
 import br.cefetrj.webdep.view.command.FillSistemaCommand;
 import br.cefetrj.webdep.view.command.GetHttpReportListsCommand;
+import br.cefetrj.webdep.view.command.GetVersionCommand;
 import br.cefetrj.webdep.view.command.ExcluirLogAcessoCommand;
 import br.cefetrj.webdep.view.command.BuscarLogAcessoCommand;
 import br.cefetrj.webdep.view.command.BuscarLogErroCommand;
@@ -78,6 +82,8 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("searchVersion", new SearchVersionCommand());
 		commands.put("deleteVersion", new DeleteVersionCommand());
 		commands.put("changeVersion", new ChangeVersionCommand());
+		commands.put("getVersion", new GetVersionCommand());
+		
 		commands.put("getUsuario", new ObterUsuarioCommand());
 
 		commands.put("insertSistema", new InsertSistemaCommand());
@@ -85,11 +91,14 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("listSistema", new ListSistemaCommand());
 		commands.put("deleteSistema", new DeleteSistemaCommand());
 		commands.put("fillSistema", new FillSistemaCommand());
+		commands.put("fillFormatoLog", new FillFormatoLogCommand());
 		commands.put("testAccessLogFolder", new TestaLogAcessoCommand());
 		commands.put("testErrorLogFolder", new TestaLogErroCommand());
 
 		commands.put("insertPadraoURL", new InsertPadraoURLCommand());
+		commands.put("deletePadraoURL", new DeletePadraoURLCommand());
 		commands.put("regexPadraoURL", new RegexPadraoURLCommand());
+		commands.put("fillPadraoURL", new FillPadraoURLCommand());
 
 		commands.put("buscarLogErro", new BuscarLogErroCommand());
 		commands.put("buscarLogAcesso", new BuscarLogAcessoCommand());

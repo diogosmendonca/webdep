@@ -47,4 +47,35 @@ public class PadraoURLServices {
 			return null;
 		}
 	}
+	
+	public static PadraoURL obterPorId(Long id){
+		PadraoURL padrao = null;
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			
+			GenericDAO<PadraoURL> padraoDAO = pManager.createGenericDAO(PadraoURL.class);
+			padrao = padraoDAO.get(id);
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+		
+		return 	padrao;
+	}
+	
+	public static List<PadraoURL> listarTodosPorUsuario(Long id){
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			Query q = pManager.createQuery("SELECT p FROM PadraoURL p WHERE p.usuario.id = :param ");
+			
+			q.setParameter("param", id);
+
+			return q.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}		
+	}
 }

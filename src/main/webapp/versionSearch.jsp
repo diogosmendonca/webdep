@@ -54,11 +54,11 @@
 					<tbody>
 						<c:forEach items="${ list }" var="item">
 								<tr>
-									<td>${ item.sistema }</td>
+									<td>${ item.sistema.nome }</td>
 									<td>${ item.nome }</td>
 									<td>${ item.timestampLiberacao.format(DateTimeFormatter.ofPattern(dateTime)) }</td>
-									<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#changeModal" onclick="getIndex(${ list.indexOf(item) })"><span class="glyphicon glyphicon-edit"></span></button></td>
-									<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteModal" onclick="getIndex(${ list.indexOf(item) })"><span class="glyphicon glyphicon-remove"></span></button></td>
+									<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#changeModal" onclick="getId(${ item.id })"><span class="glyphicon glyphicon-edit"></span></button></td>
+									<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteModal" onclick="getId(${ item.id })"><span class="glyphicon glyphicon-remove"></span></button></td>
 								</tr>
 						</c:forEach>
 					</tbody>
@@ -70,81 +70,47 @@
 	
 		</div>
 	</div>
-	
-	
-	<div class="modal fade" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel"><fmt:message key="br.cefetrj.webdep.jsp.vs.changeHeader" /></h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <form id="form-padrao-url" class="form-horizontal col-sm-11">
-									<div class="panel-body">
-										<div class="form-group">
-											<label class="control-label col-sm-2" for="name"><fmt:message key="br.cefetrj.webdep.jsp.vr.system" /></label>
-											<div class="col-xs-4">
-												<select class="form-control" name="sistema" id="sistema">
-													<option disabled selected><fmt:message key="br.cefetrj.webdep.jsp.vr.select" /></option>
-													<option value="Segmentation Fault">Segmentation Fault</option>
-												</select>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.versionName" /></label>
-											<div class="col-xs-4">
-												<input type="text" class="form-control" name="nome" id="nome">
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.releaseDate" /></label>
-											<div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-												<div class="input-group">
-													<input class="form-control" type="text"  name="date" id="date" readonly />
-													<span class="input-group-addon">
-														<span class="glyphicon glyphicon-remove"></span>
-													</span> 
-													<span class="input-group-addon">
-														<span class="glyphicon glyphicon-calendar"></span>
-													</span>
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.releaseTime" /></label>
-											<div class="input-group date form_time col-sm-4" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
-												<div class="input-group">
-													<input class="form-control" type="text" name="time" id="time" readonly />
-													<span class="input-group-addon"> 
-														<span class="glyphicon glyphicon-remove"></span>
-													</span> 
-													<span class="input-group-addon">
-														<span class="glyphicon glyphicon-time"></span>
-													</span>
-												</div>
-											</div>
-										</div>
-								</div>
-                                <div class="modal-footer col-sm-6">
-	                                	<input type="hidden" id="index" name="index">
-	                                    <button id="submit-padrao-url" name="action" value="changeVersion" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" /></button>
-	                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-         </div>
-         
-         
-         
 
-  <div class="modal fade" id="deleteModal" role="dialog">
+
+	<div class="modal fade" id="changeModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<fmt:message key="br.cefetrj.webdep.jsp.vs.changeHeader" />
+					</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+						<fmt:message key="br.cefetrj.webdep.jsp.vs.modifyMessage" />
+					</p>
+				</div>
+				<div class="modal-footer">
+					<form class="form-horizontal" method="post"
+						action="FrontControllerServlet">
+						<input type="hidden" id="id" name="id">
+						<button id="submit-padrao-url" name="action" value="getVersion"
+							type="submit" class="btn btn-primary">
+							<fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" />
+						</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							<fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" />
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="modal fade" id="deleteModal" role="dialog">
     <div class="modal-dialog">
     
       <div class="modal-content">
@@ -157,7 +123,7 @@
         </div>
         <div class="modal-footer">
 	        <form class="form-horizontal" method="post" action="FrontControllerServlet">
-	          <input type="hidden" id="index2" name="index">
+	          <input type="hidden" id="id2" name="id">
 	          <button id="submit-padrao-url" name="action" value="deleteVersion" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" /></button>
 	          <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="br.cefetrj.webdep.jsp.vs.cancel" /></button>
 	        </form>
@@ -168,9 +134,10 @@
   </div>
   
   <script type="text/javascript">
-  function getIndex(index){
-	  document.getElementById("index").value = index;
-	  document.getElementById("index2").value = index;
+  function getId(id){
+	  console.log(id)
+	  document.getElementById("id").value = id;
+	  document.getElementById("id2").value = id;
   }
   </script>
   <script type="text/javascript" src="jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>

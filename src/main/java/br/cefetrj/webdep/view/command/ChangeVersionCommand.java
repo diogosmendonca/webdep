@@ -10,7 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Versao;
+import br.cefetrj.webdep.services.SistemaServices;
 import br.cefetrj.webdep.services.VersionServices;
 
 public class ChangeVersionCommand implements Command {
@@ -19,16 +21,13 @@ public class ChangeVersionCommand implements Command {
 		
 		
 		/*
-		 *Validação dos campos e preenchimento dos campos com os dados atuais
-		 *da versão a ser alterada 
-		 *Inclusão da combo de sistemas feita pelo professor 
+		 *Validação dos campos
 		 * 
 		 */
 		
-		ArrayList <Versao> l = (ArrayList) request.getSession().getAttribute("list");
-		int index = Integer.parseInt(request.getParameter("index"));
-		
-		Versao v = l.get(index);
+
+		Long idv = Long.parseLong(request.getParameter("id"));
+		Versao v = VersionServices.obterPorId(idv);
 		
 		LocalDate ld = LocalDate.parse(request.getParameter("date"));
 		LocalTime lt = LocalTime.parse(request.getParameter("time"));
@@ -38,7 +37,10 @@ public class ChangeVersionCommand implements Command {
 		if(nome.trim().length()>0 && nome.trim().length()<101)
 			v.setNome(nome);
 		
-		//v.setSistema();
+		Long ids = Long.parseLong(request.getParameter("sistema"));
+		Sistema s = SistemaServices.obterPorId(ids);
+		v.setSistema(s);
+		
 		v.setTimestampLiberacao(ldt);
 		
 		VersionServices.changeVersion(v);

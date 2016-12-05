@@ -17,7 +17,6 @@ public class InsertPadraoURLCommand implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/json");
 		PrintWriter pw = response.getWriter();
         HttpSession session = request.getSession();  
         Long usuario_id;
@@ -39,13 +38,12 @@ public class InsertPadraoURLCommand implements Command{
         padraoURL.setUsuario(usuarioLogado);
         try{
         	PadraoURLServices.insertPadraoURL(padraoURL);
-        	mensagem = "Padr„o URL inserido com sucesso";
+        	mensagem = "Padr√£o URL inserido com sucesso";
 		} catch (Exception e) {
-			mensagem = "Erro na inserÁ„o!";
+			mensagem = "Erro na inser√ß√£o!";
 			e.printStackTrace();
 		} finally {
-			String json = "{\"mensagem\": \"" + mensagem + "\"]}";
-			response.setContentType("application/json");
+			String json = "{\"mensagem\": \"" + mensagem + "\"}";
 			pw.write(json);
 		}
         

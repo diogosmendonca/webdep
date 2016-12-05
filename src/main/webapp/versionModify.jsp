@@ -36,14 +36,15 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.versionName" /></label>
 						<div class="col-xs-4">
-							<input type="text" class="form-control" name="nome" id="nome" >
+							<input type="text" class="form-control" name="nome" id="nome" value="${ version.nome }">
+							<input type="hidden" class="form-control" name="id" id="nome" value="${ version.id }">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.releaseDate" /></label>
 						<div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 							<div class="input-group">
-								<input class="form-control" type="text"  name="date" id="date" readonly />
+								<input class="form-control" type="text" value="${ version.timestampLiberacao.toLocalDate() }" name="date" id="date" readonly />
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-remove"></span>
 								</span> 
@@ -57,7 +58,7 @@
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.releaseTime" /></label>
 						<div class="input-group date form_time col-sm-4" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
 							<div class="input-group">
-								<input class="form-control" type="text" name="time" id="time" readonly />
+								<input class="form-control" type="text" value="${ version.timestampLiberacao.toLocalTime() }" name="time" id="time" readonly />
 								<span class="input-group-addon"> 
 									<span class="glyphicon glyphicon-remove"></span>
 								</span> 
@@ -74,7 +75,7 @@
 				<label class="control-label col-sm-2" for="pwd"></label> 
 				<label class="control-label col-sm-2" for="pwd"></label>
 				<div class="col-xs-4">
-					<button type="submit" class="btn btn-primary btn-md" name="action" value="insertVersion">
+					<button type="submit" class="btn btn-primary btn-md" name="action" value="changeVersion">
 						<fmt:message key="br.cefetrj.webdep.jsp.vr.save" />
 					</button>
 					<button type="reset" class="btn btn-danger btn-md">

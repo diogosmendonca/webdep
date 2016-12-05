@@ -13,9 +13,9 @@
 <%-- 	<c:set var="idsistema" scope="session" value="${param.idsistema}" /> --%>
 <%-- </c:if> --%>
 
-<!-- Alerta para expiração de sessão -->
+<!-- Alerta para expiração de sessão 
 <script>
-	var secondsBeforeExpire = $
+	var secondsBeforeExpire = "";
 	{
 		pageContext.session.maxInactiveInterval
 	};
@@ -23,7 +23,7 @@
 	setTimeout(function() {
 		$("#sessionTimeout").modal("show");
 	}, (secondsBeforeExpire - timeToDecide) * 1000);
-</script>
+</script>-->
 
 <!-- 
 links barra menu -->

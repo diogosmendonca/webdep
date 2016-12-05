@@ -38,19 +38,18 @@ public class ListSistemaCommand implements Command{
 			for (Sistema s : sistemasFiltrados) {
 				//PEGANDO HORA DO SISTEMA
 				LocalTime now = LocalTime.now();
-				Calendar cal = Calendar.getInstance();
-				cal.setTimeInMillis(s.getPeriodicidadeLeitura());
-				LocalDateTime ofInstant = LocalDateTime.ofInstant(cal.toInstant(), ZoneId.systemDefault());
-				LocalTime Periodicidade = ofInstant.toLocalTime();
+				Date novaLeituraInput = new Date(s.getPeriodicidadeLeitura()); //MEXI AQUI
+                Calendar cal = new GregorianCalendar(); //MEXI AQUI
+                cal.setTime(novaLeituraInput);//MEXI AQUI
 				LocalTime PrimeiraLeitura = s.getPrimeiraLeitura().toLocalTime();
 				
 				while(PrimeiraLeitura.getHour() < now.getHour()){
 					
-					PrimeiraLeitura = PrimeiraLeitura.plusMinutes(Periodicidade.getMinute());
-					PrimeiraLeitura = PrimeiraLeitura.plusHours(Periodicidade.getHour());
-				}
-					PrimeiraLeitura = PrimeiraLeitura.plusMinutes(Periodicidade.getMinute());
-					PrimeiraLeitura = PrimeiraLeitura.plusHours(Periodicidade.getHour());
+					PrimeiraLeitura = PrimeiraLeitura.plusMinutes(cal.get(Calendar.MINUTE));//MEXI AQUI
+                    PrimeiraLeitura = PrimeiraLeitura.plusHours(cal.get(Calendar.HOUR_OF_DAY));//MEXI AQUI
+                }
+                    PrimeiraLeitura = PrimeiraLeitura.plusMinutes(cal.get(Calendar.MINUTE));//MEXI AQUI
+                    PrimeiraLeitura = PrimeiraLeitura.plusHours(cal.get(Calendar.HOUR_OF_DAY));//MEXI AQUI
 					
 					GregorianCalendar gc = new GregorianCalendar();  
 				    gc.setTime(new Date());  
@@ -61,14 +60,18 @@ public class ListSistemaCommand implements Command{
 				    gc.add(Calendar.HOUR,PrimeiraLeitura.getHour());  
 				    gc.add(Calendar.MINUTE,PrimeiraLeitura.getMinute());
 				   
-				    String novaLeitura = sdf2.format(gc.getTime()); 
+				    String novaLeitura = sdf2.format(gc.getTime());
+				    String periodicidade = cal.get(Calendar.DAY_OF_MONTH)+" dias "
+				    + cal.get(Calendar.HOUR_OF_DAY)+":"
+				    		+cal.get(Calendar.MINUTE);
 				    
 				json += "{";
 				json += "\"id\":\"" + s.getId() + "\",";
 				json += "\"nome\":\"" + s.getNome() + "\",";
 				json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
 				json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
-				json += "\"periodicidade\":\"" + Periodicidade.toString() + "\",";
+				json += "\"periodicidade\":\"" + periodicidade + "\",";
+				//json += "\"periodicidade\":\"" + Periodicidade.toString() + "\",";
 				json += "\"proximaleitura\":\"" + novaLeitura + "\"";
 				json += "},";
 			}
