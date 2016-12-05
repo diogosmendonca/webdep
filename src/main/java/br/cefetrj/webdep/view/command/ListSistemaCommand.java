@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,10 +29,29 @@ public class ListSistemaCommand implements Command{
 		PrintWriter pw = response.getWriter();
 		String json = "";
 		List<Sistema> sistemasFiltrados = null;
+		boolean buscaPorData = false;
+		Date filtroData = null;
 		if (filtro.equals("all")) {
 			sistemasFiltrados = SistemaServices.listarTodos();
 		} else {
-			sistemasFiltrados = SistemaServices.searchSistema(filtro);
+			if(filtro.contains("/") || filtro.contains(":")){
+				try {
+					if (!filtro.contains("/")) {
+						SimpleDateFormat periodicidadeParse = new SimpleDateFormat("dd HH:mm");
+						filtroData = periodicidadeParse.parse(filtro);
+					} else {
+						SimpleDateFormat dataHoraParse = new SimpleDateFormat("dd/mm/yyyy HH:mm");
+						filtroData = dataHoraParse.parse(filtro);
+					}
+					sistemasFiltrados = SistemaServices.listarTodos();
+					buscaPorData = true;
+				} catch (ParseException e) {
+					buscaPorData = false;
+					sistemasFiltrados = SistemaServices.searchSistema(filtro);
+				}
+			} else {
+				sistemasFiltrados = SistemaServices.searchSistema(filtro);
+			}
 		}
 		
 		if (sistemasFiltrados.size() > 0) {
@@ -65,19 +85,30 @@ public class ListSistemaCommand implements Command{
 			    SimpleDateFormat sdf2 = new SimpleDateFormat(formato);
 				String novaLeitura = sdf2.format(x.getTime());
 				    String periodicidade = calNovaLeitura.get(Calendar.DAY_OF_YEAR) 
-				    +"d "+ ((calNovaLeitura.get(Calendar.HOUR_OF_DAY) < 10)?("0"+calNovaLeitura.get(Calendar.HOUR_OF_DAY)):(calNovaLeitura.get(Calendar.HOUR_OF_DAY)))
+				    +" "+ ((calNovaLeitura.get(Calendar.HOUR_OF_DAY) < 10)?("0"+calNovaLeitura.get(Calendar.HOUR_OF_DAY)):(calNovaLeitura.get(Calendar.HOUR_OF_DAY)))
 				    + ":" 
 				   + ((calNovaLeitura.get(Calendar.MINUTE) < 10)?("0"+calNovaLeitura.get(Calendar.MINUTE)):(calNovaLeitura.get(Calendar.MINUTE)));
-				    
-				json += "{";
-				json += "\"id\":\"" + s.getId() + "\",";
-				json += "\"nome\":\"" + s.getNome() + "\",";
-				json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
-				json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
-				json += "\"periodicidade\":\"" + periodicidade + "\",";
-				//json += "\"periodicidade\":\"" + Periodicidade.toString() + "\",";
-				json += "\"proximaleitura\":\"" + novaLeitura + "\"";
-				json += "},";
+				if (buscaPorData) {
+					if (novaLeitura.equals(filtro) || periodicidade.equals(filtro)) {
+						json += "{";
+						json += "\"id\":\"" + s.getId() + "\",";
+						json += "\"nome\":\"" + s.getNome() + "\",";
+						json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
+						json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
+						json += "\"periodicidade\":\"" + periodicidade + "\",";
+						json += "\"proximaleitura\":\"" + novaLeitura + "\"";
+						json += "},";
+					}
+				} else {
+					json += "{";
+					json += "\"id\":\"" + s.getId() + "\",";
+					json += "\"nome\":\"" + s.getNome() + "\",";
+					json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
+					json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
+					json += "\"periodicidade\":\"" + periodicidade + "\",";
+					json += "\"proximaleitura\":\"" + novaLeitura + "\"";
+					json += "},";
+				}
 			}
 			json += "]}";
 			json = json.replace("},]}", "}]}");
