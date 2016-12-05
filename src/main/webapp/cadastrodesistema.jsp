@@ -32,7 +32,7 @@
 					</div>
 					<br> <label class="text-right col-sm-6"><fmt:message
 							key="br.cefetrj.webdep.jsp.form.sistema.servidor" /></label>
-					<div class="input-group">
+					<div id="div-servidor" class="input-group">
 						<!--  <select class="form-control" id="selection" name="selection"><option>Apache</option></select>-->
 						<cmp:ComboCadastroSistemaServidor serverId="${ id }"
 							classCss="form-control" />
@@ -46,7 +46,7 @@
 				<div class="col-sm-6">
 					<label class="text-right col-sm-6"><fmt:message
 							key="br.cefetrj.webdep.jsp.form.sistema.fmtLogs" /></label>
-					<div class="input-group">
+					<div id="div-formatoLog" class="input-group">
 						<select class="form-control" id="formatoLog" name="formatoLog"></select>
 					</div>
 					<br> <label class="text-right col-sm-6"><fmt:message
@@ -57,7 +57,7 @@
 					<br> <label class="text-right col-sm-6"><fmt:message
 							key="br.cefetrj.webdep.jsp.form.sistema.pxLogs" /></label>
 					<div id="div-prefixo-acesso" class="input-group">
-						<input type="text" id="pxLogs" name="pxLogs" class="form-control">
+						<input type="text" id="pxLogs" name="pxLogs" class="form-control" >
 						<span class="input-group-btn">
 							<button id="pxLogs-teste-btn" class="btn btn-info" type="button">
 								<fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnTeste" />
@@ -148,7 +148,8 @@
 				<br>
 		</div>
 		<div class="row text-center">
-			<span id="mensagem"></span> <input id="update" name="update"
+			<span class="text-center help-block with-errors" id="cadastro-mensagem"></span> 
+			<input id="update" name="update"
 				type="hidden" value="false" /> <input id="id-sistema-update"
 				name="id-sistema-update" type="hidden" value="" /> <input
 				id="action" name="action" type="hidden" value="insertSistema" />

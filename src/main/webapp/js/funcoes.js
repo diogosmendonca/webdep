@@ -337,36 +337,41 @@ $(document).ready(
 				});
 				/* FIM DATEPICKER */
 				/*CADASTRO DE SISTEMA*/
-				$("#servidor").on('change keyup', function (){
-					
-					var serverId = $("#servidor").val();
-					$.ajax({
-						type : "POST",
-						url : "FrontControllerServlet",
-						data : {
-							action: "fillFormatoLog",
-							filtro: serverId
-						}, // action fica no
-						// jsp porque o form
-						// está sendo
-						// serializado(o
-						// action está
-						// dentro de
-						// sistemaForm)
-						success : function(response) {
-							var resposta = $
-									.parseJSON(response);
-							if (resposta.hasOwnProperty("formatoLogs")) {
-								$("#formatoLog").children().remove();
-								var formatoLogs = resposta.formatoLogs;
-								for (var i = 0; i < formatoLogs.length; i += 1 ){
-									$("#formatoLog").append("<option value='"+
-											formatoLogs[i].id +"'>"+ 
-											formatoLogs[i].nome +"</option>");
+				$("#servidor").on('change keyup mouseup', function (){
+					var open = $(this).data("isopen");
+
+				    if(open) {
+						var serverId = $("#servidor").val();
+						$.ajax({
+							type : "POST",
+							url : "FrontControllerServlet",
+							data : {
+								action: "fillFormatoLog",
+								filtro: serverId
+							}, // action fica no
+							// jsp porque o form
+							// está sendo
+							// serializado(o
+							// action está
+							// dentro de
+							// sistemaForm)
+							success : function(response) {
+								var resposta = $
+										.parseJSON(response);
+								if (resposta.hasOwnProperty("formatoLogs")) {
+									$("#formatoLog").children().remove();
+									var formatoLogs = resposta.formatoLogs;
+									for (var i = 0; i < formatoLogs.length; i += 1 ){
+										$("#formatoLog").append("<option value='"+
+												formatoLogs[i].id +"'>"+ 
+												formatoLogs[i].nome +"</option>");
+									}
 								}
 							}
-						}
-					});
+						});
+				    }
+
+				    $(this).data("isopen", !open);
 				});
 				
 				$("#cadastro-sistema-submit")
@@ -391,6 +396,30 @@ $(document).ready(
 										$("#div-nome").toggleClass(
 												"has-error");
 									}
+									if (servidor.trim() === "") {
+										$("#div-servidor").toggleClass(
+												"has-error");
+									}
+									if (formatoLog.trim() === "") {
+										$("#div-formatoLog").toggleClass(
+												"has-error");
+									}
+									if (ptLogs.trim() === "") {
+										$("#div-pasta-acesso").toggleClass(
+												"has-error");
+									}
+									if (pxLogs.trim() === "") {
+										$("#div-prefixo-acesso").toggleClass(
+												"has-error");
+									}
+									if (ptLogs2.trim() === "") {
+										$("#div-pasta-erro").toggleClass(
+												"has-error");
+									}
+									if (pxLogs2.trim() === "") {
+										$("#div-prefixo-erro").toggleClass(
+												"has-error");
+									}
 									if (dataPrimeiraLeitura.trim() === "") {
 										$("#div-dataLeitura").toggleClass(
 												"has-error");
@@ -402,10 +431,41 @@ $(document).ready(
 									if (novaLeituraDia.trim() === "" && novaLeituraHora.trim() === "") {
 										$("#div-novaLeitura").toggleClass(
 												"has-error");
-									} 
-									if (nome.trim() !== "" && dataPrimeiraLeitura.trim() !== "" 
-										&& horaPrimeiraLeitura.trim() !== "" && novaLeituraDia.trim() !== ""
-											&& novaLeituraHora.trim() !== "") {
+									}
+									//////Validar limite caracter
+									if (nome.trim().length > 100) {
+										alert("Campo 'Nome' execedeu limite de caracteres")
+										return false;
+									}
+									if (servidor.trim().length > 100) {
+										alert("Campo 'Servidor' execedeu limite de caracteres")
+										return false;
+									}
+									if (formatoLog.trim().length > 50) {
+										alert("Campo 'Formato Log' execedeu limite de caracteres")
+										return false;
+									}
+									if (ptLogs.trim().length > 255) {
+										alert("Campo 'Pasta Log de Acesso' execedeu limite de caracteres")
+										return false;
+									}
+									if (pxLogs.trim().length > 100) {
+										alert("Campo 'Prefixo Log de Acesso' execedeu limite de caracteres")
+										return false;
+									}
+									if (ptLogs2.trim().length > 255) {
+										alert("Campo 'Pasta Log de Erro' execedeu limite de caracteres")
+										return false;
+									}
+									if (pxLogs2.trim().length > 100) {
+										alert("Campo 'Prefixo Log de Erro' execedeu limite de caracteres")
+										return false;
+									}
+									
+									if (nome.trim() !== "" &&  servidor.trim() !== "" && formatoLog.trim() !== "" &&
+										ptLogs.trim() !== "" && ptLogs2.trim() !== "" && pxLogs.trim() !== "" && pxLogs2.trim() !== "" &&
+										dataPrimeiraLeitura.trim() !== "" && horaPrimeiraLeitura.trim() !== "" 
+											&& novaLeituraDia.trim() !== "" && novaLeituraHora.trim() !== "") {
 										$.ajax({
 													type : "POST",
 													url : "FrontControllerServlet",
@@ -450,6 +510,8 @@ $(document).ready(
 														}
 													});
 											return false;
+										} else {
+											$("#cadastro-mensagem").html("Favor preencher os campos destacados.");
 										}
 									});
 				});
@@ -485,7 +547,9 @@ $("#pxLogs-teste-btn").click(function() {
 var pxLogs = $("#pxLogs").val();
 var ptLogs = $("#ptLogs").val();
 if (pxLogs === "" || ptLogs === "") {
+	$("#div-pasta-acesso").toggleClass("has-error");
 	$("#div-prefixo-acesso").toggleClass("has-error");
+	alert("Favor preencher campos destacados para testar o acesso.");
 } else {
 	$.ajax({
 		type : "POST",
@@ -515,7 +579,9 @@ $("#pxLogs2-teste-btn").click(function() {
 var pxLogs2 = $("#pxLogs2").val();
 var ptLogs2 = $("#ptLogs2").val();
 if (pxLogs2 === "" || ptLogs2 === "") {
+	$("#div-pasta-erro").toggleClass("has-error");
 	$("#div-prefixo-erro").toggleClass("has-error");
+	alert("Favor preencher campos destacados para testar o acesso.");
 } else {
 	$.ajax({
 		type : "POST",
