@@ -108,4 +108,20 @@ public class SistemaServices {
 		return 	sistemas;			
 	}
 	
+	public static Sistema SearchById(Long id) {
+		Sistema sis = null;
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			
+			GenericDAO<Sistema> permissaoDAO = pManager.createGenericDAO(Sistema.class);
+			sis = permissaoDAO.get(id);
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+		return sis;
+	}
+	
 }
