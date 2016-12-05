@@ -41,6 +41,7 @@ public class ListSistemaCommand implements Command{
 						filtroData = periodicidadeParse.parse(filtro);
 					} else {
 						SimpleDateFormat dataHoraParse = new SimpleDateFormat("dd/mm/yyyy HH:mm");
+						dataHoraParse.setLenient(false);
 						filtroData = dataHoraParse.parse(filtro);
 					}
 					sistemasFiltrados = SistemaServices.listarTodos();
@@ -56,6 +57,7 @@ public class ListSistemaCommand implements Command{
 		
 		if (sistemasFiltrados.size() > 0) {
 			json = "{\"sistemas\": [";
+			int contador = 0;
 			for (Sistema s : sistemasFiltrados) {
 				//PEGANDO HORA DO SISTEMA
 				Calendar now = new GregorianCalendar().getInstance();
@@ -90,6 +92,7 @@ public class ListSistemaCommand implements Command{
 				   + ((calNovaLeitura.get(Calendar.MINUTE) < 10)?("0"+calNovaLeitura.get(Calendar.MINUTE)):(calNovaLeitura.get(Calendar.MINUTE)));
 				if (buscaPorData) {
 					if (novaLeitura.equals(filtro) || periodicidade.equals(filtro)) {
+						contador++;
 						json += "{";
 						json += "\"id\":\"" + s.getId() + "\",";
 						json += "\"nome\":\"" + s.getNome() + "\",";
@@ -112,9 +115,13 @@ public class ListSistemaCommand implements Command{
 			}
 			json += "]}";
 			json = json.replace("},]}", "}]}");
+			if (buscaPorData && contador == 0) {
+				json = "{\"Erro\": \"Nenhum resultado encontrado\"}";
+			}
 		} else {
 			json = "{\"Erro\": \"Nenhum resultado encontrado\"}";
 		}
+		
 		pw.write(json);
 	}
 }
