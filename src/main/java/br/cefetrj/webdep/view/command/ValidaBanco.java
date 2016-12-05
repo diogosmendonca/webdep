@@ -4,12 +4,16 @@ import javax.servlet.ServletException;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
 import br.cefetrj.webdep.model.entity.ConfiguracaoSistema;
 import br.cefetrj.webdep.model.dao.ConfigurationDAO;
 import br.cefetrj.webdep.model.dao.ConfigurationDAO.DatabaseType;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 
 public class ValidaBanco implements Command	{
@@ -85,15 +89,23 @@ public class ValidaBanco implements Command	{
 			req.setAttribute("bdInvalido", bdInvalido);			
 			req.getRequestDispatcher("config.jsp").forward(req, resp);
 		}else{
-			ConfigurationDAO config = new ConfigurationDAO();
 			
+			
+			
+			String pathToPersistence = this.getClass().getClassLoader().getResource("persistence.xml").getPath();
+			try {
+				pathToPersistence = URLDecoder.decode(pathToPersistence, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				Logger lg = Logger.getLogger(PersistenceManager.class);
+				lg.error("Não foi possível decodificar o path do config.properties", e);
+			}
 			boolean validouBanco = true;			
 			if(bd.equals("HSQL")){
-				validouBanco = config.changeDatabaseConfig("C:/Users/Gabriel/git/webdep/src/main/resources/META-INF/persistence.xml", DatabaseType.HSQL, url, user, password);
+				validouBanco = ConfigurationDAO.changeDatabaseConfig(pathToPersistence, DatabaseType.HSQL, url, user, password);
 			}else if(bd.equals("MySQL")){
-				validouBanco = config.changeDatabaseConfig("C:/Users/Gabriel/git/webdep/src/main/resources/META-INF/persistence.xml", DatabaseType.MySQL, url, user, password);
+				validouBanco = ConfigurationDAO.changeDatabaseConfig(pathToPersistence, DatabaseType.MySQL, url, user, password);
 			}else if(bd.equals("Postegres")){
-				validouBanco = config.changeDatabaseConfig("C:/Users/Gabriel/git/webdep/src/main/resources/META-INF/persistence.xml", DatabaseType.Postgres, url, user, password);
+				validouBanco = ConfigurationDAO.changeDatabaseConfig(pathToPersistence, DatabaseType.Postgres, url, user, password);
 			}
 			
 			ConfiguracaoSistema adm = new ConfiguracaoSistema();
@@ -105,7 +117,18 @@ public class ValidaBanco implements Command	{
 			adm.setUrlBanco(url);
 			adm.setUsuarioBanco(user);
 			adm.setUsuarioEmail(usuarioAdmin);
-			config.store(adm, "C:/Users/Gabriel/git/webdep/src/main/resources/database/config.properties");
+			String pathToProperties = this.getClass().getClassLoader().getResource("config.properties").getPath();
+			try {
+				pathToProperties = URLDecoder.decode(pathToProperties, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				Logger lg = Logger.getLogger(PersistenceManager.class);
+				lg.error("Não foi possível decodificar o path do config.properties", e);
+			}
+			
+			
+			ConfigurationDAO.store(adm, pathToProperties);
+			System.out.println(pathToPersistence);
+			System.out.println(pathToProperties);
 			
 			
 			
