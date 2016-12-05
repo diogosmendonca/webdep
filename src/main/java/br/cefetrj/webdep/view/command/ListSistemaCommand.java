@@ -9,9 +9,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,59 +29,99 @@ public class ListSistemaCommand implements Command{
 		PrintWriter pw = response.getWriter();
 		String json = "";
 		List<Sistema> sistemasFiltrados = null;
+		boolean buscaPorData = false;
+		Date filtroData = null;
 		if (filtro.equals("all")) {
 			sistemasFiltrados = SistemaServices.listarTodos();
 		} else {
-			sistemasFiltrados = SistemaServices.searchSistema(filtro);
+			if(filtro.contains("/") || filtro.contains(":")){
+				try {
+					if (!filtro.contains("/")) {
+						SimpleDateFormat periodicidadeParse = new SimpleDateFormat("dd HH:mm");
+						filtroData = periodicidadeParse.parse(filtro);
+					} else {
+						SimpleDateFormat dataHoraParse = new SimpleDateFormat("dd/mm/yyyy HH:mm");
+						dataHoraParse.setLenient(false);
+						filtroData = dataHoraParse.parse(filtro);
+					}
+					sistemasFiltrados = SistemaServices.listarTodos();
+					buscaPorData = true;
+				} catch (ParseException e) {
+					buscaPorData = false;
+					sistemasFiltrados = SistemaServices.searchSistema(filtro);
+				}
+			} else {
+				sistemasFiltrados = SistemaServices.searchSistema(filtro);
+			}
 		}
 		
 		if (sistemasFiltrados.size() > 0) {
 			json = "{\"sistemas\": [";
+			int contador = 0;
 			for (Sistema s : sistemasFiltrados) {
 				//PEGANDO HORA DO SISTEMA
-				LocalTime now = LocalTime.now();
-				Date novaLeituraInput = new Date(s.getPeriodicidadeLeitura()); //MEXI AQUI
-                Calendar cal = new GregorianCalendar(); //MEXI AQUI
-                cal.setTime(novaLeituraInput);//MEXI AQUI
-				LocalTime PrimeiraLeitura = s.getPrimeiraLeitura().toLocalTime();
+				Calendar now = new GregorianCalendar().getInstance();
+				SimpleDateFormat sdf = new SimpleDateFormat();
+				Date novaLeituraInput = new Date(s.getPeriodicidadeLeitura());
+				Calendar calNovaLeitura = new GregorianCalendar();
+				calNovaLeitura.setTime(novaLeituraInput);
+				LocalDate ld = s.getPrimeiraLeitura().toLocalDate();
+				LocalTime lt = s.getPrimeiraLeitura().toLocalTime();
+				LocalDateTime l = LocalDateTime.of(ld, lt);
+				LocalDate dataPrimeiraLeitura = l.toLocalDate();
+				Date d = java.sql.Date.valueOf(dataPrimeiraLeitura);
+				Calendar calPrimeiraLeitura = new GregorianCalendar();
+				calPrimeiraLeitura.setTime(d);
+				calPrimeiraLeitura.set(Calendar.HOUR_OF_DAY, lt.getHour());
+				calPrimeiraLeitura.set(Calendar.MINUTE, lt.getMinute());
+
+				Calendar x = calPrimeiraLeitura;
+
+				while (!(x.getTime().after(now.getTime()))) {
+					x.add(Calendar.DATE, calNovaLeitura.get(Calendar.DAY_OF_YEAR));
+					x.add(Calendar.HOUR, calNovaLeitura.get(Calendar.HOUR_OF_DAY));
+					x.add(Calendar.MINUTE, calNovaLeitura.get(Calendar.MINUTE));
+				}
 				
-				while(PrimeiraLeitura.getHour() < now.getHour()){
-					
-					PrimeiraLeitura = PrimeiraLeitura.plusMinutes(cal.get(Calendar.MINUTE));//MEXI AQUI
-                    PrimeiraLeitura = PrimeiraLeitura.plusHours(cal.get(Calendar.HOUR_OF_DAY));//MEXI AQUI
-                }
-                    PrimeiraLeitura = PrimeiraLeitura.plusMinutes(cal.get(Calendar.MINUTE));//MEXI AQUI
-                    PrimeiraLeitura = PrimeiraLeitura.plusHours(cal.get(Calendar.HOUR_OF_DAY));//MEXI AQUI
-					
-					GregorianCalendar gc = new GregorianCalendar();  
-				    gc.setTime(new Date());  
-				    
-				    String formato = "dd/MM/yyyy HH:mm";
-				    SimpleDateFormat sdf2 = new SimpleDateFormat(formato);
-				    ///AQUI EU SETO A HORA QUE QUERO SOMAR E MAIS OS MINUTOS, SE QUISER SOMAR OS SEGUNDO É SÓ COLOCAR O SEGUNDOS PARA SOMAR
-				    gc.add(Calendar.HOUR,PrimeiraLeitura.getHour());  
-				    gc.add(Calendar.MINUTE,PrimeiraLeitura.getMinute());
-				   
-				    String novaLeitura = sdf2.format(gc.getTime());
-				    String periodicidade = cal.get(Calendar.DAY_OF_MONTH)+" dias "
-				    + cal.get(Calendar.HOUR_OF_DAY)+":"
-				    		+cal.get(Calendar.MINUTE);
-				    
-				json += "{";
-				json += "\"id\":\"" + s.getId() + "\",";
-				json += "\"nome\":\"" + s.getNome() + "\",";
-				json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
-				json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
-				json += "\"periodicidade\":\"" + periodicidade + "\",";
-				//json += "\"periodicidade\":\"" + Periodicidade.toString() + "\",";
-				json += "\"proximaleitura\":\"" + novaLeitura + "\"";
-				json += "},";
+				String formato = "dd/MM/yyyy HH:mm";
+			    SimpleDateFormat sdf2 = new SimpleDateFormat(formato);
+				String novaLeitura = sdf2.format(x.getTime());
+				    String periodicidade = calNovaLeitura.get(Calendar.DAY_OF_YEAR) 
+				    +" "+ ((calNovaLeitura.get(Calendar.HOUR_OF_DAY) < 10)?("0"+calNovaLeitura.get(Calendar.HOUR_OF_DAY)):(calNovaLeitura.get(Calendar.HOUR_OF_DAY)))
+				    + ":" 
+				   + ((calNovaLeitura.get(Calendar.MINUTE) < 10)?("0"+calNovaLeitura.get(Calendar.MINUTE)):(calNovaLeitura.get(Calendar.MINUTE)));
+				if (buscaPorData) {
+					if (novaLeitura.equals(filtro) || periodicidade.equals(filtro)) {
+						contador++;
+						json += "{";
+						json += "\"id\":\"" + s.getId() + "\",";
+						json += "\"nome\":\"" + s.getNome() + "\",";
+						json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
+						json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
+						json += "\"periodicidade\":\"" + periodicidade + "\",";
+						json += "\"proximaleitura\":\"" + novaLeitura + "\"";
+						json += "},";
+					}
+				} else {
+					json += "{";
+					json += "\"id\":\"" + s.getId() + "\",";
+					json += "\"nome\":\"" + s.getNome() + "\",";
+					json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
+					json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
+					json += "\"periodicidade\":\"" + periodicidade + "\",";
+					json += "\"proximaleitura\":\"" + novaLeitura + "\"";
+					json += "},";
+				}
 			}
 			json += "]}";
 			json = json.replace("},]}", "}]}");
+			if (buscaPorData && contador == 0) {
+				json = "{\"Erro\": \"Nenhum resultado encontrado\"}";
+			}
 		} else {
 			json = "{\"Erro\": \"Nenhum resultado encontrado\"}";
 		}
+		
 		pw.write(json);
 	}
 }

@@ -51,11 +51,11 @@ public class InsertSistemaCommand implements Command{
 			String mensagem = "";
 			
 			GregorianCalendar c = new GregorianCalendar();
-            c.set(Calendar.DAY_OF_MONTH, novaDias); // MEXI AQUI
+            c.set(Calendar.DAY_OF_YEAR, novaDias); // MEXI AQUI
             c.set(Calendar.HOUR_OF_DAY, tempoNovaLeitura.getHour()); // MEXI AQUI
             c.set(Calendar.MINUTE, tempoNovaLeitura.getMinute()); // MEXI AQUI
            
-            String nova = c.get(Calendar.DAY_OF_MONTH)+" "+ c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE); // MEXI AQUI
+            String nova = c.get(Calendar.DAY_OF_YEAR)+" "+ c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE); // MEXI AQUI
 			
 		try{	
 			s.setNome(nome);

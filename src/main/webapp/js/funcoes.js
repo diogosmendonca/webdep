@@ -3,7 +3,7 @@ $(document).ready(
 			if (window.location.href.indexOf("cadastrodesistema.jsp?u=") > -1) {
 				$("#update").val("update");
 				var url = window.location.href;
-				var id = url.substring(url.length - 1, url.length)
+				var id = url.substring(window.location.href.indexOf("=")+1, url.length);
 				$("#id-sistema-update").val(id);
 				$("#action").val("updateSistema");
 				$.ajax({

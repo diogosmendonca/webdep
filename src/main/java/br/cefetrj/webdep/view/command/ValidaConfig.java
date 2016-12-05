@@ -3,12 +3,19 @@ package br.cefetrj.webdep.view.command;
 import javax.servlet.ServletException;
 
 import br.cefetrj.webdep.model.dao.ConfigurationDAO;
+import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.entity.ConfiguracaoSistema;
 import br.cefetrj.webdep.model.entity.Usuario;
+import br.cefetrj.webdep.services.UsuarioServices;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 
 public class ValidaConfig implements Command	{
@@ -229,11 +236,27 @@ public class ValidaConfig implements Command	{
 			adm.setUrlBanco(url);
 			adm.setUsuarioBanco(user);
 			adm.setUsuarioEmail(usuarioAdmin);
-			ConfigurationDAO config = new ConfigurationDAO();
-			config.store(adm, "C:/Users/Gabriel/git/webdep/src/main/resources/database/config.properties");
+			Usuario admin = new Usuario();
+			admin.setAdmGeral(true);
+			admin.setEmail(emailAdmin);
+			admin.setLogin(usuarioAdmin);
+			admin.setNome(nomeAdmin);
+			admin.setPerfil("Admin");
+			UsuarioServices.salvar(admin);
+			
+			String pathToProperties = this.getClass().getClassLoader().getResource("config.properties").getPath();
+			try {
+				pathToProperties = URLDecoder.decode(pathToProperties, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				Logger lg = Logger.getLogger(PersistenceManager.class);
+				lg.error("Não foi possível decodificar o path do config.properties", e);
+			}
+			
+			ConfigurationDAO.store(adm, "pathToProperties");
 			
 			
-			req.getRequestDispatcher("login.jsp").forward(req, resp);
+			
+			req.getRequestDispatcher("home.jsp").forward(req, resp);
 		}else if(validouBanco == true && validouEmail == false){
 			if(validouAdmin == true){
 				req.setAttribute("senhaValida", senhaValida);
