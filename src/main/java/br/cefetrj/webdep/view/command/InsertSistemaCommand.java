@@ -6,19 +6,19 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.cefetrj.webdep.model.entity.FormatoLog;
-import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 import br.cefetrj.webdep.model.entity.Servidor;
 import br.cefetrj.webdep.model.entity.Sistema;
-import br.cefetrj.webdep.services.RegistroLogAcessoService;
 import br.cefetrj.webdep.services.ServidorServices;
 import br.cefetrj.webdep.services.SistemaServices;
-import br.cefetrj.webdep.services.UsuarioServices;
 
 public class InsertSistemaCommand implements Command{
 
@@ -30,19 +30,33 @@ public class InsertSistemaCommand implements Command{
 			String server = request.getParameter("servidor");
 			String formatoLog = request.getParameter("formatoLog");
 			FormatoLog fmt = new FormatoLog();
-			fmt.setNome(formatoLog);
+			fmt.setId(Long.parseLong(formatoLog));
 			Servidor serv = new Servidor();
 			serv.setFormatoLog(fmt);
-			serv.setNome(server);
+			serv.setId(Long.parseLong(server));
 			String ptLogs = request.getParameter("ptLogs");
 			String pxLogs = request.getParameter("pxLogs");
 			String ptLogs2 = request.getParameter("ptLogs2");
 			String pxLogs2 = request.getParameter("pxLogs2");
-			String nova = request.getParameter("novaData");
+			/*String nova = request.getParameter("novaData");
 			LocalDate ld = LocalDate.parse(request.getParameter("data"));
-			LocalTime lt = LocalTime.parse(request.getParameter("time"));
+			LocalTime lt = LocalTime.parse(request.getParameter("time"));*/
+			int novaDias = Integer.parseInt(request.getParameter("novaLeituraDia")); // MEXI AQUI
+            String novaHora = request.getParameter("novaLeituraHora"); // MEXI AQUI
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm"); // MEXI AQUI
+            LocalTime tempoNovaLeitura = LocalTime.parse(novaHora, formatter); // MEXI AQUI
+            LocalDate ld = LocalDate.parse(request.getParameter("dataPrimeiraLeitura")); // MEXI AQUI
+            LocalTime lt = LocalTime.parse(request.getParameter("horaPrimeiraLeitura")); // MEXI AQUI
 			LocalDateTime l = LocalDateTime.of(ld, lt);
 			String mensagem = "";
+			
+			GregorianCalendar c = new GregorianCalendar();
+            c.set(Calendar.DAY_OF_MONTH, novaDias); // MEXI AQUI
+            c.set(Calendar.HOUR_OF_DAY, tempoNovaLeitura.getHour()); // MEXI AQUI
+            c.set(Calendar.MINUTE, tempoNovaLeitura.getMinute()); // MEXI AQUI
+           
+            String nova = c.get(Calendar.DAY_OF_MONTH)+" "+ c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE); // MEXI AQUI
+			
 		try{	
 			s.setNome(nome);
 			s.setServidor(ServidorServices.searchServidor(serv).get(0));
@@ -51,7 +65,8 @@ public class InsertSistemaCommand implements Command{
 			s.setPrefixoLogErro(pxLogs2);
 			s.setPastaLogErro(ptLogs2);
 			s.setPrimeiraLeitura(l);
-			s.setPeriodicidadeLeitura(new SimpleDateFormat("hh:mm").parse(nova).getTime());
+			s.setPeriodicidadeLeitura(new SimpleDateFormat("DD HH:mm").parse(nova).getTime()); // MEXI AQUI
+			//s.setPeriodicidadeLeitura(new SimpleDateFormat("hh:mm").parse(nova).getTime());
 			SistemaServices.insertSistema(s);
 			mensagem = "Sistema cadastrado com sucesso!";
 		} catch (Exception e) {

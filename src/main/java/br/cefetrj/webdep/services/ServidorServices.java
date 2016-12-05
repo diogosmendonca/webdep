@@ -45,10 +45,10 @@ public class ServidorServices {
 	public static List<Servidor> searchServidor(Servidor s) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 		try {
-			Query q = pm.createQuery("SELECT s FROM Servidor s WHERE s.nome LIKE :param "
-			+ " AND s.formatoLog.nome LIKE :param2 ");
-			q.setParameter("param", "%"+s.getNome()+"%");
-			q.setParameter("param2", "%"+s.getFormatoLog().getNome() +"%");
+			Query q = pm.createQuery("SELECT s FROM Servidor s WHERE s.id = :param "
+			+ " AND s.formatoLog.id = :param2 ");
+			q.setParameter("param", s.getId());
+			q.setParameter("param2", s.getFormatoLog().getId());
 
 			return q.getResultList();
 		} catch (Exception e) {

@@ -332,11 +332,13 @@ $(document).ready(
 					startView : 1,
 					minView : 0,
 					maxView : 1,
-					forceParse : 0
+					forceParse : 0,
+                    minuteStep: 1 
 				});
 				/* FIM DATEPICKER */
 				/*CADASTRO DE SISTEMA*/
-				$("#servidor").on('change', function (){
+				$("#servidor").on('change keyup', function (){
+					
 					var serverId = $("#servidor").val();
 					$.ajax({
 						type : "POST",
@@ -366,6 +368,7 @@ $(document).ready(
 						}
 					});
 				});
+				
 				$("#cadastro-sistema-submit")
 						.click(
 								function() {
@@ -376,9 +379,10 @@ $(document).ready(
 									var pxLogs = $("#pxLogs").val();
 									var ptLogs2 = $("#ptLogs2").val();
 									var pxLogs2 = $("#pxLogs2").val();
-									var data = $("#data").val();
-									var time = $("#time").val();
-									var novaData = $("#novaData").val();
+									var dataPrimeiraLeitura =  $("#dataLeitura").val();
+                                    var horaPrimeiraLeitura = $("#horarioLeitura").val();
+                                    var novaLeituraDia = $("#novaLeituraDia").val();
+                                    var novaLeituraHora = $("#novaLeituraHora").val();
 									var action = $("#action").val();
 									var id_sistema_update = $(
 											"#id-sistema-update").val();
@@ -387,18 +391,21 @@ $(document).ready(
 										$("#div-nome").toggleClass(
 												"has-error");
 									}
-									if (data.trim() === "") {
-										$("#div-data").toggleClass(
+									if (dataPrimeiraLeitura.trim() === "") {
+										$("#div-dataLeitura").toggleClass(
 												"has-error");
 									}
-									if (time.trim() === "") {
-										$("#div-time").toggleClass(
+									if (horaPrimeiraLeitura.trim() === "") {
+										$("#div-horarioLeitura").toggleClass(
 												"has-error");
 									}
-									if (novaData.trim() === "") {
-										$("#div-nova").toggleClass(
+									if (novaLeituraDia.trim() === "" && novaLeituraHora.trim() === "") {
+										$("#div-novaLeitura").toggleClass(
 												"has-error");
-									} else {
+									} 
+									if (nome.trim() !== "" && dataPrimeiraLeitura.trim() !== "" 
+										&& horaPrimeiraLeitura.trim() !== "" && novaLeituraDia.trim() !== ""
+											&& novaLeituraHora.trim() !== "") {
 										$.ajax({
 													type : "POST",
 													url : "FrontControllerServlet",
@@ -410,9 +417,11 @@ $(document).ready(
 														pxLogs : pxLogs,
 														ptLogs2 : ptLogs2,
 														pxLogs2 : pxLogs2,
-														data : data,
-														novaData : novaData,
-														time : time,
+														dataPrimeiraLeitura : dataPrimeiraLeitura,
+                                                        horaPrimeiraLeitura : horaPrimeiraLeitura,
+                                                        novaLeituraDia : novaLeituraDia,
+                                                        novaLeituraHora: novaLeituraHora,
+                                                        horaPrimeiraLeitura : horaPrimeiraLeitura,
 														action : action,
 														id_sistema_update : id_sistema_update
 													}, // action fica no
