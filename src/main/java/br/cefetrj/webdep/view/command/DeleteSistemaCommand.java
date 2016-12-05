@@ -20,7 +20,7 @@ public class DeleteSistemaCommand implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("filtro");
-		Sistema sistemaFiltrado = SistemaServices.searchSistema(id).get(0);
+		Sistema sistemaFiltrado = SistemaServices.obterPorId(Long.parseLong(id));
 		PrintWriter pw = response.getWriter();
 		String mensagem = "";
 		try {

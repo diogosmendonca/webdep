@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -37,33 +38,36 @@ public class ListSistemaCommand implements Command{
 			json = "{\"sistemas\": [";
 			for (Sistema s : sistemasFiltrados) {
 				//PEGANDO HORA DO SISTEMA
-				LocalTime now = LocalTime.now();
-				Date novaLeituraInput = new Date(s.getPeriodicidadeLeitura()); //MEXI AQUI
-                Calendar cal = new GregorianCalendar(); //MEXI AQUI
-                cal.setTime(novaLeituraInput);//MEXI AQUI
-				LocalTime PrimeiraLeitura = s.getPrimeiraLeitura().toLocalTime();
+				Calendar now = new GregorianCalendar().getInstance();
+				SimpleDateFormat sdf = new SimpleDateFormat();
+				Date novaLeituraInput = new Date(s.getPeriodicidadeLeitura());
+				Calendar calNovaLeitura = new GregorianCalendar();
+				calNovaLeitura.setTime(novaLeituraInput);
+				LocalDate ld = s.getPrimeiraLeitura().toLocalDate();
+				LocalTime lt = s.getPrimeiraLeitura().toLocalTime();
+				LocalDateTime l = LocalDateTime.of(ld, lt);
+				LocalDate dataPrimeiraLeitura = l.toLocalDate();
+				Date d = java.sql.Date.valueOf(dataPrimeiraLeitura);
+				Calendar calPrimeiraLeitura = new GregorianCalendar();
+				calPrimeiraLeitura.setTime(d);
+				calPrimeiraLeitura.set(Calendar.HOUR_OF_DAY, lt.getHour());
+				calPrimeiraLeitura.set(Calendar.MINUTE, lt.getMinute());
+
+				Calendar x = calPrimeiraLeitura;
+
+				while (!(x.getTime().after(now.getTime()))) {
+					x.add(Calendar.DATE, calNovaLeitura.get(Calendar.DAY_OF_YEAR));
+					x.add(Calendar.HOUR, calNovaLeitura.get(Calendar.HOUR_OF_DAY));
+					x.add(Calendar.MINUTE, calNovaLeitura.get(Calendar.MINUTE));
+				}
 				
-				while(PrimeiraLeitura.getHour() < now.getHour()){
-					
-					PrimeiraLeitura = PrimeiraLeitura.plusMinutes(cal.get(Calendar.MINUTE));//MEXI AQUI
-                    PrimeiraLeitura = PrimeiraLeitura.plusHours(cal.get(Calendar.HOUR_OF_DAY));//MEXI AQUI
-                }
-                    PrimeiraLeitura = PrimeiraLeitura.plusMinutes(cal.get(Calendar.MINUTE));//MEXI AQUI
-                    PrimeiraLeitura = PrimeiraLeitura.plusHours(cal.get(Calendar.HOUR_OF_DAY));//MEXI AQUI
-					
-					GregorianCalendar gc = new GregorianCalendar();  
-				    gc.setTime(new Date());  
-				    
-				    String formato = "dd/MM/yyyy HH:mm";
-				    SimpleDateFormat sdf2 = new SimpleDateFormat(formato);
-				    ///AQUI EU SETO A HORA QUE QUERO SOMAR E MAIS OS MINUTOS, SE QUISER SOMAR OS SEGUNDO É SÓ COLOCAR O SEGUNDOS PARA SOMAR
-				    gc.add(Calendar.HOUR,PrimeiraLeitura.getHour());  
-				    gc.add(Calendar.MINUTE,PrimeiraLeitura.getMinute());
-				   
-				    String novaLeitura = sdf2.format(gc.getTime());
-				    String periodicidade = cal.get(Calendar.DAY_OF_MONTH)+" dias "
-				    + cal.get(Calendar.HOUR_OF_DAY)+":"
-				    		+cal.get(Calendar.MINUTE);
+				String formato = "dd/MM/yyyy HH:mm";
+			    SimpleDateFormat sdf2 = new SimpleDateFormat(formato);
+				String novaLeitura = sdf2.format(x.getTime());
+				    String periodicidade = calNovaLeitura.get(Calendar.DAY_OF_YEAR) 
+				    +"d "+ ((calNovaLeitura.get(Calendar.HOUR_OF_DAY) < 10)?("0"+calNovaLeitura.get(Calendar.HOUR_OF_DAY)):(calNovaLeitura.get(Calendar.HOUR_OF_DAY)))
+				    + ":" 
+				   + ((calNovaLeitura.get(Calendar.MINUTE) < 10)?("0"+calNovaLeitura.get(Calendar.MINUTE)):(calNovaLeitura.get(Calendar.MINUTE)));
 				    
 				json += "{";
 				json += "\"id\":\"" + s.getId() + "\",";
