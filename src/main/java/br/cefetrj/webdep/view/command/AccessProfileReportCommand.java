@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,7 @@ public class AccessProfileReportCommand implements Command {
 		LocalDateTime ildt, fldt;
 		DateTimeFormatter fmtMonth = DateTimeFormatter.ofPattern("MM-yyyy");
 		DateTimeFormatter fmtDay = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+		DateTimeFormatter fmtYear = DateTimeFormatter.ofPattern("yyyy");
 		Map<Integer, Integer> yearList = new HashMap<Integer, Integer>();
 		Map<Integer, Integer> yearListCount = new HashMap<Integer, Integer>();
 		Map<String, String> monthList = new HashMap<String, String>();
@@ -75,8 +75,6 @@ public class AccessProfileReportCommand implements Command {
 				}
 				
 			} else if(group == 1){
-				int year = cur.getYear();
-				int month = cur.getMonthValue();
 				String key = cur.format(fmtMonth);
 				if(monthList.containsValue(key)){
 					monthListCount.put(monthList.get(key), monthListCount.get(key) + 1);
@@ -85,9 +83,6 @@ public class AccessProfileReportCommand implements Command {
 					monthListCount.put(key, 1);
 				}
 			} else if(group == 0){
-				int year = cur.getYear();
-				int month = cur.getMonthValue();
-				int day = cur.getDayOfMonth();
 				String key = cur.format(fmtDay);
 				if(dayList.containsValue(key)){
 					dayListCount.put(dayList.get(key), dayListCount.get(key) + 1);
@@ -98,19 +93,40 @@ public class AccessProfileReportCommand implements Command {
 				
 			}
 		}
-//		for(Integer i : yearList.values()){
+//		for(String i : monthList.values()){
 //			System.out.println(
-//					"Year: " + i +
-//					"\nAccesses: " + yearListCount.get(i)
+//					"Month: " + i +
+//					"\nAccesses: " + monthListCount.get(i)
 //					);
 //		}
+		Map<LocalDate, Integer> map = new HashMap<LocalDate, Integer>();
 		if(group == 0){
-					
+			for(String s : dayListCount.keySet()){
+				String[] ss = s.split("-");
+				int year = Integer.parseInt(ss[1]);
+				int month = Integer.parseInt(ss[0]);
+				int day = Integer.parseInt(ss[2]);
+				map.put(LocalDate.of(year, month, day), dayListCount.get(s));
+			}
+			request.setAttribute("aprfmt", fmtDay);
+			
 		} else if (group == 1){
+			for(String s : monthListCount.keySet()){
+				String[] ss = s.split("-");
+				int year = Integer.parseInt(ss[1]);
+				int month = Integer.parseInt(ss[0]);
+				map.put(LocalDate.of(year, month, 1), monthListCount.get(s));
+			}
+			request.setAttribute("aprfmt", fmtMonth);
 			
 		}else if (group == 2){
+			for(int year : yearListCount.keySet()){
+				map.put(LocalDate.of(year, 1, 1), yearListCount.get(year));
+			}
+			request.setAttribute("aprfmt", fmtYear);
 			
 		}
+		request.setAttribute("aprMap", map);
 		request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
 
 	}

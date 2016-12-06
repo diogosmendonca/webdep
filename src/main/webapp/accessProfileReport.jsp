@@ -55,7 +55,7 @@
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.apr.initialTime" /></label>
 						<div style="float: left" class="input-group date form_time col-sm-2" data-date="" data-date-format="hh:ii:ss" data-link-field="dtp_input3" data-link-format="hh:ii:ss">
 							<div class="input-group">
-								<input class="form-control" type="text" name="initialTime" id="initialTime" readonly />
+								<input class="form-control" type="text" name="initialTime" id="initialTime" placeholder = "HH:MM:SS" />
 								<span class="input-group-addon"> 
 									<span class="glyphicon glyphicon-remove"></span>
 								</span> 
@@ -67,7 +67,7 @@
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.apr.finalTime" /></label>
 						<div style="float: left" class="input-group date form_time col-sm-2" data-date="" data-date-format="hh:ii:ss" data-link-field="dtp_input3" data-link-format="hh:ii:ss">
 							<div class="input-group">
-								<input class="form-control" type="text" name="finalTime" id="finalTime" readonly />
+								<input class="form-control" type="text" name="finalTime" id="finalTime" placeholder = "HH:MM:SS" />
 								<span class="input-group-addon"> 
 									<span class="glyphicon glyphicon-remove"></span>
 								</span> 
@@ -118,13 +118,13 @@
 								<tr>
 									<th>
 										<c:choose>
-											<c:when test="${ groupApr == 0 }">
+											<c:when test="${ groupApr == '0' }">
 												<fmt:message key="br.cefetrj.webdep.jsp.apr.select.day" />
 											</c:when>
-											<c:when test="${ groupApr == 1 }">
+											<c:when test="${ groupApr == '1' }">
 												<fmt:message key="br.cefetrj.webdep.jsp.apr.select.month" />
 											</c:when>
-											<c:when test="${ groupApr == 1 }">
+											<c:when test="${ groupApr == '2' }">
 												<fmt:message key="br.cefetrj.webdep.jsp.apr.select.year" />
 											</c:when>
 										</c:choose>
@@ -133,13 +133,11 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${ list }" var="item">
+								<c:set var="aprList" value="${ aprMap.keySet() }" scope="page"></c:set>	
+								<c:forEach items="${ aprList }" var="item">
 										<tr>
-											<td>${ item.sistema.nome }</td>
-											<td>${ item.nome }</td>
-											<td>${ item.timestampLiberacao.format(DateTimeFormatter.ofPattern(dateTime)) }</td>
-											<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#changeModal" onclick="getId(${ item.id })"><span class="glyphicon glyphicon-edit"></span></button></td>
-											<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteModal" onclick="getId(${ item.id })"><span class="glyphicon glyphicon-remove"></span></button></td>
+											<td>${ item.format(aprfmt) }</td>
+											<td>${ aprMap.get(item) }</td>
 										</tr>
 								</c:forEach>
 							</tbody>
