@@ -34,6 +34,7 @@ public class AccessProfileReportCommand implements Command {
 		Map<String, String> dayList = new HashMap<String, String>();
 		Map<String, Integer> dayListCount = new HashMap<String, Integer>();
 		
+		boolean dataIn = true;
 		/*
 		 * Validação dos campos
 		 */
@@ -47,6 +48,8 @@ public class AccessProfileReportCommand implements Command {
 		} catch (DateTimeParseException e){
 			e.printStackTrace();
 			//Set error attribute
+			dataIn = false;
+			request.setAttribute("dataIn", dataIn);
 			request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
 			return;
 			

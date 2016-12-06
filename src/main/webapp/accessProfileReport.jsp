@@ -98,6 +98,11 @@
 							</div>
 						<button type="submit" class="btn btn-primary btn-md" name="action" value="accessProfileReport"><fmt:message key="br.cefetrj.webdep.jsp.apr.search" /></button>
 					</div>
+					<c:if test="${not empty dataIn and not dataIn }">
+								<span class="help-block">
+									<fmt:message key="br.cefetrj.webdep.jsp.apr.dataError"/>
+								</span>
+					</c:if>
 				</div>
 			</div>
 		</form>
