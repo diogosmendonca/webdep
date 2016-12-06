@@ -16,6 +16,7 @@ import java.time.ZoneId;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.services.SistemaServices;
@@ -24,6 +25,8 @@ public class FillSistemaCommand implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String filtro = request.getParameter("filtro");
+		HttpSession session = request.getSession();  
+        String lang = (String)session.getAttribute("lang");
 		PrintWriter pw = response.getWriter();
 		String json = "";
 		Sistema s = SistemaServices.obterPorId(Long.parseLong(filtro));
@@ -53,7 +56,18 @@ public class FillSistemaCommand implements Command{
 				json += "}";
 			json += "}";
 		} else {
-			json = "{\"Erro\": \"Nenhum resultado encontrado\"}";
+			switch (lang){
+	        	case "en_US":
+	        		json = "{\"Erro\": \"No results found\"}";
+	        		break;
+	        		
+	        	case "pt_BR":
+	        		json = "{\"Erro\": \"Nenhum resultado encontrado\"}";
+	        		break;
+	        	default: 
+	        		json = "{\"Erro\": \"Nenhum resultado encontrado\"}";
+	    			break;
+			}
 		}
 		pw.write(json);
 	}

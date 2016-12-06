@@ -13,6 +13,7 @@ import java.util.GregorianCalendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.services.ServidorServices;
@@ -24,7 +25,8 @@ public class UpdateSistemaCommand implements Command{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
 			PrintWriter pw = response.getWriter();
-			
+			HttpSession session = request.getSession();
+	        String lang = (String)session.getAttribute("lang");
 			Sistema s = new Sistema();
 			String id = request.getParameter("id_sistema_update");
 			s = SistemaServices.obterPorId(Long.parseLong(id));
@@ -63,18 +65,64 @@ public class UpdateSistemaCommand implements Command{
 			s.setPeriodicidadeLeitura(new SimpleDateFormat("DD HH:mm").parse(nova).getTime());
 			if (s.getNome().equals(nome)){
 				SistemaServices.updateSistema(s);
-				mensagem = "Sistema atualizado com sucesso!";
+				switch (lang){
+		        	case "en_US":
+		        		mensagem = "System successfully updated!";
+		        		break;
+		        		
+		        	case "pt_BR":
+		        		mensagem = "Sistema atualizado com sucesso!";
+		        		break;
+		        	default: 
+		        		mensagem = "Sistema atualizado com sucesso!";
+		    			break;
+	        	}
 			} else {
 				s.setNome(nome);
 				if (!SistemaServices.verificaDuplicata(s)){
 					SistemaServices.updateSistema(s);
-					mensagem = "Sistema atualizado com sucesso!";
+					switch (lang){
+			        	case "en_US":
+			        		mensagem = "System successfully updated!";
+			        		break;
+			        		
+			        	case "pt_BR":
+			        		mensagem = "Sistema atualizado com sucesso!";
+			        		break;
+			        	default: 
+			        		mensagem = "Sistema atualizado com sucesso!";
+			    			break;
+		        	}
 				} else {
-					mensagem = "Sistema com mesmo nome já existe!";
+					switch (lang){
+			        	case "en_US":
+			        		mensagem = "A System with same name already exists";
+			        		break;
+			        		
+			        	case "pt_BR":
+			        		mensagem = "Sistema com mesmo nome já existe!";
+			        		break;
+			        	default: 
+			        		mensagem = "Sistema com mesmo nome já existe!";
+			    			break;
+		        	}
 				}
 			}
 		} catch (Exception e) {
-			mensagem = "Não foi possível atualizar o sistema!";
+			switch (lang){
+	        	case "en_US":
+	        		mensagem = "Could not update the system!";
+	        		break;
+	        		
+	        	case "pt_BR":
+	        		mensagem = "Não foi possível atualizar o sistema!";
+	        		break;
+	        		
+	        	default: 
+	        		mensagem = "Não foi possível atualizar o sistema!";
+	    			break;
+	    	}
+			
 			e.printStackTrace();
 		} finally {
 			String json = "{\"mensagem\": \"" + mensagem + "\"}";

@@ -13,6 +13,7 @@ import java.util.GregorianCalendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.cefetrj.webdep.model.entity.FormatoLog;
 import br.cefetrj.webdep.model.entity.Servidor;
@@ -26,6 +27,8 @@ public class InsertSistemaCommand implements Command{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			PrintWriter pw = response.getWriter();
 			Sistema s = new Sistema();
+			HttpSession session = request.getSession();
+			String lang = (String)session.getAttribute("lang");
 			String nome = request.getParameter("nome");
 			String server = request.getParameter("servidor");
 			String formatoLog = request.getParameter("formatoLog");
@@ -71,13 +74,47 @@ public class InsertSistemaCommand implements Command{
 			//s.setPeriodicidadeLeitura(new SimpleDateFormat("hh:mm").parse(nova).getTime());
 			if (!SistemaServices.verificaDuplicata(s)){
 				SistemaServices.insertSistema(s);
-				mensagem = "Sistema cadastrado com sucesso!";
+				switch (lang){
+		        	case "en_US":
+		        		mensagem = "System successfully inserted!";
+		        		break;
+		        		
+		        	case "pt_BR":
+		        		mensagem = "Sistema cadastrado com sucesso!";
+		        		break;
+		        	default: 
+		    			mensagem = "Sistema cadastrado com sucesso!";
+		    			break;
+				}
 			} else {
-				mensagem = "Sistema com mesmo nome já existe!";
+				switch (lang){
+		        	case "en_US":
+		        		mensagem = "A system with the same name already exists!";
+		        		break;
+		        		
+		        	case "pt_BR":
+		        		mensagem = "Sistema com mesmo nome já existe!";
+		        		break;
+		        	default: 
+		    			mensagem = "Sistema com mesmo nome já existe!";
+		    			break;
+				}
+				
 			}
 			
 		} catch (Exception e) {
-			mensagem = "Erro no cadastro: " + e.getMessage();
+			switch (lang){
+	        	case "en_US":
+	        		mensagem = "Insertion error: " + e.getMessage();
+	        		break;
+	        		
+	        	case "pt_BR":
+	        		mensagem = "Erro no cadastro: " + e.getMessage();
+	        		break;
+	        	default: 
+	    			mensagem = "Erro no cadastro: " + e.getMessage();
+	    			break;
+			}
 			//javax.persistence.EntityExistsException j� existe
 			e.printStackTrace();
 		} finally {

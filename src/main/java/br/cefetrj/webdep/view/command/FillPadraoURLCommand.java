@@ -17,6 +17,7 @@ public class FillPadraoURLCommand implements Command{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter pw = response.getWriter();
 		HttpSession session = request.getSession();
+		String lang = (String)session.getAttribute("lang");
 		Long usuarioId = (Long) session.getAttribute("id");
 		String json = "";
 		List<PadraoURL> padroes = PadraoURLServices.listarTodosPorUsuario(usuarioId);
@@ -31,7 +32,18 @@ public class FillPadraoURLCommand implements Command{
 			json += "]}";
 			json = json.replace("},]}", "}]}");
 		} else {
-			json = "{\"Erro\": \"N�o foi encontrado nenhum padr�o URL associado ao usu�rio logado\"}";
+			switch (lang){
+	        	case "en_US":
+	        		json = "{\"Erro\": \"Could not find any URL Pattern associated with this user\"}";
+	        		break;
+	        		
+	        	case "pt_BR":
+	        		json = "{\"Erro\": \"Não foi encontrado nenhum padrão URL associado ao usuário logado\"}";
+	        		break;
+	        	default: 
+	        		json = "{\"Erro\": \"Não foi encontrado nenhum padrão URL associado ao usuário logado\"}";
+	    			break;
+	    	}
 		}
 		pw.write(json);
 	}

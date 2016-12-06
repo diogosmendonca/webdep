@@ -371,7 +371,7 @@ $(document).ready(
 								if (resposta.hasOwnProperty("formatoLogs")) {
 									$("#formatoLog").children().remove();
 									var formatoLogs = resposta.formatoLogs;
-									$("#formatoLog").append("<option value=''></option>");
+									$("#formatoLog").append("<option value='' selected disabled></option>");
 									for (var i = 0; i < formatoLogs.length; i += 1 ){
 										$("#formatoLog").append("<option value='"+
 												formatoLogs[i].id +"'>"+ 

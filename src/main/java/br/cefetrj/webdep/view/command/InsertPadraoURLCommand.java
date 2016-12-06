@@ -19,6 +19,7 @@ public class InsertPadraoURLCommand implements Command{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter pw = response.getWriter();
         HttpSession session = request.getSession();  
+        String lang = (String)session.getAttribute("lang");
         Long usuario_id;
         Usuario u = new Usuario();
         Usuario usuarioLogado = u;
@@ -39,13 +40,46 @@ public class InsertPadraoURLCommand implements Command{
         try{
         	if (!PadraoURLServices.verificaDuplicata(padraoURL)) { //retorna true se possui duplicata
         		PadraoURLServices.insertPadraoURL(padraoURL);
-            	mensagem = "Padrão URL inserido com sucesso";
+        		switch (lang){
+		        	case "en_US":
+		        		mensagem = "URL Pattern successfully inserted!";
+		        		break;
+		        		
+		        	case "pt_BR":
+		        		mensagem = "Padrão URL inserido com sucesso";
+		        		break;
+		        	default: 
+		    			mensagem = "Padrão URL inserido com sucesso";
+		    			break;
+				}
         	} else {
-        		mensagem = "Padrão URL já existe";
+        		switch (lang){
+		        	case "en_US":
+		        		mensagem = "A URL Pattern with this name already exists";
+		        		break;
+		        		
+		        	case "pt_BR":
+		        		mensagem = "Padrão URL já existe";
+		        		break;
+		        	default: 
+		    			mensagem = "Padrão URL já existe";
+		    			break;
+				}
         	}
         	
 		} catch (Exception e) {
-			mensagem = "Erro na inserção!";
+			switch (lang){
+	        	case "en_US":
+	        		mensagem = "Insertion error";
+	        		break;
+	        		
+	        	case "pt_BR":
+	        		mensagem = "Erro na inserção!";
+	        		break;
+	        	default: 
+	    			mensagem = "Erro na inserção!";
+	    			break;
+			}
 			e.printStackTrace();
 		} finally {
 			String json = "{\"mensagem\": \"" + mensagem + "\"}";

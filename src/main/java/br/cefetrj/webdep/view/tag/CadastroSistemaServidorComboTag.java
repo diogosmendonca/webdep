@@ -2,9 +2,13 @@ package br.cefetrj.webdep.view.tag;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 import br.cefetrj.webdep.model.entity.Servidor;
@@ -66,13 +70,26 @@ public class CadastroSistemaServidorComboTag extends SimpleTagSupport {
 			out.print(" style=\"" + getStyle() + "\" ");
 		}
 		out.println(" name=\"servidor\" id=\"servidor\">");
-		if(servidores != null)
-			out.print("<option value='' selected> </option>");
+		HttpServletRequest request = ((HttpServletRequest)((PageContext)getJspContext()).getRequest());
+		HttpSession session = request.getSession();
+		
+		String mensagem = "";
+		String lang = (String)session.getAttribute("lang");
+		if (lang.equals("en_US")){
+			mensagem = "Select a Server";
+		} else if(lang.equals("pt_BR")){
+			mensagem = "Selecione um Servidor";
+		}
+		if(servidores != null){
+			out.print("<option value='' selected disabled>"+ mensagem +"</option>");
 			for (Servidor servidor : servidores) {
 				out.print("<option value=\"" + servidor.getId() + "\">");
 				out.print(servidor.getNome());
 				out.println("</option>");
 			}
+		} else {
+			
+		}
 		out.println("</select>");
 	}
 	

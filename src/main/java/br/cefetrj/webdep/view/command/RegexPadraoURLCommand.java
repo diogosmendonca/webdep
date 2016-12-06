@@ -23,6 +23,7 @@ public class RegexPadraoURLCommand implements Command{
 		String json = "";
         PrintWriter pw = response.getWriter();
         HttpSession session = request.getSession();
+        String lang = (String)session.getAttribute("lang");
         Sistema sistemaSession = null;
         String mensagem;
         if (session != null) {
@@ -47,15 +48,50 @@ public class RegexPadraoURLCommand implements Command{
             json += "]}";
             json = json.replace(",]}","]}");
         }catch (java.util.regex.PatternSyntaxException e){
-        	mensagem = "Não foi possível completar a ação. Expressão Regular inválida.";
+        	switch (lang){
+	        	case "en_US":
+	        		mensagem = "Could not complete action. Invalid Regular Expression.";
+	        		
+	        		break;
+	        		
+	        	case "pt_BR":
+	        		mensagem = "Não foi possível completar a ação. Expressão Regular inválida.";
+	        		break;
+	        	default: 
+	    			mensagem = "Não foi possível completar a ação. Expressão Regular inválida.";
+	    			break;
+        	}
         	json = "{\"Erro\": \"" + mensagem + "\"}";
         	e.printStackTrace();
         }catch (NullPointerException e){
-        	mensagem = "Não foi possível completar a ação. Selecione um Sistema acima.";
+        	switch (lang){
+	        	case "en_US":
+	        		mensagem = "Could not complete action. Select a system above";
+	        		
+	        		break;
+	        		
+	        	case "pt_BR":
+	        		mensagem = "Não foi possível completar a ação. Selecione um Sistema acima.";
+	        		break;
+	        	default: 
+	    			mensagem = "Não foi possível completar a ação. Selecione um Sistema acima.";
+	    			break;
+        	}
         	json = "{\"Erro\": \"" + mensagem + "\"}";
         	e.printStackTrace();
         }catch (Exception e){
-        	mensagem = "Não foi possível completar a ação.";
+        	switch (lang){
+	        	case "en_US":
+	        		mensagem = "Could not complete action.";
+	        		break;
+	        		
+	        	case "pt_BR":
+	        		mensagem = "Não foi possível completar a ação.";
+	        		break;
+	        	default: 
+	    			mensagem = "Não foi possível completar a ação.";
+	    			break;
+        	}
         	json = "{\"Erro\": \"" + mensagem + "\"}";
         	e.printStackTrace();
         }finally{
