@@ -125,6 +125,13 @@
 						preenchido.
 					</div>
 				</c:if>
+				<c:if test="${ not empty errorValidate and not errorValidate }">
+					<div class="alert alert-danger fade in alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Atenção!</strong> O campo Código HTTP de Erro precisa ser
+						preenchido.
+					</div>
+				</c:if>
 				
 				<c:if test="${ empty sessionScope.idsistema}">
 					<div class="alert alert-danger fade in alert-dismissible">
@@ -170,11 +177,6 @@
 						</tr>
 					</tbody>
 				</table>
-
-				<button type="submit" class="btn btn-primary btn-md">
-					<fmt:message key="br.cefetrj.webdep.jsp.http.back" />
-				</button>
-
 			</div>
 
 			<!-- Gráfico -->
@@ -183,6 +185,13 @@
 				<svg id="svg-chart" class="chart"></svg>
 			</div>
 		</div>
+		
+		<form action="home.jsp" method="POST">
+			<button type="submit" class="btn btn-primary btn-md" value="redirectParameter" style="display: block; margin: 0 auto;">
+				<fmt:message key="br.cefetrj.webdep.jsp.http.back" />
+			</button>
+		</form>
+		
 	</div>
 
 	<!-- MODAL NOVO PADRAO URL -->
