@@ -1,4 +1,4 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -22,7 +22,7 @@
 		  <div class="panel-body">
 				<div class="form-group form-inline ${ not empty nomeValido and not nomeValido ? "has-error" : "" }" >
 					<label for="inputNome"><fmt:message key="br.cefetrj.psw.user.label.nome"/></label> 
-					<input type="text" class="form-control" id="inputNome" name="nome" value="${ param.nome }" />
+					<input type="text" class="form-control" id="inputNome" maxlength="100" name="nome" value="${ param.nome }" />
 					
 					<c:if test="${not empty nomeValido and not nomeValido }">
 						<span class="help-block">
@@ -32,27 +32,39 @@
 				</div>
 				<div class="form-group form-inline ${ not empty emailValido and not emailValido ? "has-error" : "" }" >
 					<label for="inputEmail"><fmt:message key="br.cefetrj.psw.user.label.email"/></label> 
-					<input type="email" class="form-control" id="inputEmail" name="email" value="${ param.email }" />
+					<input type="email" class="form-control" id="inputEmail" maxlength="100" name="email" value="${ param.email }" />
 					
 					<c:if test="${not empty emailValido and not emailValido }">
 						<span class="help-block">
 							<fmt:message key="br.cefetrj.psw.user.msg_erro.email"/>
 						</span>
 					</c:if>
+					
+					<c:if test="${not empty emailValido2 and not emailValido2 }">
+						<span class="help-block" style="color:#a94442">
+							<fmt:message key="br.cefetrj.psw.user.msg_erro.email2"/>
+						</span>
+					</c:if>
 				</div>
 				<div class="form-group form-inline ${ not empty loginValido and not loginValido ? "has-error" : "" }" >
 					<label for="inputLogin"><fmt:message key="br.cefetrj.psw.user.label.login"/></label> 
-					<input type="text" class="form-control" id="inputLogin" name="login" value="${ param.login }" />
+					<input type="text" class="form-control" id="inputLogin" maxlength="50" name="login" value="${ param.login }" />
 					
 					<c:if test="${not empty loginValido and not loginValido }">
 						<span class="help-block">
 							<fmt:message key="br.cefetrj.psw.user.msg_erro.login"/>
 						</span>
 					</c:if>
+					
+					<c:if test="${not empty loginValido2 and not loginValido2 }">
+						<span class="help-block"  style="color:#a94442">
+							<fmt:message key="br.cefetrj.psw.user.msg_erro.login2"/>
+						</span>
+					</c:if>
 				</div>
 				<div class="form-group form-inline ${ not empty senhaValido1 and not senhaValido1 ? "has-error" : "" }" >
 					<label for="inputSenha1"><fmt:message key="br.cefetrj.psw.user.label.senha1"/></label> 
-					<input type="password" class="form-control" id="inputSenha1" name="senha"/>
+					<input type="password" class="form-control" id="inputSenha1" maxlength="64" name="senha"/>
 					
 					<c:if test="${not empty senhaValido1 and not senhaValido1 }">
 						<span class="help-block">
@@ -62,7 +74,7 @@
 				</div>
 				<div class="form-group form-inline ${ not empty senhaValido2 and not senhaValido2 ? "has-error" : "" }" >
 					<label for="inputSenha2"><fmt:message key="br.cefetrj.psw.user.label.senha2"/></label> 
-					<input type="password" class="form-control" id="inputSenha2" name="senha2"/>
+					<input type="password" class="form-control" id="inputSenha2" maxlength="64" name="senha2"/>
 					
 					<c:if test="${not empty senhaValido2 and not senhaValido2 }">
 						<span class="help-block">
@@ -87,8 +99,8 @@
 				<div class="form-group form-inline">
 				  <label for="sel1"><fmt:message key="br.cefetrj.psw.user.label.sistemas"/></label>
 					<select name="sistema" class="selectpicker" multiple title="" id="versionlist">
-				    <c:forEach items="${ sistemas }" var="sistema">
-					    <option value="${ sistema.id }">${ sistema.nome }</option>
+				    <c:forEach items="${ cadsistemas }" var="cadsistema">
+					    <option value="${ cadsistema.id }">${ cadsistema.nome }</option>
 					</c:forEach>
 					</select>
 				</div>
