@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- Variável criada para auxiliar na identificação do locale -->
-<c:set var="lang" scope="session" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}"/>
+<c:set var="lang" scope="session" value="pt_BR"/>
 
 <!-- Necessário para utilizar o i18N, informar o locale e o bundle -->
 <fmt:setLocale value="${lang}"/>

@@ -7,7 +7,6 @@
 
 <%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
 
-
 <!-- Jogando na sessao o id do sistema marcado combobox -->
 <%-- <c:if test="${!empty param.idsistema }"> --%>
 <%-- 	<c:set var="idsistema" scope="session" value="${param.idsistema}" /> --%>

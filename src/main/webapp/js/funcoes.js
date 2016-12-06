@@ -410,14 +410,14 @@ $(document).ready(
 										$("#div-nome").removeClass(
 										"has-error");
 									}
-									if (servidor.trim() === "") {
+									if (servidor === null || servidor.trim() === "") {
 										$("#div-servidor").addClass(
 												"has-error");
 									} else {
 										$("#div-servidor").removeClass(
 										"has-error");
 									}
-									if (formatoLog.trim() === "") {
+									if (formatoLog === null || formatoLog.trim() === "") {
 										$("#div-formatoLog").addClass(
 												"has-error");
 									} else {
@@ -473,40 +473,41 @@ $(document).ready(
 										$("#div-novaLeitura").removeClass(
 										"has-error");
 									}
-									//////Validar limite caracter
-									if (nome.trim().length > 100) {
-										alert("Campo 'Nome' execedeu limite de caracteres")
-										return false;
-									}
-									if (servidor.trim().length > 100) {
-										alert("Campo 'Servidor' execedeu limite de caracteres")
-										return false;
-									}
-									if (formatoLog.trim().length > 50) {
-										alert("Campo 'Formato Log' execedeu limite de caracteres")
-										return false;
-									}
-									if (ptLogs.trim().length > 255) {
-										alert("Campo 'Pasta Log de Acesso' execedeu limite de caracteres")
-										return false;
-									}
-									if (pxLogs.trim().length > 100) {
-										alert("Campo 'Prefixo Log de Acesso' execedeu limite de caracteres")
-										return false;
-									}
-									if (ptLogs2.trim().length > 255) {
-										alert("Campo 'Pasta Log de Erro' execedeu limite de caracteres")
-										return false;
-									}
-									if (pxLogs2.trim().length > 100) {
-										alert("Campo 'Prefixo Log de Erro' execedeu limite de caracteres")
-										return false;
-									}
 									
 									if (nome.trim() !== "" &&  servidor.trim() !== "" && formatoLog.trim() !== "" &&
 										ptLogs.trim() !== "" && ptLogs2.trim() !== "" && pxLogs.trim() !== "" && pxLogs2.trim() !== "" &&
 										dataPrimeiraLeitura.trim() !== "" && horaPrimeiraLeitura.trim() !== "" 
 											&& novaLeituraDia.trim() !== "" && novaLeituraHora.trim() !== "") {
+									//////Validar limite caracter
+										if (nome.trim().length > 100) {
+											alert("Campo 'Nome' execedeu limite de caracteres")
+											return false;
+										}
+										if (servidor.trim().length > 100) {
+											alert("Campo 'Servidor' execedeu limite de caracteres")
+											return false;
+										}
+										if (formatoLog.trim().length > 50) {
+											alert("Campo 'Formato Log' execedeu limite de caracteres")
+											return false;
+										}
+										if (ptLogs.trim().length > 255) {
+											alert("Campo 'Pasta Log de Acesso' execedeu limite de caracteres")
+											return false;
+										}
+										if (pxLogs.trim().length > 100) {
+											alert("Campo 'Prefixo Log de Acesso' execedeu limite de caracteres")
+											return false;
+										}
+										if (ptLogs2.trim().length > 255) {
+											alert("Campo 'Pasta Log de Erro' execedeu limite de caracteres")
+											return false;
+										}
+										if (pxLogs2.trim().length > 100) {
+											alert("Campo 'Prefixo Log de Erro' execedeu limite de caracteres")
+											return false;
+										}
+										
 										$("#div-nome").removeClass("has-error");
 										$("#div-servidor").removeClass("has-error");
 										$("#div-formatoLog").removeClass("has-error");
