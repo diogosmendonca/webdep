@@ -30,20 +30,30 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="name"><fmt:message key="br.cefetrj.webdep.jsp.vr.system" /></label>
 						<div class="col-xs-2">
-							<cmp:ComboSistema userId="${ id }" selectedList="${ sys }" classCss="form-control"/>	
+							<cmp:ComboSistema userId="${ id }" selectedList="${ sys }" classCss="form-control"/>
+							<c:if test="${not empty systemIn and not systemIn }">
+								<span class="help-block">
+									<fmt:message key="br.cefetrj.webdep.jsp.vr.systemError"/>
+								</span>
+							</c:if>	
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.versionName" /></label>
 						<div class="col-xs-4">
-							<input type="text" class="form-control" name="nome" id="nome" >
+							<input type="text" class="form-control" name="nome" id="nome"  value="${ version.nome }" >
+							<c:if test="${not empty nameIn and not nameIn }">
+								<span class="help-block">
+									<fmt:message key="br.cefetrj.webdep.jsp.vr.nameError"/>
+								</span>
+							</c:if>	
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.releaseDate" /></label>
 						<div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 							<div class="input-group">
-								<input class="form-control" type="text"  name="date" id="date" readonly />
+								<input class="form-control" type="text"  name="date" id="date" value="${ version.timestampLiberacao.toLocalDate() }" readonly />
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-remove"></span>
 								</span> 
@@ -51,13 +61,18 @@
 									<span class="glyphicon glyphicon-calendar"></span>
 								</span>
 							</div>
+							<c:if test="${not empty dateIn and not dateIn }">
+								<span class="help-block">
+									<fmt:message key="br.cefetrj.webdep.jsp.vr.dateError"/>
+								</span>
+							</c:if>	
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.releaseTime" /></label>
 						<div class="input-group date form_time col-sm-4" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
 							<div class="input-group">
-								<input class="form-control" type="text" name="time" id="time" readonly />
+								<input class="form-control" type="text" name="time" id="time" value="${ version.timestampLiberacao.toLocalTime() }" placeholder="HH:MM" />
 								<span class="input-group-addon"> 
 									<span class="glyphicon glyphicon-remove"></span>
 								</span> 
@@ -65,6 +80,11 @@
 									<span class="glyphicon glyphicon-time"></span>
 								</span>
 							</div>
+							<c:if test="${not empty timeIn and not timeIn }">
+								<span class="help-block">
+									<fmt:message key="br.cefetrj.webdep.jsp.vr.timeError"/>
+								</span>
+							</c:if>	
 						</div>
 					</div>
 	

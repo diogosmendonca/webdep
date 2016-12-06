@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -29,24 +30,72 @@ public class ChangeVersionCommand implements Command {
 		Long idv = Long.parseLong(request.getParameter("id"));
 		Versao v = VersionServices.obterPorId(idv);
 		
-		LocalDate ld = LocalDate.parse(request.getParameter("date"));
-		LocalTime lt = LocalTime.parse(request.getParameter("time"));
-		LocalDateTime ldt = LocalDateTime.of(ld, lt);
+		LocalDateTime l = null;
+		String name = null;
 		
-		String nome = request.getParameter("nome");
-		if(nome.trim().length()>0 && nome.trim().length()<101)
-			v.setNome(nome);
+		LocalTime lt = null;
+		LocalDate ld = null;
 		
-		Long ids = Long.parseLong(request.getParameter("sistema"));
-		Sistema s = SistemaServices.obterPorId(ids);
-		v.setSistema(s);
 		
-		v.setTimestampLiberacao(ldt);
+		Long id = null;
+		Sistema s= null;
 		
-		VersionServices.changeVersion(v);
+		boolean dateIn = true;
+		boolean timeIn = true;
+		boolean systemIn = true;
+		boolean nameIn = true;
 		
-		request.getRequestDispatcher("versionSearch.jsp").forward(request, response);
+		try{
+			ld = LocalDate.parse(request.getParameter("date"));
+		}catch(DateTimeParseException de){
+			dateIn = false;
+		}
+		try{
+			lt = LocalTime.parse(request.getParameter("time"));
+		}catch(DateTimeParseException te){
+			timeIn = false;
+		}
 		
+		if(lt != null && ld != null)
+			l = LocalDateTime.of(ld, lt);
+		
+		try{
+			id = Long.parseLong(request.getParameter("sistema"));
+		}catch(NumberFormatException ide){
+			systemIn = false;
+		}
+		
+		if(systemIn)
+			s = SistemaServices.obterPorId(id);
+		
+		try{
+		name = request.getParameter("nome").trim();
+		if(name.isEmpty() || name.length()>100)
+			throw new IllegalArgumentException();
+		else
+			System.out.println(name.length());
+			v.setNome(name);
+		}catch(IllegalArgumentException ne){
+			nameIn = false;
+		}
+		
+		if(s != null)
+			v.setSistema(s);
+		if(l != null)
+			v.setTimestampLiberacao(l);
+		if(dateIn && timeIn && nameIn && systemIn)
+			VersionServices.changeVersion(v);
+
+		if(dateIn && timeIn && nameIn && systemIn)
+			request.getRequestDispatcher("versionSearch.jsp").forward(request, response);
+		else{
+			request.setAttribute("nameIn", nameIn);
+			request.setAttribute("dateIn", dateIn);
+			request.setAttribute("timeIn", timeIn);
+			request.setAttribute("systemIn", systemIn);
+			request.setAttribute("version", v);
+			request.getRequestDispatcher("versionModify.jsp").forward(request, response);
+		}
 		
 	}
 }
