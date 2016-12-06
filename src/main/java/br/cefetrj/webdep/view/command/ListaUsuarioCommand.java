@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.cefetrj.webdep.model.entity.Usuario;
+import br.cefetrj.webdep.services.SistemaServices;
 import br.cefetrj.webdep.services.UsuarioServices;
 
 /**
@@ -25,8 +26,13 @@ public class ListaUsuarioCommand implements Command {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 			List<Usuario> usu = null;	
 			usu = UsuarioServices.listarTodos();
+			int cont = 0;
+			if(usu == null && cont == 0){
+				usu = UsuarioServices.listarTodos();
+				cont++;
+			}
 		
-			request.setAttribute("usuario", usu);				
+			request.setAttribute("listUsuario", usu);				
 			request.getRequestDispatcher("listaUsuario.jsp").forward(request, response);	
 	}
 	
@@ -41,7 +47,11 @@ public class ListaUsuarioCommand implements Command {
 		
 			try {
 				usu = UsuarioServices.buscaTodos(search.trim());
-				request.setAttribute("usuario", usu);				
+				if(usu.size() == 0){
+					String msg = "Não foram encontrados registros com o parâmetro de busca passado.";
+					request.setAttribute("msg", msg);
+				}
+				request.setAttribute("listUsuario", usu);				
 				request.getRequestDispatcher("listaUsuario.jsp").forward(request, response);	
 			} catch (Exception e) {
 				doGet(request, response);
