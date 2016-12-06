@@ -15,12 +15,12 @@ public class TestaLogAcessoCommand implements Command {
         String pxLogs = request.getParameter("pxLogs");
         String pathLog = ptLogs+pxLogs;
 
-        if(!(pathLog.equals(""))) { //sempre será cheio pois a validação está em JS
+        if(!(pathLog.equals(""))) { //sempre serï¿½ cheio pois a validaï¿½ï¿½o estï¿½ em JS
             File file = new File(pathLog);
             if(file.isFile())
                 resposta = "{\"mensagem\":\"O caminho '" + pathLog + "' existe!\" }";
             else
-            	resposta = "{\"mensagem\":\"O caminho '" + pathLog + "' não existe!\" }";
+            	resposta = "{\"mensagem\":\"O caminho '" + pathLog + "' nÃ£o existe!\" }";
         }
 
         PrintWriter pw = response.getWriter();

@@ -31,8 +31,8 @@ public class FillSistemaCommand implements Command{
 			json = "{\"sistema\":";
 				json += "{";
 				json += "\"nome\":\"" + s.getNome() + "\",";
-				json += "\"servidor\":" + s.getServidor().getId() + ",";
-				json += "\"formatolog\":" + s.getServidor().getFormatoLog().getId() + ",";
+				json += "\"servidor\":\"" + s.getServidor().getId() + "\",";
+				json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getId() + "\",";
 				json += "\"ptLogs\":\"" + s.getPastaLogAcesso() + "\",";
 				json += "\"pxLogs\":\"" + s.getPrefixoLogAcesso() + "\",";
 				json += "\"ptLogs2\":\"" + s.getPastaLogErro() + "\",";
@@ -42,7 +42,14 @@ public class FillSistemaCommand implements Command{
 				cal.setTimeInMillis(s.getPeriodicidadeLeitura());
 				LocalDateTime ofInstant = LocalDateTime.ofInstant(cal.toInstant(), ZoneId.systemDefault());
 				json += "\"time\":\"" + s.getPrimeiraLeitura().toLocalTime().toString() + "\",";
-				json += "\"novaData\":\"" + ofInstant.toLocalTime().toString() + "\"";
+				Date novaLeituraInput = new Date(s.getPeriodicidadeLeitura());
+				Calendar calNovaLeitura = new GregorianCalendar();
+				calNovaLeitura.setTime(novaLeituraInput);
+				String periodicidade = ((calNovaLeitura.get(Calendar.DAY_OF_YEAR) < 10)?("0"+calNovaLeitura.get(Calendar.DAY_OF_YEAR)):(calNovaLeitura.get(Calendar.DAY_OF_YEAR)))
+					    +" "+ ((calNovaLeitura.get(Calendar.HOUR_OF_DAY) < 10)?("0"+calNovaLeitura.get(Calendar.HOUR_OF_DAY)):(calNovaLeitura.get(Calendar.HOUR_OF_DAY)))
+					    + ":" 
+					   + ((calNovaLeitura.get(Calendar.MINUTE) < 10)?("0"+calNovaLeitura.get(Calendar.MINUTE)):(calNovaLeitura.get(Calendar.MINUTE)));
+				json += "\"novaData\":\"" + periodicidade + "\"";
 				json += "}";
 			json += "}";
 		} else {

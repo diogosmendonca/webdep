@@ -16,15 +16,17 @@ $(document).ready(
 						success : function(response) {
 							var resposta = $.parseJSON(response);
 							$("#nome").val(resposta.sistema.nome);
-							$("#servidor").val(resposta.sistema.servidor);
+							$("#servidor").val(resposta.sistema.servidor).change();
 							$("#formatoLog").val(resposta.sistema.formatolog);
 							$("#ptLogs").val(resposta.sistema.ptLogs);
 							$("#pxLogs").val(resposta.sistema.pxLogs);
 							$("#ptLogs2").val(resposta.sistema.ptLogs2);
 							$("#pxLogs2").val(resposta.sistema.pxLogs2);
-							$("#data").val(resposta.sistema.data);
-							$("#time").val(resposta.sistema.time);
-							$("#novaData").val(resposta.sistema.novaData);
+							$("#dataLeitura").val(resposta.sistema.data);
+							$("#horarioLeitura").val(resposta.sistema.time);
+							
+							$("#novaLeituraDia").val(resposta.sistema.novaData.split(" ")[0]);
+							$("#novaLeituraHora").val(resposta.sistema.novaData.split(" ")[1]);
 							}
 						});
 				} else if (window.location.href.indexOf("gerenciadorsistema.jsp") > -1) {
@@ -499,13 +501,8 @@ $(document).ready(
 																.hasOwnProperty("mensagem")) {
 															var mensagem = resposta.mensagem;
 															alert(mensagem);
-															if (!confirm("Você deseja cadastrar outro Sistema? \n Ok, para cadastrar outro Sistema \n Cancelar, para ser sair desta página.")) {
-																window.location
-																		.replace("gerenciadorsistema.jsp");
-															} else {
-																window.location
-																		.replace("cadastrodesistema.jsp");
-																}
+															window.location.replace("gerenciadorsistema.jsp");
+															
 															}
 														}
 													});

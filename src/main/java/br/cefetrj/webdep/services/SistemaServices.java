@@ -1,6 +1,5 @@
 package br.cefetrj.webdep.services;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -8,12 +7,25 @@ import javax.persistence.Query;
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.dao.SistemaDAO;
-import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
-import br.cefetrj.webdep.model.entity.Servidor;
 import br.cefetrj.webdep.model.entity.Sistema;
-import br.cefetrj.webdep.model.entity.Usuario;
 
 public class SistemaServices {
+	
+	public static boolean verificaDuplicata(Sistema s) {
+		PersistenceManager pm = PersistenceManager.getInstance();
+		try {
+			Query q = pm.createQuery("FROM Sistema sis WHERE sis.nome LIKE :param ");
+			
+			q.setParameter("param", s.getNome());
+
+			return (q.getResultList().size() > 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
 	public static void insertSistema(Sistema s) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 

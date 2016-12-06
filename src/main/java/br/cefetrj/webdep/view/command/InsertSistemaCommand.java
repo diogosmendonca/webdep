@@ -55,8 +55,10 @@ public class InsertSistemaCommand implements Command{
             c.set(Calendar.HOUR_OF_DAY, tempoNovaLeitura.getHour()); // MEXI AQUI
             c.set(Calendar.MINUTE, tempoNovaLeitura.getMinute()); // MEXI AQUI
            
-            String nova = c.get(Calendar.DAY_OF_YEAR)+" "+ c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE); // MEXI AQUI
-			
+            String nova = c.get(Calendar.DAY_OF_YEAR) 
+        		    +" "+ ((c.get(Calendar.HOUR_OF_DAY) < 10)?("0"+c.get(Calendar.HOUR_OF_DAY)):(c.get(Calendar.HOUR_OF_DAY)))
+        		    + ":" 
+        		   + ((c.get(Calendar.MINUTE) < 10)?("0"+c.get(Calendar.MINUTE)):(c.get(Calendar.MINUTE)));
 		try{	
 			s.setNome(nome);
 			s.setServidor(ServidorServices.searchServidor(serv).get(0));
@@ -67,8 +69,13 @@ public class InsertSistemaCommand implements Command{
 			s.setPrimeiraLeitura(l);
 			s.setPeriodicidadeLeitura(new SimpleDateFormat("DD HH:mm").parse(nova).getTime()); // MEXI AQUI
 			//s.setPeriodicidadeLeitura(new SimpleDateFormat("hh:mm").parse(nova).getTime());
-			SistemaServices.insertSistema(s);
-			mensagem = "Sistema cadastrado com sucesso!";
+			if (!SistemaServices.verificaDuplicata(s)){
+				SistemaServices.insertSistema(s);
+				mensagem = "Sistema cadastrado com sucesso!";
+			} else {
+				mensagem = "Sistema com mesmo nome já existe!";
+			}
+			
 		} catch (Exception e) {
 			mensagem = "Erro no cadastro: " + e.getMessage();
 			//javax.persistence.EntityExistsException j� existe

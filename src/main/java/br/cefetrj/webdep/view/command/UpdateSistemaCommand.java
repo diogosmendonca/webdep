@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,25 +34,47 @@ public class UpdateSistemaCommand implements Command{
 			String pxLogs = request.getParameter("pxLogs");
 			String ptLogs2 = request.getParameter("ptLogs2");
 			String pxLogs2 = request.getParameter("pxLogs2");
-			String nova = request.getParameter("novaData");
-			LocalDate ld = LocalDate.parse(request.getParameter("data"));
-			LocalTime lt = LocalTime.parse(request.getParameter("time"));
+			int novaDias = Integer.parseInt(request.getParameter("novaLeituraDia")); // MEXI AQUI
+            String novaHora = request.getParameter("novaLeituraHora"); // MEXI AQUI
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm"); // MEXI AQUI
+            LocalTime tempoNovaLeitura = LocalTime.parse(novaHora, formatter); // MEXI AQUI
+            LocalDate ld = LocalDate.parse(request.getParameter("dataPrimeiraLeitura")); // MEXI AQUI
+            LocalTime lt = LocalTime.parse(request.getParameter("horaPrimeiraLeitura")); // MEXI AQUI
 			LocalDateTime l = LocalDateTime.of(ld, lt);
 			String mensagem = "";
+			
+			GregorianCalendar c = new GregorianCalendar();
+            c.set(Calendar.DAY_OF_YEAR, novaDias); // MEXI AQUI
+            c.set(Calendar.HOUR_OF_DAY, tempoNovaLeitura.getHour()); // MEXI AQUI
+            c.set(Calendar.MINUTE, tempoNovaLeitura.getMinute()); // MEXI AQUI
+           
+            String nova = c.get(Calendar.DAY_OF_YEAR) 
+		    +" "+ ((c.get(Calendar.HOUR_OF_DAY) < 10)?("0"+c.get(Calendar.HOUR_OF_DAY)):(c.get(Calendar.HOUR_OF_DAY)))
+		    + ":" 
+		   + ((c.get(Calendar.MINUTE) < 10)?("0"+c.get(Calendar.MINUTE)):(c.get(Calendar.MINUTE)));
 		try{	
-			s.setNome(nome);
+			
 			s.setServidor(ServidorServices.searchServidor(server).get(0));
 			s.setPastaLogAcesso(ptLogs);
 			s.setPrefixoLogAcesso(pxLogs);
 			s.setPrefixoLogErro(pxLogs2);
 			s.setPastaLogErro(ptLogs2);
 			s.setPrimeiraLeitura(l);
-			s.setPeriodicidadeLeitura(new SimpleDateFormat("hh:mm").parse(nova).getTime());
-			SistemaServices.updateSistema(s);
-			
-			mensagem = "Sistema atualizado com sucesso!";
+			s.setPeriodicidadeLeitura(new SimpleDateFormat("DD HH:mm").parse(nova).getTime());
+			if (s.getNome() == nome){
+				SistemaServices.updateSistema(s);
+				mensagem = "Sistema atualizado com sucesso!";
+			} else {
+				s.setNome(nome);
+				if (!SistemaServices.verificaDuplicata(s)){
+					SistemaServices.updateSistema(s);
+					mensagem = "Sistema atualizado com sucesso!";
+				} else {
+					mensagem = "Sistema com mesmo nome jÃ¡ existe!";
+				}
+			}
 		} catch (Exception e) {
-			mensagem = "Não foi possível cadastrar o sistema!";
+			mensagem = "NÃ£o foi possÃ­vel atualizar o sistema!";
 			e.printStackTrace();
 		} finally {
 			String json = "{\"mensagem\": \"" + mensagem + "\"}";
