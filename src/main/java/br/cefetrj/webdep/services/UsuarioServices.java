@@ -3,11 +3,13 @@ package br.cefetrj.webdep.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.entity.Permissao;
+import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Usuario;
 
 public class UsuarioServices {
@@ -69,6 +71,39 @@ public class UsuarioServices {
 		} catch (Exception e) {
 			pManager.rollbackTransaction();
 		}
+	}
+	
+	public void ForceSavePermission(Long id ,Usuario usu, Sistema sis) {
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			
+			Query query = pManager.createNativeQuery("INSERT INTO permissao (id, sistema_id, usuario_id)VALUES(?,?,?)");
+			query.setParameter(1, id);
+			query.setParameter(2, sis.getId());
+	        query.setParameter(3, usu.getId());
+	        query.executeUpdate();
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+	}
+	
+	public Permissao getLastPermission() {
+		List<Permissao> permissao = null;
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			TypedQuery	<Permissao> query = (TypedQuery<Permissao>) pManager.createQuery("select p from Permissao p ORDER BY p.id DESC");
+			permissao = query.getResultList();
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+		
+		return permissao.get(0);
 	}
 	
 	public static List<Permissao> getPermissao(Usuario usu){
