@@ -18,9 +18,9 @@ public class TestaLogAcessoCommand implements Command {
         if(!(pathLog.equals(""))) { //sempre ser� cheio pois a valida��o est� em JS
             File file = new File(pathLog);
             if(file.isFile())
-                resposta = "{\"mensagem\":\"O caminho '" + pathLog + "' existe!\" }";
+                resposta = "{\"mensagem\":\"O caminho '" + pathLog.replace("\\", "\\\\") + "' existe!\" }";
             else
-            	resposta = "{\"mensagem\":\"O caminho '" + pathLog + "' não existe!\" }";
+            	resposta = "{\"mensagem\":\"O caminho '" + pathLog.replace("\\", "\\\\") + "' não existe!\" }";
         }
 
         PrintWriter pw = response.getWriter();
