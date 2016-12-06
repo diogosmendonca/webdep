@@ -115,35 +115,33 @@
 				<c:if test="${ not empty versionValidate and not versionValidate }">
 					<div class="alert alert-danger fade in alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atenção!</strong> O campo Versões precisa ser preenchido.
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.versionField" />
 					</div>
 				</c:if>
 				<c:if test="${ not empty okValidate and not okValidate }">
 					<div class="alert alert-danger fade in alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atenção!</strong> O campo Código HTTP OK precisa ser
-						preenchido.
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.okCode" />
 					</div>
 				</c:if>
 				<c:if test="${ not empty errorValidate and not errorValidate }">
 					<div class="alert alert-danger fade in alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atenção!</strong> O campo Código HTTP de Erro precisa ser
-						preenchido.
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.errorCode" />
 					</div>
 				</c:if>
 				
 				<c:if test="${ empty sessionScope.idsistema}">
 					<div class="alert alert-danger fade in alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atenção!</strong> Sistema deve ser selecionado 
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.sistemMes" /> 
 					</div>
 				</c:if>
 			
 				<c:if test="${ not empty errohttp }">
 					<div class="alert alert-danger fade in alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atenção!</strong> Existe problema nos dados do banco
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.dbError" /> 
 					</div>
 				</c:if>
 			
