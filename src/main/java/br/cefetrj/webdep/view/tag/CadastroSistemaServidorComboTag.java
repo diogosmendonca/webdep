@@ -67,6 +67,7 @@ public class CadastroSistemaServidorComboTag extends SimpleTagSupport {
 		}
 		out.println(" name=\"servidor\" id=\"servidor\">");
 		if(servidores != null)
+			out.print("<option value='' selected> </option>");
 			for (Servidor servidor : servidores) {
 				out.print("<option value=\"" + servidor.getId() + "\">");
 				out.print(servidor.getNome());

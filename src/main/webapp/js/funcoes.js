@@ -198,6 +198,7 @@ $(document).ready(
 										var resposta = $.parseJSON(response);
 										console.log(response)
 										if (resposta.hasOwnProperty("url")) {
+											$("#table-url").children().remove();
 											var urls = resposta.url;
 											urls.forEach(function(el) {
 												$("#table-url").append("<tr><td>"
@@ -340,7 +341,7 @@ $(document).ready(
 				/* FIM DATEPICKER */
 			
 				/* MASCARA PARA INPUT DE DATA E HORA NO CADASTRO SISTEMA */	
-				$("#horarioLeitura").mask(" 99:99");
+				$("#horarioLeitura").mask("99:99");
 				$("#dataLeitura").mask("9999-99-99");
 				$("#novaLeituraDia").mask("99");
 				$("#novaLeituraHora").mask("99:99");
@@ -370,6 +371,7 @@ $(document).ready(
 								if (resposta.hasOwnProperty("formatoLogs")) {
 									$("#formatoLog").children().remove();
 									var formatoLogs = resposta.formatoLogs;
+									$("#formatoLog").append("<option value=''></option>");
 									for (var i = 0; i < formatoLogs.length; i += 1 ){
 										$("#formatoLog").append("<option value='"+
 												formatoLogs[i].id +"'>"+ 

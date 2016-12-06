@@ -213,7 +213,7 @@
 								<div id="div-nome" class="form-group has-feedback">
 									<label class="col-sm-2 text-right control-label" for="padrao-url-nome">Nome: </label>
 									<div class="col-sm-3">
-										<input name="padrao-url-nome" placeholder="Por exemplo: 'Somente letras e números'" id="padrao-url-nome" type="text"
+										<input name="padrao-url-nome" placeholder="Por exemplo: 'Contém números'" id="padrao-url-nome" type="text"
 											data-error="Favor preencher este campo." class="form-control" />
 											<div id="nome-error" class="text-center help-block with-errors"></div>
 									</div>
@@ -222,7 +222,7 @@
 								<div id="div-regex" class="form-group has-feedback">
 									<label class="col-sm-2 text-right control-label" for="regex">Expressão Regular:</label>
 									<div class="col-sm-4 input-group">
-										<input id="regex" placeholder="Por exemplo: ^[a-zA-Z0-9]+$+" name="regex" type="text"
+										<input id="regex" placeholder="Por exemplo: [0-9]" name="regex" type="text"
 											class="form-control" required>
 											<span class="input-group-btn text-right">
 												<button id="submit-regex" class="btn btn-primary"

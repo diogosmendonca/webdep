@@ -36,7 +36,7 @@ public class RegexPadraoURLCommand implements Command{
             for (RegistroLogAcesso registroLogAcesso: registrosLogAcessoPermitidos){
             	String url = registroLogAcesso.getUrl();
             	Matcher m = p.matcher(url);
-            	if (m.matches()) URLsRegex.add(url);
+            	if (m.find()) URLsRegex.add(url);
         	}
             json = "{\"url\":[";
             for (String url: URLsRegex){
