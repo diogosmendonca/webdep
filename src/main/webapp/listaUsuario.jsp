@@ -20,7 +20,7 @@
 			<div class="form-group form-inline" >
 			
             	<input id="action" name="action" type="hidden" value="listaUsuario"/>
-      			<input type="text" class="form-control" name="search" id="search" required="required">
+      			<input type="text" class="form-control" name="search" id="search">
     			<button type="submit" class="btn btn-primary" ><b><fmt:message key="br.cefetrj.psw.user.bt_buscar"/></b></button>
     		</div>
 		</form>
@@ -37,7 +37,8 @@
 		      </tr>
 		  </thead>
 		  <tbody>
-		      <c:forEach items="${ usuarios }" var="usu">					
+		      <span style="color:red">${ msg }</span>				
+		      <c:forEach items="${ listUsuario }" var="usu">	
 			      <tr>
 			        <td>${ usu.nome }</td>
 			        <td>${ usu.login }</td>
