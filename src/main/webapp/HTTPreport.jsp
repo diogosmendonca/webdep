@@ -46,7 +46,7 @@
 	</form>
 	 -->
 	<!-- Campo de Filtros -->
-
+	<div class="container-fluid">
 	<form class="form-horizontal" action="FrontControllerServlet"
 		method="POST">
 		<div class="panel panel-default">
@@ -103,12 +103,12 @@
 								<option value="${ ok.id }">${ ok.codigo }</option>
 							</c:forEach>
 						</select>
-						<div>
+						
 							<button name="action" value="errorParameter" type="submit"
-								class="btn btn-primary btn-md pull-right">
+								class="btn btn-primary btn-md">
 								<fmt:message key="br.cefetrj.webdep.jsp.apr.search" />
 							</button>
-						</div>
+					
 					</div>
 
 				</div>
@@ -192,6 +192,7 @@
 			</button>
 		</form>
 		
+	</div>
 	</div>
 
 	<!-- MODAL NOVO PADRAO URL -->
