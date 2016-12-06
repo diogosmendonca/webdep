@@ -198,6 +198,7 @@ $(document).ready(
 										var resposta = $.parseJSON(response);
 										console.log(response)
 										if (resposta.hasOwnProperty("url")) {
+											$("#table-url").children().remove();
 											var urls = resposta.url;
 											urls.forEach(function(el) {
 												$("#table-url").append("<tr><td>"

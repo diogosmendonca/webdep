@@ -37,8 +37,13 @@ public class InsertPadraoURLCommand implements Command{
         padraoURL.setExpressaoRegular(regex);
         padraoURL.setUsuario(usuarioLogado);
         try{
-        	PadraoURLServices.insertPadraoURL(padraoURL);
-        	mensagem = "Padrão URL inserido com sucesso";
+        	if (!PadraoURLServices.verificaDuplicata(padraoURL)) { //retorna true se possui duplicata
+        		PadraoURLServices.insertPadraoURL(padraoURL);
+            	mensagem = "Padrão URL inserido com sucesso";
+        	} else {
+        		mensagem = "Padrão URL já existe";
+        	}
+        	
 		} catch (Exception e) {
 			mensagem = "Erro na inserção!";
 			e.printStackTrace();

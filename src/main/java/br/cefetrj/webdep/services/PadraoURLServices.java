@@ -7,8 +7,25 @@ import javax.persistence.Query;
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.entity.PadraoURL;
+import br.cefetrj.webdep.model.entity.Sistema;
 
 public class PadraoURLServices {
+	
+	public static boolean verificaDuplicata(PadraoURL p) {
+		PersistenceManager pm = PersistenceManager.getInstance();
+		try {
+			Query q = pm.createQuery("FROM PadraoURL p WHERE p.nome LIKE :param ");
+			
+			q.setParameter("param", p.getNome());
+
+			return (q.getResultList().size() > 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
 	public static void insertPadraoURL(PadraoURL p) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 
