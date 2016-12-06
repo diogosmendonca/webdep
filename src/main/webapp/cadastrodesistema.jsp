@@ -97,7 +97,7 @@
 						data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 						<div class="input-group">
 							<input type="text" id="dataLeitura" class="form-control"
-								placeholder="aaaa-mm-dd" /> <span class="input-group-addon">
+								placeholder="aaaa-mm-dd" name="dataLeitura" /> <span class="input-group-addon">
 								<span class="glyphicon glyphicon-remove"></span>
 							</span> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"></span>
@@ -111,7 +111,7 @@
 						data-link-format="hh:ii">
 						<div id="div-horarioLeitura" class="input-group">
 							<input type="text" id="horarioLeitura" class="form-control"
-								placeholder="hh:mm" /> <span class="input-group-addon"> <span
+								placeholder="hh:mm" name="horarioLeitura" /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-remove"></span>
 							</span> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-time"></span>
@@ -130,13 +130,13 @@
 						<div id="div-novaLeitura" class="form-group col-md-12">
 							<label class="text-right col-md-3"><fmt:message
 									key="br.cefetrj.webdep.jsp.form.sistema.nova" /></label> <input
-								type="text" id="novaLeituraDia" size="2" class="form-control"
+								type="text" id="novaLeituraDia" size="2" name="novaLeituraDia" class="form-control"
 								placeholder="dd" />
 							<div class="input-group date form_time col-sm-2" data-date=""
 								data-date-format="hh:ii" data-link-field="dtp_input3"
 								data-link-format="hh:ii">
 								<input type="text" id="novaLeituraHora" class="form-control"
-									placeholder="hh:mm" /> <span class="input-group-addon">
+									placeholder="hh:mm" name="novaLeituraHora"/> <span class="input-group-addon">
 									<span class="glyphicon glyphicon-remove"></span>
 								</span> <span class="input-group-addon"> <span
 									class="glyphicon glyphicon-time"></span>
