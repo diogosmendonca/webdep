@@ -33,10 +33,10 @@ public class FillSistemaCommand implements Command{
 				json += "\"nome\":\"" + s.getNome() + "\",";
 				json += "\"servidor\":\"" + s.getServidor().getId() + "\",";
 				json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getId() + "\",";
-				json += "\"ptLogs\":\"" + s.getPastaLogAcesso() + "\",";
-				json += "\"pxLogs\":\"" + s.getPrefixoLogAcesso() + "\",";
-				json += "\"ptLogs2\":\"" + s.getPastaLogErro() + "\",";
-				json += "\"pxLogs2\":\"" + s.getPrefixoLogErro() + "\",";
+				json += "\"ptLogs\":\"" + s.getPastaLogAcesso().replace("\\", "\\\\") + "\",";
+				json += "\"pxLogs\":\"" + s.getPrefixoLogAcesso().replace("\\", "\\\\") + "\",";
+				json += "\"ptLogs2\":\"" + s.getPastaLogErro().replace("\\", "\\\\") + "\",";
+				json += "\"pxLogs2\":\"" + s.getPrefixoLogErro().replace("\\", "\\\\") + "\",";
 				json += "\"data\":\"" + s.getPrimeiraLeitura().toLocalDate().toString() + "\",";
 				Calendar cal = Calendar.getInstance();
 				cal.setTimeInMillis(s.getPeriodicidadeLeitura());

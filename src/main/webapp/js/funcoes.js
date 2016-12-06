@@ -544,10 +544,12 @@ $("#pxLogs-teste-btn").click(function() {
 var pxLogs = $("#pxLogs").val();
 var ptLogs = $("#ptLogs").val();
 if (pxLogs === "" || ptLogs === "") {
-	$("#div-pasta-acesso").toggleClass("has-error");
-	$("#div-prefixo-acesso").toggleClass("has-error");
+	$("#div-pasta-acesso").addClass("has-error");
+	$("#div-prefixo-acesso").addClass("has-error");
 	alert("Favor preencher campos destacados para testar o acesso.");
 } else {
+	$("#div-pasta-acesso").removeClass("has-error");
+	$("#div-prefixo-acesso").removeClass("has-error");
 	$.ajax({
 		type : "POST",
 		url : "FrontControllerServlet",
@@ -576,10 +578,12 @@ $("#pxLogs2-teste-btn").click(function() {
 var pxLogs2 = $("#pxLogs2").val();
 var ptLogs2 = $("#ptLogs2").val();
 if (pxLogs2 === "" || ptLogs2 === "") {
-	$("#div-pasta-erro").toggleClass("has-error");
-	$("#div-prefixo-erro").toggleClass("has-error");
+	$("#div-pasta-erro").addClass("has-error");
+	$("#div-prefixo-erro").addClass("has-error");
 	alert("Favor preencher campos destacados para testar o acesso.");
 } else {
+	$("#div-pasta-erro").removeClass("has-error");
+	$("#div-prefixo-erro").removeClass("has-error");
 	$.ajax({
 		type : "POST",
 		url : "FrontControllerServlet",
