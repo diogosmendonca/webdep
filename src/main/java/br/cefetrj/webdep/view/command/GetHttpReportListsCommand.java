@@ -33,10 +33,11 @@ public class GetHttpReportListsCommand implements Command {
 		}
 
 		try {
-			List<Versao> vers = new VersionServices().searchVersion(idSistema);
+			Sistema sis = new SistemaServices().SearchById(idSistemaLong);
+			List<Versao> vers = new VersionServices().searchVersaoBySistema(sis);
 			request.setAttribute("versionList", vers);
 
-			Sistema sis = new SistemaServices().SearchById(idSistemaLong);
+			
 			List<RegistroLogAcesso> regLog = new RegistroLogAcessoService().searchRegistroLogAcessoBySistema(sis);
 			List<RegistroLogAcesso> codeOk = new ArrayList<RegistroLogAcesso>();
 			List<RegistroLogAcesso> codeError = new ArrayList<RegistroLogAcesso>();

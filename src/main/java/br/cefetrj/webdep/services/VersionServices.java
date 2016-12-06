@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import org.hsqldb.persist.PersistentStoreCollectionSession;
 
 import br.cefetrj.webdep.model.dao.GenericDAO;
+import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Versao;
 
@@ -96,5 +97,19 @@ public class VersionServices {
 		}
 		
 		return 	v;
+	}
+	
+	public static List<Versao> searchVersaoBySistema(Sistema s) {
+		PersistenceManager pm = PersistenceManager.getInstance();
+		try {
+			Query q = pm.createQuery("FROM Versao v WHERE v.sistema = :param");
+			
+			q.setParameter("param", s);
+
+			return q.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
