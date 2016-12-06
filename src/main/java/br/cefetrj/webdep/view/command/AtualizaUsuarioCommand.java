@@ -39,7 +39,7 @@ public class AtualizaUsuarioCommand implements Command {
 		if(id != null){
 			new SistemaServices();
 			List<Sistema> sis = SistemaServices.listarTodos();
-			request.setAttribute("sistemas", sis);
+			request.setAttribute("cadsistemas", sis);
 
 			Usuario usu = null;
 			usu = UsuarioServices.obterPorId(id);
@@ -97,16 +97,16 @@ public class AtualizaUsuarioCommand implements Command {
 			email = "";
 		}
 
-		final String senha1;
+		String senha1;
 		if(request.getParameter("senha") != null){
-			senha1 = AutenticaUsuarioCommand.sha512(request.getParameter("senha"));
+			senha1 =  request.getParameter("senha");
 		}else{
 			senha1 = "";
 		}
 		
-		final String senha2;
+		String senha2;
 		if(request.getParameter("senha2") != null){
-			senha2 = AutenticaUsuarioCommand.sha512(request.getParameter("senha2"));
+			senha2 = request.getParameter("senha2");
 		}else{
 			senha2 = "";
 		}
@@ -133,26 +133,29 @@ public class AtualizaUsuarioCommand implements Command {
 		
 		Boolean nomeValido = true, loginValido = true, emailValido = true, senhaValido1 = true, senhaValido2 = true;
 		
-		if(nome.trim().length() == 0){
+		if(nome.trim().length() == 0 || nome.trim().length() > 100){
 			nomeValido = false;
 			request.setAttribute("nomeValido", nomeValido);
 		}
-		if(login.trim().length() == 0){
+		if(login.trim().length() == 0 || login.trim().length() > 50){
 			loginValido = false;
 			request.setAttribute("loginValido", loginValido);
 		}
-		if(senha2.trim().length() == 0){
+		if(senha2.trim().length() == 0 || senha2.trim().length() > 64){
 			senhaValido2 = false;
 			request.setAttribute("senhaValido2", senhaValido2);
 		}
-		if(senha1.trim().length() == 0){
+		if(senha1.trim().length() == 0 || senha1.trim().length() > 64){
 			senhaValido1 = false;
 			request.setAttribute("senhaValido1", senhaValido1);
 		}
-		if(email.trim().length() == 0){
+		if(email.trim().length() == 0 || email.trim().length() > 100){
 			emailValido = false;
 			request.setAttribute("emailValido", emailValido);
 		}
+		
+		senha1 = AutenticaUsuarioCommand.sha512(senha1);
+		senha2 = AutenticaUsuarioCommand.sha512(senha2);
 		
 		if(!senha1.equals(senha2)){
 			senhaValido2 = false;
@@ -178,13 +181,13 @@ public class AtualizaUsuarioCommand implements Command {
 		if(rLogin != null){
 			if(!auxLogin.equals(login)){
 				loginValido = false;
-				request.setAttribute("loginValido", loginValido);
+				request.setAttribute("loginValido2", loginValido);
 			}
 		}
 		if(rEmail != null){
 			if(!auxEmail.equals(email)){
 				emailValido = false;
-				request.setAttribute("emailValido", emailValido);
+				request.setAttribute("emailValido2", emailValido);
 			}
 		}	
 							
@@ -226,8 +229,19 @@ public class AtualizaUsuarioCommand implements Command {
 					UsuarioServices.salvarPermissao(permissao);
 				}				
 			}
-			
-			for (Permissao perm : lp) {
+			for (int i = 0; i < lp.size(); i++) {
+				int cont = 0;
+				for (Permissao permissao : permisseos) {
+					if(lp.get(i).getSistema().getId() == permissao.getSistema().getId()){
+						cont++;
+					}
+				} 
+				if(cont == 0){
+					UsuarioServices usuSePe = new UsuarioServices();
+					usuSePe.removerPermissao(lp.get(i));
+				}	
+			}
+			/*for (Permissao perm : lp) {
 				int cont = 0;
 				for (Permissao permissao : permisseos) {
 					if(perm.getSistema().getId() == permissao.getSistema().getId()){
@@ -238,9 +252,9 @@ public class AtualizaUsuarioCommand implements Command {
 					UsuarioServices usuSePe = new UsuarioServices();
 					usuSePe.removerPermissao(perm);
 				}				
-			}
+			}*/
 			
-			request.getRequestDispatcher("home.jsp").forward(request, response);	
+			request.getRequestDispatcher("FrontControllerServlet?action=listaUsuario&get=true").forward(request, response);		
 		}	
 	}
 
