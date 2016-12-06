@@ -341,7 +341,7 @@ $(document).ready(
 				/* FIM DATEPICKER */
 			
 				/* MASCARA PARA INPUT DE DATA E HORA NO CADASTRO SISTEMA */	
-				$("#horarioLeitura").mask(" 99:99");
+				$("#horarioLeitura").mask("99:99");
 				$("#dataLeitura").mask("9999-99-99");
 				$("#novaLeituraDia").mask("99");
 				$("#novaLeituraHora").mask("99:99");
