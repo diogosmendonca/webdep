@@ -81,15 +81,20 @@ public class ListSistemaCommand implements Command{
 				Calendar x = calPrimeiraLeitura;
 
 				while (!(x.getTime().after(now.getTime()))) {
-					x.add(Calendar.DATE, calNovaLeitura.get(Calendar.DAY_OF_YEAR));
-					x.add(Calendar.HOUR, calNovaLeitura.get(Calendar.HOUR_OF_DAY));
-					x.add(Calendar.MINUTE, calNovaLeitura.get(Calendar.MINUTE));
+					if (calNovaLeitura.get(Calendar.DAY_OF_YEAR) > 99){
+						x.add(Calendar.HOUR, calNovaLeitura.get(Calendar.HOUR_OF_DAY));
+						x.add(Calendar.MINUTE, calNovaLeitura.get(Calendar.MINUTE));
+					} else {
+						x.add(Calendar.DATE, calNovaLeitura.get(Calendar.DAY_OF_YEAR));
+						x.add(Calendar.HOUR, calNovaLeitura.get(Calendar.HOUR_OF_DAY));
+						x.add(Calendar.MINUTE, calNovaLeitura.get(Calendar.MINUTE));
+					}
 				}
 				
 				String formato = "dd/MM/yyyy HH:mm";
 			    SimpleDateFormat sdf2 = new SimpleDateFormat(formato);
 				String novaLeitura = sdf2.format(x.getTime());
-				    String periodicidade = ((calNovaLeitura.get(Calendar.DAY_OF_YEAR) < 10)?("0"+calNovaLeitura.get(Calendar.DAY_OF_YEAR)):(calNovaLeitura.get(Calendar.DAY_OF_YEAR)))
+				    String periodicidade = ((calNovaLeitura.get(Calendar.DAY_OF_YEAR) < 10)?("0"+calNovaLeitura.get(Calendar.DAY_OF_YEAR)):((calNovaLeitura.get(Calendar.DAY_OF_YEAR) > 99)? "0":calNovaLeitura.get(Calendar.DAY_OF_YEAR)))
 				    +" "+ ((calNovaLeitura.get(Calendar.HOUR_OF_DAY) < 10)?("0"+calNovaLeitura.get(Calendar.HOUR_OF_DAY)):(calNovaLeitura.get(Calendar.HOUR_OF_DAY)))
 				    + ":" 
 				   + ((calNovaLeitura.get(Calendar.MINUTE) < 10)?("0"+calNovaLeitura.get(Calendar.MINUTE)):(calNovaLeitura.get(Calendar.MINUTE)));

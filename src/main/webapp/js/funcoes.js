@@ -371,7 +371,7 @@ $(document).ready(
 								if (resposta.hasOwnProperty("formatoLogs")) {
 									$("#formatoLog").children().remove();
 									var formatoLogs = resposta.formatoLogs;
-									$("#formatoLog").append("<option value='' selected disabled></option>");
+									$("#formatoLog").append("<option value='' selected disabled>Selecione um formato</option>");
 									for (var i = 0; i < formatoLogs.length; i += 1 ){
 										$("#formatoLog").append("<option value='"+
 												formatoLogs[i].id +"'>"+ 
@@ -474,7 +474,7 @@ $(document).ready(
 										"has-error");
 									}
 									
-									if (nome.trim() !== "" &&  servidor.trim() !== "" && formatoLog.trim() !== "" &&
+									if (nome.trim() !== "" && servidor !== null && formatoLog !== null &&  servidor.trim() !== "" && formatoLog.trim() !== "" &&
 										ptLogs.trim() !== "" && ptLogs2.trim() !== "" && pxLogs.trim() !== "" && pxLogs2.trim() !== "" &&
 										dataPrimeiraLeitura.trim() !== "" && horaPrimeiraLeitura.trim() !== "" 
 											&& novaLeituraDia.trim() !== "" && novaLeituraHora.trim() !== "") {
@@ -501,6 +501,10 @@ $(document).ready(
 										}
 										if (ptLogs2.trim().length > 255) {
 											alert("Campo 'Pasta Log de Erro' execedeu limite de caracteres")
+											return false;
+										}
+										if (pxLogs2.trim().length > 100) {
+											alert("Campo 'Prefixo Log de Erro' execedeu limite de caracteres")
 											return false;
 										}
 										if (pxLogs2.trim().length > 100) {
@@ -547,12 +551,12 @@ $(document).ready(
 															response) {
 														var resposta = $
 																.parseJSON(response);
-														if (resposta
-																.hasOwnProperty("mensagem")) {
+														if (resposta.hasOwnProperty("mensagem")) {
 															var mensagem = resposta.mensagem;
-															alert(mensagem);
-															window.location.replace("gerenciadorsistema.jsp");
-															
+															if (!mensagem.indexOf("Erro") > -1) {
+																alert(mensagem);
+																window.location.replace("gerenciadorsistema.jsp");
+															}
 															}
 														}
 													});

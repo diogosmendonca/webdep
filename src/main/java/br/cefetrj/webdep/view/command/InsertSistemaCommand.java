@@ -58,7 +58,7 @@ public class InsertSistemaCommand implements Command{
             c.set(Calendar.HOUR_OF_DAY, tempoNovaLeitura.getHour()); // MEXI AQUI
             c.set(Calendar.MINUTE, tempoNovaLeitura.getMinute()); // MEXI AQUI
            
-            String nova = c.get(Calendar.DAY_OF_YEAR) 
+            String nova = ((c.get(Calendar.DAY_OF_YEAR) > 99)? "0":c.get(Calendar.DAY_OF_YEAR))
         		    +" "+ ((c.get(Calendar.HOUR_OF_DAY) < 10)?("0"+c.get(Calendar.HOUR_OF_DAY)):(c.get(Calendar.HOUR_OF_DAY)))
         		    + ":" 
         		   + ((c.get(Calendar.MINUTE) < 10)?("0"+c.get(Calendar.MINUTE)):(c.get(Calendar.MINUTE)));
