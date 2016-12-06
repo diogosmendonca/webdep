@@ -27,7 +27,7 @@ import br.cefetrj.webdep.view.command.UpdateSistemaCommand;
 import br.cefetrj.webdep.view.command.ValidaHttpReportCommand;
 import br.cefetrj.webdep.view.command.ObterUsuarioCommand;
 import br.cefetrj.webdep.view.command.RegexPadraoURLCommand;
-
+import br.cefetrj.webdep.view.command.AccessProfileReportCommand;
 import br.cefetrj.webdep.view.command.AtualizaUsuarioCommand;
 import br.cefetrj.webdep.view.command.AutenticaUsuarioCommand;
 import br.cefetrj.webdep.view.command.CadastraUsuarioCommand;
@@ -83,6 +83,7 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("deleteVersion", new DeleteVersionCommand());
 		commands.put("changeVersion", new ChangeVersionCommand());
 		commands.put("getVersion", new GetVersionCommand());
+		commands.put("accessProfileReport", new AccessProfileReportCommand());
 		
 		commands.put("getUsuario", new ObterUsuarioCommand());
 
