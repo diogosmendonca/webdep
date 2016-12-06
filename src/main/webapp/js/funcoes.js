@@ -338,6 +338,13 @@ $(document).ready(
                     minuteStep: 1 
 				});
 				/* FIM DATEPICKER */
+			
+				/* MASCARA PARA INPUT DE DATA E HORA NO CADASTRO SISTEMA */	
+				$("#horarioLeitura").mask(" 99:99");
+				$("#dataLeitura").mask("9999-99-99");
+				$("#novaLeituraDia").mask("99");
+				$("#novaLeituraHora").mask("99:99");
+				
 				/*CADASTRO DE SISTEMA*/
 				$("#servidor").on('change keyup mouseup', function (){
 					var open = $(this).data("isopen");
