@@ -31,7 +31,7 @@ public class VersionServices {
 		try {
 			Query q = pm.createQuery("FROM Versao WHERE nome LIKE :param "
 					+ " OR timestampLiberacao LIKE :param "
-					+ " OR sistema  LIKE :param");
+					+ " OR sistema.nome  LIKE :param");
 			
 			q.setParameter("param", "%"+s+"%");
 

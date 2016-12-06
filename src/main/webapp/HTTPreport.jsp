@@ -27,7 +27,7 @@
 <title><fmt:message key="br.cefetrj.webdep.jsp.http.title" /></title>
 <jsp:include page="head.jspf" />
 
-<c:if test="${versionList==null}">
+<c:if test="${okhttp ==null}">
 	<jsp:forward page="/FrontControllerServlet">
 		<jsp:param name="action" value="getListsParameter" />
 
@@ -125,13 +125,22 @@
 						preenchido.
 					</div>
 				</c:if>
-				<c:if test="${ not empty erorValidate and not errorValidate }">
+				
+				<c:if test="${ empty sessionScope.idsistema}">
 					<div class="alert alert-danger fade in alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atenção!</strong> O campo Código HTTP de Erro precisa ser
-						preenchido.
+						<strong>Atenção!</strong> Sistema deve ser selecionado 
 					</div>
 				</c:if>
+			
+				<c:if test="${ not empty errohttp }">
+					<div class="alert alert-danger fade in alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Atenção!</strong> Existe problema nos dados do banco
+					</div>
+				</c:if>
+			
+				
 			</div>
 		</div>
 	</form>
@@ -241,6 +250,8 @@
 			</div>
 		</div>
 	</div>
+	
+	 
 	<jsp:include page="scripts.jspf" />
 </body>
 </html>
