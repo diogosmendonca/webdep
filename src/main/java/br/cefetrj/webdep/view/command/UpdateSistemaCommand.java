@@ -61,7 +61,7 @@ public class UpdateSistemaCommand implements Command{
 			s.setPastaLogErro(ptLogs2);
 			s.setPrimeiraLeitura(l);
 			s.setPeriodicidadeLeitura(new SimpleDateFormat("DD HH:mm").parse(nova).getTime());
-			if (s.getNome() == nome){
+			if (s.getNome().equals(nome)){
 				SistemaServices.updateSistema(s);
 				mensagem = "Sistema atualizado com sucesso!";
 			} else {

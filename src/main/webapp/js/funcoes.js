@@ -395,44 +395,74 @@ $(document).ready(
 											"#id-sistema-update").val();
 									// validação form
 									if (nome.trim() === "") {
-										$("#div-nome").toggleClass(
+										$("#div-nome").addClass(
 												"has-error");
+									} else {
+										$("#div-nome").removeClass(
+										"has-error");
 									}
 									if (servidor.trim() === "") {
-										$("#div-servidor").toggleClass(
+										$("#div-servidor").addClass(
 												"has-error");
+									} else {
+										$("#div-servidor").removeClass(
+										"has-error");
 									}
 									if (formatoLog.trim() === "") {
-										$("#div-formatoLog").toggleClass(
+										$("#div-formatoLog").addClass(
 												"has-error");
+									} else {
+										$("#div-formatoLog").removeClass(
+										"has-error");
 									}
 									if (ptLogs.trim() === "") {
-										$("#div-pasta-acesso").toggleClass(
+										$("#div-pasta-acesso").addClass(
 												"has-error");
+									} else {
+										$("#div-pasta-acesso").removeClass(
+										"has-error");
 									}
 									if (pxLogs.trim() === "") {
-										$("#div-prefixo-acesso").toggleClass(
+										$("#div-prefixo-acesso").addClass(
 												"has-error");
+									} else {
+										$("#div-prefixo-acesso").removeClass(
+										"has-error");
 									}
 									if (ptLogs2.trim() === "") {
-										$("#div-pasta-erro").toggleClass(
+										$("#div-pasta-erro").addClass(
 												"has-error");
+									} else {
+										$("#div-pasta-erro").removeClass(
+										"has-error");
 									}
 									if (pxLogs2.trim() === "") {
-										$("#div-prefixo-erro").toggleClass(
+										$("#div-prefixo-erro").addClass(
 												"has-error");
+									} else {
+										$("#div-prefixo-erro").removeClass(
+										"has-error");
 									}
 									if (dataPrimeiraLeitura.trim() === "") {
-										$("#div-dataLeitura").toggleClass(
+										$("#div-dataLeitura").addClass(
 												"has-error");
+									} else {
+										$("#div-dataLeitura").removeClass(
+										"has-error");
 									}
 									if (horaPrimeiraLeitura.trim() === "") {
-										$("#div-horarioLeitura").toggleClass(
+										$("#div-horarioLeitura").addClass(
 												"has-error");
+									} else {
+										$("#div-horarioLeitura").removeClass(
+										"has-error");
 									}
 									if (novaLeituraDia.trim() === "" && novaLeituraHora.trim() === "") {
-										$("#div-novaLeitura").toggleClass(
+										$("#div-novaLeitura").addClass(
 												"has-error");
+									} else {
+										$("#div-novaLeitura").removeClass(
+										"has-error");
 									}
 									//////Validar limite caracter
 									if (nome.trim().length > 100) {
@@ -468,6 +498,16 @@ $(document).ready(
 										ptLogs.trim() !== "" && ptLogs2.trim() !== "" && pxLogs.trim() !== "" && pxLogs2.trim() !== "" &&
 										dataPrimeiraLeitura.trim() !== "" && horaPrimeiraLeitura.trim() !== "" 
 											&& novaLeituraDia.trim() !== "" && novaLeituraHora.trim() !== "") {
+										$("#div-nome").removeClass("has-error");
+										$("#div-servidor").removeClass("has-error");
+										$("#div-formatoLog").removeClass("has-error");
+										$("#div-pasta-acesso").removeClass("has-error");
+										$("#div-prefixo-acesso").removeClass("has-error");
+										$("#div-pasta-erro").removeClass("has-error");
+										$("#div-prefixo-erro").removeClass("has-error");
+										$("#div-dataLeitura").removeClass("has-error");
+										$("#div-horarioLeitura").removeClass("has-error");
+										$("#div-novaLeitura").removeClass("has-error");
 										$.ajax({
 													type : "POST",
 													url : "FrontControllerServlet",
