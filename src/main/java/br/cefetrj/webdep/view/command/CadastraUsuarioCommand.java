@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.cefetrj.webdep.model.entity.Permissao;
 import br.cefetrj.webdep.model.entity.Sistema;
@@ -29,7 +30,12 @@ public class CadastraUsuarioCommand implements Command {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		new SistemaServices();
 		List<Sistema> sis = SistemaServices.listarTodos();
-		request.setAttribute("sistemas", sis);
+		int cont = 0;
+		if(sis == null && cont == 0){
+			sis = SistemaServices.listarTodos();
+			cont++;
+		}
+		request.setAttribute("cadsistemas", sis);
 		request.getRequestDispatcher("cadastraUsuario.jsp").forward(request, response);
 	}
 
@@ -55,16 +61,16 @@ public class CadastraUsuarioCommand implements Command {
 			email = "";
 		}
 
-		final String senha1;
+		String senha1;
 		if(request.getParameter("senha") != null){
-			senha1 = AutenticaUsuarioCommand.sha512(request.getParameter("senha"));
+			senha1 =  request.getParameter("senha");
 		}else{
 			senha1 = "";
 		}
 		
-		final String senha2;
+		String senha2;
 		if(request.getParameter("senha2") != null){
-			senha2 = AutenticaUsuarioCommand.sha512(request.getParameter("senha2"));
+			senha2 = request.getParameter("senha2");
 		}else{
 			senha2 = "";
 		}
@@ -91,26 +97,29 @@ public class CadastraUsuarioCommand implements Command {
 		
 		Boolean nomeValido = true, loginValido = true, emailValido = true, senhaValido1 = true, senhaValido2 = true;
 		
-		if(nome.trim().length() == 0){
+		if(nome.trim().length() == 0 || nome.trim().length() > 100){
 			nomeValido = false;
 			request.setAttribute("nomeValido", nomeValido);
 		}
-		if(login.trim().length() == 0){
+		if(login.trim().length() == 0 || login.trim().length() > 50){
 			loginValido = false;
 			request.setAttribute("loginValido", loginValido);
 		}
-		if(senha2.trim().length() == 0){
+		if(senha2.trim().length() == 0 || senha2.trim().length() > 64){
 			senhaValido2 = false;
 			request.setAttribute("senhaValido2", senhaValido2);
 		}
-		if(senha1.trim().length() == 0){
+		if(senha1.trim().length() == 0 || senha1.trim().length() > 64){
 			senhaValido1 = false;
 			request.setAttribute("senhaValido1", senhaValido1);
 		}
-		if(email.trim().length() == 0){
+		if(email.trim().length() == 0 || email.trim().length() > 100){
 			emailValido = false;
 			request.setAttribute("emailValido", emailValido);
 		}
+		
+		senha1 = AutenticaUsuarioCommand.sha512(senha1);
+		senha2 = AutenticaUsuarioCommand.sha512(senha2);
 		
 		if(!senha1.equals(senha2)){
 			senhaValido2 = false;
@@ -133,16 +142,16 @@ public class CadastraUsuarioCommand implements Command {
 		
 		if(rLogin != null){
 			loginValido = false;
-			request.setAttribute("loginValido", loginValido);
+			request.setAttribute("loginValido2", loginValido);
 		}
 		if(rEmail != null){
 			emailValido = false;
-			request.setAttribute("emailValido", emailValido);
+			request.setAttribute("emailValido2", emailValido);
 		}
 		
 		if(nomeValido == false || emailValido == false || loginValido == false || senhaValido1 == false || senhaValido2 == false){
 			request.getRequestDispatcher("cadastraUsuario.jsp").forward(request, response);
-		}else{			
+		}else{
 			Usuario usu = new Usuario();
 			usu.setNome(nome);
 			usu.setEmail(email);
@@ -166,7 +175,15 @@ public class CadastraUsuarioCommand implements Command {
 				UsuarioServices.salvarPermissao(permissao);
 			}
 			
-			request.getRequestDispatcher("home.jsp").forward(request, response);	
+			//Usuario getusu = new UsuarioServices().validarEmail(usu.getEmail());
+			/*for (Sistema sis : sistema) {
+				UsuarioServices use = new UsuarioServices();
+				Permissao p = use.getLastPermission();
+				UsuarioServices uservice = new UsuarioServices();
+				uservice.ForceSavePermission((p.getId() + 1), getusu, sis);
+			}*/			
+			
+			request.getRequestDispatcher("FrontControllerServlet?action=listaUsuario&get=true").forward(request, response);	
 		}
 	}
 
@@ -185,5 +202,5 @@ public class CadastraUsuarioCommand implements Command {
 			doPost(request, response);
 		}
 	}
-
+	
 }
