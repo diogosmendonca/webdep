@@ -62,7 +62,30 @@ $(document).ready(
 											}
 									}
 								});
-					} else if (window.location.href.indexOf("HTTPreport.jsp") > -1) {
+					} else if (window.location.href.indexOf("HTTPreport.jsp") > -1 || window.location.href.indexOf("accessProfileReport.jsp") > -1) {
+						$('.form_date').datetimepicker({
+							language : 'pt-BR',
+							weekStart : 1,
+							todayBtn : 1,
+							autoclose : 1,
+							todayHighlight : 1,
+							startView : 2,
+							minView : 2,
+							forceParse : 0,
+							format: "yyyy-mm-dd"
+						});
+						$('.form_time').datetimepicker({
+							language : 'pt-BR',
+							weekStart : 1,
+							todayBtn : 1,
+							autoclose : 1,
+							todayHighlight : 1,
+							startView : 1,
+							minView : 0,
+							maxView : 1,
+							forceParse : 0,
+							format : "hh:ii:ss"
+						});
 						$.ajax({
 							type : "POST",
 							url : "FrontControllerServlet",
@@ -71,14 +94,14 @@ $(document).ready(
 							},
 							success : function(response) {
 								var resposta = $.parseJSON(response);
-								$("#selectPadraoURL").children().remove();
+								$(".padrao-select").children().remove();
 								if (resposta.hasOwnProperty("padroes")) {
 									var padroes = resposta.padroes;
 									padroes.forEach(function (padrao){
-										$("#selectPadraoURL").append("<option value='"+padrao.id+"'>"+padrao.nome+"</option>");
+										$(".padrao-select").append("<option value='"+padrao.id+"'>"+padrao.nome+"</option>");
 									});
 								} else if (resposta.hasOwnProperty("Erro")) {
-									$("#selectPadraoURL").append("<option>Adicione um Padrão URL<option>");
+									$(".padrao-select").append("<option>Adicione um Padrão URL<option>");
 									alert(resposta.Erro);
 								}
 							}
@@ -150,7 +173,7 @@ $(document).ready(
 
 				/* MODAL PADRAO URL */
 				// abrir modal Novo Padrão de URL
-				$('#myModal').on('shown.bs.modal', function() {
+				$('.myModal').on('shown.bs.modal', function() {
 					$('#myInput').focus();
 				});
 				
@@ -261,7 +284,12 @@ $(document).ready(
 										if (resposta.hasOwnProperty("mensagem") > -1) {
 											var mensagem = resposta.mensagem;
 											alert(mensagem);
-											window.location.replace("HTTPreport.jsp");
+											if (window.location.href.indexOf("HTTPreport.jsp") > -1 ){
+												window.location.replace("HTTPreport.jsp");
+											} else {
+												window.location.replace("accessProfileReport.jsp");
+											}
+											
 										} else if (resposta.indexOf("Erro")) {
 											alert("Erro de conexão com o servidor");
 											}
@@ -273,7 +301,7 @@ $(document).ready(
 				});
 				
 				$("#deletePadraoURL").on("click", function() {
-					var idPadrao = $("#selectPadraoURL").val();
+					var idPadrao = $(".padrao-select").val();
 					if(idPadrao != null){
 						if (confirm("Tem certeza que deseja excluir este padrão URL?")){
 							$.ajax({
@@ -288,7 +316,11 @@ $(document).ready(
 									if (resposta.hasOwnProperty("mensagem") > -1) {
 										var mensagem = resposta.mensagem;
 										alert(mensagem);
-										window.location.replace("HTTPreport.jsp");
+										if (window.location.href.indexOf("HTTPreport.jsp") > -1 ){
+											window.location.replace("HTTPreport.jsp");
+										} else if (window.location.href.indexOf("accessProfileReport.jsp") > -1 ){
+											window.location.replace("accessProfileReport.jsp");
+										}
 									} else if (resposta.indexOf("Erro")) {
 										alert("Erro de conexão com o servidor");
 										}

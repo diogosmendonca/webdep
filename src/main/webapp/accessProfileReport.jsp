@@ -88,10 +88,10 @@
 						</div>
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.apr.urlPatterns" /></label>
 							<div class="col-xs-2">
-								<select id="selectPadraoURL" class="form-control">
+								<select  class="form-control padrao-select">
 					<!-- essa parte está no meu caso de teste pode deixar que eu preencho conforme o usuario logado. Ass: Luan -->
 								</select>
-								<button class="btn btn-primary" type="button" data-toggle="modal"
+								<button class="btn btn-primary myModal" type="button" data-toggle="modal"
 									data-target="#myModal">+</button>
 									<button id="deletePadraoURL" name="deletepadraourl" class="btn btn-primary" 
 									 type="button">-</button>
@@ -148,11 +148,13 @@
 			</div>
 	</div>
 	
-	<script type="text/javascript" src="jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+	<!-- MOVIDO PARA SCRIPTS.JSPF POIS CAUSA CONFLITOS
+	script type="text/javascript" src="jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.<fmt:message key="br.cefetrj.webdep.jsp.datepicker" />.js" charset="UTF-8"></script>
 	<script type="text/javascript">
+	MOVIDO PARA FUNCOES.JS LINHA 66
 		$('.form_date').datetimepicker({
 			language : 'pt-BR',
 			weekStart : 1,
@@ -176,6 +178,71 @@
 			forceParse : 0,
 			format : "hh:ii:ss"
 		});
-	</script>
+	</script -->
+	
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Novo Padrão de URL</h4>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<div id="form-padrao-url" class="form-horizontal col-sm-11">
+							<div class="row">
+								<div id="div-nome" class="form-group has-feedback">
+									<label class="col-sm-2 text-right control-label" for="padrao-url-nome">Nome: </label>
+									<div class="col-sm-3">
+										<input name="padrao-url-nome" placeholder="Por exemplo: 'Contém números'" id="padrao-url-nome" type="text"
+											data-error="Favor preencher este campo." class="form-control" />
+											<div id="nome-error" class="text-center help-block with-errors"></div>
+									</div>
+									
+								</div>
+								<div id="div-regex" class="form-group has-feedback">
+									<label class="col-sm-2 text-right control-label" for="regex">Expressão Regular:</label>
+									<div class="col-sm-4 input-group">
+										<input id="regex" placeholder="Por exemplo: [0-9]" name="regex" type="text"
+											class="form-control" required>
+											<span class="input-group-btn text-right">
+												<button id="submit-regex" class="btn btn-primary"
+													type="button">Buscar</button>
+											</span>
+									</div>
+									<div id="regex-error" class="col-sm-7 text-center help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>URLs Encontrados</th>
+											</tr>
+										</thead>
+										<tbody id="table-url">
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="modal-footer col-sm-6">
+								<button id="submitpadraourl" type="button"
+									class="btn btn-primary">Salvar</button>
+								<button id="cancela-padrao-url" type="button"
+									class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 </body>
 </html>
