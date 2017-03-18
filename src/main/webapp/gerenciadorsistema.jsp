@@ -16,14 +16,16 @@
     </head>
     <body>
     <%@include file="navbar.jspf"%>
-        <div id="div-buscar-sistemas" class="form-group container">
-            <br></br>
-            <div class="row form-inline">
-                <div class="col-sm-5">
+        <div class=" container">
+            <div class="col-sm-6 row form-inline">
+                <div id="div-buscar-sistemas" class="form-group has-feedback">
                     <input id="filtro-busca-sistemas" class="form-control" type="text">
-                    <button id="buscar-sistemas" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.buscar" /></button>
+                    <span class=""></span>
                 </div>
+              	<button id="buscar-sistemas" type="submit" class="btn btn-primary"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.buscar" /></button>
+            	<br>
             </div>
+            <br></br>
             <br>
             <div class="row">
                 <table class="table table-bordered table-condensed">
@@ -45,7 +47,7 @@
             </div>
             <br></br>
             <div class="row">
-                <button type="button" class="btn btn-secondary btn-lg center-block"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.voltar" /></button>
+                <button id="volta-btn" type="button" class="btn btn-secondary btn-lg center-block"><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.voltar" /></button>
             </div>
         </div>
         <jsp:include page="scripts.jspf"/>

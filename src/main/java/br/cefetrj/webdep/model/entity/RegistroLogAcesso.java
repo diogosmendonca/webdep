@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
@@ -28,7 +29,7 @@ public class RegistroLogAcesso implements Serializable{
 	private String ip;
 	
 	@Column(nullable = false, length = 100)
-	private Usuario usuario;
+	private String usuario;
 	
 	@Column(nullable = false)
 	private LocalDateTime timestamp;
@@ -49,6 +50,7 @@ public class RegistroLogAcesso implements Serializable{
 	private String agente;
 	
 	@ManyToOne
+	@JoinColumn(name="sistema_id")
 	private Sistema sistema;
 
 	public Long getId() {
@@ -67,11 +69,11 @@ public class RegistroLogAcesso implements Serializable{
 		this.ip = ip;
 	}
 
-	public Usuario getUsuario() {
+	public String getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
 
@@ -128,8 +130,21 @@ public class RegistroLogAcesso implements Serializable{
 	}
 
 	public void setSistema(Sistema sistema) {
-		this.sistema = sistema;
-	}
-	
-	
+	    //prevent endless loop
+	    if (checarSeExiste(sistema))
+	      return ;
+	    //set new owner
+	    Sistema oldSistema = this.sistema;
+	    this.sistema = sistema;
+	    //remove from the old owner
+	    if (oldSistema!=null)
+	    	oldSistema.removeAcesso(this);
+	    //set myself into new owner
+	    if (sistema!=null)
+	    	sistema.addAcesso(this);
+	  }
+
+	  private boolean checarSeExiste(Sistema newSistema) {
+	    return sistema==null? newSistema == null : sistema.equals(newSistema);
+	  }
 }

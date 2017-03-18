@@ -31,8 +31,8 @@ public class ServidorServices {
 	public static List<Servidor> searchServidor(String s) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 		try {
-			Query q = pm.createQuery("FROM Servidor WHERE nome LIKE :param ");
-			
+			Query q = pm.createQuery("FROM Servidor WHERE nome LIKE :param "
+			+ " OR id LIKE :param ");
 			q.setParameter("param", "%"+s+"%");
 
 			return q.getResultList();
@@ -41,4 +41,22 @@ public class ServidorServices {
 			return null;
 		}
 	}
+	
+	public static List<Servidor> searchServidor(Servidor s) {
+		PersistenceManager pm = PersistenceManager.getInstance();
+		try {
+			Query q = pm.createQuery("SELECT s FROM Servidor s WHERE s.id = :param "
+			+ " AND s.formatoLog.id = :param2 ");
+			q.setParameter("param", s.getId());
+			q.setParameter("param2", s.getFormatoLog().getId());
+
+			return q.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	
 }

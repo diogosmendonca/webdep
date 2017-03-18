@@ -11,10 +11,6 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
 
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"></script>
-
 <!-- Variável criada para auxiliar na identificação do locale -->
 <c:set var="lang" scope="session"
 	value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}" />
@@ -24,55 +20,33 @@
 <fmt:setBundle basename="Messages" />
 
 <!DOCTYPE html>
-
-<style>
-/*
-.chart rect {
-  fill: steelblue;
-}
-*/
-.chart .legend {
-	fill: black;
-	font: 14px sans-serif;
-	text-anchor: start;
-	font-size: 12px;
-}
-
-.chart text {
-	fill: white;
-	font: 10px sans-serif;
-	text-anchor: end;
-}
-
-.chart .label {
-	fill: black;
-	font: 14px sans-serif;
-	text-anchor: end;
-}
-
-.bar:hover {
-	fill: brown;
-}
-
-.axis path, .axis line {
-	fill: none;
-	stroke: #000;
-	shape-rendering: crispEdges;
-}
-</style>
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="css/http-report.css">
 <title><fmt:message key="br.cefetrj.webdep.jsp.http.title" /></title>
 <jsp:include page="head.jspf" />
+
+<c:if test="${okhttp ==null}">
+	<jsp:forward page="/FrontControllerServlet">
+		<jsp:param name="action" value="getListsParameter" />
+
+	</jsp:forward>
+
+</c:if>
+
+
 </head>
 <body class="container-full">
 	<%@include file="navbar.jspf"%>
-
+	<!-- 
+	<form id="hidden_form" action="FrontControllerServlet" method="POST">
+		<input type="hidden" name="getListsParameter" value="getListsParameter"
+			id="hidden-form"  onload="document.getElementById('hidden_form').submit()"/>
+	</form>
+	 -->
 	<!-- Campo de Filtros -->
-
-
+	<div class="container-fluid">
 	<form class="form-horizontal" action="FrontControllerServlet"
 		method="POST">
 		<div class="panel panel-default">
@@ -87,22 +61,22 @@
 					<label class="control-label col-sm-2" for="pwd"><fmt:message
 							key="br.cefetrj.webdep.jsp.http.URLpattern" /></label>
 					<div class="col-xs-2">
-						<select class="form-control">
-							<option>URLs Sistema</option>
+						<select id="selectPadraoURL" class="form-control padrao-select">
+			<!-- essa parte está no meu caso de teste pode deixar que eu preencho conforme o usuario logado. Ass: Luan -->
 						</select>
-						<button class="btn btn-primary" type="button" data-toggle="modal"
+						<button class="btn btn-primary myModal" type="button" data-toggle="modal"
 							data-target="#myModal">+</button>
+							<button id="deletePadraoURL" name="deletepadraourl" class="btn btn-primary" 
+							 type="button">-</button>
 					</div>
-
-
 					<label class="control-label col-sm-2" for="pwd"><fmt:message
 							key="br.cefetrj.webdep.jsp.http.HTTPerror" /></label>
 					<div class="col-xs-2">
 						<select name="errorList" class="selectpicker" multiple title=""
 							id="errorList">
-							<option>500</option>
-							<option>400</option>
-							<option>404</option>
+							<c:forEach items="${ errorList }" var="error">
+								<option value="${ error.id }">${ error.codigo }</option>
+							</c:forEach>
 						</select>
 
 					</div>
@@ -114,9 +88,9 @@
 					<div class="col-xs-2">
 						<select name="versionList" class="selectpicker" multiple title=""
 							id="versionlist">
-							<option>1.7.1</option>
-							<option>1.7.2</option>
-							<option>1.8.0</option>
+							<c:forEach items="${ versionList }" var="version">
+								<option value="${ version.id }">${ version.nome }</option>
+							</c:forEach>
 						</select>
 					</div>
 
@@ -125,36 +99,53 @@
 					<div class="col-xs-2">
 						<select name="okList" class="selectpicker" multiple title=""
 							id="oklist">
-							<option>300</option>
-							<option>200</option>
+							<c:forEach items="${ okList }" var="ok">
+								<option value="${ ok.id }">${ ok.codigo }</option>
+							</c:forEach>
 						</select>
-						<div>
+						
 							<button name="action" value="errorParameter" type="submit"
-								class="btn btn-primary btn-md pull-right">
+								class="btn btn-primary btn-md">
 								<fmt:message key="br.cefetrj.webdep.jsp.apr.search" />
 							</button>
-						</div>
+					
 					</div>
 
 				</div>
 				<c:if test="${ not empty versionValidate and not versionValidate }">
 					<div class="alert alert-danger fade in alert-dismissible">
-						 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atenção!</strong> O campo Versões precisa ser preenchido.
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.versionField" />
 					</div>
 				</c:if>
 				<c:if test="${ not empty okValidate and not okValidate }">
 					<div class="alert alert-danger fade in alert-dismissible">
-						 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atenção!</strong> O campo Código HTTP OK precisa ser preenchido.
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.okCode" />
 					</div>
 				</c:if>
-				<c:if test="${ not empty erorValidate and not errorValidate }">
+				<c:if test="${ not empty errorValidate and not errorValidate }">
 					<div class="alert alert-danger fade in alert-dismissible">
-						 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atenção!</strong> O campo Código HTTP de Erro precisa ser preenchido.
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.errorCode" />
 					</div>
 				</c:if>
+				
+				<c:if test="${ empty sessionScope.idsistema}">
+					<div class="alert alert-danger fade in alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.sistemMes" /> 
+					</div>
+				</c:if>
+			
+				<c:if test="${ not empty errohttp }">
+					<div class="alert alert-danger fade in alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.dbError" /> 
+					</div>
+				</c:if>
+			
+				
 			</div>
 		</div>
 	</form>
@@ -184,120 +175,22 @@
 						</tr>
 					</tbody>
 				</table>
-
-				<button type="submit" class="btn btn-primary btn-md">
-					<fmt:message key="br.cefetrj.webdep.jsp.http.back" />
-				</button>
-
 			</div>
 
 			<!-- Gráfico -->
 
 			<div class="tab-pane fade" id="2a">
-				<svg class="chart"></svg>
-				<script src="http://d3js.org/d3.v3.min.js"></script>
-				<script>
-					var data = {
-						labels : [ 'resilience', 'maintainability',
-								'accessibility', 'uptime', 'functionality',
-								'impact' ],
-						series : [ {
-							label : '2012',
-							values : [ 4, 8, 15, 16, 23, 42 ]
-						}, {
-							label : '2013',
-							values : [ 12, 43, 22, 11, 73, 25 ]
-						}, {
-							label : '2014',
-							values : [ 31, 28, 14, 8, 15, 21 ]
-						}, ]
-					};
-
-					var chartWidth = 300, barHeight = 20, groupHeight = barHeight
-							* data.series.length, gapBetweenGroups = 10, spaceForLabels = 150, spaceForLegend = 150;
-
-					// Zip the series data together (first values, second values, etc.)
-					var zippedData = [];
-					for (var i = 0; i < data.labels.length; i++) {
-						for (var j = 0; j < data.series.length; j++) {
-							zippedData.push(data.series[j].values[i]);
-						}
-					}
-					
-
-					// Color scale
-					var color = d3.scale.category20();
-					var chartHeight = barHeight * zippedData.length
-							+ gapBetweenGroups * data.labels.length;
-
-					var x = d3.scale.linear().domain([ 0, d3.max(zippedData) ])
-							.range([ 0, chartWidth ]);
-
-					var y = d3.scale.linear().range(
-							[ chartHeight + gapBetweenGroups, 0 ]);
-
-					var yAxis = d3.svg.axis().scale(y).tickFormat('').tickSize(
-							0).orient("left");
-
-					// Specify the chart area and dimensions
-					var chart = d3.select(".chart").attr("width",
-							spaceForLabels + chartWidth + spaceForLegend).attr(
-							"height", chartHeight);
-
-					// Create bars
-					var bar = chart
-							.selectAll("g")
-							.data(zippedData)
-							.enter()
-							.append("g")
-							.attr(
-									"transform",
-									function(d, i) {
-										return "translate("
-												+ spaceForLabels
-												+ ","
-												+ (i * barHeight + gapBetweenGroups
-														* (0.5 + Math
-																.floor(i
-																		/ data.series.length)))
-												+ ")";
-									});
-
-					// Create rectangles of the correct width
-					bar.append("rect").attr("fill", function(d, i) {
-						return color(i % data.series.length);
-					}).attr("class", "bar").attr("width", x).attr("height",
-							barHeight - 1);
-
-					// Add text label in bar
-					bar.append("text").attr("x", function(d) {
-						return x(d) - 3;
-					}).attr("y", barHeight / 2).attr("fill", "red").attr("dy",
-							".35em").text(function(d) {
-						return d;
-					});
-
-					// Draw labels
-					bar.append("text").attr("class", "label").attr("x",
-							function(d) {
-								return -10;
-							}).attr("y", groupHeight / 2).attr("dy", ".35em")
-							.text(
-									function(d, i) {
-										if (i % data.series.length === 0)
-											return data.labels[Math.floor(i
-													/ data.series.length)];
-										else
-											return ""
-									});
-
-					chart.append("g").attr("class", "y axis").attr(
-							"transform",
-							"translate(" + spaceForLabels + ", "
-									+ -gapBetweenGroups / 2 + ")").call(yAxis);
-				</script>
+				<svg id="svg-chart" class="chart"></svg>
 			</div>
 		</div>
+		
+		<form action="home.jsp" method="POST">
+			<button type="submit" class="btn btn-primary btn-md" value="redirectParameter" style="display: block; margin: 0 auto;">
+				<fmt:message key="br.cefetrj.webdep.jsp.http.back" />
+			</button>
+		</form>
+		
+	</div>
 	</div>
 
 	<!-- MODAL NOVO PADRAO URL -->
@@ -315,27 +208,28 @@
 				</div>
 				<div class="modal-body">
 					<div class="container">
-						<form id="form-padrao-url" class="form-horizontal col-sm-11">
+						<div id="form-padrao-url" class="form-horizontal col-sm-11">
 							<div class="row">
-								<div id="div-nome" class="form-group">
-									<label class="col-sm-2 text-right control-label"
-										for="padrao-url-nome">Nome: </label>
+								<div id="div-nome" class="form-group has-feedback">
+									<label class="col-sm-2 text-right control-label" for="padrao-url-nome">Nome: </label>
 									<div class="col-sm-3">
-										<input name="padrao-url-nome" id="padrao-url-nome" type="text"
-											class="form-control" />
+										<input name="padrao-url-nome" placeholder="Por exemplo: 'Contém números'" id="padrao-url-nome" type="text"
+											data-error="Favor preencher este campo." class="form-control" />
+											<div id="nome-error" class="text-center help-block with-errors"></div>
 									</div>
+									
 								</div>
-								<div id="div-regex" class="form-group">
-									<label class="col-sm-2 text-right control-label" for="regex">Expressão
-										Regular:</label>
-									<div class="col-sm-3 input-group">
-										<input id="regex" name="regex" type="text"
-											class="form-control" /> <span
-											class="input-group-btn text-right">
-											<button id="submit-regex" name="action"
-												class="btn btn-primary" value="buscaRegex" type="submit">Buscar</button>
-										</span>
+								<div id="div-regex" class="form-group has-feedback">
+									<label class="col-sm-2 text-right control-label" for="regex">Expressão Regular:</label>
+									<div class="col-sm-4 input-group">
+										<input id="regex" placeholder="Por exemplo: [0-9]" name="regex" type="text"
+											class="form-control" required>
+											<span class="input-group-btn text-right">
+												<button id="submit-regex" class="btn btn-primary"
+													type="button">Buscar</button>
+											</span>
 									</div>
+									<div id="regex-error" class="col-sm-7 text-center help-block with-errors"></div>
 								</div>
 							</div>
 							<div class="row">
@@ -353,17 +247,19 @@
 								</div>
 							</div>
 							<div class="modal-footer col-sm-6">
-								<button id="submit-padrao-url" name="action" type="submit"
-									class="btn btn-primary" value="salvarPadrao">Salvar</button>
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">Cancelar</button>
+								<button id="submitpadraourl" type="button"
+									class="btn btn-primary">Salvar</button>
+								<button id="cancela-padrao-url" type="button"
+									class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 							</div>
-						</form>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	 
 	<jsp:include page="scripts.jspf" />
 </body>
 </html>

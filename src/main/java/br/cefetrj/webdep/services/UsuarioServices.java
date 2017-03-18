@@ -1,19 +1,22 @@
 package br.cefetrj.webdep.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
+import br.cefetrj.webdep.model.entity.Permissao;
+import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Usuario;
 
-public class UsuarioService {
+public class UsuarioServices {
 
 	private static Usuario usuario;
 	
-	public static Usuario getUsuario(Usuario _usuario){
-		
+	public static Usuario getUsuario(Usuario _usuario) {
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		pManager.beginTransaction();
 		
@@ -26,7 +29,7 @@ public class UsuarioService {
 	}
 	
 	
-	public static Usuario obterPorId(Long id){
+	public static Usuario obterPorId(Long id) {
 		Usuario usuario = null;
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
@@ -39,11 +42,10 @@ public class UsuarioService {
 		} catch (Exception e) {
 			pManager.rollbackTransaction();
 		}
-		
-		return 	usuario;
+		return usuario;
 	}
 	
-	public static void salvar(Usuario usuario){
+	public static void salvar(Usuario usuario) {
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
 			pManager.beginTransaction();
@@ -57,7 +59,86 @@ public class UsuarioService {
 		}
 	}
 	
-	public static void update(Usuario usuario){
+	public static void salvarPermissao(Permissao permissao) {
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			
+			GenericDAO<Permissao> permissaoDAO = pManager.createGenericDAO(Permissao.class);
+			permissaoDAO.insert(permissao);
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+	}
+	
+	public void ForceSavePermission(Long id ,Usuario usu, Sistema sis) {
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			
+			Query query = pManager.createNativeQuery("INSERT INTO permissao (id, sistema_id, usuario_id)VALUES(?,?,?)");
+			query.setParameter(1, id);
+			query.setParameter(2, sis.getId());
+	        query.setParameter(3, usu.getId());
+	        query.executeUpdate();
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+	}
+	
+	public Permissao getLastPermission() {
+		List<Permissao> permissao = null;
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			TypedQuery	<Permissao> query = (TypedQuery<Permissao>) pManager.createQuery("select p from Permissao p ORDER BY p.id DESC");
+			permissao = query.getResultList();
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+		
+		return permissao.get(0);
+	}
+	
+	public static List<Permissao> getPermissao(Usuario usu){
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		List<Permissao> list = new ArrayList<Permissao>(); 
+		
+		try {
+			pManager.beginTransaction();
+			
+			TypedQuery	<Permissao> query = (TypedQuery<Permissao>) pManager.createQuery("SELECT p FROM Permissao p where p.usuario = :usu");
+			list = query.setParameter("usu", usu).getResultList();
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+		return list;
+	}
+	
+	public void removerPermissao(Permissao per) {
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		
+		try {
+			pManager.beginTransaction();
+						
+			GenericDAO<Permissao> permissaoDAO = pManager.createGenericDAO(Permissao.class);
+			permissaoDAO.delete(per);
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+	}
+	
+	public static void update(Usuario usuario) {
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
 			pManager.beginTransaction();
@@ -71,7 +152,7 @@ public class UsuarioService {
 		}
 	}
 	
-	public static void remover(Usuario usuario){
+	public static void remover(Usuario usuario) {
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
 			pManager.beginTransaction();
@@ -85,7 +166,7 @@ public class UsuarioService {
 		}
 	}
 	
-	public static List<Usuario> listarTodos(){
+	public static List<Usuario> listarTodos() {
 		List<Usuario> usuarios = null;
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
@@ -98,11 +179,10 @@ public class UsuarioService {
 		} catch (Exception e) {
 			pManager.rollbackTransaction();
 		}
-		
-		return 	usuarios;			
+		return usuarios;			
 	}
 	
-	public static List<Usuario> buscaTodos(String busca){
+	public static List<Usuario> buscaTodos(String busca) {
 		List<Usuario> usuarios = null;
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
@@ -115,11 +195,10 @@ public class UsuarioService {
 		} catch (Exception e) {
 			pManager.rollbackTransaction();
 		}
-		
-		return 	usuarios;			
+		return usuarios;			
 	}
 	
-	public static Usuario validarLogin(String Login){
+	public static Usuario validarLogin(String Login) {
 		Usuario usuario = null;
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
@@ -131,11 +210,10 @@ public class UsuarioService {
 		} catch (Exception e) {
 			pManager.rollbackTransaction();
 		}
-		
-		return 	usuario;
+		return usuario;
 	}
 	
-	public static Usuario validarEmail(String Email){
+	public static Usuario validarEmail(String Email) {
 		Usuario usuario = null;
 		PersistenceManager pManager = PersistenceManager.getInstance();
 		try {
@@ -147,8 +225,7 @@ public class UsuarioService {
 		} catch (Exception e) {
 			pManager.rollbackTransaction();
 		}
-		
-		return 	usuario;
+		return usuario;
 	}
 	
 }

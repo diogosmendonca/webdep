@@ -1,8 +1,6 @@
 package br.cefetrj.webdep.view.command;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,13 +13,15 @@ public class DeleteVersionCommand implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ArrayList <Versao> l = (ArrayList) request.getSession().getAttribute("list");
-		int index = Integer.parseInt(request.getParameter("index"));
+		/* Tratamento de exceções
+		*/
 		
+		Long id = Long.parseLong(request.getParameter("id"));
+		Versao v = VersionServices.obterPorId(id);
 		
-		Versao v = l.get(index);
 		VersionServices.deleteVersion(v);
 		
+		request.getRequestDispatcher("versionSearch.jsp").forward(request, response);
 		
 	}
 	

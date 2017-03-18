@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,21 +24,40 @@ import br.cefetrj.webdep.model.entity.Permissao;
 import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Usuario;
 
+/**
+ * Classe de teste da combo de sistema.
+ * Projetada para executar utilizando o jsp comboSistemaTestDriver.jsp,
+ * com o banco HSQLDB em memória. Após os testes serem executados
+ * todos os dados são limpos para que não haje interferência com outros
+ * testes.
+ * 
+ * Lembrar de ligar o banco (run_mem_database) e servidor web antes de 
+ * executar o teste.
+ * 
+ * @author diogo
+ * @since 0.1
+ *
+ */
 public class ComponentSistemaComboTest {
 
 	private static Long adminGeralId;
 	private static Long usuarioNormalId;
 	private static WebDriver driver;
-		
+	private static PersistenceManager pm;
+	
 	@AfterClass
 	public static void restoreDbConfig() throws IOException {
+		pm.beginTransaction();
+		Query q = pm.createNativeQuery("TRUNCATE SCHEMA public AND COMMIT");
+		q.executeUpdate();
+		pm.commitTransaction();
 		driver.quit();
 	}
 	
 	@BeforeClass
 	public static void configureDb() throws IOException {
 		
-		PersistenceManager pm = PersistenceManager.getInstance();
+		pm = PersistenceManager.getInstance();
 		pm.beginTransaction();
 		
 		Sistema s1 = new Sistema();

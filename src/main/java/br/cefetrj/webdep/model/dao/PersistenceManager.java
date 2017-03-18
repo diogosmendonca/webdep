@@ -1,9 +1,14 @@
 package br.cefetrj.webdep.model.dao;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
 
 import br.cefetrj.webdep.model.entity.ConfiguracaoSistema;
 
@@ -16,7 +21,12 @@ public class PersistenceManager {
 
 	private PersistenceManager() {
 		String pathToProperties = this.getClass().getClassLoader().getResource("config.properties").getPath();
-		
+		try {
+			pathToProperties = URLDecoder.decode(pathToProperties, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			Logger lg = Logger.getLogger(PersistenceManager.class);
+			lg.error("Não foi possível decodificar o path do config.properties", e);
+		}
 		// configuração de produção
 		ConfiguracaoSistema cs = ConfigurationDAO.load(pathToProperties);
 
@@ -63,6 +73,10 @@ public class PersistenceManager {
 		return this.manager.createQuery(query);
 	}
 
+	public Query createNativeQuery(String query) {
+		return this.manager.createNativeQuery(query);
+	}
+	
 	public static void resetInstance() {
 		instance = null;
 	}

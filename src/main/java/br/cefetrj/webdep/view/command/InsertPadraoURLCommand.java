@@ -11,15 +11,15 @@ import javax.servlet.http.HttpSession;
 import br.cefetrj.webdep.model.entity.PadraoURL;
 import br.cefetrj.webdep.model.entity.Usuario;
 import br.cefetrj.webdep.services.PadraoURLServices;
-import br.cefetrj.webdep.services.UsuarioService;
+import br.cefetrj.webdep.services.UsuarioServices;
 
 public class InsertPadraoURLCommand implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/json");
 		PrintWriter pw = response.getWriter();
         HttpSession session = request.getSession();  
+        String lang = (String)session.getAttribute("lang");
         Long usuario_id;
         Usuario u = new Usuario();
         Usuario usuarioLogado = u;
@@ -27,7 +27,7 @@ public class InsertPadraoURLCommand implements Command{
         if (session != null) {
         	usuario_id = (Long)session.getAttribute("id");
         	u.setId(usuario_id);
-        	usuarioLogado = UsuarioService.getUsuario(u);
+        	usuarioLogado = UsuarioServices.getUsuario(u);
         }
         //retrieving URL Pattern form fields
         String nome = request.getParameter("nome");
@@ -38,14 +38,51 @@ public class InsertPadraoURLCommand implements Command{
         padraoURL.setExpressaoRegular(regex);
         padraoURL.setUsuario(usuarioLogado);
         try{
-        	PadraoURLServices.insertPadraoURL(padraoURL);
-        	mensagem = "Padr�o URL inserido com sucesso";
+        	if (!PadraoURLServices.verificaDuplicata(padraoURL)) { //retorna true se possui duplicata
+        		PadraoURLServices.insertPadraoURL(padraoURL);
+        		switch (lang){
+		        	case "en_US":
+		        		mensagem = "URL Pattern successfully inserted!";
+		        		break;
+		        		
+		        	case "pt_BR":
+		        		mensagem = "Padrão URL inserido com sucesso";
+		        		break;
+		        	default: 
+		    			mensagem = "Padrão URL inserido com sucesso";
+		    			break;
+				}
+        	} else {
+        		switch (lang){
+		        	case "en_US":
+		        		mensagem = "A URL Pattern with this name already exists";
+		        		break;
+		        		
+		        	case "pt_BR":
+		        		mensagem = "Padrão URL já existe";
+		        		break;
+		        	default: 
+		    			mensagem = "Padrão URL já existe";
+		    			break;
+				}
+        	}
+        	
 		} catch (Exception e) {
-			mensagem = "Erro na inser��o!";
+			switch (lang){
+	        	case "en_US":
+	        		mensagem = "Insertion error";
+	        		break;
+	        		
+	        	case "pt_BR":
+	        		mensagem = "Erro na inserção!";
+	        		break;
+	        	default: 
+	    			mensagem = "Erro na inserção!";
+	    			break;
+			}
 			e.printStackTrace();
 		} finally {
-			String json = "{\"mensagem\": \"" + mensagem + "\"]}";
-			response.setContentType("application/json");
+			String json = "{\"mensagem\": \"" + mensagem + "\"}";
 			pw.write(json);
 		}
         

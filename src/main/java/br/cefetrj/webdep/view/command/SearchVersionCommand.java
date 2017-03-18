@@ -12,11 +12,17 @@ import br.cefetrj.webdep.model.entity.Versao;
 import br.cefetrj.webdep.services.VersionServices;
 
 public class SearchVersionCommand implements Command{
+	
+	/*
+	 * Adicionar validação quando não for digitado nada e adicionar
+	 * mensagem quando a busca não houver resultados
+	 * 
+	 */
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Versao> l = VersionServices.searchVersion(request.getParameter("arg"));
-		request.getSession(true).setAttribute("list", l);
+		request.setAttribute("list", l);
 		request.getRequestDispatcher("versionSearch.jsp").forward(request, response);
 		
 	}

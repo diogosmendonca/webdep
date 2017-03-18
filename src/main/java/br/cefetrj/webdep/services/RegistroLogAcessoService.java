@@ -12,12 +12,36 @@ import br.cefetrj.webdep.model.entity.Usuario;
 
 public class RegistroLogAcessoService {
 	
+	public static void insertRegistroLogAcesso(RegistroLogAcesso s) {
+		PersistenceManager pm = PersistenceManager.getInstance();
+
+		pm.beginTransaction();
+
+		GenericDAO<RegistroLogAcesso> dao = pm.createGenericDAO(RegistroLogAcesso.class);
+		dao.insert(s);
+
+		pm.commitTransaction();
+
+	}
+	
+	public static void updateRegistroLogAcesso(RegistroLogAcesso s) {
+		PersistenceManager pm = PersistenceManager.getInstance();
+
+		pm.beginTransaction();
+
+		GenericDAO<RegistroLogAcesso> dao = pm.createGenericDAO(RegistroLogAcesso.class);
+		dao.update(s);
+
+		pm.commitTransaction();
+
+	}
+	
 	public static List<RegistroLogAcesso> searchRegistroLogAcessoByUsuario(Usuario u) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 		try {
-			Query q = pm.createQuery("FROM RegistroLogAcesso WHERE usuario LIKE :param ");
+			Query q = pm.createQuery("FROM RegistroLogAcesso WHERE usuario = :param ");
 			
-			q.setParameter("param", "%"+u+"%");
+			q.setParameter("param", u);
 
 			return q.getResultList();
 		} catch (Exception e) {
@@ -29,9 +53,9 @@ public class RegistroLogAcessoService {
 	public static List<RegistroLogAcesso> searchRegistroLogAcessoBySistema(Sistema s) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 		try {
-			Query q = pm.createQuery("FROM RegistroLogAcesso r WHERE r.sistema.id = :param");
+			Query q = pm.createQuery("FROM RegistroLogAcesso r WHERE r.sistema = :param");
 			
-			q.setParameter("param", s.getId());
+			q.setParameter("param", s);
 
 			return q.getResultList();
 		} catch (Exception e) {
@@ -49,6 +73,23 @@ public class RegistroLogAcessoService {
 		dao.delete(r);
 
 		pm.commitTransaction();
+	}
+
+	public static List<RegistroLogAcesso> listAllRegisters() {
+		List<RegistroLogAcesso> regsAcesso = null;
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			
+			GenericDAO<RegistroLogAcesso> regAcessoDAO = pManager.createGenericDAO(RegistroLogAcesso.class);
+			regsAcesso = regAcessoDAO.listAll();
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+		
+		return 	regsAcesso;	
 	}
 	
 }

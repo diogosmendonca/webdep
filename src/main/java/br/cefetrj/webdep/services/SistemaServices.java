@@ -7,10 +7,25 @@ import javax.persistence.Query;
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.dao.SistemaDAO;
-import br.cefetrj.webdep.model.entity.Servidor;
 import br.cefetrj.webdep.model.entity.Sistema;
 
 public class SistemaServices {
+	
+	public static boolean verificaDuplicata(Sistema s) {
+		PersistenceManager pm = PersistenceManager.getInstance();
+		try {
+			Query q = pm.createQuery("FROM Sistema sis WHERE sis.nome LIKE :param ");
+			
+			q.setParameter("param", s.getNome());
+
+			return (q.getResultList().size() > 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
 	public static void insertSistema(Sistema s) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 
@@ -37,21 +52,18 @@ public class SistemaServices {
 	
 	public static void deleteSistema(Sistema s){
 		PersistenceManager pm = PersistenceManager.getInstance();
-
 		pm.beginTransaction();
-
 		GenericDAO<Sistema> dao = pm.createGenericDAO(Sistema.class);
 		dao.delete(s);
-
 		pm.commitTransaction();
 	}
 	
 	public static List<Sistema> searchSistema(String s) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 		try {
-			Query q = pm.createQuery("FROM Sistema WHERE nome LIKE :param "
-					+ " OR servidor LIKE :param "
-					+ " OR id LIKE :param ");
+			Query q = pm.createQuery("FROM Sistema sis WHERE sis.nome LIKE :param "
+					+ " OR (sis.servidor.nome LIKE :param )"
+					+ " OR (sis.servidor.formatoLog.nome LIKE :param )");
 			
 			q.setParameter("param", "%"+s+"%");
 
@@ -106,6 +118,22 @@ public class SistemaServices {
 		}
 		
 		return 	sistemas;			
+	}
+	
+	public static Sistema SearchById(Long id) {
+		Sistema sis = null;
+		PersistenceManager pManager = PersistenceManager.getInstance();
+		try {
+			pManager.beginTransaction();
+			
+			GenericDAO<Sistema> permissaoDAO = pManager.createGenericDAO(Sistema.class);
+			sis = permissaoDAO.get(id);
+			
+			pManager.commitTransaction();
+		} catch (Exception e) {
+			pManager.rollbackTransaction();
+		}
+		return sis;
 	}
 	
 }
