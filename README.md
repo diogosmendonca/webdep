@@ -12,6 +12,6 @@ Instruções para instalação do sistema:
 2) Inicie o banco de dados embutido executando o arquivo src/main/resources/run_database.sh no linux ou src/main/resources/run_database.bat no windows.
 3) Utilize o maven para gerar o arquivo webdep.war através da execução do seguinte comando na raiz do projeto: mvn install. O arquivo webdep.war estará na pasta target.
 4) Faça deploy da aplicação no tomcat ou outro servidor de aplicação JEE. No tomcat basta mover o arquivo webdep.war para a pasta webapp dentro da instalação do tomcat.
-5) Acesse o sistema pela url http://localhost:8080/webdep/
+5) Inicie o servidor de aplicação (Tomcat ou outro) e acesse o sistema pela url http://localhost:8080/webdep/
 6) Faça login com o usuário admin e senha admin.
 
