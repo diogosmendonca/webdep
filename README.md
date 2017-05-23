@@ -1,7 +1,7 @@
 # webdep
 Web Dependability (WebDep)
 
-O WebDep tem como ojetivo proporcionar informações sobre a confiabilidade e robustez de sistemas web. Para isto ele monitora os sistemas web através dos seus arquivos de log do servidor de aplicação. O WebDep extrai informações sobre a confiabilidade, falhas e defeitos nos sistemas monitorados apresentando relatórios gráficos que permitem os administradores tomarem ações corretivas e preventivas sobre os defeitos em aplicações web.
+O WebDep tem como objetivo proporcionar informações sobre a confiabilidade e robustez de sistemas web. Para isto ele monitora os sistemas web através dos seus arquivos de log do servidor de aplicação. O WebDep extrai informações sobre a confiabilidade, falhas e defeitos nos sistemas monitorados apresentando relatórios gráficos que permitem os administradores tomarem ações corretivas e preventivas sobre os defeitos em aplicações web.
 
 O WebDep encontra-se em desenvolvimento, não contendo ainda todas as funcionalidades prontas para o monitoramento de um sistema web. Segundo nosso roadmap a primeira versão funcional do sistema deve estar pronta em Julho de 2017.
 Nesta versão planejada o WebDep suportará somente o monitoramento de aplicações que executam no servidor de aplicação Apache HTTPD. Futuramente pretendemos incluir outros servidores de aplicação como o Apache Tomcat e o Nigx.
