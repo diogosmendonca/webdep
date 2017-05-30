@@ -10,6 +10,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 	  <jsp-property-group>
 	    <url-pattern>*.jsp</url-pattern>
 	    <el-ignored>false</el-ignored>
+	    <page-encoding>UTF-8</page-encoding>
 	  </jsp-property-group>
   </jsp-config>
 	
