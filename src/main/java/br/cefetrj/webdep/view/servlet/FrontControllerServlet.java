@@ -35,7 +35,7 @@ import br.cefetrj.webdep.view.command.DeletaUsuarioCommand;
 import br.cefetrj.webdep.view.command.DeletePadraoURLCommand;
 import br.cefetrj.webdep.view.command.DeslogaUsuarioCommand;
 import br.cefetrj.webdep.view.command.ListaUsuarioCommand;
-
+import br.cefetrj.webdep.view.command.ListarDefeitosCommand;
 import br.cefetrj.webdep.view.command.ValidaBanco;
 import br.cefetrj.webdep.view.command.ValidaConfig;
 import br.cefetrj.webdep.view.command.ValidaEmail;
@@ -112,6 +112,8 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("ValidaEmail", new ValidaEmail());
 		commands.put("ValidaBanco", new ValidaBanco());
 		commands.put("ValidaConfig", new ValidaConfig());
+		commands.put("ListaDefeitos", new ListarDefeitosCommand());
+
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
