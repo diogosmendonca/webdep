@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="cmp" uri="WEB-INF/components.tld"%>
 
 <!-- Variável criada para auxiliar na identificação do locale -->
 <c:set var="lang" scope="session"
@@ -34,7 +35,6 @@
 	</jsp:forward>
 
 </c:if>
-
 
 </head>
 <body class="container-full">
@@ -189,7 +189,8 @@
 			</div>
 			
 			<div class="tab-pane fade" id="3a">
-				<!-- <svg id="svg-chart" class="chart"></svg> ->
+				 <!-- tag utilizada para gerar o gráfico de dispersão -->
+				 <cmp:RChartTag/>
 			</div>
 		</div>
 		
