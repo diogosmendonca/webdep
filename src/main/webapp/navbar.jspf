@@ -105,6 +105,8 @@ links barra menu -->
 										key="br.cefetrj.webdep.jsp.navbar.relatorios.confiabilidadeurls" /></a></li>
 							<li><a href="./relatorioFalhaTempo.jsp"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.relatorios.falhanotempo" /></a></li>
+							<li><a href="./acessoFalha.jsp"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.relatorios.boxacessofalha" /></a></li>
 						</ul></li>
 				</c:if>
 				<!-- END Relatórios  -->
@@ -125,20 +127,25 @@ links barra menu -->
 												selecionados = val.value;
 											});
 
-									$
-											.ajax({
-												url : "FrontControllerServlet?action=insertselectidsistema&idSistema="+ selecionados,
-												success : function(result) {
-													
-												}
-											});
+									$.ajax({
+											url : "FrontControllerServlet?action=insertselectidsistema&idSistema="+ selecionados,
+											success : function(result) {
+												location.reload();
+											}
+									});
+									
+									
 								}
 							</script>
 
 
 							<!-- Tag do select customizada -->
 														
-							<cmp:ComboSistema userId="${ id }" selectedList="${sessionScope.idsistema}" attributes=" onchange='javascript:updateIdSistema()'"  classCss="form-control" />
+							<cmp:ComboSistema userId="${ id }" selectedList="${sessionScope.idsistema}" 
+								attributes=" onchange='javascript:updateIdSistema()'"  
+								classCss="form-control"
+								alertaSelecao="${ true }"
+								opcaoVazia="${ true }" />
 
 
 							<!-- Script para submissão do select -->
