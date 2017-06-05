@@ -103,6 +103,8 @@ links barra menu -->
 										key="br.cefetrj.webdep.jsp.navbar.relatorios.perfildeacesso" /></a></li>
 							<li><a href="./HTTPreport.jsp"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.relatorios.confiabilidadeurls" /></a></li>
+							<li><a href="./relatorioFalhaTempo.jsp"><fmt:message
+										key="br.cefetrj.webdep.jsp.navbar.relatorios.falhanotempo" /></a></li>
 						</ul></li>
 				</c:if>
 				<!-- END Relatórios  -->
