@@ -1,15 +1,12 @@
 package br.cefetrj.webdep.services;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.Query;
-
-import br.cefetrj.webdep.DTO.Defeito;
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.entity.RegistroLogErro;
+
+import javax.persistence.Query;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by renatoor on 11/25/16.
@@ -56,43 +53,4 @@ public class LogErroServices {
             pm.commitTransaction();
         }
     }
- 
-    public static List<Defeito> buscarDefeitos(LocalDateTime ldtInicial, LocalDateTime ldtFinal, String buscar) {
-    	try {
-    		
-    		List<RegistroLogErro> listaErros = LogErroServices.buscarLog(ldtInicial, ldtFinal, buscar);
-    		List<Defeito> listaDefeito = new ArrayList<>();
-    		List<Defeito> retorno = new ArrayList<>();
-    		for (RegistroLogErro linha: listaErros) {
-    			String aux[] = linha.getMensagem().split("\\w{4}/");
-    			String juntar = aux[1] + aux[2];
-    			aux = juntar.split(" na|em linha ");
-    			listaDefeito.add(new Defeito(aux[0], aux[0], aux[1]));
-    		}
-    		
-    		for (int i = 0; i < listaDefeito.size(); i++) {
-    			Defeito posicaoI = listaDefeito.get(i);
-				for (int j = i++; j <= listaDefeito.size(); j++) {
-					Defeito posicaoJ = listaDefeito.get(j);
-					if (posicaoI.getArquivo().equals(posicaoJ.getArquivo()) && 
-							posicaoI.getLinhaCod().equals(posicaoJ.getLinhaCod())){
-						Defeito adiciona = posicaoI;
-						if (retorno.get(i) == null) {
-							adiciona.setNumFalhas(1);
-							retorno.add(adiciona);
-						}
-						else retorno.get(i).setNumFalhas(retorno.get(i).getNumFalhas() + 1);
-					}
-				}
-			}
-    		
-    		return retorno;
-    		
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return null;
-		}
-    }
-    
 }
