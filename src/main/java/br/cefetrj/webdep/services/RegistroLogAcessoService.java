@@ -9,6 +9,7 @@ import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Usuario;
+import br.cefetrj.webdep.model.entity.Versao;
 
 public class RegistroLogAcessoService {
 	
@@ -90,6 +91,30 @@ public class RegistroLogAcessoService {
 		}
 		
 		return 	regsAcesso;	
+	}
+	
+	
+	public static List<RegistroLogAcesso> listRegistroLogAcessoByFilters(Sistema sistema, 
+			List<Versao> versoes, String[] codigos){
+		
+		PersistenceManager pm = PersistenceManager.getInstance();
+		try {
+			Query q = pm.createQuery(""
+					+ "FROM RegistroLogAcesso r "
+					+ "WHERE r.sistema = :sistema "
+					+ "  AND r.codigo in (:codigos) ");
+			
+			//q.setParameter("sistema", s);
+			
+
+			return q.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+		//return null;
 	}
 	
 }

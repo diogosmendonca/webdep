@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 import br.cefetrj.webdep.model.entity.Sistema;
@@ -34,6 +33,20 @@ public class SistemaComboTag extends SimpleTagSupport {
 	
 	private String selectedList;
 	
+	/**
+	 * Define se será exibido antes da primeira 
+	 * opção uma vazia solicitando que o usuário selecione
+	 * um sistema. 
+	 */
+	private boolean opcaoVazia;
+	
+	/**
+	 * Se insere um alerta visual indicando que a combo
+	 * precisa ser selecionada.
+	 * 
+	 */
+	private boolean alertaSelecao;
+	
 	
 	public String getClassCss() {
 		return classCss;
@@ -59,7 +72,21 @@ public class SistemaComboTag extends SimpleTagSupport {
 		this.userId = userId;
 	}
 
-	
+	public boolean isOpcaoVazia() {
+		return opcaoVazia;
+	}
+
+	public void setOpcaoVazia(boolean opcaoVazia) {
+		this.opcaoVazia = opcaoVazia;
+	}
+
+	public boolean isAlertaSelecao() {
+		return alertaSelecao;
+	}
+
+	public void setAlertaSelecao(boolean alertaSelecao) {
+		this.alertaSelecao = alertaSelecao;
+	}
 
 	public String getSelectedList() {
 		return selectedList;
@@ -102,8 +129,20 @@ public class SistemaComboTag extends SimpleTagSupport {
 			out.print(" " + getAttributes() + " ");
 		}
 		
-		out.println(" name=\"sistema\" id=\"sistema\">");
-		if(sistemas != null)
+		out.print(" name=\"sistema\" id=\"sistema\" ");
+		
+		if(alertaSelecao == true){
+			out.print(" title='' data-content='Selecione o sistema que deseja "
+					+ "trabalhar para que todas as telas sejam exibidas com dados específicos para este sistema."
+					+ " Esta seleção é necessária para a exibição correta de diversas funcionalidades do WebDep.' data-placement='bottom' "
+					+ " data-toggle='' ");
+		}
+		
+		out.println(">");
+		if(sistemas != null){
+			if(opcaoVazia == true){
+				out.print("<option value=''>Escolha um Sistema</option>");
+			}
 			for (Sistema sistema : sistemas) {
 				out.print("<option value=\"" + sistema.getId() + "\" ");
 				if(selecionados.contains(sistema.getId())){
@@ -113,7 +152,24 @@ public class SistemaComboTag extends SimpleTagSupport {
 				out.print(sistema.getNome());
 				out.println("</option>");
 			}
-		out.println("</select>");
+			out.println("</select>");
+			
+			if((alertaSelecao == true) && (selecionados.size() == 0) && (sistemas.size() > 0)){
+				out.println(""
+						+ "<script> "
+						+ "window.onload = "
+						+ "	function() {"
+						+ "		$('#sistema').trigger('manual');"
+						+ "		$('#sistema').popover('show');"
+						+ "	};"
+						+ "document.getElementById('sistema').onclick = "
+						+ "	function() {"
+						+ "		$('#sistema').popover('destroy');"
+						+ " };"
+						+ "</script>");
+				
+			}
+		}
 	}
 	
 }
