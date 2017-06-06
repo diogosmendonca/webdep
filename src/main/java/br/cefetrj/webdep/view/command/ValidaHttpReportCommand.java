@@ -1,14 +1,14 @@
 package br.cefetrj.webdep.view.command;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.cefetrj.webdep.model.entity.Versao;
 import br.cefetrj.webdep.services.VersionServices;
 
 
@@ -19,16 +19,23 @@ public class ValidaHttpReportCommand implements Command {
 		boolean versionValidate = true;
 		boolean errorValidate = true;
 		boolean okValidate = true;
+		String[] versionList;
+		String[] errorList;
+		String[] okList;
 		
 		if(request.getParameterValues("versionList") != null){
-			String versionList[] = request.getParameterValues("versionlist");
+			versionList = request.getParameterValues("versionlist");
+			List<Versao> v = null;
+			for(int i = 0; i < versionList.length; i++){
+				v.add(VersionServices.findByName(versionList[i]));
+			}
 		} else {
 			versionValidate = false;
 			request.setAttribute("versionValidate", versionValidate);
 		}
 		
 		if(request.getParameterValues("errorList") != null){
-			String versionList[] = request.getParameterValues("errorList");
+			errorList = request.getParameterValues("errorList");
 		} else {
 			errorValidate = false;
 			request.setAttribute("errorValidate", errorValidate);
@@ -36,7 +43,7 @@ public class ValidaHttpReportCommand implements Command {
 		
 		
 		if(request.getParameterValues("okList") != null){
-			String versionList[] = request.getParameterValues("okList");
+			okList = request.getParameterValues("okList");
 		} else {
 			okValidate = false;
 			request.setAttribute("okValidate", okValidate);
