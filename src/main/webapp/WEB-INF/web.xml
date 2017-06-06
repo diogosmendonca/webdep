@@ -20,4 +20,14 @@
     <servlet-name>ListarDefeitosCommand</servlet-name>
     <url-pattern>/ListarDefeitosCommand</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EmitirRelatorioDefeitosCommand</display-name>
+    <servlet-name>EmitirRelatorioDefeitosCommand</servlet-name>
+    <servlet-class>br.cefetrj.webdep.view.command.EmitirRelatorioDefeitosCommand</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmitirRelatorioDefeitosCommand</servlet-name>
+    <url-pattern>/EmitirRelatorioDefeitosCommand</url-pattern>
+  </servlet-mapping>
 </web-app>

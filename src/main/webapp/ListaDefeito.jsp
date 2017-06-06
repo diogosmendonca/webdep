@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
@@ -27,35 +28,31 @@
 				<div class="panel-body">
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.ListaDefeito.initialDate" /></label>
-						<div style="float: left" class="input-group date form_date col-sm-2" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 							<div class="input-group">
-								<input class="form-control" type="text" name="initialDate" id="initialDate" readonly />
-								<span class="input-group-addon">
-									<span class="glyphicon glyphicon-remove"></span>
-								</span> 
-								<span class="input-group-addon">
-									<span class="glyphicon glyphicon-calendar"></span>
-								</span>
+								<input class="form-control" type="text" name="initialDate" id="initialDate" />
+<!-- 								<span class="input-group-addon"> -->
+<!-- 									<span class="glyphicon glyphicon-remove"></span> -->
+<!-- 								</span>  -->
+<!-- 								<span class="input-group-addon"> -->
+<!-- 									<span class="glyphicon glyphicon-calendar"></span> -->
+<!-- 								</span> -->
 							</div>
-						</div>
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.ListaDefeito.finalDate" /></label>
-						<div style="float: left" class="input-group date form_date col-sm-2" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 							<div class="input-group">
-								<input class="form-control" type="text" name="finalDate" id="finalDate" readonly />
-								<span class="input-group-addon">
-									<span class="glyphicon glyphicon-remove"></span>
-								</span> 
-								<span class="input-group-addon">
-									<span class="glyphicon glyphicon-calendar"></span>
-								</span>
+								<input class="form-control" type="text" name="finalDate" id="finalDate" />
+<!-- 								<span class="input-group-addon"> -->
+<!-- 									<span class="glyphicon glyphicon-remove"></span> -->
+<!-- 								</span>  -->
+<!-- 								<span class="input-group-addon"> -->
+<!-- 									<span class="glyphicon glyphicon-calendar"></span> -->
+<!-- 								</span> -->
 							</div>
-						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.ListaDefeito.urlPatterns" /></label>
 							<div class="col-xs-2">
-								<select  class="form-control padrao-select">
-					<!-- essa parte está no meu caso de teste pode deixar que eu preencho conforme o usuario logado. Ass: Luan -->
+								<select  class="form-control padrao-select" name="url">
+									<option value=" ">1</option>
 								</select>
 								<button class="btn btn-primary myModal" type="button" data-toggle="modal"
 									data-target="#myModal">+</button>
@@ -79,36 +76,30 @@
 				<div class="tab-content clearfix">
 					<div class="tab-pane fade in active" id="1a">
 						<table class="table table-striped">
+						
 							<thead>
 								<tr>
-									<th>
-										<c:choose>
-											<c:when test="${ groupApr == '0' }">
-												<fmt:message key="br.cefetrj.webdep.jsp.ListaDefeito.select.day" />
-											</c:when>
-											<c:when test="${ groupApr == '1' }">
-												<fmt:message key="br.cefetrj.webdep.jsp.ListaDefeito.select.month" />
-											</c:when>
-											<c:when test="${ groupApr == '2' }">
-												<fmt:message key="br.cefetrj.webdep.jsp.ListaDefeito.select.year" />
-											</c:when>
-										</c:choose>
-									</th>
-									<th><fmt:message key="br.cefetrj.webdep.jsp.ListaDefeito.accessCount" /></th>
+									<th><fmt:message key="br.cefetrj.webdep.jsp.ListaDefeito.arquivo" /></th>
+									<th><fmt:message key="br.cefetrj.webdep.jsp.ListaDefeito.funcao" /></th>
+									<th><fmt:message key="br.cefetrj.webdep.jsp.ListaDefeito.linha" /></th>
+									<th><fmt:message key="br.cefetrj.webdep.jsp.ListaDefeito.falhas" /></th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:set var="aprList" value="${ aprMap.keySet() }" scope="page"></c:set>	
-								<c:forEach items="${ aprList }" var="item">
-										<tr>
-											<td>${ item.format(aprfmt) }</td>
-											<td>${ aprMap.get(item) }</td>
-										</tr>
+								<c:forEach items="${ listaDefeitos }" var="linha">
+									<tr>
+										<td>${linha.arquivo }</td>
+										<td>${linha.nomArquivo }</td>
+										<td>${linha.linhaCod }</td>
+										<td>${linha.numFalha }</td>
+									</tr>
 								</c:forEach>
 							</tbody>
+						
 						</table>
 					</div>
 				</div>
+<!-- 				${msg } -->
 			</div>
 	</div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
