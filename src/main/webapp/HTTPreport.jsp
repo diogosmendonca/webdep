@@ -74,9 +74,11 @@
 					<div class="col-xs-2">
 						<select name="errorList" class="selectpicker" multiple title=""
 							id="errorList">
-							<c:forEach items="${ errorList }" var="error">
+							<!--<c:forEach items="${ errorList }" var="error">
 								<option value="${ error.id }">${ error.codigo }</option>
-							</c:forEach>
+							</c:forEach>-->
+							<option value="404">404</option>
+							<option value="500">500</option>
 						</select>
 
 					</div>
@@ -99,9 +101,10 @@
 					<div class="col-xs-2">
 						<select name="okList" class="selectpicker" multiple title=""
 							id="oklist">
-							<c:forEach items="${ okList }" var="ok">
+							<!--<c:forEach items="${ okList }" var="ok">
 								<option value="${ ok.id }">${ ok.codigo }</option>
-							</c:forEach>
+							</c:forEach>-->
+							<option value="200">200</option>
 						</select>
 						
 							<button name="action" value="errorParameter" type="submit"
@@ -158,6 +161,8 @@
 						key="br.cefetrj.webdep.jsp.apr.table" /></a></li>
 			<li><a href="#2a" data-toggle="tab"><fmt:message
 						key="br.cefetrj.webdep.jsp.apr.graphic" /></a></li>
+			<li><a href="#3a" data-toggle="tab"><fmt:message
+						key="br.cefetrj.webdep.jsp.apr.scatter" /></a></li>
 		</ul>
 		<div class="tab-content clearfix">
 			<div class="tab-pane fade in active" id="1a">
@@ -181,6 +186,10 @@
 
 			<div class="tab-pane fade" id="2a">
 				<svg id="svg-chart" class="chart"></svg>
+			</div>
+			
+			<div class="tab-pane fade" id="3a">
+				<!-- <svg id="svg-chart" class="chart"></svg> ->
 			</div>
 		</div>
 		
