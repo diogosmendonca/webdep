@@ -140,6 +140,10 @@
       <type>java.lang.String</type>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
+  <!--  Tag para gráfico R -->
+  <tag>
+    <name>RChartTag</name>
+    <tag-class>br.cefetrj.webdep.view.tag.RChartTag</tag-class>
+    <body-content>empty</body-content>
   </tag>
-  
 </taglib>
