@@ -2,6 +2,14 @@ package br.cefetrj.webdep.DTO;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * @author Rafael
+ * @since 30/05/2017
+ * 
+ * Classe onde serao armazenadas os defeitos que serao mostrados no listaDefeito.jsp, porem classe que nao sera armazena no Banco de dados
+ *
+ */
 public class Defeito implements Serializable {
 
 	private static final long serialVersionUID = 1L;

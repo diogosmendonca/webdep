@@ -11,12 +11,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.hibernate.type.LocalDateType;
 
 import br.cefetrj.webdep.DTO.Defeito;
 import br.cefetrj.webdep.services.LogErroServices;
 
+/**
+ * 
+ * @author Rafael Souza
+ * @version 0.2
+ * @since 30/05/2017
+ *
+ */
 public class EmitirRelatorioDefeitosCommand implements Command {
 
+	/**
+	 * @param Todo o conteudo enviado pelo ListaDefeitos.jsp
+	 * @return Retorna uma Lista do tipo Defeito para o ListaDefeitos.jsp
+	 * @exception Envia as excecoes para um arquivo de Log de sistema
+	 *
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -25,6 +39,16 @@ public class EmitirRelatorioDefeitosCommand implements Command {
 			String dtInicial = new String(request.getParameter("initialDate"));
 			String dtFinal = new String(request.getParameter("finalDate"));
 			String url = new String(request.getParameter("url"));
+			String msg ="";
+
+			if (dtInicial.length() == 0){
+				dtInicial = "01/01/2000";
+			}
+			
+			if (dtFinal.length() == 0){
+				dtFinal = "01/01/2018";
+			}
+			
 
 			String formatarData[] = dtInicial.split("/");
 			
@@ -43,11 +67,11 @@ public class EmitirRelatorioDefeitosCommand implements Command {
 			request.getRequestDispatcher("ListaDefeito.jsp").forward(request, response);
 
 		} catch (Exception e) {
-			// TODO: handle exception
 			Logger lg = Logger.getLogger(EmitirRelatorioDefeitosCommand.class);
 			lg.error(e.getMessage());
-			request.setAttribute("msg", e.getMessage());
-			request.getRequestDispatcher("error.jsp").forward(request, response);
+			String msg = "Data inputada invalida, Favor inserir uma data Valida!";
+			request.setAttribute("msg", msg);
+			request.getRequestDispatcher("ListaDefeito.jsp").forward(request, response);
 		}
 	}
 

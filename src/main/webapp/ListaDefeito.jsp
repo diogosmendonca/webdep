@@ -99,7 +99,7 @@
 						</table>
 					</div>
 				</div>
-<!-- 				${msg } -->
+	 			${msg }
 			</div>
 	</div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"

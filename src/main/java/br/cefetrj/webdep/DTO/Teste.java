@@ -14,6 +14,14 @@ import java.util.Set;
 
 import br.cefetrj.webdep.model.entity.RegistroLogErro;
 
+/**
+ * 
+ * @author Rafael
+ * @since 30/05/2017
+ * 
+ * Classe criado para intuito de realizar testes, totalmente inutilizavel
+ *
+ */
 public class Teste {
 	public static void main(String[] args) {
 //		List<String> lista = new ArrayList<>();
