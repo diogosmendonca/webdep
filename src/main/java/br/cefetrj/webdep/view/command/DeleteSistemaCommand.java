@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 import br.cefetrj.webdep.model.entity.Sistema;
+import br.cefetrj.webdep.services.LogPeriodico;
 import br.cefetrj.webdep.services.RegistroLogAcessoService;
 import br.cefetrj.webdep.services.SistemaServices;
 import br.cefetrj.webdep.services.UsuarioServices;
@@ -34,6 +35,7 @@ public class DeleteSistemaCommand implements Command{
 				}
 			}*/
 			SistemaServices.deleteSistema(sistemaFiltrado);
+			LogPeriodico.agendarTarefaPeriodica();
 			switch (lang){
 	        	case "en_US":
 	        		mensagem = "System successfully removed!";

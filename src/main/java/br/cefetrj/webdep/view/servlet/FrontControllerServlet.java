@@ -10,48 +10,47 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.cefetrj.webdep.view.command.ChangeVersionCommand;
-import br.cefetrj.webdep.view.command.Command;
-import br.cefetrj.webdep.view.command.DeleteSistemaCommand;
-import br.cefetrj.webdep.view.command.DeleteVersionCommand;
-import br.cefetrj.webdep.view.command.InsertPadraoURLCommand;
-import br.cefetrj.webdep.view.command.InsertSelectIdSistemaCommand;
-import br.cefetrj.webdep.view.command.InsertSistemaCommand;
-import br.cefetrj.webdep.view.command.InsertVersionCommand;
-import br.cefetrj.webdep.view.command.ListSistemaCommand;
-import br.cefetrj.webdep.view.command.ListarPermissaoUsuarioCommand;
-import br.cefetrj.webdep.view.command.SearchVersionCommand;
-import br.cefetrj.webdep.view.command.TestaLogAcessoCommand;
-import br.cefetrj.webdep.view.command.TestaLogErroCommand;
-import br.cefetrj.webdep.view.command.UpdateSistemaCommand;
-import br.cefetrj.webdep.view.command.ValidaHttpReportCommand;
-import br.cefetrj.webdep.view.command.ObterUsuarioCommand;
-import br.cefetrj.webdep.view.command.RegexPadraoURLCommand;
 import br.cefetrj.webdep.view.command.AccessProfileReportCommand;
 import br.cefetrj.webdep.view.command.AtualizaUsuarioCommand;
 import br.cefetrj.webdep.view.command.AutenticaUsuarioCommand;
+import br.cefetrj.webdep.view.command.BuscarLogAcessoCommand;
+import br.cefetrj.webdep.view.command.BuscarLogErroCommand;
 import br.cefetrj.webdep.view.command.CadastraUsuarioCommand;
+import br.cefetrj.webdep.view.command.ChangeVersionCommand;
+import br.cefetrj.webdep.view.command.Command;
 import br.cefetrj.webdep.view.command.DeletaUsuarioCommand;
 import br.cefetrj.webdep.view.command.DeletePadraoURLCommand;
+import br.cefetrj.webdep.view.command.DeleteSistemaCommand;
+import br.cefetrj.webdep.view.command.DeleteVersionCommand;
 import br.cefetrj.webdep.view.command.DeslogaUsuarioCommand;
-import br.cefetrj.webdep.view.command.ListaUsuarioCommand;
-
-import br.cefetrj.webdep.view.command.ValidaBanco;
-import br.cefetrj.webdep.view.command.ValidaConfig;
-import br.cefetrj.webdep.view.command.ValidaEmail;
-
-import br.cefetrj.webdep.view.command.ValidaLogErroCommand;
-import br.cefetrj.webdep.view.command.ValidaLogAcessoCommand;
-import br.cefetrj.webdep.view.command.ImportarLogCommand;
+import br.cefetrj.webdep.view.command.EmitirRelatorioDefeitosCommand;
+import br.cefetrj.webdep.view.command.ExcluirLogAcessoCommand;
 import br.cefetrj.webdep.view.command.ExcluirLogErroCommand;
 import br.cefetrj.webdep.view.command.FillFormatoLogCommand;
 import br.cefetrj.webdep.view.command.FillPadraoURLCommand;
 import br.cefetrj.webdep.view.command.FillSistemaCommand;
 import br.cefetrj.webdep.view.command.GetHttpReportListsCommand;
 import br.cefetrj.webdep.view.command.GetVersionCommand;
-import br.cefetrj.webdep.view.command.ExcluirLogAcessoCommand;
-import br.cefetrj.webdep.view.command.BuscarLogAcessoCommand;
-import br.cefetrj.webdep.view.command.BuscarLogErroCommand;
+import br.cefetrj.webdep.view.command.ImportarLogCommand;
+import br.cefetrj.webdep.view.command.InsertPadraoURLCommand;
+import br.cefetrj.webdep.view.command.InsertSelectIdSistemaCommand;
+import br.cefetrj.webdep.view.command.InsertSistemaCommand;
+import br.cefetrj.webdep.view.command.InsertVersionCommand;
+import br.cefetrj.webdep.view.command.ListSistemaCommand;
+import br.cefetrj.webdep.view.command.ListaUsuarioCommand;
+import br.cefetrj.webdep.view.command.ListarPermissaoUsuarioCommand;
+import br.cefetrj.webdep.view.command.ObterUsuarioCommand;
+import br.cefetrj.webdep.view.command.RegexPadraoURLCommand;
+import br.cefetrj.webdep.view.command.SearchVersionCommand;
+import br.cefetrj.webdep.view.command.TestaLogAcessoCommand;
+import br.cefetrj.webdep.view.command.TestaLogErroCommand;
+import br.cefetrj.webdep.view.command.UpdateSistemaCommand;
+import br.cefetrj.webdep.view.command.ValidaBanco;
+import br.cefetrj.webdep.view.command.ValidaConfig;
+import br.cefetrj.webdep.view.command.ValidaEmail;
+import br.cefetrj.webdep.view.command.ValidaHttpReportCommand;
+import br.cefetrj.webdep.view.command.ValidaLogAcessoCommand;
+import br.cefetrj.webdep.view.command.ValidaLogErroCommand;
 
 /**
  * Servlet implementation class FrontControllerServlet
@@ -112,6 +111,8 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("ValidaEmail", new ValidaEmail());
 		commands.put("ValidaBanco", new ValidaBanco());
 		commands.put("ValidaConfig", new ValidaConfig());
+		commands.put("ListaDefeitos", new EmitirRelatorioDefeitosCommand());
+
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

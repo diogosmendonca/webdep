@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import br.cefetrj.webdep.model.entity.FormatoLog;
 import br.cefetrj.webdep.model.entity.Servidor;
 import br.cefetrj.webdep.model.entity.Sistema;
+import br.cefetrj.webdep.services.LogPeriodico;
 import br.cefetrj.webdep.services.ServidorServices;
 import br.cefetrj.webdep.services.SistemaServices;
 
@@ -74,6 +75,7 @@ public class InsertSistemaCommand implements Command{
 			//s.setPeriodicidadeLeitura(new SimpleDateFormat("hh:mm").parse(nova).getTime());
 			if (!SistemaServices.verificaDuplicata(s)){
 				SistemaServices.insertSistema(s);
+				LogPeriodico.agendarTarefaPeriodica();
 				switch (lang){
 		        	case "en_US":
 		        		mensagem = "System successfully inserted!";
