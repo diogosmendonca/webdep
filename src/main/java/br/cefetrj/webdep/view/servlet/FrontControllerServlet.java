@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.cefetrj.webdep.view.command.AccessProfileReportCommand;
+import br.cefetrj.webdep.view.command.AcessoFalhaCommand;
 import br.cefetrj.webdep.view.command.AtualizaUsuarioCommand;
 import br.cefetrj.webdep.view.command.AutenticaUsuarioCommand;
 import br.cefetrj.webdep.view.command.BuscarLogAcessoCommand;
@@ -41,6 +42,7 @@ import br.cefetrj.webdep.view.command.ListaUsuarioCommand;
 import br.cefetrj.webdep.view.command.ListarPermissaoUsuarioCommand;
 import br.cefetrj.webdep.view.command.ObterUsuarioCommand;
 import br.cefetrj.webdep.view.command.RegexPadraoURLCommand;
+import br.cefetrj.webdep.view.command.RelatorioFalhaTempoCommand;
 import br.cefetrj.webdep.view.command.SearchVersionCommand;
 import br.cefetrj.webdep.view.command.TestaLogAcessoCommand;
 import br.cefetrj.webdep.view.command.TestaLogErroCommand;
@@ -67,6 +69,8 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("insertselectidsistema", new InsertSelectIdSistemaCommand ());
 		
 		commands.put("errorParameter", new ValidaHttpReportCommand());
+		
+		commands.put("relatorioFalhaTempo", new RelatorioFalhaTempoCommand());
 
 		commands.put("autenticaUsuario", new AutenticaUsuarioCommand());
 		commands.put("deslogaUsuario", new DeslogaUsuarioCommand());
@@ -112,7 +116,8 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("ValidaBanco", new ValidaBanco());
 		commands.put("ValidaConfig", new ValidaConfig());
 		commands.put("ListaDefeitos", new EmitirRelatorioDefeitosCommand());
-
+	
+		commands.put("RelatorioAcessoFalha", new AcessoFalhaCommand());
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -121,7 +126,7 @@ public class FrontControllerServlet extends HttpServlet {
 			String action = request.getParameter("action");
 			commands.get(action).execute(request, response);
 		} catch (Exception e) {
-			request.getRequestDispatcher("error.jsp").forward(request, response);
+			request.getRequestDispatcher("/error.jsp").forward(request, response);
 			e.printStackTrace();
 		}
 

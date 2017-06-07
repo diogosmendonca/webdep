@@ -62,7 +62,7 @@ $(document).ready(
 											}
 									}
 								});
-					} else if (window.location.href.indexOf("HTTPreport.jsp") > -1 || window.location.href.indexOf("accessProfileReport.jsp") > -1) {
+					} else if (window.location.href.indexOf("HTTPreport.jsp") > -1 || window.location.href.indexOf("accessProfileReport.jsp") > -1|| window.location.href.indexOf("relatorioFalhaTempo.jsp") > -1) {
 						$('.form_date').datetimepicker({
 							language : 'pt-BR',
 							weekStart : 1,
@@ -286,8 +286,11 @@ $(document).ready(
 											alert(mensagem);
 											if (window.location.href.indexOf("HTTPreport.jsp") > -1 ){
 												window.location.replace("HTTPreport.jsp");
-											} else {
+											} else if(window.location.href.indexOf("accessProfileReport.jsp") > -1 ) {
 												window.location.replace("accessProfileReport.jsp");
+											}
+											else{
+												window.location.replace("relatorioFalhaTempo.jsp");
 											}
 											
 										} else if (resposta.indexOf("Erro")) {
@@ -318,9 +321,13 @@ $(document).ready(
 										alert(mensagem);
 										if (window.location.href.indexOf("HTTPreport.jsp") > -1 ){
 											window.location.replace("HTTPreport.jsp");
-										} else if (window.location.href.indexOf("accessProfileReport.jsp") > -1 ){
+										} else if(window.location.href.indexOf("accessProfileReport.jsp") > -1 ) {
 											window.location.replace("accessProfileReport.jsp");
 										}
+										else{
+											window.location.replace("relatorioFalhaTempo.jsp");
+										}
+										
 									} else if (resposta.indexOf("Erro")) {
 										alert("Erro de conexão com o servidor");
 										}

@@ -18,7 +18,7 @@ response.setDateHeader("Expires",-1);
 <!-- Necessário para utilizar o i18N, informar o locale e o bundle -->
 <fmt:setLocale value="${ lang }" />
 <fmt:setBundle basename="Messages" />
-<?xml version='1.0' encoding='UTF-8' ?>
+
 <!DOCTYPE html>
 <html>
 <head>

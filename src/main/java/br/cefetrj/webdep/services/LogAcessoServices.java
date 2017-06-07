@@ -1,12 +1,15 @@
 package br.cefetrj.webdep.services;
 
-import br.cefetrj.webdep.model.dao.GenericDAO;
-import br.cefetrj.webdep.model.dao.PersistenceManager;
-import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
-
-import javax.persistence.Query;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import javax.persistence.Query;
+
+import br.cefetrj.webdep.model.dao.GenericDAO;
+import br.cefetrj.webdep.model.dao.PersistenceManager;
+import br.cefetrj.webdep.model.dao.RegistroLogAcessoDAO;
+import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
+import br.cefetrj.webdep.model.entity.Sistema;
 
 /**
  * Created by renatoor on 11/25/16.
@@ -61,5 +64,9 @@ public class LogAcessoServices {
 
             pm.commitTransaction();
         }
+    }
+    
+    public static List<Integer> buscarCodigosRegistroLogAcesso(Sistema s){
+    	return RegistroLogAcessoDAO.listCodigosBySistema(s);
     }
 }
