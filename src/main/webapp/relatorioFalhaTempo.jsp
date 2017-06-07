@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title><fmt:message key="br.cefetrj.webdep.jsp.apr.title" /></title>
+<title><fmt:message key="br.cefetrj.webdep.jsp.falhatempo.title" /></title>
 <jsp:include page="head.jspf" />
 </head>
 <body class="container-full ">
@@ -22,11 +22,11 @@
 		<form class="form-horizontal" method="post" action="FrontControllerServlet">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h5><fmt:message key="br.cefetrj.webdep.jsp.apr.header" /></h5>
+					<h5><fmt:message key="br.cefetrj.webdep.jsp.falhatempo.header" /></h5>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.apr.initialDate" /></label>
+						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.falhatempo.initialDate" /></label>
 						<div style="float: left" class="input-group date form_date col-sm-2" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 							<div class="input-group">
 								<input class="form-control" type="text" name="initialDate" id="initialDate" readonly />
@@ -38,7 +38,7 @@
 								</span>
 							</div>
 						</div>
-						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.apr.finalDate" /></label>
+						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.falhatempo.finalDate" /></label>
 						<div style="float: left" class="input-group date form_date col-sm-2" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 							<div class="input-group">
 								<input class="form-control" type="text" name="finalDate" id="finalDate" readonly />
@@ -52,7 +52,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.apr.urlPatterns" /></label>
+						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.falhatempo.urlPatterns" /></label>
 							<div class="col-xs-2">
 								<select  class="form-control padrao-select">
 								</select>
@@ -61,11 +61,11 @@
 									<button id="deletePadraoURL" name="deletepadraourl" class="btn btn-primary" 
 									 type="button">-</button>
 							</div>
-						<button type="submit" class="btn btn-primary btn-md" name="action" value="accessProfileReport"><fmt:message key="br.cefetrj.webdep.jsp.apr.search" /></button>
+						<button type="submit" class="btn btn-primary btn-md" name="action" value="accessProfileReport"><fmt:message key="br.cefetrj.webdep.jsp.falhatempo.search" /></button>
 					</div>
 					<c:if test="${not empty dataIn and not dataIn }">
 								<span class="help-block">
-									<fmt:message key="br.cefetrj.webdep.jsp.apr.dataError"/>
+									<fmt:message key="br.cefetrj.webdep.jsp.falhatempo.dataError"/>
 								</span>
 					</c:if>
 				</div>
@@ -76,9 +76,9 @@
 	<div id="exTab1" class="panel panel-default">
 		<ul class="nav nav-tabs ">
 			<li class="active"><a href="#1a" data-toggle="tab"><fmt:message
-						key="br.cefetrj.webdep.jsp.apr.table" /></a></li>
+						key="br.cefetrj.webdep.jsp.falhatempo.table" /></a></li>
 			<li><a href="#2a" data-toggle="tab"><fmt:message
-						key="br.cefetrj.webdep.jsp.apr.graphic" /></a></li>
+						key="br.cefetrj.webdep.jsp.falhatempo.graphic" /></a></li>
 		</ul>
 		<div class="tab-content clearfix">
 			<div class="tab-pane fade in active" id="1a">
