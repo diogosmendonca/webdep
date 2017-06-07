@@ -147,4 +147,13 @@ public class RegistroLogAcesso implements Serializable{
 	  private boolean checarSeExiste(Sistema newSistema) {
 	    return sistema==null? newSistema == null : sistema.equals(newSistema);
 	  }
+
+	@Override
+	public String toString() {
+		return "RegistroLogAcesso [id=" + id + ", ip=" + ip + ", usuario=" + usuario + ", timestamp=" + timestamp
+				+ ", url=" + url + ", codigo=" + codigo + ", bytes=" + bytes + ", origem=" + origem + ", agente="
+				+ agente + ", sistema=" + sistema + "]";
+	}
+	  
+	  
 }
