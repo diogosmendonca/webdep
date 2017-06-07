@@ -61,7 +61,7 @@
 									<button id="deletePadraoURL" name="deletepadraourl" class="btn btn-primary" 
 									 type="button">-</button>
 							</div>
-						<button type="submit" class="btn btn-primary btn-md" name="action" value="accessProfileReport"><fmt:message key="br.cefetrj.webdep.jsp.falhatempo.search" /></button>
+						<button type="submit" class="btn btn-primary btn-md" name="action" value="relatorioFalhaTempo"><fmt:message key="br.cefetrj.webdep.jsp.falhatempo.search" /></button>
 					</div>
 					<c:if test="${not empty dataIn and not dataIn }">
 								<span class="help-block">

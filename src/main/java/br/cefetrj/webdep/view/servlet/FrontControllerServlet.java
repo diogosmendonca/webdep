@@ -27,6 +27,7 @@ import br.cefetrj.webdep.view.command.UpdateSistemaCommand;
 import br.cefetrj.webdep.view.command.ValidaHttpReportCommand;
 import br.cefetrj.webdep.view.command.ObterUsuarioCommand;
 import br.cefetrj.webdep.view.command.RegexPadraoURLCommand;
+import br.cefetrj.webdep.view.command.RelatorioFalhaTempoCommand;
 import br.cefetrj.webdep.view.command.AccessProfileReportCommand;
 import br.cefetrj.webdep.view.command.AtualizaUsuarioCommand;
 import br.cefetrj.webdep.view.command.AutenticaUsuarioCommand;
@@ -68,6 +69,8 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("insertselectidsistema", new InsertSelectIdSistemaCommand ());
 		
 		commands.put("errorParameter", new ValidaHttpReportCommand());
+		
+		commands.put("relatorioFalhaTempo", new RelatorioFalhaTempoCommand());
 
 		commands.put("autenticaUsuario", new AutenticaUsuarioCommand());
 		commands.put("deslogaUsuario", new DeslogaUsuarioCommand());
