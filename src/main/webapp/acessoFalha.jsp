@@ -32,12 +32,10 @@
 
 	<%@include file="navbar.jspf"%>
 
-<!-- ################## SE TEM SISTEMA SELECIONADO ############################# -->
-<c:choose>
-	<c:when test="${ not empty idsistema }">
-
-
-		<div class="container">
+<div class="container">
+	<!-- ################## SE TEM SISTEMA SELECIONADO ############################# -->
+	<c:choose>
+		<c:when test="${ not empty idsistema }">
 			<!-- ################ MSGS DE VALIDAÇÃO DO FORM ##################################### -->
 			<c:if test="${ not empty msgKeys }">
 				<div class="alert alert-danger fade in alert-dismissible">
@@ -108,31 +106,76 @@
 					</div>
 				</div>
 			</form>
-		</div>
 		
+			<c:if test="${ formValido eq true }">
+				<div id="exTab1" class="panel panel-default">
+					<ul class="nav nav-tabs ">
+						<li class="active"><a href="#1a" data-toggle="tab"><fmt:message
+									key="br.cefetrj.webdep.jsp.apr.table" /></a></li>
+						<li><a href="#2a" data-toggle="tab"><fmt:message
+									key="br.cefetrj.webdep.jsp.apr.graphic" /></a></li>
+					</ul>
+					<div class="tab-content clearfix">
+						
+						<!-- ########################################################################### -->
+						<!-- ######################### LISTAGEM ######################################## -->
+						<!-- ########################################################################### -->
+						<div class="tab-pane fade in active" id="1a">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>URLs que retornaram pelo menos um código HTTP de Erro</th>
+										<th><fmt:message key="br.cefetrj.webdep.jsp.http.access" /></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="url" items="${ contagemAcessosUrlsComFalha.keySet() }">
+										<tr>
+											<td>${ url }</td>
+											<td>${ contagemAcessosUrlsComFalha.get(url) }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+							
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>URLs que somente retornaram códigos HTTP OK</th>
+										<th><fmt:message key="br.cefetrj.webdep.jsp.http.access" /></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="url" items="${ contagemAcessosUrlsSemFalha.keySet() }">
+										<tr>
+											<td>${ url }</td>
+											<td>${ contagemAcessosUrlsSemFalha.get(url) }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+			
+						<!-- ########################################################################### -->
+						<!-- ######################### GRÁFICO ######################################## -->
+						<!-- ########################################################################### -->
+						<div class="tab-pane fade" id="2a">
+							
+						</div>
+					</div>
+				</div>
+			</c:if>
 		
-	
-	<!-- ########################################################################### -->
-	<!-- ######################### LISTAGEM ######################################## -->
-	<!-- ########################################################################### -->
-	
-	
-	
-	<!-- ########################################################################### -->
-	<!-- ######################### GRÁFICO ######################################## -->
-	<!-- ########################################################################### -->
-	
-	
-	</c:when>
-	<c:otherwise>
-		<!-- ################## SE NÃO TEM SISTEMA SELECIONADO ######################### -->
-		<div class="alert alert-danger fade in alert-dismissible">
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<fmt:message key="br.cefetrj.webdep.jsp.acessofalha.sistemaRequired" />
-		</div>
-	</c:otherwise>
-</c:choose>	
-
+		</c:when>
+		<c:otherwise>
+			<!-- ################## SE NÃO TEM SISTEMA SELECIONADO ######################### -->
+			<div class="alert alert-danger fade in alert-dismissible">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<fmt:message key="br.cefetrj.webdep.jsp.acessofalha.sistemaRequired" />
+			</div>
+		</c:otherwise>
+	</c:choose>
+</div>
 	<jsp:include page="scripts.jspf" />
 </body>
 </html>
