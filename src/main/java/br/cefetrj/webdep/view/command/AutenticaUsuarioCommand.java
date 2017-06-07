@@ -10,6 +10,7 @@ import java.security.MessageDigest;
 import java.util.Locale;
 
 import br.cefetrj.webdep.model.entity.Usuario;
+import br.cefetrj.webdep.services.LogPeriodico;
 import br.cefetrj.webdep.services.UsuarioServices;
 
 /**
@@ -60,6 +61,7 @@ public class AutenticaUsuarioCommand implements Command {
 			request.getSession().setAttribute("id", id);
 			login.setSenha(null);
 			request.getSession().setAttribute("usuario", login);
+			LogPeriodico.agendarTarefaPeriodica();
 			response.sendRedirect(request.getContextPath() + "/home.jsp");
 			return;
 		} else {

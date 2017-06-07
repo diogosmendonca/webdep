@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.cefetrj.webdep.services.VersionServices;
+
 
 @WebServlet("/ValidaHttpReport")
 public class ValidaHttpReportCommand implements Command {
@@ -17,7 +19,7 @@ public class ValidaHttpReportCommand implements Command {
 		boolean versionValidate = true;
 		boolean errorValidate = true;
 		boolean okValidate = true;
-
+		
 		if(request.getParameterValues("versionList") != null){
 			String versionList[] = request.getParameterValues("versionlist");
 		} else {
@@ -29,7 +31,7 @@ public class ValidaHttpReportCommand implements Command {
 			String versionList[] = request.getParameterValues("errorList");
 		} else {
 			errorValidate = false;
-			request.setAttribute("erorValidate", errorValidate);
+			request.setAttribute("errorValidate", errorValidate);
 		}
 		
 		
@@ -44,7 +46,7 @@ public class ValidaHttpReportCommand implements Command {
 			request.getRequestDispatcher("HTTPreport.jsp").forward(request, response);
 			return;
 		} else {
-			//Lógica para a busca dos filtros...
+			//Lï¿½gica para a busca dos filtros...
 		}
 		
 	}

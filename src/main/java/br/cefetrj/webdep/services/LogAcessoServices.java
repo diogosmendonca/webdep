@@ -1,12 +1,5 @@
 package br.cefetrj.webdep.services;
 
-import br.cefetrj.webdep.model.dao.GenericDAO;
-import br.cefetrj.webdep.model.dao.PersistenceManager;
-import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
-import br.cefetrj.webdep.model.entity.Sistema;
-
-import javax.persistence.Query;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +10,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.persistence.Query;
+
+import br.cefetrj.webdep.model.dao.GenericDAO;
+import br.cefetrj.webdep.model.dao.PersistenceManager;
+import br.cefetrj.webdep.model.dao.RegistroLogAcessoDAO;
+import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
+import br.cefetrj.webdep.model.entity.Sistema;
+
 
 /**
  * Created by renatoor on 11/25/16.
@@ -73,6 +75,7 @@ public class LogAcessoServices {
         }
     }
     
+
     
 public static void ImportarLogAcesso(Sistema s) {
 		
@@ -183,4 +186,9 @@ public static void ImportarLogAcesso(Sistema s) {
 		}
 
 	}	
+
+    public static List<Integer> buscarCodigosRegistroLogAcesso(Sistema s){
+    	return RegistroLogAcessoDAO.listCodigosBySistema(s);
+    }
+
 }
