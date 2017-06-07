@@ -64,6 +64,18 @@ public class Sistema implements Serializable{
 	@ManyToOne
 	private Servidor servidor;
 	
+	@ManyToOne
+	private FormatoLog fomatoLog;
+	
+	
+	public FormatoLog getFomatoLog() {
+		return fomatoLog;
+	}
+
+	public void setFomatoLog(FormatoLog fomatoLog) {
+		this.fomatoLog = fomatoLog;
+	}
+
 	public Long getId() {
 		return id;
 	}

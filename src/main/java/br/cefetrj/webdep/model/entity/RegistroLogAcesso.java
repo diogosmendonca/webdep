@@ -31,7 +31,7 @@ public class RegistroLogAcesso implements Serializable{
 	@Column(nullable = false, length = 100)
 	private String usuario;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private LocalDateTime timestamp;
 	
 	@Column(nullable = false, length = 4096)
