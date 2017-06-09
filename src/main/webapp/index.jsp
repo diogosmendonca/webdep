@@ -39,7 +39,7 @@
                         </div>
                         <div class="panel-body" >
                         <p style="color:red">${msg}</p>
-                        <form class="form-horizontal" action="FrontControllerServlet" method="post" >
+                        <form class="form-horizontal" action="FrontControllerServlet" method="POST" >
                             <div class="form-group">
     				<label class="control-label col-sm-2" for="login"><fmt:message key="br.cefetrj.webdep.jsp.index.login" /></label>
     				<div class="col-sm-10">

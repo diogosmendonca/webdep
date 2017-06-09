@@ -3,6 +3,13 @@ package br.cefetrj.webdep.view.command;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import br.cefetrj.webdep.model.dao.SistemaDAO;
+import br.cefetrj.webdep.model.entity.Sistema;
+import br.cefetrj.webdep.services.LogAcessoServices;
+//import br.cefetrj.webdep.services.LogServices;
+import br.cefetrj.webdep.services.SistemaServices;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -22,11 +29,14 @@ public class ImportarLogCommand implements Command {
         request.setAttribute("servidor", servidor);
         request.setAttribute("log", formatoLog);
         request.setAttribute("logAcesso", logAcesso);
-        request.setAttribute("logErro", logErro);
-
+        request.setAttribute("logErro", logErro);       
+        
+        Sistema s = new Sistema();
+        s = SistemaServices.obterPorId(Long.parseLong(sistema));
+                
         File dirLogAcesso, dirLogErro;
         boolean erro = false;
-
+             
         if(logAcesso.equals("")) {
             request.setAttribute("logAcessoVazio", "1");
             erro = true;
@@ -40,18 +50,20 @@ public class ImportarLogCommand implements Command {
         dirLogAcesso = new File(logAcesso);
         dirLogErro = new File(logErro);
 
-        if(dirLogAcesso.isFile() && dirLogErro.isFile() && !(erro)) {
-            //insere log no banco de dados
+        if(dirLogAcesso.isDirectory() && dirLogErro.isDirectory() && !(erro)) {
+            LogAcessoServices.ImportarLogAcesso(s);
+//        	LogServices.ImportarLogAcesso();
             request.setAttribute("logAdicionado", "1");
         }
         else {
             request.setAttribute("testarAcesso", "1");
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            //request.getRequestDispatcher("/importarLog.jsp").forward(request, response);
         }
 
         if(erro) {
             request.setAttribute("erro", "1");
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            //request.getRequestDispatcher("/importarLog.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("/importarLog.jsp").forward(request, response);
     }
 }
