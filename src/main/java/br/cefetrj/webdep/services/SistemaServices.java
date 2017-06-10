@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import br.cefetrj.webdep.model.dao.GenericDAO;
 import br.cefetrj.webdep.model.dao.PersistenceManager;
 import br.cefetrj.webdep.model.dao.SistemaDAO;
+import br.cefetrj.webdep.model.entity.Servidor;
 import br.cefetrj.webdep.model.entity.Sistema;
 
 public class SistemaServices {
@@ -103,6 +104,12 @@ public class SistemaServices {
 		return 	sistema;
 	}
 	
+	public static List<Sistema> listAllSSistemas() {
+		PersistenceManager pm = PersistenceManager.getInstance();
+		GenericDAO<Sistema> dao = pm.createGenericDAO(Sistema.class);
+		return dao.listAll();
+	}
+	
 	public static List<Sistema> listarTodos(){
 		List<Sistema> sistemas = null;
 		PersistenceManager pManager = PersistenceManager.getInstance();
@@ -113,8 +120,10 @@ public class SistemaServices {
 			sistemas = permissaoDAO.listAll();
 			
 			pManager.commitTransaction();
+			
 		} catch (Exception e) {
 			pManager.rollbackTransaction();
+			System.out.println("Erro ao tentar listar todos. Msg erro: " +e.getMessage());
 		}
 		
 		return 	sistemas;			

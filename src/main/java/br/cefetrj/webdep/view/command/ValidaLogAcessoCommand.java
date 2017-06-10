@@ -26,7 +26,7 @@ public class ValidaLogAcessoCommand implements Command {
 
         if(!(logAcesso.equals(""))) {
             File file = new File(logAcesso);
-            if(file.isFile())
+            if(file.isDirectory())
                 request.setAttribute("logAcessoValido", "1");
             else
                 request.setAttribute("logAcessoInvalido", "1");
@@ -36,7 +36,7 @@ public class ValidaLogAcessoCommand implements Command {
 
         if(!(logErro.equals(""))) {
             File file = new File(logErro);
-            if(file.isFile())
+            if(file.isDirectory())
                 request.setAttribute("logErroValido", "1");
             else
                 request.setAttribute("logErroInvalido", "1");

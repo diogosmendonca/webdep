@@ -77,6 +77,10 @@ public class PersistenceManager {
 		return this.manager.createNativeQuery(query);
 	}
 	
+	public Query createNativeQuery(String query, Class classe) {
+		return this.manager.createNativeQuery(query, classe);
+	}
+	
 	public static void resetInstance() {
 		instance = null;
 	}

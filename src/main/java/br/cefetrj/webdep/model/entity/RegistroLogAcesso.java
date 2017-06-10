@@ -31,7 +31,7 @@ public class RegistroLogAcesso implements Serializable{
 	@Column(nullable = false, length = 100)
 	private String usuario;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private LocalDateTime timestamp;
 	
 	@Column(nullable = false, length = 4096)
@@ -147,4 +147,13 @@ public class RegistroLogAcesso implements Serializable{
 	  private boolean checarSeExiste(Sistema newSistema) {
 	    return sistema==null? newSistema == null : sistema.equals(newSistema);
 	  }
+
+	@Override
+	public String toString() {
+		return "RegistroLogAcesso [id=" + id + ", ip=" + ip + ", usuario=" + usuario + ", timestamp=" + timestamp
+				+ ", url=" + url + ", codigo=" + codigo + ", bytes=" + bytes + ", origem=" + origem + ", agente="
+				+ agente + ", sistema=" + sistema + "]";
+	}
+	  
+	  
 }

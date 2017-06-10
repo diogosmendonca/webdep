@@ -8,7 +8,7 @@
 <c:set var="lang" scope="session" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}"/>
 <fmt:setLocale value="${ lang }"/>
 <fmt:setBundle basename="Messages" />
-<c:set var="sistemas" scope="session" value="<%=SistemaServices.listarTodos()%>"/>
+<c:set var="sistemas" scope="session" value="<%=SistemaServices.listAllSSistemas()%>"/>
 <c:set var="servidores" scope="session" value="<%=ServidorServices.listAllServidor()%>"/>
 <c:set var="logs" scope="session" value="<%=FormatoLogServices.listAllFormatoLog()%>"/>
 <html>
@@ -95,7 +95,7 @@
     </c:if>
     <c:if test="${ not empty logAdicionado and not logAdicionado }">
         <fmt:message key="br.cefetrj.psw.importaLog.sucesso" />
-    </c:if>
+    </c:if>   
 </div>
 <jsp:include page="scripts.jspf"/>
 </body>

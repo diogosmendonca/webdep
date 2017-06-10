@@ -11,11 +11,15 @@ public class InsertSelectIdSistemaCommand implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-			Long id = Long.parseLong(request.getParameter("idSistema"));
-			
+			Long id = null;
+			try{
+				id = Long.parseLong(request.getParameter("idSistema"));
+			}catch(Exception e){
+				//não faz nada, pois o usuário não selecionou nenhum id.
+			}
 			request.getSession().setAttribute("idsistema", id);
 			
-			request.getRequestDispatcher("/home.jsp").forward(request, response);
+			//request.getRequestDispatcher("/home.jsp").forward(request, response);
 		
 	}
 

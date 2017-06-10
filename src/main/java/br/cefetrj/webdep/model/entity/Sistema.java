@@ -64,6 +64,18 @@ public class Sistema implements Serializable{
 	@ManyToOne
 	private Servidor servidor;
 	
+	@ManyToOne
+	private FormatoLog fomatoLog;
+	
+	
+	public FormatoLog getFomatoLog() {
+		return fomatoLog;
+	}
+
+	public void setFomatoLog(FormatoLog fomatoLog) {
+		this.fomatoLog = fomatoLog;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -207,6 +219,31 @@ public class Sistema implements Serializable{
 
 	public void setServidor(Servidor servidor) {
 		this.servidor = servidor;
+	}
+	
+	public boolean compareSistems(Object obj) {
+	    if (obj == null) {
+	        return false;
+	    }
+	    if (!Sistema.class.isAssignableFrom(obj.getClass())) {
+	        return false;
+	    }
+	    final Sistema other = (Sistema) obj;
+	    if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
+	        return false;
+	    }
+	    return true;
+	    
+	}
+	public boolean compareSistemsData(Sistema other) {
+	
+		if (this.periodicidadeLeitura != other.periodicidadeLeitura) {
+	        return false;
+	    }
+	    if (this.primeiraLeitura != other.primeiraLeitura) {
+	        return false;
+	    }
+	    return true;
 	}
 
 	
