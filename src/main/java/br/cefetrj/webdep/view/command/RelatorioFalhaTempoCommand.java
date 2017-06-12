@@ -11,17 +11,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 import br.cefetrj.webdep.services.LogAcessoServices;
 
+@WebServlet("/RelatorioFalhaTempo")
 public class RelatorioFalhaTempoCommand implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		// Recebe parâmetros
 		String padraoUrl = request.getParameter("padraoUrl");
 		LocalDate idate, fdate;
@@ -56,32 +57,27 @@ public class RelatorioFalhaTempoCommand implements Command {
 		}
 
 		boolean dataIn = true;
+		request.getRequestDispatcher("relatorioFalhaTempo.jsp").forward(request, response);
 		/*
 		 * Valida os campos
 		 */
-		try {
-			idate = LocalDate.parse(request.getParameter("initialDate"));
-			fdate = LocalDate.parse(request.getParameter("finalDate"));
-		} catch (DateTimeParseException e) {
+		//try {
+		idate = LocalDate.parse(request.getParameter("initialDate"));
+		fdate = LocalDate.parse(request.getParameter("finalDate"));
+		request.setAttribute("dataIn", dataIn);
+		/*} catch (DateTimeParseException e) {
 			e.printStackTrace();
 			// Set error attribute
 			dataIn = false;
 			request.setAttribute("dataIn", dataIn);
 			request.getRequestDispatcher("relatorioFalhaTempo.jsp").forward(request, response);
-			return;
+			return;*/
 
-		}
+		//}
 		int group = Integer.parseInt(request.getParameter("groupApr"));
 
+		request.setAttribute("msgKeys", msgKeys);
 		request.getRequestDispatcher("relatorioFalhaTempo.jsp").forward(request, response);
-
-		if (!formValido)
-
-		{
-			request.setAttribute("msgKeys", msgKeys);
-			request.getRequestDispatcher("acessoFalha.jsp").forward(request, response);
-			return;
-		}
 
 	}
 }
