@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class AccessProfileReportCommand implements Command {
 		
 		boolean dataIn = true;
 		/*
-		 * Validação dos campos
+		 * Validaï¿½ï¿½o dos campos
 		 */
 		try {
 			idate = LocalDate.parse(request.getParameter("initialDate"));
@@ -52,83 +53,72 @@ public class AccessProfileReportCommand implements Command {
 			request.setAttribute("dataIn", dataIn);
 			request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
 			return;
-			
 		}
+		
 		int group = Integer.parseInt(request.getParameter("groupApr"));
-//		System.out.println(
-//				"idate: " + idate +
-//				"\nfdate: " + fdate +
-//				"\nitime: " + itime +
-//				"\nftime: " + ftime +
-//				"\ngroup: " + group
-//				);
 		List<RegistroLogAcesso> logs = LogAcessoServices.buscarLog(ildt, fldt, "");
-		for(RegistroLogAcesso log : logs){
-			LocalDateTime cur = log.getTimestamp();
-			if(group == 2){
-				int year = cur.getYear();
-				if(yearList.containsValue(year)){
-					yearListCount.put(yearList.get(year), yearListCount.get(year) + 1);
-				} else {
-					yearList.put(year, year);
-					yearListCount.put(year, 1);
+		Map<String, Integer> logsAgrupado = new HashMap<String, Integer>();
+		if(group == 2){
+			int lastYear = 0;
+			Iterator<RegistroLogAcesso> it = logs.iterator();
+			int quant = 0;
+			while(it.hasNext()){
+				RegistroLogAcesso log = it.next();
+				int curYear = log.getTimestamp().getYear();
+				if(lastYear == 0 || curYear == lastYear){
+					quant++;
+					lastYear = curYear;
 				}
-				
-			} else if(group == 1){
-				String key = cur.format(fmtMonth);
-				if(monthList.containsValue(key)){
-					monthListCount.put(monthList.get(key), monthListCount.get(key) + 1);
-				} else {
-					monthList.put(key, key);
-					monthListCount.put(key, 1);
+				else{
+					logsAgrupado.put(Integer.toString(lastYear), quant);
+					quant = 1;
+					lastYear = curYear;
 				}
-			} else if(group == 0){
-				String key = cur.format(fmtDay);
-				if(dayList.containsValue(key)){
-					dayListCount.put(dayList.get(key), dayListCount.get(key) + 1);
-				} else {
-					dayList.put(key, key);
-					dayListCount.put(key, 1);
+			}
+			logsAgrupado.put(Integer.toString(lastYear), quant);
+		}else{
+			if(group == 1){
+				int lastMonth = 0;
+				Iterator<RegistroLogAcesso> it = logs.iterator();
+				int quant = 0;
+				while(it.hasNext()){
+					RegistroLogAcesso log = it.next();
+					int curMonth = log.getTimestamp().getMonthValue();
+					if(lastMonth == 0 || curMonth == lastMonth){
+						quant++;
+						lastMonth = curMonth;
+					}
+					else{
+						logsAgrupado.put(Integer.toString(lastMonth), quant);
+						quant = 1;
+						lastMonth= curMonth;
+					}
 				}
-				
+				logsAgrupado.put(Integer.toString(lastMonth), quant);
+			} else{
+				if(group == 0){
+					int lastDay = 0;
+					Iterator<RegistroLogAcesso> it = logs.iterator();
+					int quant = 0;
+					while(it.hasNext()){
+						RegistroLogAcesso log = it.next();
+						int curDay = log.getTimestamp().getDayOfYear();
+						if(lastDay == 0 || curDay == lastDay){
+							quant++;
+							lastDay = curDay;
+						}
+						else{
+							logsAgrupado.put(Integer.toString(lastDay), quant);
+							quant = 1;
+							lastDay= curDay;
+						}
+					}
+					logsAgrupado.put(Integer.toString(lastDay), quant);
+				}
 			}
 		}
-//		for(String i : monthList.values()){
-//			System.out.println(
-//					"Month: " + i +
-//					"\nAccesses: " + monthListCount.get(i)
-//					);
-//		}
-		Map<LocalDate, Integer> map = new HashMap<LocalDate, Integer>();
-		if(group == 0){
-			for(String s : dayListCount.keySet()){
-				String[] ss = s.split("-");
-				int year = Integer.parseInt(ss[1]);
-				int month = Integer.parseInt(ss[0]);
-				int day = Integer.parseInt(ss[2]);
-				map.put(LocalDate.of(year, month, day), dayListCount.get(s));
-			}
-			request.setAttribute("aprfmt", fmtDay);
-			
-		} else if (group == 1){
-			for(String s : monthListCount.keySet()){
-				String[] ss = s.split("-");
-				int year = Integer.parseInt(ss[1]);
-				int month = Integer.parseInt(ss[0]);
-				map.put(LocalDate.of(year, month, 1), monthListCount.get(s));
-			}
-			request.setAttribute("aprfmt", fmtMonth);
-			
-		}else if (group == 2){
-			for(int year : yearListCount.keySet()){
-				map.put(LocalDate.of(year, 1, 1), yearListCount.get(year));
-			}
-			request.setAttribute("aprfmt", fmtYear);
-			
-		}
-		request.setAttribute("aprMap", map);
+		
+		request.setAttribute("dados", logsAgrupado);
 		request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
-
 	}
-
 }
