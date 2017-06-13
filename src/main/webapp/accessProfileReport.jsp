@@ -112,7 +112,7 @@
 					<li><a href="#2a" data-toggle="tab"><fmt:message key="br.cefetrj.webdep.jsp.apr.graphic" /></a></li>
 				</ul>
 				<div class="tab-content clearfix">
-					<div class="tab-pane fade in active" id="1a">
+					<!-- <div class="tab-pane fade in active" id="1a">
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -142,8 +142,10 @@
 								</c:forEach>
 							</tbody>
 						</table>
+					</div> -->
+					<div class="tab-pane fade" id="2a">
+						<cmp:ChartTag tipoGrafico="lineplot" dados="${ dados }"/>
 					</div>
-					<div class="tab-pane fade" id="2a">Gráfico Aqui</div>
 				</div>
 			</div>
 	</div>
