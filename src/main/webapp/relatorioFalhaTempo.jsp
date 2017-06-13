@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -61,7 +61,7 @@
 				<div class="panel-body">
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.falhatempo.initialDate" /></label>
-						<div style="float: left" class="input-group date form_date col-sm-2" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+						<div style="float: left" class="input-group date form_date col-sm-2" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 							<div class="input-group">
 								<input class="form-control" type="text" name="initialDate" id="initialDate" readonly />
 								<span class="input-group-addon">
@@ -73,7 +73,7 @@
 							</div>
 						</div>
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.falhatempo.finalDate" /></label>
-						<div style="float: left" class="input-group date form_date col-sm-2" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+						<div style="float: left" class="input-group date form_date col-sm-2" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 							<div class="input-group">
 								<input class="form-control" type="text" name="finalDate" id="finalDate" readonly />
 								<span class="input-group-addon">
@@ -167,7 +167,7 @@
 						<!-- ######################### GRÁFICO ######################################## -->
 						<!-- ########################################################################### -->
 						<div class="tab-pane fade" id="2a">
-							
+							<cmp:ChartTag tipoGrafico="boxplot" dados="${ dadosGrafico }"/>
 						</div>
 					</div>
 				</div>
