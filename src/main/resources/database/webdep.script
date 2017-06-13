@@ -89,7 +89,6 @@ INSERT INTO REGISTROLOGERRO VALUES(16,'10.0.0.7','PHP Notice: Undefined index: f
 INSERT INTO SERVIDOR VALUES(1,'Apache Httpd',1)
 INSERT INTO SERVIDOR VALUES(2,'Apache HTTPD',2)
 INSERT INTO SISTEMA VALUES(1,'Sistema 1','/home/webdep','/home/webdep',10800000,'log_acesso','log_erro','2016-11-25 23:50:00.000000',1)
-INSERT INTO SERVIDOR VALUES(1,'Apache Httpd',1)
 INSERT INTO SISTEMA VALUES(2,'Sistema 2','/home/diogo/','/home/diogo',10800000,'log_acesso','log_erro','2016-11-25 23:50:00.000000',1)
 INSERT INTO SISTEMA VALUES(3,'Sistema 3','/home/diogo/','/home/diogo',10800000,'log_acesso','log_erro','2016-11-25 23:50:00.000000',1)
 INSERT INTO SISTEMA VALUES(4,'Sistema 5','/home','/home',63000000,'log','err','2016-12-08 13:05:00.000000',1)

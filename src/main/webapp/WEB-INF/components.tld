@@ -143,8 +143,32 @@
   </tag>
   <!--  Tag para gráfico R -->
   <tag>
-    <name>RChartTag</name>
-    <tag-class>br.cefetrj.webdep.view.tag.RChartTag</tag-class>
+    <name>ChartTag</name>
+    <tag-class>br.cefetrj.webdep.view.tag.ChartTag</tag-class>
     <body-content>empty</body-content>
+    <attribute>
+      <name>largura</name>
+      <required>false</required>
+      <type>java.lang.Integer</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>altura</name>
+      <required>false</required>
+      <type>java.lang.Integer</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>tipoGrafico</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>dados</name>
+      <required>true</required>
+      <type>java.lang.Object</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
   </tag>
 </taglib>

@@ -179,6 +179,12 @@ public class AcessoFalhaCommand implements Command{
 		request.setAttribute("formValido", formValido);
 		request.setAttribute("contagemAcessosUrlsComFalha", contagemAcessosUrlsComFalha);
 		request.setAttribute("contagemAcessosUrlsSemFalha", contagemAcessosUrlsSemFalha);
+		
+		List<Map<String, Long>> dados = new ArrayList<Map<String, Long>>();
+		dados.add(contagemAcessosUrlsSemFalha);
+		dados.add(contagemAcessosUrlsComFalha);
+		request.setAttribute("dadosGrafico", dados);
+		
 		request.getRequestDispatcher("acessoFalha.jsp").forward(request, response);
 	}
 
