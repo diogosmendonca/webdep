@@ -1,5 +1,0 @@
-[Thu Jun 16 11:19:36.792109 2016] [:error] [pid 26537] [client 200.9.149.88:57927] PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/avaliacao-dicap/lancar_recebimento.php on line 89, referer: http://sad.cefet-rj.br/paineldecontrole.php
-[Thu Jun 16 12:29:25.254221 2016] [:error] [pid 26924] [client 200.9.149.88:45750] PHP Notice:  Undefined offset: 6 in /var/www/html/avaliacao-dicap/modeloADF.php on line 144, referer: http://sad.cefet-rj.br/perfil.php?id=304
-[Thu Jun 16 12:29:25.254253 2016] [:error] [pid 26924] [client 200.9.149.88:45750] PHP Notice:  Undefined offset: 7 in /var/www/html/avaliacao-dicap/modeloADF.php on line 144, referer: http://sad.cefet-rj.br/perfil.php?id=304
-[Thu Jun 16 12:29:25.254259 2016] [:error] [pid 26924] [client 200.9.149.88:45750] PHP Notice:  Undefined offset: 8 in /var/www/html/avaliacao-dicap/modeloADF.php on line 144, referer: http://sad.cefet-rj.br/perfil.php?id=304
-[Thu Jun 16 12:29:25.254264 2016] [:error] [pid 26924] [client 200.9.149.88:45750] PHP Notice:  Undefined offset: 9 in /var/www/html/avaliacao-dicap/modeloADF.php on line 144, referer: http://sad.cefet-rj.br/perfil.php?id=304
