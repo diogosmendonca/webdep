@@ -53,29 +53,30 @@ public class RelatorioFalhaTempoCommand implements Command {
 		if (!(padraoUrl != null && padraoUrl.trim().length() > 0)) {
 			formValido = false;
 			request.setAttribute("padraoUrlStatus", "has-error");
-			msgKeys += "br.cefetrj.webdep.jsp.acessofalha.patternField,";
+			request.setAttribute("formValido", formValido);
+			msgKeys += "br.cefetrj.webdep.jsp.acessofalha.patternField";
 		}
 
-		boolean dataIn = true;
-		request.getRequestDispatcher("relatorioFalhaTempo.jsp").forward(request, response);
-		/*
-		 * Valida os campos
-		 */
+		//request.getRequestDispatcher("relatorioFalhaTempo.jsp").forward(request, response);
+		
 		//try {
 		idate = LocalDate.parse(request.getParameter("initialDate"));
 		fdate = LocalDate.parse(request.getParameter("finalDate"));
-		request.setAttribute("dataIn", dataIn);
+		if (idate == null || fdate == null){
+			formValido = false;
+			msgKeys += "data inválida";
+		}
 		/*} catch (DateTimeParseException e) {
 			e.printStackTrace();
 			// Set error attribute
 			dataIn = false;
 			request.setAttribute("dataIn", dataIn);
 			request.getRequestDispatcher("relatorioFalhaTempo.jsp").forward(request, response);
-			return;*/
+			return;
 
 		//}
-		int group = Integer.parseInt(request.getParameter("groupApr"));
-
+		//int group = Integer.parseInt(request.getParameter("groupApr"));
+*/
 		request.setAttribute("msgKeys", msgKeys);
 		request.getRequestDispatcher("relatorioFalhaTempo.jsp").forward(request, response);
 
