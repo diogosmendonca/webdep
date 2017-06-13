@@ -61,9 +61,7 @@
 					<label class="control-label col-sm-2" for="pwd"><fmt:message
 							key="br.cefetrj.webdep.jsp.http.URLpattern" /></label>
 					<div class="col-xs-2">
-						<select id="selectPadraoURL" class="form-control padrao-select">
-			<!-- essa parte está no meu caso de teste pode deixar que eu preencho conforme o usuario logado. Ass: Luan -->
-						</select>
+						<cmp:PadraoURLCombo nome="padraoUrl" usuarioId="${ usuario.id }" padraoSelecionado="${ param.padraoUrl }"/>
 						<button class="btn btn-primary myModal" type="button" data-toggle="modal"
 							data-target="#myModal">+</button>
 							<button id="deletePadraoURL" name="deletepadraourl" class="btn btn-primary" 
@@ -72,14 +70,7 @@
 					<label class="control-label col-sm-2" for="pwd"><fmt:message
 							key="br.cefetrj.webdep.jsp.http.HTTPerror" /></label>
 					<div class="col-xs-2">
-						<select name="errorList" class="selectpicker" multiple title=""
-							id="errorList">
-							<!--<c:forEach items="${ errorList }" var="error">
-								<option value="${ error.id }">${ error.codigo }</option>
-							</c:forEach>-->
-							<option value="404">404</option>
-							<option value="500">500</option>
-						</select>
+						<cmp:CodigoHTTPCombo nome="codigosHttpErro" sistemaId="${ idsistema }" codigosSelecionados="${ paramValues.codigosHttpErro }" />
 
 					</div>
 				</div>
@@ -99,13 +90,7 @@
 					<label class="control-label col-sm-2" for="pwd"><fmt:message
 							key="br.cefetrj.webdep.jsp.http.CodeHTTPok" /></label>
 					<div class="col-xs-2">
-						<select name="okList" class="selectpicker" multiple title=""
-							id="oklist">
-							<!--<c:forEach items="${ okList }" var="ok">
-								<option value="${ ok.id }">${ ok.codigo }</option>
-							</c:forEach>-->
-							<option value="200">200</option>
-						</select>
+						<cmp:CodigoHTTPCombo nome="codigosHttpOk" sistemaId="${ idsistema }" codigosSelecionados="${ paramValues.codigosHttpOk }"  />
 						
 							<button name="action" value="errorParameter" type="submit"
 								class="btn btn-primary btn-md">
@@ -115,18 +100,27 @@
 					</div>
 
 				</div>
+				<c:if test="${ empty sessionScope.idsistema or not empty systemValidate and not systemValidate}">
+					<div class="alert alert-danger fade in alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.sistemMes" /> 
+					</div>
+				</c:if>
+				
+				<c:if test="${ not empty patternValidate and not patternValidate }">
+					<div class="alert alert-danger fade in alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.urlField" />
+					</div>
+				</c:if>
+				
 				<c:if test="${ not empty versionValidate and not versionValidate }">
 					<div class="alert alert-danger fade in alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.versionField" />
 					</div>
 				</c:if>
-				<c:if test="${ not empty okValidate and not okValidate }">
-					<div class="alert alert-danger fade in alert-dismissible">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.okCode" />
-					</div>
-				</c:if>
+				
 				<c:if test="${ not empty errorValidate and not errorValidate }">
 					<div class="alert alert-danger fade in alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -134,19 +128,19 @@
 					</div>
 				</c:if>
 				
-				<c:if test="${ empty sessionScope.idsistema}">
+				<c:if test="${ not empty okValidate and not okValidate }">
 					<div class="alert alert-danger fade in alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.sistemMes" /> 
+						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.okCode" />
 					</div>
 				</c:if>
 			
-				<c:if test="${ not empty errohttp }">
+				<!-- <c:if test="${ not empty errohttp }">
 					<div class="alert alert-danger fade in alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 						<strong><fmt:message key="br.cefetrj.webdep.jsp.http.atention" /></strong> <fmt:message key="br.cefetrj.webdep.jsp.http.dbError" /> 
 					</div>
-				</c:if>
+				</c:if> -->
 			
 				
 			</div>
@@ -190,7 +184,7 @@
 			
 			<div class="tab-pane fade" id="3a">
 				 <!-- tag utilizada para gerar o gráfico de dispersão -->
-				 <cmp:RChartTag/>
+				 <cmp:ChartTag tipoGrafico = "scatterplot" dados = "${ dados }"/>
 			</div>
 		</div>
 		
