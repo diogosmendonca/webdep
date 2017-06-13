@@ -16,9 +16,9 @@ public class Defeito implements Serializable {
 
 	private String arquivo;
 	private String nomArquivo;
-	private String linhaCod;
+	private Integer linhaCod;
 	private Integer numFalha;
-	public Defeito(String arquivo, String nomArquivo, String linhaCod, Integer numFalha) {
+	public Defeito(String arquivo, String nomArquivo, Integer linhaCod, Integer numFalha) {
 		super();
 		this.arquivo = arquivo;
 		this.nomArquivo = nomArquivo;
@@ -26,6 +26,14 @@ public class Defeito implements Serializable {
 		this.numFalha = numFalha;
 	}
 
+	public Defeito(String arquivo, String nomArquivo, Integer linhaCod, long numFalha) {
+		super();
+		this.arquivo = arquivo;
+		this.nomArquivo = nomArquivo;
+		this.linhaCod = linhaCod;
+		this.numFalha = (int) numFalha;
+	}
+	
 	public Defeito() {
 		super();
 	}
@@ -46,11 +54,11 @@ public class Defeito implements Serializable {
 		this.nomArquivo = nomArquivo;
 	}
 
-	public String getLinhaCod() {
+	public Integer getLinhaCod() {
 		return linhaCod;
 	}
 
-	public void setLinhaCod(String linhaCod) {
+	public void setLinhaCod(Integer linhaCod) {
 		this.linhaCod = linhaCod;
 	}
 
@@ -67,12 +75,16 @@ public class Defeito implements Serializable {
 		return "Defeito [arquivo=" + arquivo + ", nomArquivo=" + nomArquivo + ", linhaCod=" + linhaCod + ", numFalha="
 				+ numFalha + "]";
 	}
+	
+	public String getPrimaryKey(){
+		return this.arquivo + " " + this.linhaCod;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if(obj == null) return false;
 		Defeito d = (Defeito) obj;
-		if(this.getArquivo().equals(d.getArquivo()) && this.getLinhaCod().equals(d.getLinhaCod())) return true;
+		if(this.getArquivo().equals(d.getArquivo()) && this.getLinhaCod()==(d.getLinhaCod())) return true;
 		else return false;
 	}
 

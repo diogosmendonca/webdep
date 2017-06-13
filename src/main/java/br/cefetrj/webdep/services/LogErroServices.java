@@ -3,10 +3,12 @@ package br.cefetrj.webdep.services;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.IntSummaryStatistics;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.persistence.Query;
 
@@ -59,40 +61,50 @@ public class LogErroServices {
 
 		List<RegistroLogErro> listaErros = LogErroServices.buscarLog(dataInicial, dataFinal, buscar);
 		
-		
 		List<Defeito> listaDefeito = new ArrayList<>();
 
 		List<Defeito> retorno = new ArrayList<>();
 
-		Map<String, Defeito> teste = new HashMap<>();
+		Map<String, IntSummaryStatistics> teste = new HashMap<>();
 		
 		for (RegistroLogErro r : listaErros) {
 			String aux[] = r.getMensagem().split("\\w{5}/");
 			aux = aux[1].split(" on line ");
-			listaDefeito.add(new Defeito(aux[0], aux[0], aux[1], 1));
-		}
-
-		Iterator<Defeito> it = listaDefeito.iterator();
-		while(it.hasNext()){
-			Defeito dUm = it.next();
-			for (int i = 1; i < listaDefeito.size(); i++) {
-				Defeito dDois = listaDefeito.get(i);
-				if (dUm.equals(dDois)){
-					dUm.setNumFalha(dUm.getNumFalha() + 1);
-					retorno.add(dUm);
-				}
-			}
+			listaDefeito.add(new Defeito(aux[0], aux[0], Integer.parseInt(aux[1]), 1L));
 		}
 		
-		for(Defeito d: retorno) {
-			teste.put(d.getArquivo(), d);
-		}
-		retorno = new ArrayList<>();
-		for (Entry<String, Defeito> d: teste.entrySet()) {
-			retorno.add(d.getValue());
+		teste = listaDefeito.stream().collect(Collectors.groupingBy(Defeito::getPrimaryKey, Collectors.summarizingInt(Defeito::getNumFalha)));
+		
+		for(Entry<String, IntSummaryStatistics> aux: teste.entrySet()) {
+			String parse[] = aux.getKey().split(" ");
+			retorno.add(new Defeito(parse[0], parse[0], Integer.parseInt(parse[1]), aux.getValue().getSum()));
 		}
 		
 		return retorno;
+		
+//		System.out.println(listaDefeito);
+//		Iterator<Defeito> it = listaDefeito.iterator();
+//		while(it.hasNext()){
+//			Defeito dUm = it.next();
+//			for (int i = 1; i < listaDefeito.size(); i++) {
+//				Defeito dDois = listaDefeito.get(i);
+//				if (dUm.equals(dDois)){
+//					dUm.setNumFalha(dUm.getNumFalha() + 1);
+//					retorno.add(dUm);
+//				}else{
+//					
+//				}
+//			}
+//		}
+//		
+//		for(Defeito d: retorno) {
+//			teste.put(d.getArquivo(), d);
+//		}
+//		retorno = new ArrayList<>();
+//		for (Entry<String, Defeito> d: teste.entrySet()) {
+//			retorno.add(d.getValue());
+//		}
+		
 		
 	}
 

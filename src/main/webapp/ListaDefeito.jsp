@@ -17,8 +17,24 @@
 <jsp:include page="head.jspf" />
 </head>
 <body class="container-full ">
+
+	<!-- ################ BARRA DE MENU ##################################### -->
+	
 	<jsp:include page="scripts.jspf" />
 	<%@include file="navbar.jspf"%>
+	
+	<!-- ################ MSGS DE VALIDAÇÃO DO FORM ##################################### -->
+			<c:if test="${ not empty msgKeys }">
+				<div class="alert alert-danger fade in alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<c:forTokens items="${ msgKeys }" delims="," var="key">
+						<c:if test="${ not empty key }">
+							<fmt:message key="${ key }"/><br/>
+						</c:if>
+						</c:forTokens>
+				</div>
+			</c:if>
+			
 	<div class="container">
 		<form class="form-horizontal" method="post" action="FrontControllerServlet">
 			<div class="panel panel-default">
