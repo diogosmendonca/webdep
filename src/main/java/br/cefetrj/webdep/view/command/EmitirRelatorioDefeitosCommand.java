@@ -39,7 +39,7 @@ public class EmitirRelatorioDefeitosCommand implements Command {
 			String dtInicial = new String(request.getParameter("initialDate"));
 			String dtFinal = new String(request.getParameter("finalDate"));
 			String url = new String(request.getParameter("url"));
-			String msg ="";
+			
 
 			if (dtInicial.length() == 0){
 				dtInicial = "01/01/2000";
@@ -60,6 +60,19 @@ public class EmitirRelatorioDefeitosCommand implements Command {
 			LocalDateTime dataFinal = LocalDateTime.of(LocalDate.of(Integer.parseInt(formatarData[2]),
 					Integer.parseInt(formatarData[1]), Integer.parseInt(formatarData[0])), LocalTime.of(0, 0));
 			
+			
+			/*
+			 * Tratamento de erro, para caso a data inicial seja maior que a data final.
+			 */
+			boolean maiorQue = false;
+			maiorQue = dataFinal.isBefore(dataInicial);
+			
+			if (maiorQue == true){
+				String msg = "br.cefetrj.webdep.jsp.ListaDefeito.msgErroDataMenor";
+				request.setAttribute("msgKeys", msg);
+				request.getRequestDispatcher("ListaDefeito.jsp").forward(request, response);
+			}
+			
 			List<Defeito> lista = new LogErroServices().buscarDefeitos(dataInicial, dataFinal, "");
 			
 			
@@ -69,8 +82,8 @@ public class EmitirRelatorioDefeitosCommand implements Command {
 		} catch (Exception e) {
 			Logger lg = Logger.getLogger(EmitirRelatorioDefeitosCommand.class);
 			lg.error(e.getMessage());
-			String msg = "Data inputada invalida, Favor inserir uma data Valida!";
-			request.setAttribute("msg", msg);
+			String msg = "br.cefetrj.webdep.jsp.ListaDefeito.msgErroDataInvalida";
+			request.setAttribute("msgKeys", msg);
 			request.getRequestDispatcher("ListaDefeito.jsp").forward(request, response);
 		}
 	}
