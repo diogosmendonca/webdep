@@ -57,7 +57,7 @@ public class AccessProfileReportCommand implements Command {
 		
 		int group = Integer.parseInt(request.getParameter("groupApr"));
 		List<RegistroLogAcesso> logs = LogAcessoServices.buscarLog(ildt, fldt, "");
-		Map<String, Integer> logsAgrupado = new HashMap<String, Integer>();
+		Map<Integer, Integer> logsAgrupado = new HashMap<Integer, Integer>();
 		if(group == 2){
 			int lastYear = 0;
 			Iterator<RegistroLogAcesso> it = logs.iterator();
@@ -70,12 +70,12 @@ public class AccessProfileReportCommand implements Command {
 					lastYear = curYear;
 				}
 				else{
-					logsAgrupado.put(Integer.toString(lastYear), quant);
+					logsAgrupado.put(lastYear, quant);
 					quant = 1;
 					lastYear = curYear;
 				}
 			}
-			logsAgrupado.put(Integer.toString(lastYear), quant);
+			logsAgrupado.put(lastYear, quant);
 		}else{
 			if(group == 1){
 				int lastMonth = 0;
@@ -89,12 +89,12 @@ public class AccessProfileReportCommand implements Command {
 						lastMonth = curMonth;
 					}
 					else{
-						logsAgrupado.put(Integer.toString(lastMonth), quant);
+						logsAgrupado.put(lastMonth, quant);
 						quant = 1;
 						lastMonth= curMonth;
 					}
 				}
-				logsAgrupado.put(Integer.toString(lastMonth), quant);
+				logsAgrupado.put(lastMonth, quant);
 			} else{
 				if(group == 0){
 					int lastDay = 0;
@@ -108,17 +108,17 @@ public class AccessProfileReportCommand implements Command {
 							lastDay = curDay;
 						}
 						else{
-							logsAgrupado.put(Integer.toString(lastDay), quant);
+							logsAgrupado.put(lastDay, quant);
 							quant = 1;
 							lastDay= curDay;
 						}
 					}
-					logsAgrupado.put(Integer.toString(lastDay), quant);
+					logsAgrupado.put(lastDay, quant);
 				}
 			}
 		}
 		
-		request.setAttribute("dados", logsAgrupado);
+		request.setAttribute("dadosGrafico", logsAgrupado);
 		request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
 	}
 }
