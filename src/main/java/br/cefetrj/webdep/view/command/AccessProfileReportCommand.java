@@ -84,68 +84,39 @@ public class AccessProfileReportCommand implements Command {
 			return;
 		}
 		
+		//Pega por qual agrupamento o gráfico deve ser feito
 		int group = Integer.parseInt(request.getParameter("groupApr"));
 		
+		//Pega os logs de entre a data inicial e a data final
 		List<RegistroLogAcesso> logs = RegistroLogAcessoService.filterByTimestamp(ildt, fldt);
+		//Filtra os logs do pradrão url selecionado
 		logs = RegistroLogAcessoService.filterByPadraoURL(logs, padrao);
 		
 		Map<Integer, Integer> logsAgrupado = new HashMap<Integer, Integer>();
 		if(group == 2){
-			int lastYear = 0;
 			Iterator<RegistroLogAcesso> it = logs.iterator();
-			int quant = 0;
 			while(it.hasNext()){
 				RegistroLogAcesso log = it.next();
 				int curYear = log.getTimestamp().getYear();
-				if(lastYear == 0 || curYear == lastYear){
-					quant++;
-					lastYear = curYear;
-				}
-				else{
-					logsAgrupado.put(lastYear, quant);
-					quant = 1;
-					lastYear = curYear;
-				}
+				if(logsAgrupado.containsKey(curYear)) logsAgrupado.put(curYear, logsAgrupado.get(curYear)+1);
+				else logsAgrupado.put(curYear,1);
 			}
-			logsAgrupado.put(lastYear, quant);
 		}else{
 			if(group == 1){
-				int lastMonth = 0;
 				Iterator<RegistroLogAcesso> it = logs.iterator();
-				int quant = 0;
 				while(it.hasNext()){
 					RegistroLogAcesso log = it.next();
 					int curMonth = log.getTimestamp().getMonthValue();
-					if(lastMonth == 0 || curMonth == lastMonth){
-						quant++;
-						lastMonth = curMonth;
-					}
-					else{
-						logsAgrupado.put(lastMonth, quant);
-						quant = 1;
-						lastMonth= curMonth;
-					}
+					if(logsAgrupado.containsKey(curMonth)) logsAgrupado.put(curMonth, logsAgrupado.get(curMonth)+1);
+					else logsAgrupado.put(curMonth,1);
 				}
-				logsAgrupado.put(lastMonth, quant);
 			} else{
-				if(group == 0){
-					int lastDay = 0;
-					Iterator<RegistroLogAcesso> it = logs.iterator();
-					int quant = 0;
-					while(it.hasNext()){
-						RegistroLogAcesso log = it.next();
-						int curDay = log.getTimestamp().getDayOfYear();
-						if(lastDay == 0 || curDay == lastDay){
-							quant++;
-							lastDay = curDay;
-						}
-						else{
-							logsAgrupado.put(lastDay, quant);
-							quant = 1;
-							lastDay= curDay;
-						}
-					}
-					logsAgrupado.put(lastDay, quant);
+				Iterator<RegistroLogAcesso> it = logs.iterator();
+				while(it.hasNext()){
+					RegistroLogAcesso log = it.next();
+					int curDay = log.getTimestamp().getYear();
+					if(logsAgrupado.containsKey(curDay)) logsAgrupado.put(curDay, logsAgrupado.get(curDay)+1);
+					else logsAgrupado.put(curDay,1);
 				}
 			}
 		}
