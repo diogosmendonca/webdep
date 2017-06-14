@@ -15,8 +15,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.cefetrj.webdep.model.entity.PadraoURL;
 import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 import br.cefetrj.webdep.services.LogAcessoServices;
+import br.cefetrj.webdep.services.PadraoURLServices;
+import br.cefetrj.webdep.services.RegistroLogAcessoService;
 
 public class AccessProfileReportCommand implements Command {
 
@@ -25,6 +28,8 @@ public class AccessProfileReportCommand implements Command {
 		LocalDate idate, fdate;
 		LocalTime itime, ftime;
 		LocalDateTime ildt, fldt;
+		String padraoUrl = request.getParameter("padraoUrl");
+		PadraoURL padrao = null;
 		DateTimeFormatter fmtMonth = DateTimeFormatter.ofPattern("MM-yyyy");
 		DateTimeFormatter fmtDay = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 		DateTimeFormatter fmtYear = DateTimeFormatter.ofPattern("yyyy");
@@ -39,6 +44,30 @@ public class AccessProfileReportCommand implements Command {
 		/*
 		 * Valida��o dos campos
 		 */
+		if(padraoUrl != null && padraoUrl.trim().length() > 0){
+			Long padraoIdLong = null; 
+			try{
+				padraoIdLong = Long.parseLong(padraoUrl);
+				padrao = PadraoURLServices.obterPorId(padraoIdLong);
+				if(padrao == null){
+					dataIn = false;
+					request.setAttribute("dataIn", dataIn);
+					request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
+					return;
+				}
+			}catch(Exception e){
+				dataIn = false;
+				request.setAttribute("dataIn", dataIn);
+				request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
+				return;
+			}
+		}
+		else{
+			dataIn = false;
+			request.setAttribute("dataIn", dataIn);
+			request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
+			return;
+		}
 		try {
 			idate = LocalDate.parse(request.getParameter("initialDate"));
 			itime = LocalTime.parse(request.getParameter("initialTime"));
@@ -56,7 +85,10 @@ public class AccessProfileReportCommand implements Command {
 		}
 		
 		int group = Integer.parseInt(request.getParameter("groupApr"));
-		List<RegistroLogAcesso> logs = LogAcessoServices.buscarLog(ildt, fldt, "");
+		
+		List<RegistroLogAcesso> logs = RegistroLogAcessoService.filterByTimestamp(ildt, fldt);
+		logs = RegistroLogAcessoService.filterByPadraoURL(logs, padrao);
+		
 		Map<Integer, Integer> logsAgrupado = new HashMap<Integer, Integer>();
 		if(group == 2){
 			int lastYear = 0;
