@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.cefetrj.webdep.model.entity.PadraoURL;
 import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
-import br.cefetrj.webdep.services.LogAcessoServices;
 import br.cefetrj.webdep.services.PadraoURLServices;
 import br.cefetrj.webdep.services.RegistroLogAcessoService;
 
@@ -82,6 +81,7 @@ public class AccessProfileReportCommand implements Command {
 			request.setAttribute("dataIn", dataIn);
 			request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
 			return;
+
 		}
 		
 		//Pega por qual agrupamento o gráfico deve ser feito

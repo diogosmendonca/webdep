@@ -118,8 +118,6 @@ public class RegistroLogAcessoService {
 				.collect(Collectors.groupingBy(RegistroLogAcesso::getUrl, Collectors.counting()));
 	}
 	
-	
-	
 	/**
 	 * Filtra uma lista de registro de logs de acesso por um padrÃ£o de URL. 
 	 * 
@@ -202,14 +200,13 @@ public class RegistroLogAcessoService {
 				.isPresent();
 	}
 	
-
 	/**
-	 * Retorna a quantidade de erros numa determinada URL no Log de Acesso através do parâmetro código passado
+	 * Retorna a quantidade de erros numa determinada URL no Log de Acesso atravï¿½s do parï¿½metro cï¿½digo passado
 	 * 
 	 * @param url url que se quer saber se o cÃ³digo estÃ¡ presente
 	 * @param codigos os cÃ³digos que se quer verificar
 	 * @param acessos o conjunto de registro de logs de acesso a ser pesquisado
-	 * @return Um Long que representa o número total de erros.
+	 * @return Um Long que representa o nï¿½mero total de erros.
 	 * 
 	 * @author Lyago
 	 * @since 0.2
@@ -243,5 +240,4 @@ public class RegistroLogAcessoService {
 	     
 	     return query.getResultList();
 	}
-
 }

@@ -109,7 +109,6 @@
 				</div>
 			</div>
 		</form>
-		
 		<c:if test="${ dataIn eq true }">
 			<div id="exTab1" class="panel panel-default">
 				<ul class="nav nav-tabs ">

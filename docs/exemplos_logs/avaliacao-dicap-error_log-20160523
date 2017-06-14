@@ -1,0 +1,5 @@
+[Mon May 16 13:51:20.765108 2016] [:error] [pid 25737] [client 200.9.149.88:34979] PHP Notice:  Undefined index: next in /var/www/html/avaliacao-dicap/login_page.php on line 93
+[Mon May 16 14:15:05.081908 2016] [:error] [pid 25131] [client 200.9.149.88:35675] PHP Notice:  Undefined index: next in /var/www/html/avaliacao-dicap/login_page.php on line 93, referer: http://sad.cefet-rj.br/perfil.php?id=725
+[Mon May 16 14:27:52.626354 2016] [:error] [pid 24248] [client 200.9.149.88:36009] PHP Notice:  Undefined index: next in /var/www/html/avaliacao-dicap/login_page.php on line 93, referer: http://sad.cefet-rj.br/index.php
+[Mon May 16 14:47:56.297875 2016] [:error] [pid 26653] [client 200.9.149.88:36766] PHP Notice:  Undefined index: next in /var/www/html/avaliacao-dicap/login_page.php on line 93, referer: http://sad.cefet-rj.br/perfil.php?id=722
+[Mon May 16 16:45:47.085972 2016] [:error] [pid 27719] [client 200.9.149.88:40326] PHP Notice:  Undefined index: next in /var/www/html/avaliacao-dicap/login_page.php on line 93, referer: http://sad.cefet-rj.br/index.php
