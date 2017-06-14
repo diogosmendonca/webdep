@@ -61,7 +61,7 @@ package br.cefetrj.webdep.services;
 				private Runnable threadSistema(String nome,long aux, int contador, ScheduledFuture<?> threade) {
 					
 					// TODO Auto-generated method stub
-					//System.out.println("Chamou Thread"+ aux);
+					System.out.println("Chamou Thread"+ aux);
 					final Runnable importador2 = new Runnable() {
 						
 						@Override
@@ -71,11 +71,11 @@ package br.cefetrj.webdep.services;
 							if(conta == contador)
 							{
 								// Se for da atual faz a acao de ler;
-								//System.out.println("Execucao da Thread de Nome : "+nome);
+								System.out.println("Execucao da Thread de Nome : "+nome);
 							}
 							else
 							{
-								//System.out.println("Thread - "+aux+" Interrompida");
+								System.out.println("Thread - "+aux+" Interrompida");
 								threade.cancel(false);
 							}
 						}
