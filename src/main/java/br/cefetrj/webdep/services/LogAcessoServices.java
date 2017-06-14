@@ -31,7 +31,7 @@ public class LogAcessoServices {
 
         if(buscar.equals("")) {
             query = pm.createQuery("from RegistroLogAcesso where timestamp " +
-                    "between :inicio and :fim");
+                    "between :inicio and :fim ORDER BY timestamp");
         }
         else {
             try {
@@ -164,7 +164,7 @@ public static void ImportarLogAcesso(Sistema s) {
 								RegistroLogAcessoService.insertRegistroLogAcesso(logAcesso);
 								
 								System.out.println("IP: " + ip);
-								System.out.println("Usuário: " + usuario);
+								System.out.println("Usuï¿½rio: " + usuario);
 								System.out.println("Data Hora: " + dataHora);
 								System.out.println("URL: " + url);
 								System.out.println("Codigo: " + codigo);
