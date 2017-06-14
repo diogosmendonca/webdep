@@ -36,7 +36,7 @@ public class ChartTag extends SimpleTagSupport{
 	
 	static{
 		comandos.put("boxplot", new BoxPlotRChartTag());
-		comandos.put("scatterplot", new ScatterPlotRChartTag());
+		comandos.put("scatterplotHttpReport", new ScatterPlotHttpReportRChartTag());
 		comandos.put("lineplot", new LinePlotRChartTag());
 	}
 	
