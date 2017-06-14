@@ -26,6 +26,7 @@ public class ValidaHttpReportCommand implements Command {
 		boolean okValidate = true;
 		boolean systemValidate = true;
 		boolean patternValidate = true;
+		boolean formValido = true;
 		String urlPattern = request.getParameter("padraoURL");
 		String[] versionList = request.getParameterValues("versionList");
 		String[] errorList = request.getParameterValues("codigosHttpErro");
@@ -44,6 +45,7 @@ public class ValidaHttpReportCommand implements Command {
 		
 		//Valida padrão de url
 		PadraoURL padrao = null;
+		System.out.println(urlPattern);
 		if(urlPattern != null && urlPattern.trim().length() > 0){
 			Long padraoIdLong = null; 
 			try{
@@ -119,10 +121,13 @@ public class ValidaHttpReportCommand implements Command {
 		
 		//Retornar para a jsp caso algum campo seja inválido
 		if((versionValidate == false) || (errorValidate == false) || (okValidate = false)){
+			formValido = false;
+			request.setAttribute("formValido", formValido);
 			request.getRequestDispatcher("HTTPreport.jsp").forward(request, response);
 			return;
 		}
-		
+		request.setAttribute("formValido", formValido);
+		request.getRequestDispatcher("HTTPreport.jsp").forward(request, response);
 		//Chamar o service para retornar os dados da query
 	}
 

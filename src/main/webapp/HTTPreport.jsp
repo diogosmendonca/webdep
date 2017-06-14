@@ -71,7 +71,6 @@
 							key="br.cefetrj.webdep.jsp.http.HTTPerror" /></label>
 					<div class="col-xs-2">
 						<cmp:CodigoHTTPCombo nome="codigosHttpErro" sistemaId="${ idsistema }" codigosSelecionados="${ paramValues.codigosHttpErro }" />
-
 					</div>
 				</div>
 
@@ -148,53 +147,54 @@
 	</form>
 
 	<!-- Tabela  -->
-
-	<div id="exTab1" class="panel panel-default">
-		<ul class="nav nav-tabs ">
-			<li class="active"><a href="#1a" data-toggle="tab"><fmt:message
-						key="br.cefetrj.webdep.jsp.apr.table" /></a></li>
-			<li><a href="#2a" data-toggle="tab"><fmt:message
-						key="br.cefetrj.webdep.jsp.apr.graphic" /></a></li>
-			<li><a href="#3a" data-toggle="tab"><fmt:message
-						key="br.cefetrj.webdep.jsp.apr.scatter" /></a></li>
-		</ul>
-		<div class="tab-content clearfix">
-			<div class="tab-pane fade in active" id="1a">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>URLs</th>
-							<th><fmt:message key="br.cefetrj.webdep.jsp.http.access" /></th>
-							<th><fmt:message key="br.cefetrj.webdep.jsp.http.fail" /></th>
-							<th><fmt:message key="br.cefetrj.webdep.jsp.http.probFail" /></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-
-			<!-- Gráfico -->
-
-			<div class="tab-pane fade" id="2a">
-				<svg id="svg-chart" class="chart"></svg>
+	<c:if test="${ formValido eq true }">
+		<div id="exTab1" class="panel panel-default">
+			<ul class="nav nav-tabs ">
+				<li class="active"><a href="#1a" data-toggle="tab"><fmt:message
+							key="br.cefetrj.webdep.jsp.apr.table" /></a></li>
+				<li><a href="#2a" data-toggle="tab"><fmt:message
+							key="br.cefetrj.webdep.jsp.apr.graphic" /></a></li>
+				<li><a href="#3a" data-toggle="tab"><fmt:message
+							key="br.cefetrj.webdep.jsp.apr.scatter" /></a></li>
+			</ul>
+			<div class="tab-content clearfix">
+				<div class="tab-pane fade in active" id="1a">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>URLs</th>
+								<th><fmt:message key="br.cefetrj.webdep.jsp.http.access" /></th>
+								<th><fmt:message key="br.cefetrj.webdep.jsp.http.fail" /></th>
+								<th><fmt:message key="br.cefetrj.webdep.jsp.http.probFail" /></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+	
+				<!-- Gráfico -->
+	
+				<div class="tab-pane fade" id="2a">
+					<svg id="svg-chart" class="chart"></svg>
+				</div>
+				
+				<div class="tab-pane fade" id="3a">
+					 <!-- tag utilizada para gerar o gráfico de dispersão -->
+					 <cmp:ChartTag tipoGrafico = "scatterplot" dados = "${ dados }"/>
+				</div>
 			</div>
 			
-			<div class="tab-pane fade" id="3a">
-				 <!-- tag utilizada para gerar o gráfico de dispersão -->
-				 <cmp:ChartTag tipoGrafico = "scatterplot" dados = "${ dados }"/>
-			</div>
+			<form action="home.jsp" method="POST">
+				<button type="submit" class="btn btn-primary btn-md" value="redirectParameter" style="display: block; margin: 0 auto;">
+					<fmt:message key="br.cefetrj.webdep.jsp.http.back" />
+				</button>
+			</form>
+			
 		</div>
-		
-		<form action="home.jsp" method="POST">
-			<button type="submit" class="btn btn-primary btn-md" value="redirectParameter" style="display: block; margin: 0 auto;">
-				<fmt:message key="br.cefetrj.webdep.jsp.http.back" />
-			</button>
-		</form>
-		
-	</div>
+	</c:if>
 	</div>
 
 	<!-- MODAL NOVO PADRAO URL -->

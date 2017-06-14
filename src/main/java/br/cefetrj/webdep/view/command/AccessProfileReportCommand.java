@@ -118,7 +118,8 @@ public class AccessProfileReportCommand implements Command {
 			}
 		}
 		
-		request.setAttribute("dadosGrafico", logsAgrupado);
+		request.setAttribute("dados", logsAgrupado);
+		request.setAttribute("dataIn", dataIn);
 		request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
 	}
 }

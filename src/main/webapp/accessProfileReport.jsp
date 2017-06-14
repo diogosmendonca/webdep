@@ -106,13 +106,15 @@
 				</div>
 			</div>
 		</form>
+		
+		<c:if test="${ dataIn eq true }">
 			<div id="exTab1" class="panel panel-default">
 				<ul class="nav nav-tabs ">
 					<li class="active"><a href="#1a" data-toggle="tab"><fmt:message key="br.cefetrj.webdep.jsp.apr.table" /></a></li>
 					<li><a href="#2a" data-toggle="tab"><fmt:message key="br.cefetrj.webdep.jsp.apr.graphic" /></a></li>
 				</ul>
 				<div class="tab-content clearfix">
-					<!-- <div class="tab-pane fade in active" id="1a">
+					<div class="tab-pane fade in active" id="1a">
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -142,12 +144,13 @@
 								</c:forEach>
 							</tbody>
 						</table>
-					</div> -->
+					</div>
 					<div class="tab-pane fade" id="2a">
 						<cmp:ChartTag tipoGrafico="lineplot" dados="${ dados }"/>
 					</div>
 				</div>
 			</div>
+		</c:if>
 	</div>
 	
 	<!-- MOVIDO PARA SCRIPTS.JSPF POIS CAUSA CONFLITOS
