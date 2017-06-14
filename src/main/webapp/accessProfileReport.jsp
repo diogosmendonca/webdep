@@ -87,15 +87,18 @@
 							</select>
 						</div>
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.apr.urlPatterns" /></label>
-							<div class="col-xs-2">
-								<select  class="form-control padrao-select">
-					<!-- essa parte está no meu caso de teste pode deixar que eu preencho conforme o usuario logado. Ass: Luan -->
-								</select>
+						<div class="col-xs-2">
+							<nobr>
+								<cmp:PadraoURLCombo nome="padraoUrl" usuarioId="${ usuario.id }" padraoSelecionado="${ param.padraoUrl }"/>
 								<button class="btn btn-primary myModal" type="button" data-toggle="modal"
 									data-target="#myModal">+</button>
 									<button id="deletePadraoURL" name="deletepadraourl" class="btn btn-primary" 
 									 type="button">-</button>
-							</div>
+							</nobr>
+						</div>
+						
+					</div>
+					<div class="form-group col-md-3">
 						<button type="submit" class="btn btn-primary btn-md" name="action" value="accessProfileReport"><fmt:message key="br.cefetrj.webdep.jsp.apr.search" /></button>
 					</div>
 					<c:if test="${not empty dataIn and not dataIn }">
