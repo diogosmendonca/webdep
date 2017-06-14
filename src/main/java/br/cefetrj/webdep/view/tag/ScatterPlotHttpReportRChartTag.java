@@ -6,11 +6,10 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.rosuda.REngine.REngineException;
 
-public class ScatterPlotRChartTag extends RChartCommand {
+public class ScatterPlotHttpReportRChartTag extends RChartCommand {
 	
 	@Override
 	public void plot(Object dados) {
-		int[] dados2 = {15, 32, 87, 100, 112, 34, 65, 29}; 
 		try {
 			List<Map<String, Long>> list = (List<Map<String, Long>>) dados;
 			Map<String, Long> contagemAcessosUrls = list.get(0);

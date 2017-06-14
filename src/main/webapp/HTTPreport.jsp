@@ -147,7 +147,7 @@
 						<!-- ######################### GRÁFICO ######################################## -->
 						<!-- ########################################################################### -->
 						<div class="tab-pane fade" id="2a">
-							<cmp:ChartTag tipoGrafico="scatterplot" dados="${ dadosGrafico }"/>
+							<cmp:ChartTag tipoGrafico="scatterplotHttpReport" dados="${ dadosGrafico }"/>
 						</div>
 					</div>
 				</div>
