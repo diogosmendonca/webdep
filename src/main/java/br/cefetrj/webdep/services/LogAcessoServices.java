@@ -164,7 +164,7 @@ public static void ImportarLogAcesso(Sistema s) {
 								RegistroLogAcessoService.insertRegistroLogAcesso(logAcesso);
 								
 								System.out.println("IP: " + ip);
-								System.out.println("Usuário: " + usuario);
+								System.out.println("Usuï¿½rio: " + usuario);
 								System.out.println("Data Hora: " + dataHora);
 								System.out.println("URL: " + url);
 								System.out.println("Codigo: " + codigo);
@@ -191,4 +191,8 @@ public static void ImportarLogAcesso(Sistema s) {
     	return RegistroLogAcessoDAO.listCodigosBySistema(s);
     }
 
+    public static List<RegistroLogAcesso> buscaLogAcessoOrdenada(LocalDateTime ldtInicial, LocalDateTime ldtFinal, Long idSistema){
+    	return RegistroLogAcessoDAO.searchLogCodeOrdered(ldtInicial, ldtFinal, idSistema);
+    }
+    
 }

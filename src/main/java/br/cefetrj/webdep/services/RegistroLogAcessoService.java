@@ -128,20 +128,24 @@ public class RegistroLogAcessoService {
 	 * @since 0.2
 	 */
 	public static List<RegistroLogAcesso> filterByPadraoURL(List<RegistroLogAcesso> acessos, PadraoURL padrao){
-		if (acessos == null)
-			throw new IllegalArgumentException("acessos argument cannot be null");
+		if (acessos == null) {
+			throw new IllegalArgumentException("acessos argument cannot be null");  
+		}
 		
-		if (padrao == null)
+		if (padrao == null) {
 			throw new IllegalArgumentException("padrao argument cannot be null");
+		}
 		
-		if (padrao.getExpressaoRegular() == null)
+		if (padrao.getExpressaoRegular() == null) {
 			throw new IllegalArgumentException("field expressaoRegular in padrao argument cannot be null");
+		}
 		
 		try{
 			Pattern.compile(padrao.getExpressaoRegular());
 		}catch(PatternSyntaxException  e){
-			throw new IllegalArgumentException("field expressaoRegular in padrao argument is not a valid regular expression");
+			throw new IllegalArgumentException("field expressaoRegular in padrao argument is not a valid regular expression"); 			
 		}
+		
 		
 		return acessos
 				.parallelStream()

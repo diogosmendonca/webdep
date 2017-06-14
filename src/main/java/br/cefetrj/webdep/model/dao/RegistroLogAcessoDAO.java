@@ -1,5 +1,6 @@
 package br.cefetrj.webdep.model.dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -119,5 +120,32 @@ public class RegistroLogAcessoDAO {
 		return pManager.createNativeQuery(sql, RegistroLogAcesso.class).getResultList();
 		
 	}
+	
+	/**
+	 * Busca ordenada por código dos registros de log acesso de um sistema  
+	 * dentro de um intervalo de tempo específico.
+	 * 
+	 * @param ldtInicial LocalDateTime
+	 * @param ldtFinal LocalDateTime
+	 * @param s Sistema
+	 * @return Lista de registro de log acesso ordenada por código, filtrada por Sistema
+	 * e dentro do intervalo de tempo entre ldtInicial e ldtFinal
+	 * 
+	 * @author GabrielPoyares
+	 * @since 0.2
+	 */
+	@SuppressWarnings("unchecked")
+	public static List<RegistroLogAcesso> searchLogCodeOrdered(LocalDateTime ldtInicial, LocalDateTime ldtFinal, Long idSistema) {
+        PersistenceManager pm = PersistenceManager.getInstance();
+        Query query = pm.createQuery("from RegistroLogAcesso where (timestamp " +
+                "between :inicio and :fim) AND (sistema_id = :sistemaId) " +
+    			"ORDER BY codigo ASC");     
+
+        query.setParameter("inicio", ldtInicial);
+        query.setParameter("fim", ldtFinal);
+        query.setParameter("sistemaId", idSistema);
+
+        return query.getResultList();
+    }
 
 }
