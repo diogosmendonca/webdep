@@ -10,20 +10,18 @@ import org.rosuda.REngine.REngineException;
 public class LinePlotRChartTag extends RChartCommand{
 	public void plot(Object dados) {
 		try{
-			Map<String, Integer> logsAgrupados = (Map<String, Integer>)dados;
-			Set<String> keys = logsAgrupados.keySet();
-			Collection<Integer> values = logsAgrupados.values();
-			String[] x = new String[keys.size()];
-			int[] y = new int[values.size()];
+			Map<Integer, Integer> logsAgrupados = (Map<Integer, Integer>)dados;
+			int[] x = new int[logsAgrupados.keySet().size()];
+			int[] y = new int[logsAgrupados.values().size()];
 			
 			int i = 0;
-			for(String k : keys){
+			for(int k : logsAgrupados.keySet()){
 				x[i] = k;
 				i++;
 			}
 			
 			i = 0;
-			for(Integer v: values){
+			for(Integer v: logsAgrupados.values()){
 				y[i] = v;
 				i++;
 			}
