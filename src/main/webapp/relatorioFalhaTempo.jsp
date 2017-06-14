@@ -56,6 +56,8 @@
 				<div class="panel-heading">
 					<h5><fmt:message key="br.cefetrj.webdep.jsp.falhatempo.header" /></h5>
 				</div>
+			</div>
+			</form>
 			<form class="form-horizontal" method="GET" action="FrontControllerServlet">
 				<input type="hidden" name="action" value="relatorioFalhaTempo"/>
 				<div class="panel-body">
