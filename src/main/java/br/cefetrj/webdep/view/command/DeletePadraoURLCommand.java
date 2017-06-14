@@ -21,6 +21,7 @@ public class DeletePadraoURLCommand implements Command{
 	    String lang = (String)session.getAttribute("lang");
         //retrieving URL Pattern form fields
         String id = request.getParameter("id");
+        System.out.println(id);
         
         PadraoURL padraoURL = PadraoURLServices.obterPorId(Long.parseLong(id));
         

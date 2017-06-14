@@ -71,7 +71,7 @@ package br.cefetrj.webdep.services;
 							if(conta == contador)
 							{
 								// Se for da atual faz a acao de ler;
-								System.out.println("Execucao da Thread de Nome : "+nome);
+//								System.out.println("Execucao da Thread de Nome : "+nome);
 							}
 							else
 							{
