@@ -118,6 +118,8 @@ public class RegistroLogAcessoService {
 				.collect(Collectors.groupingBy(RegistroLogAcesso::getUrl, Collectors.counting()));
 	}
 	
+	
+	
 	/**
 	 * Filtra uma lista de registro de logs de acesso por um padrÃ£o de URL. 
 	 * 
@@ -200,6 +202,36 @@ public class RegistroLogAcessoService {
 				.isPresent();
 	}
 	
+
+	/**
+	 * Retorna a quantidade de erros numa determinada URL no Log de Acesso através do parâmetro código passado
+	 * 
+	 * @param url url que se quer saber se o cÃ³digo estÃ¡ presente
+	 * @param codigos os cÃ³digos que se quer verificar
+	 * @param acessos o conjunto de registro de logs de acesso a ser pesquisado
+	 * @return Um Long que representa o número total de erros.
+	 * 
+	 * @author Lyago
+	 * @since 0.2
+	 */
+	public static Long getErros(String url, List<Integer> codigos, List<RegistroLogAcesso> acessos){
+		if (url == null)
+			throw new IllegalArgumentException("url argument cannot be null");
+		
+		if (codigos == null)
+			throw new IllegalArgumentException("codigos argument cannot be null");
+		
+		
+		if (acessos == null)
+			throw new IllegalArgumentException("acessos argument cannot be null");
+		
+		return acessos
+				.parallelStream()
+				.filter(r -> r.getUrl().equals(url) && codigos.contains(r.getCodigo()))
+				.collect(Collectors.counting());
+	}
+	
+
 	public static List<RegistroLogAcesso> filterByTimestamp(LocalDateTime ldtInicial, LocalDateTime ldtFinal){
 		 PersistenceManager pm = PersistenceManager.getInstance();
 	     Query query;
@@ -211,4 +243,5 @@ public class RegistroLogAcessoService {
 	     
 	     return query.getResultList();
 	}
+
 }
