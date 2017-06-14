@@ -1,5 +1,6 @@
 package br.cefetrj.webdep.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -199,4 +200,15 @@ public class RegistroLogAcessoService {
 				.isPresent();
 	}
 	
+	public static List<RegistroLogAcesso> filterByTimestamp(LocalDateTime ldtInicial, LocalDateTime ldtFinal){
+		 PersistenceManager pm = PersistenceManager.getInstance();
+	     Query query;
+	     query = pm.createQuery("from RegistroLogAcesso where timestamp " +
+	                    "between :inicio and :fim ORDER BY timestamp");
+	     
+	     query.setParameter("inicio", ldtInicial);
+	     query.setParameter("fim", ldtFinal);
+	     
+	     return query.getResultList();
+	}
 }
