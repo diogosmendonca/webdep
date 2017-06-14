@@ -56,8 +56,6 @@
 				<div class="panel-heading">
 					<h5><fmt:message key="br.cefetrj.webdep.jsp.falhatempo.header" /></h5>
 				</div>
-			</div>
-			</form>
 			<form class="form-horizontal" method="GET" action="FrontControllerServlet">
 				<input type="hidden" name="action" value="relatorioFalhaTempo"/>
 				<div class="panel-body">
@@ -146,30 +144,13 @@
 									</c:forEach>
 								</tbody>
 							</table>
-							
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th>URLs que somente retornaram códigos HTTP OK</th>
-										<th><fmt:message key="br.cefetrj.webdep.jsp.http.access" /></th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="url" items="${ contagemAcessosUrlsSemFalha.keySet() }">
-										<tr>
-											<td>${ url }</td>
-											<td>${ contagemAcessosUrlsSemFalha.get(url) }</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
 						</div>
 			
 						<!-- ########################################################################### -->
 						<!-- ######################### GRÁFICO ######################################## -->
 						<!-- ########################################################################### -->
 						<div class="tab-pane fade" id="2a">
-							<cmp:ChartTag tipoGrafico="boxplot" dados="${ dadosGrafico }"/>
+							<cmp:ChartTag tipoGrafico="scatterplot" dados="${ dadosGrafico }"/>
 						</div>
 					</div>
 				</div>

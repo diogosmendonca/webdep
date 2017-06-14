@@ -115,4 +115,5 @@ public class RelatorioFalhaTempoCommand implements Command {
 		request.getRequestDispatcher("relatorioFalhaTempo.jsp").forward(request, response);
 
 	}
+
 }
