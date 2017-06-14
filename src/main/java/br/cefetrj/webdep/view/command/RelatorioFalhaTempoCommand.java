@@ -1,6 +1,7 @@
 ﻿package br.cefetrj.webdep.view.command;
 
 import java.io.IOException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class RelatorioFalhaTempoCommand implements Command {
 		String padraoUrl = request.getParameter("padraoUrl");
 		PadraoURL padrao = null;
 		LocalDate idate, fdate;
+		boolean datavazia = false;
 
 		// Inicializa as variÃ¡veis de validaÃ§Ã£o de parÃ¢metros
 		boolean formValido = true;
@@ -50,22 +52,32 @@ public class RelatorioFalhaTempoCommand implements Command {
 		
 		try {
 			idate = LocalDate.parse(request.getParameter("initialDate"));
+		}
+		catch (DateTimeParseException e){
+			formValido = false;
+			datavazia = true;
+			msgKeys += "Data inicial nao pode ser vazia. ";
+		}
+		
+		try {
+			fdate = LocalDate.parse(request.getParameter("finalDate"));
+		}
+		catch (DateTimeParseException e){
+			formValido = false;
+			datavazia = true;
+			msgKeys += "Data final nao pode ser vazia. ";
+		}
+		
+		if (!datavazia){
+			idate = LocalDate.parse(request.getParameter("initialDate"));
 			fdate = LocalDate.parse(request.getParameter("finalDate"));
 			if (idate.isAfter(fdate)){
 				formValido = false;
-				msgKeys += "data inicial depois que a data final";
+				msgKeys += "Data inicial depois que a data final. ";
 			}
 		}
-			catch (DateTimeParseException e) {
-			e.printStackTrace();
-			// Set error attribute
-			formValido = false;
-			msgKeys += "data invalida";
-			}
 		request.setAttribute("formValido", formValido);
 		request.setAttribute("msgKeys", msgKeys);
-		
-		
 		
 		try{
 			Long padraoIdLong = null; 
@@ -81,10 +93,12 @@ public class RelatorioFalhaTempoCommand implements Command {
 			request.setAttribute("padraoUrlStatus", "has-error");
 			msgKeys += "br.cefetrj.webdep.jsp.acessofalha.patternField,";
 		}
-		
+
 		List<RegistroLogAcesso> acessos = RegistroLogAcessoService.listAllRegisters();
 		List<Integer> codigosErro = new ArrayList<Integer>();
-		codigosErro.add(400);
+		for (int i = 400; i < 600; i++){
+			codigosErro.add(i);
+		}
 		
 		//Filtra pelo padrÃ£o de url passado
 		acessos = RegistroLogAcessoService.filterByPadraoURL(acessos, padrao);
@@ -107,8 +121,10 @@ public class RelatorioFalhaTempoCommand implements Command {
 		//redireciona para a tela apresentar os dados
 		request.setAttribute("formValido", formValido);
 		request.setAttribute("contagemAcessosUrlsComFalha", contagemAcessosUrlsComFalha);
-		
+		request.setAttribute("contagemAcessosUrlsSemFalha", contagemAcessosUrlsSemFalha);
+
 		List<Map<String, Long>> dados = new ArrayList<Map<String, Long>>();
+		dados.add(contagemAcessosUrlsSemFalha);
 		dados.add(contagemAcessosUrlsComFalha);
 		request.setAttribute("dadosGrafico", dados);
 		
