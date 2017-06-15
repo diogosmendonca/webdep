@@ -12,6 +12,7 @@ Pré-requisitos para instalação:
 3) Ter instalado o maven
 4) Ter instalado a JRE (Java) versão 8 ou superior
 5) Estar conectado com a Internet (para baixar as dependências do maven)
+6) Ter a linguagem R instalada, com o pacote Rserve e o Rserve estar rodando (para gerar os gráficos)
 
 Instruções para instalação do sistema:
 
