@@ -109,6 +109,8 @@ links barra menu -->
 										key="br.cefetrj.webdep.jsp.navbar.relatorios.falhanotempo" /></a></li>
 							<li><a href="./acessoFalha.jsp"><fmt:message
 										key="br.cefetrj.webdep.jsp.navbar.relatorios.boxacessofalha" /></a></li>
+							<li><a href="./summaryCode.jsp"><fmt:message
+										key="br.cefetrj.webdep.jsp.summarycode.title" /></a></li>
 						</ul></li>
 				</c:if>
 				<!-- END Relatórios  -->

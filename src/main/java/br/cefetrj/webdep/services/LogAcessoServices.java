@@ -31,7 +31,7 @@ public class LogAcessoServices {
 
         if(buscar.equals("")) {
             query = pm.createQuery("from RegistroLogAcesso where timestamp " +
-                    "between :inicio and :fim ORDER BY timestamp");
+                    "between :inicio and :fim");
         }
         else {
             try {
@@ -191,4 +191,8 @@ public static void ImportarLogAcesso(Sistema s) {
     	return RegistroLogAcessoDAO.listCodigosBySistema(s);
     }
 
+    public static List<RegistroLogAcesso> buscaLogAcessoOrdenada(LocalDateTime ldtInicial, LocalDateTime ldtFinal, Long idSistema){
+    	return RegistroLogAcessoDAO.searchLogCodeOrdered(ldtInicial, ldtFinal, idSistema);
+    }
+    
 }

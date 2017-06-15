@@ -1,5 +1,6 @@
 package br.cefetrj.webdep.model.dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -9,7 +10,7 @@ import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Versao;
 
 /**
- * Classe de abstraÃ§Ã£o de acesso aos dados de registros de log de acesso.
+ * Classe de abstração de acesso aos dados de registros de log de acesso.
  * 		
  * @author diogo
  * @since 0.2
@@ -17,12 +18,12 @@ import br.cefetrj.webdep.model.entity.Versao;
 public class RegistroLogAcessoDAO {
 	
 	/**
-	 * Busca os cÃ³digos http distintos de um sistema em seu registro de log
+	 * Busca os códigos http distintos de um sistema em seu registro de log
 	 * de aesso.
 	 * 
 	 * @param s Sistema
-	 * @return Lista de registro de log acesso contendo somente o campo cÃ³digo 
-	 * preechido com os cÃ³digos HTTP distintos
+	 * @return Lista de registro de log acesso contendo somente o campo código 
+	 * preechido com os códigos HTTP distintos
 	 * 
 	 * @author diogo
 	 * @since 0.2
@@ -43,14 +44,14 @@ public class RegistroLogAcessoDAO {
 	
 	/**
 	 * Recupera uma lista de registros de log de acesso de um determinado sistema nas 
-	 * versÃµes solicitadas e que tiveram os cÃ³digos HTTP de retorno especificados.
+	 * versões solicitadas e que tiveram os códigos HTTP de retorno especificados.
 	 * 
 	 * @param sistema Sistema a serem buscados os registros de log de acesso
-	 * @param versoes VersÃµes a serem filtradas
-	 * @param codigos cÃ³digos de retorno HTTP a serem considerados na busca. ParÃ¢metro opcional, pode
+	 * @param versoes Versões a serem filtradas
+	 * @param codigos códigos de retorno HTTP a serem considerados na busca. Parâmetro opcional, pode
 	 * ser passado null.
 	 * 
-	 * @return lista de registro de logs de acesso filtrados pelos parÃ¢metros passados
+	 * @return lista de registro de logs de acesso filtrados pelos parâmetros passados
 	 * 
 	 * @author diogo
 	 * @since 0.2
@@ -66,7 +67,7 @@ public class RegistroLogAcessoDAO {
 		if (versoes == null || versoes.size() == 0)
 			throw new IllegalArgumentException("versoesId argument cannot be null or empty");
 		
-		//Monta a string de parÃ¢metro das versÃµes
+		//Monta a string de parâmetro das versões
 		StringBuilder versoesBuilder = new StringBuilder();
 		for (Versao versao : versoes) {
 			versoesBuilder.append(versao.getId());
@@ -75,7 +76,7 @@ public class RegistroLogAcessoDAO {
 		versoesBuilder.deleteCharAt(versoesBuilder.length() -1);
 		String versoesStr = versoesBuilder.toString();
 		
-		//Monta a string de parÃ¢metros dos cÃ³digos
+		//Monta a string de parâmetros dos códigos
 		String codigosStr = null;
 		if(codigos != null && codigos.size() > 0){
 			StringBuilder codigosBuilder = new StringBuilder();
@@ -119,5 +120,32 @@ public class RegistroLogAcessoDAO {
 		return pManager.createNativeQuery(sql, RegistroLogAcesso.class).getResultList();
 		
 	}
+	
+	/**
+	 * Busca ordenada por código dos registros de log acesso de um sistema  
+	 * dentro de um intervalo de tempo específico.
+	 * 
+	 * @param ldtInicial LocalDateTime
+	 * @param ldtFinal LocalDateTime
+	 * @param s Sistema
+	 * @return Lista de registro de log acesso ordenada por código, filtrada por Sistema
+	 * e dentro do intervalo de tempo entre ldtInicial e ldtFinal
+	 * 
+	 * @author GabrielPoyares
+	 * @since 0.2
+	 */
+	@SuppressWarnings("unchecked")
+	public static List<RegistroLogAcesso> searchLogCodeOrdered(LocalDateTime ldtInicial, LocalDateTime ldtFinal, Long idSistema) {
+        PersistenceManager pm = PersistenceManager.getInstance();
+        Query query = pm.createQuery("from RegistroLogAcesso where (timestamp " +
+                "between :inicio and :fim) AND (sistema_id = :sistemaId) " +
+    			"ORDER BY codigo ASC");     
+
+        query.setParameter("inicio", ldtInicial);
+        query.setParameter("fim", ldtFinal);
+        query.setParameter("sistemaId", idSistema);
+
+        return query.getResultList();
+    }
 
 }

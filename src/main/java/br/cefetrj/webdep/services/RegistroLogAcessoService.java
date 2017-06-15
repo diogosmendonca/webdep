@@ -240,4 +240,6 @@ public class RegistroLogAcessoService {
 	     
 	     return query.getResultList();
 	}
+	
+	
 }
