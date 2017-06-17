@@ -2,6 +2,8 @@ package br.cefetrj.webdep.services;
 
 	import java.io.IOException;
 	import java.io.PrintWriter;
+	import java.time.Duration;
+	import java.time.LocalDateTime;
 	import java.util.Iterator;
 	import java.util.List;
 	import java.util.concurrent.Executors;
@@ -46,11 +48,11 @@ package br.cefetrj.webdep.services;
 			threadon = false;
 			//ScheduledFuture<?> thread = new ScheduledFuture();
 			long delayInicial =0L;
-			long periodicidade = 5L;
+			long periodicidade = 1L;
 			int id ='0'; //get ID atual set value
 			final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 			ScheduledFuture<?> criathread ; 
-			    // CHAMA A VERIFICACAO DO LOG PARA MANUTENCAO
+			 // CHAMA A VERIFICACAO DO LOG PARA MANUTENCAO
 			
 			
 			
@@ -71,11 +73,17 @@ package br.cefetrj.webdep.services;
 							if(conta == contador)
 							{
 								// Se for da atual faz a acao de ler;
-								System.out.println("Execucao da Thread de Nome : "+nome);
+								System.out.println("Executando Thread de Nome : "+nome);
+								// Importa log
+								Sistema sis = SistemaServices.SearchById(aux);
+								LogAcessoServices.ImportarLogAcesso(sis);
+								
+								//Excluir Log - Funcao nao encontrada.
+								//LogAcessoServices.ExcluirLogAcesso(sis);
 							}
 							else
 							{
-								//System.out.println("Thread - "+aux+" Interrompida");
+								//Cancela a Thread se for modificado o Banco de Dados.
 								threade.cancel(false);
 							}
 						}
@@ -100,6 +108,8 @@ package br.cefetrj.webdep.services;
 				 		}
 				 		else
 				 		{
+				 			// Mosta que as threads estao rodando
+				 			threadon=true;
 				 			//Checa se existe algum sistema valido cadastrado
 				 			if (sistemasFiltrados.size() > 0)
 				 		    {
@@ -110,19 +120,45 @@ package br.cefetrj.webdep.services;
 					 				System.out.println("Iniciando a Thread do "+sistema.getNome());
 					 				String nome = sistema.getNome();
 					 				long aux = sistema.getId();
-					 				long periodicidade = (aux*3)+1;
+					 				LocalDateTime primeiraLeitura = sistema.getPrimeiraLeitura();
+					 				LocalDateTime agora = LocalDateTime.now();
+					 				long periodicidadereal = sistema.getPeriodicidadeLeitura();
+					 				
+					 				
+					 				// verifica a data de primeira leitura e compara para setar a nova.
+					 				
+					 				int auxdate = 0;
+					 				while(auxdate==0)
+					 				{
+					 					// se a data for anterior a data atual soma ate a data de agendamento ser maior
+					 					if(primeiraLeitura.compareTo(agora) ==-1)
+					 					{
+					 						primeiraLeitura = primeiraLeitura.plusMinutes(periodicidadereal);
+					 						
+					 					}
+					 					else
+					 					{
+					 						auxdate = 1;
+					 						
+					 					}
+					 					
+					 				}
+					 				//passando para minutos
+					 				long minutes = Duration.between(agora, primeiraLeitura).toMinutes();
+					 				//passando para minutos
+					 				periodicidadereal = periodicidadereal/60;
+					 				//agendando a Thread
 					 				ScheduledFuture<?> importadorAgendamentoSistema = null;
-					 				System.out.println("Thread de Nome : "+nome+" - Programada para a cada "+periodicidade+" segundos ");
-					 				importadorAgendamentoSistema = scheduler.scheduleAtFixedRate(threadSistema(nome, aux, contador, importadorAgendamentoSistema), delayInicial, periodicidade, TimeUnit.SECONDS);
+					 				System.out.println("Thread de Nome : "+nome+" - Comeca em "+ minutes +" minutos e roda a cada "+periodicidadereal+" minutos ");
+					 				importadorAgendamentoSistema = scheduler.scheduleAtFixedRate(threadSistema(nome, aux, contador, importadorAgendamentoSistema), minutes, periodicidadereal, TimeUnit.MINUTES);
 					 				  
 				 				}
-				 			   	threadon=true;
+				 				
 				 			 }
 				 		    else
 				 		    {
-				 		    	// Nenhum sistema cadastrado
-				 		    	//System.out.println("Nenhum sistema cadastrado");
-				 		    	threadon=true;
+				 		    	System.out.println("Nenhum sistema cadastrado");
+				 		    	
 				 		    	
 				 		    }
 				 		}
@@ -154,5 +190,4 @@ package br.cefetrj.webdep.services;
 
 		
 	}
-
 
