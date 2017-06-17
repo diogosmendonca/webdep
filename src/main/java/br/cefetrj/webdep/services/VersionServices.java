@@ -43,6 +43,20 @@ public class VersionServices {
 		}
 	}
 	
+	public static Versao findByName(String s){
+		PersistenceManager pm = PersistenceManager.getInstance();
+		try {
+			Query q = pm.createQuery("FROM Versao WHERE nome = :param ");
+			
+			q.setParameter("param", "%"+s+"%");
+			
+			return (Versao)q.getResultList().get(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public static void deleteVersion(Versao v){
 		PersistenceManager pm = PersistenceManager.getInstance();
 		

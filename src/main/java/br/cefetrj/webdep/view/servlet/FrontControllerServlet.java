@@ -30,6 +30,7 @@ import br.cefetrj.webdep.view.command.ExcluirLogErroCommand;
 import br.cefetrj.webdep.view.command.FillFormatoLogCommand;
 import br.cefetrj.webdep.view.command.FillPadraoURLCommand;
 import br.cefetrj.webdep.view.command.FillSistemaCommand;
+import br.cefetrj.webdep.view.command.GenCodeSummaryCommand;
 import br.cefetrj.webdep.view.command.GetHttpReportListsCommand;
 import br.cefetrj.webdep.view.command.GetVersionCommand;
 import br.cefetrj.webdep.view.command.ImportarLogCommand;
@@ -118,6 +119,8 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("ListaDefeitos", new EmitirRelatorioDefeitosCommand());
 	
 		commands.put("RelatorioAcessoFalha", new AcessoFalhaCommand());
+		
+		commands.put("genCodeSummary", new GenCodeSummaryCommand());
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -2,3 +2,12 @@
 alter table Sistema add column fomatoLog_id bigint
 alter table Sistema add constraint FKm319fh2wchtmxrhkow0setycy foreign key (fomatoLog_id) references FormatoLog
 DISCONNECT
+/*C12*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C15*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C13*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C14*/SET SCHEMA PUBLIC
+DISCONNECT
+

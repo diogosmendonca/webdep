@@ -1,5 +1,6 @@
 package br.cefetrj.webdep.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -198,5 +199,47 @@ public class RegistroLogAcessoService {
 				.findAny()
 				.isPresent();
 	}
+	
+	/**
+	 * Retorna a quantidade de erros numa determinada URL no Log de Acesso atrav�s do par�metro c�digo passado
+	 * 
+	 * @param url url que se quer saber se o código está presente
+	 * @param codigos os códigos que se quer verificar
+	 * @param acessos o conjunto de registro de logs de acesso a ser pesquisado
+	 * @return Um Long que representa o n�mero total de erros.
+	 * 
+	 * @author Lyago
+	 * @since 0.2
+	 */
+	public static Long getErros(String url, List<Integer> codigos, List<RegistroLogAcesso> acessos){
+		if (url == null)
+			throw new IllegalArgumentException("url argument cannot be null");
+		
+		if (codigos == null)
+			throw new IllegalArgumentException("codigos argument cannot be null");
+		
+		
+		if (acessos == null)
+			throw new IllegalArgumentException("acessos argument cannot be null");
+		
+		return acessos
+				.parallelStream()
+				.filter(r -> r.getUrl().equals(url) && codigos.contains(r.getCodigo()))
+				.collect(Collectors.counting());
+	}
+	
+
+	public static List<RegistroLogAcesso> filterByTimestamp(LocalDateTime ldtInicial, LocalDateTime ldtFinal){
+		 PersistenceManager pm = PersistenceManager.getInstance();
+	     Query query;
+	     query = pm.createQuery("from RegistroLogAcesso where timestamp " +
+	                    "between :inicio and :fim ORDER BY timestamp");
+	     
+	     query.setParameter("inicio", ldtInicial);
+	     query.setParameter("fim", ldtFinal);
+	     
+	     return query.getResultList();
+	}
+	
 	
 }

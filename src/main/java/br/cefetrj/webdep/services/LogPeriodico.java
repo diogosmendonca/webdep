@@ -61,9 +61,7 @@ package br.cefetrj.webdep.services;
 				
 				// sempre inicializa a thread quando o banco é modificado ou quando  a pessoa loga.
 				private Runnable threadSistema(String nome,long aux, int contador, ScheduledFuture<?> threade) {
-					
-					// TODO Auto-generated method stub
-					//System.out.println("Chamou Thread"+ aux);
+					System.out.println("Chamou Thread"+ aux);
 					final Runnable importador2 = new Runnable() {
 						
 						@Override
@@ -83,7 +81,7 @@ package br.cefetrj.webdep.services;
 							}
 							else
 							{
-								//Cancela a Thread se for modificado o Banco de Dados.
+								System.out.println("Thread - "+aux+" Interrompida");
 								threade.cancel(false);
 							}
 						}

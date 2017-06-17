@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +15,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.cefetrj.webdep.model.entity.PadraoURL;
 import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
-import br.cefetrj.webdep.services.LogAcessoServices;
+import br.cefetrj.webdep.services.PadraoURLServices;
+import br.cefetrj.webdep.services.RegistroLogAcessoService;
 
 public class AccessProfileReportCommand implements Command {
 
@@ -24,6 +27,8 @@ public class AccessProfileReportCommand implements Command {
 		LocalDate idate, fdate;
 		LocalTime itime, ftime;
 		LocalDateTime ildt, fldt;
+		String padraoUrl = request.getParameter("padraoUrl");
+		PadraoURL padrao = null;
 		DateTimeFormatter fmtMonth = DateTimeFormatter.ofPattern("MM-yyyy");
 		DateTimeFormatter fmtDay = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 		DateTimeFormatter fmtYear = DateTimeFormatter.ofPattern("yyyy");
@@ -36,8 +41,32 @@ public class AccessProfileReportCommand implements Command {
 		
 		boolean dataIn = true;
 		/*
-		 * ValidaÁ„o dos campos
+		 * ValidaÔøΩÔøΩo dos campos
 		 */
+		if(padraoUrl != null && padraoUrl.trim().length() > 0){
+			Long padraoIdLong = null; 
+			try{
+				padraoIdLong = Long.parseLong(padraoUrl);
+				padrao = PadraoURLServices.obterPorId(padraoIdLong);
+				if(padrao == null){
+					dataIn = false;
+					request.setAttribute("dataIn", dataIn);
+					request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
+					return;
+				}
+			}catch(Exception e){
+				dataIn = false;
+				request.setAttribute("dataIn", dataIn);
+				request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
+				return;
+			}
+		}
+		else{
+			dataIn = false;
+			request.setAttribute("dataIn", dataIn);
+			request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
+			return;
+		}
 		try {
 			idate = LocalDate.parse(request.getParameter("initialDate"));
 			itime = LocalTime.parse(request.getParameter("initialTime"));
@@ -52,83 +81,48 @@ public class AccessProfileReportCommand implements Command {
 			request.setAttribute("dataIn", dataIn);
 			request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
 			return;
-			
+
 		}
+		
+		//Pega por qual agrupamento o gr√°fico deve ser feito
 		int group = Integer.parseInt(request.getParameter("groupApr"));
-//		System.out.println(
-//				"idate: " + idate +
-//				"\nfdate: " + fdate +
-//				"\nitime: " + itime +
-//				"\nftime: " + ftime +
-//				"\ngroup: " + group
-//				);
-		List<RegistroLogAcesso> logs = LogAcessoServices.buscarLog(ildt, fldt, "");
-		for(RegistroLogAcesso log : logs){
-			LocalDateTime cur = log.getTimestamp();
-			if(group == 2){
-				int year = cur.getYear();
-				if(yearList.containsValue(year)){
-					yearListCount.put(yearList.get(year), yearListCount.get(year) + 1);
-				} else {
-					yearList.put(year, year);
-					yearListCount.put(year, 1);
+		
+		//Pega os logs de entre a data inicial e a data final
+		List<RegistroLogAcesso> logs = RegistroLogAcessoService.filterByTimestamp(ildt, fldt);
+		//Filtra os logs do pradr√£o url selecionado
+		logs = RegistroLogAcessoService.filterByPadraoURL(logs, padrao);
+		
+		Map<Integer, Integer> logsAgrupado = new HashMap<Integer, Integer>();
+		if(group == 2){
+			Iterator<RegistroLogAcesso> it = logs.iterator();
+			while(it.hasNext()){
+				RegistroLogAcesso log = it.next();
+				int curYear = log.getTimestamp().getYear();
+				if(logsAgrupado.containsKey(curYear)) logsAgrupado.put(curYear, logsAgrupado.get(curYear)+1);
+				else logsAgrupado.put(curYear,1);
+			}
+		}else{
+			if(group == 1){
+				Iterator<RegistroLogAcesso> it = logs.iterator();
+				while(it.hasNext()){
+					RegistroLogAcesso log = it.next();
+					int curMonth = log.getTimestamp().getMonthValue();
+					if(logsAgrupado.containsKey(curMonth)) logsAgrupado.put(curMonth, logsAgrupado.get(curMonth)+1);
+					else logsAgrupado.put(curMonth,1);
 				}
-				
-			} else if(group == 1){
-				String key = cur.format(fmtMonth);
-				if(monthList.containsValue(key)){
-					monthListCount.put(monthList.get(key), monthListCount.get(key) + 1);
-				} else {
-					monthList.put(key, key);
-					monthListCount.put(key, 1);
+			} else{
+				Iterator<RegistroLogAcesso> it = logs.iterator();
+				while(it.hasNext()){
+					RegistroLogAcesso log = it.next();
+					int curDay = log.getTimestamp().getYear();
+					if(logsAgrupado.containsKey(curDay)) logsAgrupado.put(curDay, logsAgrupado.get(curDay)+1);
+					else logsAgrupado.put(curDay,1);
 				}
-			} else if(group == 0){
-				String key = cur.format(fmtDay);
-				if(dayList.containsValue(key)){
-					dayListCount.put(dayList.get(key), dayListCount.get(key) + 1);
-				} else {
-					dayList.put(key, key);
-					dayListCount.put(key, 1);
-				}
-				
 			}
 		}
-//		for(String i : monthList.values()){
-//			System.out.println(
-//					"Month: " + i +
-//					"\nAccesses: " + monthListCount.get(i)
-//					);
-//		}
-		Map<LocalDate, Integer> map = new HashMap<LocalDate, Integer>();
-		if(group == 0){
-			for(String s : dayListCount.keySet()){
-				String[] ss = s.split("-");
-				int year = Integer.parseInt(ss[1]);
-				int month = Integer.parseInt(ss[0]);
-				int day = Integer.parseInt(ss[2]);
-				map.put(LocalDate.of(year, month, day), dayListCount.get(s));
-			}
-			request.setAttribute("aprfmt", fmtDay);
-			
-		} else if (group == 1){
-			for(String s : monthListCount.keySet()){
-				String[] ss = s.split("-");
-				int year = Integer.parseInt(ss[1]);
-				int month = Integer.parseInt(ss[0]);
-				map.put(LocalDate.of(year, month, 1), monthListCount.get(s));
-			}
-			request.setAttribute("aprfmt", fmtMonth);
-			
-		}else if (group == 2){
-			for(int year : yearListCount.keySet()){
-				map.put(LocalDate.of(year, 1, 1), yearListCount.get(year));
-			}
-			request.setAttribute("aprfmt", fmtYear);
-			
-		}
-		request.setAttribute("aprMap", map);
+		
+		request.setAttribute("dados", logsAgrupado);
+		request.setAttribute("dataIn", dataIn);
 		request.getRequestDispatcher("accessProfileReport.jsp").forward(request, response);
-
 	}
-
 }
