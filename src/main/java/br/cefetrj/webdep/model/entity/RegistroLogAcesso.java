@@ -2,12 +2,14 @@ package br.cefetrj.webdep.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
@@ -52,7 +54,10 @@ public class RegistroLogAcesso implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="sistema_id")
 	private Sistema sistema;
-
+	
+	@ManyToMany(mappedBy = "codigosFalha")
+	private List<EmailNotificacao> emailNotificacao;
+	
 	public Long getId() {
 		return id;
 	}

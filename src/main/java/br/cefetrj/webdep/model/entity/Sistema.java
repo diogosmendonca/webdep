@@ -67,6 +67,8 @@ public class Sistema implements Serializable{
 	@ManyToOne
 	private FormatoLog fomatoLog;
 	
+	@OneToMany(mappedBy = "sistema")
+	private List<EmailNotificacao> emailNotificacao;
 	
 	public FormatoLog getFomatoLog() {
 		return fomatoLog;

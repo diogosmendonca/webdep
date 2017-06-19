@@ -17,6 +17,7 @@ import br.cefetrj.webdep.view.command.AutenticaUsuarioCommand;
 import br.cefetrj.webdep.view.command.BuscarLogAcessoCommand;
 import br.cefetrj.webdep.view.command.BuscarLogErroCommand;
 import br.cefetrj.webdep.view.command.CadastraUsuarioCommand;
+import br.cefetrj.webdep.view.command.CadastroEmailNotificacaoCommand;
 import br.cefetrj.webdep.view.command.ChangeVersionCommand;
 import br.cefetrj.webdep.view.command.Command;
 import br.cefetrj.webdep.view.command.DeletaUsuarioCommand;
@@ -24,13 +25,16 @@ import br.cefetrj.webdep.view.command.DeletePadraoURLCommand;
 import br.cefetrj.webdep.view.command.DeleteSistemaCommand;
 import br.cefetrj.webdep.view.command.DeleteVersionCommand;
 import br.cefetrj.webdep.view.command.DeslogaUsuarioCommand;
+import br.cefetrj.webdep.view.command.EditarEmailNotificacaoCommand;
 import br.cefetrj.webdep.view.command.EmitirRelatorioDefeitosCommand;
+import br.cefetrj.webdep.view.command.ExcluirEmailNotificacaoCommand;
 import br.cefetrj.webdep.view.command.ExcluirLogAcessoCommand;
 import br.cefetrj.webdep.view.command.ExcluirLogErroCommand;
 import br.cefetrj.webdep.view.command.FillFormatoLogCommand;
 import br.cefetrj.webdep.view.command.FillPadraoURLCommand;
 import br.cefetrj.webdep.view.command.FillSistemaCommand;
 import br.cefetrj.webdep.view.command.GenCodeSummaryCommand;
+import br.cefetrj.webdep.view.command.GetEmailNotificacaoCommand;
 import br.cefetrj.webdep.view.command.GetHttpReportListsCommand;
 import br.cefetrj.webdep.view.command.GetVersionCommand;
 import br.cefetrj.webdep.view.command.ImportarLogCommand;
@@ -39,6 +43,7 @@ import br.cefetrj.webdep.view.command.InsertSelectIdSistemaCommand;
 import br.cefetrj.webdep.view.command.InsertSistemaCommand;
 import br.cefetrj.webdep.view.command.InsertVersionCommand;
 import br.cefetrj.webdep.view.command.ListSistemaCommand;
+import br.cefetrj.webdep.view.command.ListaEmailNotificacaoCommand;
 import br.cefetrj.webdep.view.command.ListaUsuarioCommand;
 import br.cefetrj.webdep.view.command.ListarPermissaoUsuarioCommand;
 import br.cefetrj.webdep.view.command.ObterUsuarioCommand;
@@ -121,6 +126,13 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("RelatorioAcessoFalha", new AcessoFalhaCommand());
 		
 		commands.put("genCodeSummary", new GenCodeSummaryCommand());
+		
+		commands.put("CadastroEmailNotificacao", new CadastroEmailNotificacaoCommand());
+		commands.put("EditarEmailNotificacao", new EditarEmailNotificacaoCommand());
+		commands.put("ListaEmailNotificacao", new ListaEmailNotificacaoCommand());
+		commands.put("ExcluirEmailNotificacao", new ExcluirEmailNotificacaoCommand());
+		commands.put("GetEmailNotificacao", new GetEmailNotificacaoCommand());
+		
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
