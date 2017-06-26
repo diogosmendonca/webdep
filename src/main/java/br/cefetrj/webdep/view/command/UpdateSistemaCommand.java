@@ -72,6 +72,7 @@ public class UpdateSistemaCommand implements Command {
 			s.setPeriodicidadeLeitura(new SimpleDateFormat("DD HH:mm").parse(nova).getTime());
 			if (s.getNome().equals(nome)) {
 				SistemaServices.updateSistema(s);
+				LogPeriodico.agendarTarefaPeriodica();
 				switch (lang) {
 				case "en_US":
 					mensagem = "System successfully updated!";
@@ -88,6 +89,7 @@ public class UpdateSistemaCommand implements Command {
 				s.setNome(nome);
 				if (!SistemaServices.verificaDuplicata(s)) {
 					SistemaServices.updateSistema(s);
+					LogPeriodico.agendarTarefaPeriodica();
 					switch (lang) {
 					case "en_US":
 						mensagem = "System successfully updated!";
