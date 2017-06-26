@@ -91,6 +91,7 @@ import java.util.Iterator;
 							else
 							{
 								//Cancela a Thread se for modificado o Banco de Dados.
+								System.out.println("Thread cancelada: "+nome);
 								threade.cancel(false);
 							}
 						}
