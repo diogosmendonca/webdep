@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.cefetrj.webdep.model.dao.SistemaDAO;
+import br.cefetrj.webdep.model.entity.FormatoLog;
 import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.services.LogAcessoServices;
 //import br.cefetrj.webdep.services.LogServices;
@@ -33,6 +34,14 @@ public class ImportarLogCommand implements Command {
         
         Sistema s = new Sistema();
         s = SistemaServices.obterPorId(Long.parseLong(sistema));
+        
+        FormatoLog f = new FormatoLog(); 
+        f.setId(Long.parseLong(formatoLog));
+        
+        s.setFomatoLog(f);
+        s.setPastaLogAcesso(logAcesso);
+        s.setPastaLogErro(logErro);
+        
                 
         File dirLogAcesso, dirLogErro;
         boolean erro = false;
@@ -51,18 +60,23 @@ public class ImportarLogCommand implements Command {
         dirLogErro = new File(logErro);
 
         if(dirLogAcesso.isDirectory() && dirLogErro.isDirectory() && !(erro)) {
-            LogAcessoServices.ImportarLogAcesso(s);
-//        	LogServices.ImportarLogAcesso();
+        	
+        	System.out.println(s.getFomatoLog());	
+        	System.out.println(s.getPastaLogAcesso());
+        	System.out.println(s.getPastaLogErro());
+        	
+        	
+        	LogAcessoServices.ImportarLogAcesso(s);
+        	
             request.setAttribute("logAdicionado", "1");
         }
         else {
             request.setAttribute("testarAcesso", "1");
-            //request.getRequestDispatcher("/importarLog.jsp").forward(request, response);
         }
 
         if(erro) {
             request.setAttribute("erro", "1");
-            //request.getRequestDispatcher("/importarLog.jsp").forward(request, response);
+           
         }
         request.getRequestDispatcher("/importarLog.jsp").forward(request, response);
     }
