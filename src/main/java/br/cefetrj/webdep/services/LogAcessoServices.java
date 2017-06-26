@@ -104,7 +104,7 @@ public class LogAcessoServices {
 			File arquivo = afile[i];			
 			 
 			
-
+ 
 				System.out.println(arquivo.getName());
 
 				try{
