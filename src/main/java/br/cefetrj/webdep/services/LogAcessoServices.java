@@ -102,6 +102,7 @@ public class LogAcessoServices {
 
 		for (int j = afile.length; i < j; i++) {
 			File arquivo = afile[i];			
+			 
 			
 
 				System.out.println(arquivo.getName());
