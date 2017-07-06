@@ -24,9 +24,10 @@ $(document).ready(
 							$("#pxLogs2").val(resposta.sistema.pxLogs2);
 							$("#dataLeitura").val(resposta.sistema.data);
 							$("#horarioLeitura").val(resposta.sistema.time);
-							
+							$("#periodicidade").val(resposta.sistema.periodicidade);
 							$("#novaLeituraDia").val(resposta.sistema.novaData.split(" ")[0]);
 							$("#novaLeituraHora").val(resposta.sistema.novaData.split(" ")[1]);
+							$("#periodicidade").val(resposta.sistema.periodicidade);
 							}
 						});
 				} else if (window.location.href.indexOf("gerenciadorsistema.jsp") > -1) {
@@ -439,6 +440,7 @@ $(document).ready(
                                     var novaLeituraDia = $("#novaLeituraDia").val();
                                     var novaLeituraHora = $("#novaLeituraHora").val();
 									var action = $("#action").val();
+									var periodicidade = $("#periodicidade").val();
 									var id_sistema_update = $(
 											"#id-sistema-update").val();
 									// validação form
@@ -512,6 +514,15 @@ $(document).ready(
 										$("#div-novaLeitura").removeClass(
 										"has-error");
 									}
+
+									if( periodicidade.trim() !== "" ){
+										if( parseInt(periodicidade) < 0 || parseInt(periodicidade) > 999 ){
+											$("#div-periodicidade").addClass("has-error");
+										}
+										else{
+											$("#div-periodicidade").removeClass("has-error");
+										}
+									} 
 									
 									if (nome.trim() !== "" && servidor !== null && formatoLog !== null &&  servidor.trim() !== "" && formatoLog.trim() !== "" &&
 										ptLogs.trim() !== "" && ptLogs2.trim() !== "" && pxLogs.trim() !== "" && pxLogs2.trim() !== "" &&
@@ -550,7 +561,11 @@ $(document).ready(
 											alert("Campo 'Prefixo Log de Erro' execedeu limite de caracteres")
 											return false;
 										}
-										
+										if( periodicidade.trim().length > 3 ){
+											alert("Campo 'Periodicidade' execedeu limite de caracteres")
+											return false;	
+										}
+
 										$("#div-nome").removeClass("has-error");
 										$("#div-servidor").removeClass("has-error");
 										$("#div-formatoLog").removeClass("has-error");
@@ -561,6 +576,7 @@ $(document).ready(
 										$("#div-dataLeitura").removeClass("has-error");
 										$("#div-horarioLeitura").removeClass("has-error");
 										$("#div-novaLeitura").removeClass("has-error");
+										$("#div-periodicidade").removeClass("has-error");
 										$.ajax({
 													type : "POST",
 													url : "FrontControllerServlet",
@@ -578,7 +594,8 @@ $(document).ready(
                                                         novaLeituraHora: novaLeituraHora,
                                                         horaPrimeiraLeitura : horaPrimeiraLeitura,
 														action : action,
-														id_sistema_update : id_sistema_update
+														id_sistema_update : id_sistema_update,
+														periodicidade: periodicidade,
 													}, // action fica no
 													// jsp porque o form
 													// está sendo

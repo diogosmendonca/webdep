@@ -22,11 +22,9 @@ public class ChangeVersionCommand implements Command {
 		
 		
 		/*
-		 *Validação dos campos
+		 *Validaï¿½ï¿½o dos campos
 		 * 
-		 */
-		
-
+		*/
 		Long idv = Long.parseLong(request.getParameter("id"));
 		Versao v = VersionServices.obterPorId(idv);
 		

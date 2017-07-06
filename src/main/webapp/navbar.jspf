@@ -91,6 +91,21 @@ links barra menu -->
 						</ul></li>
 				</c:if>
 				<!-- END LOGS -->
+				<!-- EMAIL NOTIFICACAO -->
+				<c:if
+					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' || sessionScope.usuario.perfil=='Admin' }">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false"><fmt:message
+								key="br.cefetrj.psw.manteremail.titulo" /><span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="./cadastroEmailNotificacao.jsp"><fmt:message
+										key="br.cefetrj.psw.manteremail.novo" /></a></li>
+							<li><a href="./listaEmailNotificacao.jsp"><fmt:message
+										key="br.cefetrj.psw.manteremail.listar" /></a></li>
+						</ul></li>
+				</c:if>
+				<!-- END EMAIL NOTIFICACAO -->
 				<c:if
 					test="${sessionScope.usuario.admGeral==true || sessionScope.usuario.perfil=='Administrador' || sessionScope.usuario.perfil=='Admin' || sessionScope.usuario.perfil=='Analista'}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"

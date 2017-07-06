@@ -57,7 +57,7 @@
 					<br> <label class="text-right col-sm-6"><fmt:message
 							key="br.cefetrj.webdep.jsp.form.sistema.pxLogs" /></label>
 					<div id="div-prefixo-acesso" class="input-group">
-						<input type="text" id="pxLogs" name="pxLogs" class="form-control" >
+						<input type="text" id="pxLogs" name="pxLogs" class="form-control">
 						<span class="input-group-btn">
 							<button id="pxLogs-teste-btn" class="btn btn-info" type="button">
 								<fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnTeste" />
@@ -97,8 +97,9 @@
 						data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 						<div class="input-group">
 							<input type="text" id="dataLeitura" class="form-control"
-								placeholder="aaaa-mm-dd" name="dataLeitura" /> <span class="input-group-addon">
-								<span class="glyphicon glyphicon-remove"></span>
+								placeholder="aaaa-mm-dd" name="dataLeitura" /> <span
+								class="input-group-addon"> <span
+								class="glyphicon glyphicon-remove"></span>
 							</span> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -111,7 +112,8 @@
 						data-link-format="hh:ii">
 						<div id="div-horarioLeitura" class="input-group">
 							<input type="text" id="horarioLeitura" class="form-control"
-								placeholder="hh:mm" name="horarioLeitura" /> <span class="input-group-addon"> <span
+								placeholder="hh:mm" name="horarioLeitura" /> <span
+								class="input-group-addon"> <span
 								class="glyphicon glyphicon-remove"></span>
 							</span> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-time"></span>
@@ -130,14 +132,15 @@
 						<div id="div-novaLeitura" class="form-group col-md-12">
 							<label class="text-right col-md-3"><fmt:message
 									key="br.cefetrj.webdep.jsp.form.sistema.nova" /></label> <input
-								type="text" id="novaLeituraDia" size="2" name="novaLeituraDia" class="form-control"
-								placeholder="dd" />
+								type="text" id="novaLeituraDia" size="2" name="novaLeituraDia"
+								class="form-control" placeholder="dd" />
 							<div class="input-group date form_time col-sm-2" data-date=""
 								data-date-format="hh:ii" data-link-field="dtp_input3"
 								data-link-format="hh:ii">
 								<input type="text" id="novaLeituraHora" class="form-control"
-									placeholder="hh:mm" name="novaLeituraHora"/> <span class="input-group-addon">
-									<span class="glyphicon glyphicon-remove"></span>
+									placeholder="hh:mm" name="novaLeituraHora" /> <span
+									class="input-group-addon"> <span
+									class="glyphicon glyphicon-remove"></span>
 								</span> <span class="input-group-addon"> <span
 									class="glyphicon glyphicon-time"></span>
 								</span>
@@ -146,13 +149,25 @@
 					</div>
 				</div>
 				<br>
+			</div>
+		<div class="row">
+			<fieldset class="form-group">
+				<legend>Periodicidade</legend>
+				<div class="col-sm-6" id="div-periodicidade">
+					<label class="text-right col-sm-6"><fmt:message
+							key="br.cefetrj.webdep.jsp.form.sistema.periodicidade" /></label>
+					<div class="input-group">
+						<input type="number" min="1" max="999" name="periodicidade" id="periodicidade" class="form-control" />
+					</div>
+				</div>
+			</fieldset>
 		</div>
 		<div class="row text-center">
-			<span class="text-center help-block with-errors" id="cadastro-mensagem"></span> 
-			<input id="update" name="update"
-				type="hidden" value="false" /> <input id="id-sistema-update"
-				name="id-sistema-update" type="hidden" value="" /> <input
-				id="action" name="action" type="hidden" value="insertSistema" />
+			<span class="text-center help-block with-errors"
+				id="cadastro-mensagem"></span> 
+				<input id="update" name="update" type="hidden" value="false" /> 
+				<input id="id-sistema-update" name="id-sistema-update" type="hidden" value="" /> 
+				<input	id="action" name="action" type="hidden" value="insertSistema" />
 			<button id="cadastro-sistema-submit" type="submit"
 				class="btn btn-primary ">
 				<fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnSalvar" />
@@ -161,7 +176,6 @@
 				<fmt:message key="br.cefetrj.webdep.jsp.form.sistema.btnCancelar" />
 			</button>
 		</div>
-
 	</div>
 
 	<jsp:include page="scripts.jspf" />
