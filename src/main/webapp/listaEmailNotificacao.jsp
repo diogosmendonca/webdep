@@ -94,7 +94,7 @@
 					<form class="form-horizontal" method="post"
 						action="FrontControllerServlet">
 						<input type="hidden" id="id" name="id">
-						<button id="submit-padrao-url" name="action" value="GetEmailNotificacao"
+						<button id="submit-padrao-url" name="action" value="EditarEmailNotificacao"
 							type="submit" class="btn btn-primary">
 							<fmt:message key="br.cefetrj.webdep.jsp.vs.confirm" />
 						</button>

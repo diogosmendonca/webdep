@@ -59,18 +59,12 @@ public class CadastroEmailNotificacaoCommand implements Command{
 			request.getRequestDispatcher("cadastroEmailNotificacao.jsp").forward(request, response);
 			return;
 		}
-		
-		
-		System.out.println(codigosHttpErro);
-		System.out.println(padraoUrl);
-		System.out.println(sistema);
-		System.out.println(emails);
-		
+				
 		EmailNotificacao rn = new EmailNotificacao();
 		
 		Sistema s = new Sistema();
 		s.setId(new Long(sistema));
-		
+				
 		PadraoURL pu = new PadraoURL();
 		pu.setId(new Long(padraoUrl));
 		

@@ -33,6 +33,11 @@
 	<%@include file="navbar.jspf"%>
 
 <div class="container">
+
+{ idFalha }
+{ idUrls }
+{ idSistema }
+{ emails }
 	<!-- ################## SE TEM SISTEMA SELECIONADO ############################# -->
 	<c:choose>
 		<c:when test="${ not empty idsistema }">
@@ -65,7 +70,7 @@
 								<fmt:message key="br.cefetrj.webdep.jsp.manteremail.campo.falha" />
 							</label>
 							<div class="col-sm-3 ">
-								<cmp:CodigoHTTPCombo nome="codigosHttpErro" sistemaId="${ idsistema }" codigosSelecionados="${ paramValues.codigosHttpErro }" />
+								<cmp:CodigoHTTPCombo nome="codigosHttpErro" sistemaId="${ idsistema }" codigosSelecionados="${ idFalha }" />
 							</div>
 						</div>
 						<div class="form-group ${ padraoUrlStatus }">
@@ -75,14 +80,14 @@
 							</label>
 							<div class="col-sm-3 ">
 								<nobr>
-									<cmp:PadraoURLCombo nome="padraoUrl" usuarioId="${ usuario.id }" padraoSelecionado="${ param.padraoUrl }"/>
+									<cmp:PadraoURLCombo nome="padraoUrl" usuarioId="${ usuario.id }" padraoSelecionado="${ idUrls }"/>
 								</nobr>
 							</div>
 						</div>
 						<div class="form-group ${ sistemaStatus }">
 							<label class="control-label col-sm-2" for="name"><fmt:message key="br.cefetrj.webdep.jsp.vr.system" /></label>
 							<div class="col-xs-2">
-								<cmp:ComboSistema userId="${ id }" selectedList="${ sys }" classCss="form-control"/>
+								<cmp:ComboSistema userId="${ id }" selectedList="${ idSistema }" classCss="form-control"/>
 								<c:if test="${not empty systemIn and not systemIn }">
 									<span class="help-block">
 										<fmt:message key="br.cefetrj.webdep.jsp.vr.systemError"/>
@@ -90,13 +95,13 @@
 								</c:if>	
 							</div>
 						</div>
-						<div class="form-group ${ emailsStatus }">
+						<div class="form-group ${ emailNotificacao.email }">
 							<!-- ################ EMAILS ################################# -->
 							<label class="control-label col-sm-2" for="emails">
 								<fmt:message key="br.cefetrj.webdep.jsp.manteremail.campo.email" />
 							</label>
 							<div class="col-sm-3 ">
-								<input type="text" name="emails" class="form-control" />
+								<input type="text" name="emails" class="form-control" value="${emails} }"/>
 							</div>
 						</div>
 						<div class="form-group col-sm-5">

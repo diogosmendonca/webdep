@@ -19,10 +19,7 @@ public class ListaEmailNotificacaoCommand implements Command{
 		System.out.println(7);
 		
 		request.setAttribute("list", l);
-		request.getRequestDispatcher("listaEmailNotificacao.jsp").forward(request, response);
-		
-		
-		
+		request.getRequestDispatcher("listaEmailNotificacao.jsp").forward(request, response);		
 	}
 	
 

@@ -137,6 +137,7 @@ public class FrontControllerServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println(request.getParameter("frequencia"));
 		try {
 			String action = request.getParameter("action");
 			commands.get(action).execute(request, response);
@@ -149,7 +150,10 @@ public class FrontControllerServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+        Map<String, String[]> parameters = request.getParameterMap();
+        for(String parameter : parameters.keySet()) {
+            System.out.println(parameter);
+        }
 		doGet(request, response);
 	}
 

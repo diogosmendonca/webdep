@@ -63,7 +63,27 @@ public class InsertSistemaCommand implements Command{
         		    +" "+ ((c.get(Calendar.HOUR_OF_DAY) < 10)?("0"+c.get(Calendar.HOUR_OF_DAY)):(c.get(Calendar.HOUR_OF_DAY)))
         		    + ":" 
         		   + ((c.get(Calendar.MINUTE) < 10)?("0"+c.get(Calendar.MINUTE)):(c.get(Calendar.MINUTE)));
-		try{	
+            
+            Integer periodicidade = 0;
+            String strPeriodicidade = request.getParameter("periodicidade");
+			try{
+				System.out.println(strPeriodicidade);
+				if( !strPeriodicidade.isEmpty() && strPeriodicidade != null ){
+					periodicidade = Integer.parseInt(strPeriodicidade);
+					
+					if(!( periodicidade >= 1 && periodicidade <= 999)){
+						throw new Exception("Periodicidade fora do tamanho permitido");
+					}
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}            
+			
+		try{
+			if(periodicidade > 0 ){
+				s.setPeriodicidade(periodicidade);
+			}
+			
 			s.setNome(nome);
 			s.setServidor(ServidorServices.searchServidor(serv).get(0));
 			s.setPastaLogAcesso(ptLogs);

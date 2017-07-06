@@ -70,8 +70,19 @@ public class Sistema implements Serializable{
 	@OneToMany(mappedBy = "sistema")
 	private List<EmailNotificacao> emailNotificacao;
 	
+	@Column(length=3)
+	private Integer periodicidade;
+	
 	public FormatoLog getFomatoLog() {
 		return fomatoLog;
+	}
+
+	public Integer getPeriodicidade() {
+		return periodicidade;
+	}
+
+	public void setPeriodicidade(Integer periodicidade) {
+		this.periodicidade = periodicidade;
 	}
 
 	public void setFomatoLog(FormatoLog fomatoLog) {
