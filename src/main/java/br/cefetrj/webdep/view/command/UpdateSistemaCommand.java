@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.cefetrj.webdep.model.entity.Sistema;
+import br.cefetrj.webdep.services.LogPeriodico;
 import br.cefetrj.webdep.services.ServidorServices;
 import br.cefetrj.webdep.services.SistemaServices;
 

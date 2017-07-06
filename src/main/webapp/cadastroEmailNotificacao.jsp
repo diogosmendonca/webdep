@@ -96,7 +96,7 @@
 								<fmt:message key="br.cefetrj.webdep.jsp.manteremail.campo.email" />
 							</label>
 							<div class="col-sm-3 ">
-								<input type="text" name="emails" class="form-control" />
+								<input type="text" name="emails" maxlength="1000" class="form-control" placeholder="Insira os e-mails separados por vírgula"/>
 							</div>
 						</div>
 						<div class="form-group col-sm-5">

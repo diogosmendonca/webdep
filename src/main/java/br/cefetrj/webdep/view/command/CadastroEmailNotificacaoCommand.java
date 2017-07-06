@@ -3,6 +3,8 @@ package br.cefetrj.webdep.view.command;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,13 +23,22 @@ public class CadastroEmailNotificacaoCommand implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
 		String codigosHttpErro = request.getParameter("codigosHttpErro");
 		String padraoUrl = request.getParameter("padraoUrl");
 		String sistema = request.getParameter("sistema");
-		String emails = request.getParameter("emails").trim();
+		String emails = "";
 		
+		String emailsView = request.getParameter("emails").trim();
+		String[] arrEmails = emailsView.split(",");
+		
+		for( String email : arrEmails ){
+			email = email.trim();
+			if(validarEmail(email)){
+				if(emails.length() == 0) emails = email;
+				else emails = emails + "," + email; 
+			}
+		}
+			
 		boolean formValido = true;
 		
 		if( codigosHttpErro == null ){
@@ -84,5 +95,19 @@ public class CadastroEmailNotificacaoCommand implements Command{
 		request.getRequestDispatcher("cadastroEmailNotificacao.jsp").forward(request, response);
 		
 	}
+	
+	public boolean validarEmail(String email)
+    {
+        boolean isEmailIdValid = false;
+        if (email != null && email.length() > 0) {
+            String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(email);
+            if (matcher.matches()) {
+                isEmailIdValid = true;
+            }
+        }
+        return isEmailIdValid;
+    }
 
 }

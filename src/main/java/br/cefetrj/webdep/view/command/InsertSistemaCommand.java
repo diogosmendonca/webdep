@@ -83,7 +83,6 @@ public class InsertSistemaCommand implements Command{
 			if(periodicidade > 0 ){
 				s.setPeriodicidade(periodicidade);
 			}
-			
 			s.setNome(nome);
 			s.setServidor(ServidorServices.searchServidor(serv).get(0));
 			s.setPastaLogAcesso(ptLogs);

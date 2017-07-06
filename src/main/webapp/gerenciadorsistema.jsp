@@ -34,6 +34,7 @@
                             <th><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.titulo1" /></th>
                             <th><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.servidor" /></th>
                             <th><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.format" /></th>
+                            <th><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.perioleitura" /></th>
                             <th><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.perio" /></th>
                             <th><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.prox" /></th>
                             <th><fmt:message key="br.cefetrj.webdep.jsp.form.sistema.alterar" /></th>

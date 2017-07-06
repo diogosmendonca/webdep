@@ -24,7 +24,6 @@ $(document).ready(
 							$("#pxLogs2").val(resposta.sistema.pxLogs2);
 							$("#dataLeitura").val(resposta.sistema.data);
 							$("#horarioLeitura").val(resposta.sistema.time);
-							$("#periodicidade").val(resposta.sistema.periodicidade);
 							$("#novaLeituraDia").val(resposta.sistema.novaData.split(" ")[0]);
 							$("#novaLeituraHora").val(resposta.sistema.novaData.split(" ")[1]);
 							$("#periodicidade").val(resposta.sistema.periodicidade);
@@ -49,8 +48,9 @@ $(document).ready(
 													+ el.nome + "</td><td>"
 													+ el.servidor + "</td><td>"
 													+ el.formatolog + "</td><td>"
+													+ el.periodicidadeLeitura + "</td><td>"
 													+ el.periodicidade + "</td><td>"
-													+ el.proximaleitura + "</td>" 
+													+ el.proximaleitura + "</td>"
 													+ "<td><a onclick=alterar(\""
 													+ el.id + "\"); id=\"" + el.id
 													+ "-alterar\" class=\"alterar-sistema\">Alterar</a></td>"
@@ -145,6 +145,8 @@ $(document).ready(
 															+ el.servidor
 															+ "</td><td>"
 															+ el.formatolog
+															+ "</td><td>"
+															+ el.periodicidadeLeitura
 															+ "</td><td>"
 															+ el.periodicidade
 															+ "</td><td>"

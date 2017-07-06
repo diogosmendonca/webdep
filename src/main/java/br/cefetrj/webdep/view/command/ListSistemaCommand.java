@@ -94,20 +94,21 @@ public class ListSistemaCommand implements Command{
 				String formato = "dd/MM/yyyy HH:mm";
 			    SimpleDateFormat sdf2 = new SimpleDateFormat(formato);
 				String novaLeitura = sdf2.format(x.getTime());
-				    String periodicidade = ((calNovaLeitura.get(Calendar.DAY_OF_YEAR) < 10)?("0"+calNovaLeitura.get(Calendar.DAY_OF_YEAR)):((calNovaLeitura.get(Calendar.DAY_OF_YEAR) > 99)? "0":calNovaLeitura.get(Calendar.DAY_OF_YEAR)))
+				    String periodicidadeLeitura = ((calNovaLeitura.get(Calendar.DAY_OF_YEAR) < 10)?("0"+calNovaLeitura.get(Calendar.DAY_OF_YEAR)):((calNovaLeitura.get(Calendar.DAY_OF_YEAR) > 99)? "0":calNovaLeitura.get(Calendar.DAY_OF_YEAR)))
 				    +" "+ ((calNovaLeitura.get(Calendar.HOUR_OF_DAY) < 10)?("0"+calNovaLeitura.get(Calendar.HOUR_OF_DAY)):(calNovaLeitura.get(Calendar.HOUR_OF_DAY)))
 				    + ":" 
 				   + ((calNovaLeitura.get(Calendar.MINUTE) < 10)?("0"+calNovaLeitura.get(Calendar.MINUTE)):(calNovaLeitura.get(Calendar.MINUTE)));
 				if (buscaPorData) {
-					if (novaLeitura.equals(filtro) || periodicidade.equals(filtro)) {
+					if (novaLeitura.equals(filtro) || periodicidadeLeitura.equals(filtro)) {
 						contador++;
 						json += "{";
 						json += "\"id\":\"" + s.getId() + "\",";
 						json += "\"nome\":\"" + s.getNome() + "\",";
 						json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
 						json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
-						json += "\"periodicidade\":\"" + periodicidade + "\",";
-						json += "\"proximaleitura\":\"" + novaLeitura + "\"";
+						json += "\"periodicidadeLeitura\":\"" + periodicidadeLeitura + "\",";
+						json += "\"proximaleitura\":\"" + novaLeitura + "\",";
+						json += "\"periodicidade\":\"" + s.getPeriodicidade() + "\"";
 						json += "},";
 					}
 				} else {
@@ -116,8 +117,9 @@ public class ListSistemaCommand implements Command{
 					json += "\"nome\":\"" + s.getNome() + "\",";
 					json += "\"servidor\":\"" + s.getServidor().getNome() + "\",";
 					json += "\"formatolog\":\"" + s.getServidor().getFormatoLog().getNome() + "\",";
-					json += "\"periodicidade\":\"" + periodicidade + "\",";
-					json += "\"proximaleitura\":\"" + novaLeitura + "\"";
+					json += "\"periodicidadeLeitura\":\"" + periodicidadeLeitura + "\",";
+					json += "\"proximaleitura\":\"" + novaLeitura + "\",";
+					json += "\"periodicidade\":\"" + s.getPeriodicidade() + "\"";
 					json += "},";
 				}
 			}
