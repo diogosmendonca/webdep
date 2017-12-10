@@ -31,6 +31,9 @@
 <!-- ########################################################################### -->
 
 	<%@include file="navbar.jspf"%>
+	<div class="alert alert-info" role="alert">
+		<fmt:message key="br.cefetrj.webdep.jsp.manteremail.cadastro" />
+	</div>
 
 <div class="container">
 	<!-- ################## SE TEM SISTEMA SELECIONADO ############################# -->

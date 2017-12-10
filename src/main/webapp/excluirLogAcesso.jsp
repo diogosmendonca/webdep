@@ -7,12 +7,15 @@
 <fmt:setBundle basename="Messages" />
 <html>
 <head>
-    <title>WebDep</title>
+    <title><fmt:message key="br.cefetrj.psw.excluirLog.title_acesso" /></title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 </head>
 <body>
 <%@include file="navbar.jspf"%>
-<div class="col-lg-8">
+<div class="alert alert-info" role="alert">
+	<fmt:message key="br.cefetrj.psw.excluirLog.title_acesso" />
+</div>
+<div class="container">
     <form action="FrontControllerServlet">
         <fieldset class="form-group">
             <legend><fmt:message key="br.cefetrj.psw.excluirLog.sistema" /></legend>

@@ -12,12 +12,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title><fmt:message key="br.cefetrj.webdep.jsp.vr.title" /></title>
+<title><fmt:message key="br.cefetrj.webdep.jsp.vr.title_altera" /></title>
 <jsp:include page="head.jspf" />
 </head>
 <body class="container-full ">
 	<jsp:include page="scripts.jspf" />
 	<%@include file="navbar.jspf"%>
+	<div class="alert alert-info" role="alert">
+		<fmt:message key="br.cefetrj.webdep.jsp.vr.title_altera" />
+	</div>
 	<div class="container">
 		<form class="form-horizontal container" method="post" action="FrontControllerServlet">
 			<div class="panel panel-default">

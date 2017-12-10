@@ -163,7 +163,7 @@ links barra menu -->
 							<cmp:ComboSistema userId="${ id }" selectedList="${sessionScope.idsistema}" 
 								attributes=" onchange='javascript:updateIdSistema()'"  
 								classCss="form-control"
-								alertaSelecao="${ true }"
+								alertaSelecao="${ false }"
 								opcaoVazia="${ true }" />
 
 

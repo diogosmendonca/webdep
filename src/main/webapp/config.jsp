@@ -11,16 +11,17 @@
 <html>
 <head>
 	<jsp:include page="head.jspf"/>
-	<title><fmt:message key="br.cefetrj.webdep.config.titulo"/></title>
+	<title><fmt:message key="br.cefetrj.webdep.config.head.titulo" /></title>
 </head>
 
 
 <body>
 	<%@include file="navbar.jspf"%>
-	<div class="col-lg-8">
-	<p><font size="10"><fmt:message key="br.cefetrj.webdep.config.head.titulo"/></font></p>
-	</div>
-	<div class="col-lg-8">
+	<div class="alert alert-info" role="alert">
+		<fmt:message key="br.cefetrj.webdep.config.head.titulo" />
+	</div>	
+	
+	<div class="container">
 			<div class="panel panel-default">
 	<form action="FrontControllerServlet" name="form" id="form" class="form-horizontal" method="post">
 		<fieldset>
@@ -120,11 +121,11 @@
 	    				</div>
 		    		</div>
 		    	</div>
-		  		</fieldset>
+		  </fieldset>
 		
 			<fieldset>
 		  			<legend><fmt:message key="br.cefetrj.webdep.config.panelADM.titulo"/></legend>
-		  	
+		  			<div class="panel-body">
 			  		<div class="form-group">
 				    		<label for="inputPanelUserNome" class="col-sm-2 control-label"><fmt:message key="br.cefetrj.webdep.config.panelADM.form.Nome"/></label>
 			    			<div class="col-sm-10">
@@ -233,12 +234,13 @@
 						</span>	
 						</div>
 				    </c:if>
+				    </div>
 			  		</fieldset>
 			
 			
 				<fieldset>
 		  		<legend><fmt:message key="br.cefetrj.webdep.config.panelEmail.titulo"/></legend>
-		  			
+		  		<div class="panel-body">		  			
 		  					<div class="form-group">
 			    				<label for="inputPanelEmailUser" class="col-sm-2 control-label"><fmt:message key="br.cefetrj.webdep.config.panelEmail.form.User"/></label>
 		    					<div class="col-sm-10">
@@ -299,7 +301,8 @@
 									
 								</c:choose>
 	    					</div>
-		    			</div>		    		
+		    			</div>	
+		    			</div>	    		
 		  			</fieldset>		  				
 		
 			<div class="form-group">

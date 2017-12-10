@@ -11,11 +11,17 @@
 <fmt:setBundle basename="Messages" />
 <!DOCTYPE html>
 <html>
-    <head>
-        <jsp:include page="head.jspf"/>
-    </head>
-    <body>
+<head>
+<jsp:include page="head.jspf" />
+<title>
+<fmt:message key="br.cefetrj.webdep.jsp.lista.sistema.title" />
+</title>
+</head>
+<body>
     <%@include file="navbar.jspf"%>
+    <div class="alert alert-info" role="alert">
+		<fmt:message key="br.cefetrj.webdep.jsp.lista.sistema.title" />
+	</div>
         <div class=" container">
             <div class="col-sm-6 row form-inline">
                 <div id="div-buscar-sistemas" class="form-group has-feedback">

@@ -93,11 +93,11 @@ response.setDateHeader("Expires",-1);
 
 
 
-	<!--<%-- 		<H1>logado como ${usuario.nome} ${usuario.admGeral} --%>
+<%-- 		<H1>logado como ${usuario.nome} ${usuario.admGeral} --%>
 <%-- 		${usuario.perfil }</H1> --%>
 <%-- 		${lista}</br> --%>
-<%-- 		ID SISTEMA ${param.idsistema} ${sessionScope.idsistema} --%>-->
-${sessionScope.idsistema}
+<%-- 		ID SISTEMA ${param.idsistema} ${sessionScope.idsistema} --%>
+<%-- ${sessionScope.idsistema} --%>
 	<jsp:include page="scripts.jspf" />
 </body>
 </html>

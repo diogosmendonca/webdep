@@ -22,7 +22,11 @@
 	
 	<jsp:include page="scripts.jspf" />
 	<%@include file="navbar.jspf"%>
-	
+	<div class="alert alert-info" role="alert">
+		<fmt:message key="br.cefetrj.webdep.jsp.ListaDefeito.title" />
+	</div>
+
+
 	<!-- ################ MSGS DE VALIDAÇÃO DO FORM ##################################### -->
 			<c:if test="${ not empty msgKeys }">
 				<div class="alert alert-danger fade in alert-dismissible">

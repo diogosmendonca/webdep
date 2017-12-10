@@ -16,8 +16,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="css/http-report.css">
-<title><fmt:message
-		key="br.cefetrj.webdep.jsp.acessofalha.title" /></title>
+<title>
+	<fmt:message key="br.cefetrj.webdep.jsp.falhatempo.title" />
+</title>
 <jsp:include page="head.jspf" />
 <style type="text/css">
 	.btn-space {
@@ -31,8 +32,11 @@
 <!-- ########################################################################### -->
 
 	<%@include file="navbar.jspf"%>
+	<div class="alert alert-info" role="alert">
+		<fmt:message key="br.cefetrj.webdep.jsp.falhatempo.title" />
+	</div>
 
-<div class="container">
+	<div class="container">
 	<!-- ################## SE TEM SISTEMA SELECIONADO ############################# -->
 	<c:choose>
 		<c:when test="${ not empty idsistema }">

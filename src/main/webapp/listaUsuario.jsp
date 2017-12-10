@@ -11,11 +11,14 @@
 <html>
 <head>
 	<jsp:include page="head.jspf"/>
-	<title><fmt:message key="br.cefetrj.psw.user.titulo"/></title>
+	<title><fmt:message key="br.cefetrj.webdep.lista_usuario.titulo"/></title>
 </head>
 <body>
     <%@include file="navbar.jspf"%>
-	<div style="padding: 5%">
+    <div class="alert alert-info" role="alert">
+		<fmt:message key="br.cefetrj.webdep.lista_usuario.titulo"/>
+	</div>
+	<div class="container">	
 		<form action="FrontControllerServlet" method="post">
 			<div class="form-group form-inline" >
 			
@@ -25,12 +28,13 @@
     		</div>
 		</form>
 	</div>
+	<div class="container">
 	<div class="table-responsive">
 	  <table class="table table-striped">
 	      <thead>
 		      <tr>
 		        <th><fmt:message key="br.cefetrj.psw.user.label.nome"/></th>
-		        <th><fmt:message key="br.cefetrj.psw.user.titulo"/></th>
+		        <th><fmt:message key="br.cefetrj.psw.user.panel"/></th>
 		        <th><fmt:message key="br.cefetrj.psw.user.label.email"/></th>
 		        <th><fmt:message key="br.cefetrj.psw.user.label.talterar"/></th>
 		        <th><fmt:message key="br.cefetrj.psw.user.label.texcluir"/></th>
@@ -76,6 +80,7 @@
 	        </div>
 	      </div>  
 	    </div>
+  	</div>
   	</div>
   
 	<jsp:include page="scripts.jspf"/>

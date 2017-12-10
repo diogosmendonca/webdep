@@ -15,9 +15,13 @@
 <html>
 <head>
 <jsp:include page="head.jspf" />
+<title> <fmt:message key="br.cefetrj.webdep.jsp.form.sistema.cadastro_sistema"/></title>
 </head>
 <body>
 	<%@include file="navbar.jspf"%>
+	<div class="alert alert-info" role="alert">
+		<fmt:message key="br.cefetrj.webdep.jsp.form.sistema.cadastro_sistema"/>
+	</div>
 	<div id="sistema-form" class="form-horizontal container">
 		<div class="row">
 			<fieldset class="form-group">

@@ -10,12 +10,17 @@
 <html>
 <head>
 	<jsp:include page="head.jspf"/>
-	<title><fmt:message key="br.cefetrj.psw.user.titulo"/></title>
+	<title><fmt:message key="br.cefetrj.psw.user.alteracao_usuario" /></title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
 </head>
 <body>
     <%@include file="navbar.jspf"%>
-	<div style="padding: 5%">
+    <div class="alert alert-info" role="alert">
+		<h4>
+			<fmt:message key="br.cefetrj.psw.user.alteracao_usuario" />
+		</h4>
+	</div>
+	<div class="container">
 		<form action="FrontControllerServlet" method="POST" id="jqCad">
 		<input type="hidden" name="id" value="${ usuario.id }">
 		<input type="hidden" name="action" value="alteraUsuario" />
@@ -114,8 +119,8 @@
 			</div>
 		</div>
 		<div class="text-center">
-			<input type="submit" class="btn btn-default" value="<fmt:message key="br.cefetrj.psw.user.bt_salvar"/>" />
-			<a class="btn btn-default" href="FrontControllerServlet?action=listaUsuario&get=true"><fmt:message key="br.cefetrj.psw.user.bt_cancelar"/></a>
+			<input type="submit" class="btn btn-primary" value="<fmt:message key="br.cefetrj.psw.user.bt_salvar"/>" />
+			<a class="btn btn-danger" href="FrontControllerServlet?action=listaUsuario&get=true"><fmt:message key="br.cefetrj.psw.user.bt_cancelar"/></a>
 		</div>
 		</c:if>
 		</form>

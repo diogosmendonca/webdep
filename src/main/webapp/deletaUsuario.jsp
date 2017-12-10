@@ -14,7 +14,7 @@
 	<title><fmt:message key="br.cefetrj.psw.user.label.deletehead"/></title>
 </head>
 <body>
-    <%@include file="navbar.jspf"%>
+    <%@include file="navbar.jspf"%>   
 	<div style="padding: 5%">
 		<div class="panel panel-default">
 		  <div class="panel-heading"><fmt:message key="br.cefetrj.psw.user.label.deletehead" /></div>

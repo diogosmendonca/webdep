@@ -13,12 +13,15 @@
 <c:set var="logs" scope="session" value="<%=FormatoLogServices.listAllFormatoLog()%>"/>
 <html>
 <head>
-    <title>WebDep</title>
+    <title><fmt:message key="br.cefetrj.psw.importaLog.title" /></title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 </head>
 <body>
 <%@include file="navbar.jspf"%>
-<div class="col-lg-8">
+<div class="alert alert-info" role="alert">
+	<fmt:message key="br.cefetrj.psw.importaLog.title" />
+</div>
+<div class="container">
     <div class="panel-body">
         <form action="FrontControllerServlet" class="form-horizontal" >
             <fieldset class="form-group">

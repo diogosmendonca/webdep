@@ -18,6 +18,9 @@
 <body class="container-full ">
 	<jsp:include page="scripts.jspf" />
 	<%@include file="navbar.jspf"%>
+	<div class="alert alert-info" role="alert">
+		<fmt:message key="br.cefetrj.webdep.jsp.apr.title" />
+	</div>
 	<div class="container">
 		<form class="form-horizontal" method="post" action="FrontControllerServlet">
 			<div class="panel panel-default">

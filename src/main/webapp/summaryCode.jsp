@@ -31,8 +31,11 @@
 <!-- ########################################################################### -->
 
 	<%@include file="navbar.jspf"%>
+	<div class="alert alert-info" role="alert">
+		<fmt:message key="br.cefetrj.webdep.jsp.summarycode.title" />
+	</div>
 
-<!-- ################## SE TEM SISTEMA SELECIONADO ############################# -->
+	<!-- ################## SE TEM SISTEMA SELECIONADO ############################# -->
 <c:choose>
 	<c:when test="${ not empty idsistema }">
 

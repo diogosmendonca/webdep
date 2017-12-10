@@ -21,12 +21,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title><fmt:message key="br.cefetrj.webdep.jsp.vs.title" /></title>
+<title><fmt:message key="br.cefetrj.psw.manteremail.lista_email_title" /></title>
 <jsp:include page="head.jspf" />
 </head>
 <body class="container-full ">
 	<jsp:include page="scripts.jspf" />
 	<%@include file="navbar.jspf"%>
+	<div class="alert alert-info" role="alert">
+		<fmt:message key="br.cefetrj.psw.manteremail.lista_email_title" />
+	</div>
 	<div class="container">
 		<form class="form-horizontal" method="post" action="FrontControllerServlet">
 			<div class="form-group">
@@ -65,9 +68,8 @@
 				</table>
 			</form>
 			<div class="row text-center">		
-			<button type="submit" class="btn btn-primary btn-md"><fmt:message key="br.cefetrj.webdep.jsp.vs.back" /></button>
-			</div>
-	
+			<button type="button" onclick="javascript:location.href='home.jsp'" class="btn btn-primary btn-md"><fmt:message key="br.cefetrj.webdep.jsp.vs.back" /></button>
+			</div>	
 		</div>
 	</div>
 
