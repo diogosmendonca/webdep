@@ -92,14 +92,13 @@
 							<fmt:message key="br.cefetrj.psw.user.msg_erro.senha2"/>
 						</span>
 					</c:if>
-				</div>
-				
+				</div>		
 				
 				<div class="form-group form-inline" >
 				<label for="sel1"><fmt:message key="br.cefetrj.psw.user.label.select"/></label>
-				  <select class="form-control" name="perfil">
-				    <option value="Analista"><fmt:message key="br.cefetrj.psw.user.label.optselect1"/></option>
-				    <option value="Administrador"><fmt:message key="br.cefetrj.psw.user.label.optselect2"/></option>
+				  <select class="form-control" name="perfil" >					  
+				    <option value="Analista" ${ usuario.perfil eq "Analista" ? "selected" : "" }  ><fmt:message key="br.cefetrj.psw.user.label.optselect1"/></option>
+				    <option value="Administrador" ${ usuario.perfil eq "Admin" ? "selected" : "" } ><fmt:message key="br.cefetrj.psw.user.label.optselect2"/></option>
 				  </select>
 				</div>
 		  </div>
