@@ -226,9 +226,9 @@ links barra menu -->
 					aria-expanded="false"><fmt:message
 							key="br.cefetrj.webdep.jsp.navbar.idioma" /> <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="./home.jsp?lang=en_US"><fmt:message
+						<li><a href="?lang=en_US"><fmt:message
 									key="br.cefetrj.webdep.jsp.navbar.idioma.ingles" /></a></li>
-						<li><a href="./home.jsp?lang=pt_BR"><fmt:message
+						<li><a href="?lang=pt_BR"><fmt:message
 									key="br.cefetrj.webdep.jsp.navbar.idioma.portugues" /></a></li>
 
 					</ul></li>
