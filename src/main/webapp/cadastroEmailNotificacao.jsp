@@ -34,8 +34,13 @@
 	<div class="alert alert-info" role="alert">
 		<fmt:message key="br.cefetrj.webdep.jsp.manteremail.cadastro" />
 	</div>
+	<c:if test="${ not empty msg }">
+		<div class="alert alert-success" role="alert">
+			<fmt:message key="br.cefetrj.webdep.jsp.manteremail.sucesso" />
+		</div>
+	</c:if>
 
-<div class="container">
+	<div class="container">
 	<!-- ################## SE TEM SISTEMA SELECIONADO ############################# -->
 	<c:choose>
 		<c:when test="${ not empty idsistema }">

@@ -91,7 +91,8 @@ public class CadastroEmailNotificacaoCommand implements Command{
 		rn.setCodigosFalha(listErro);
 		
 		EmailNotificacaoServices.create(rn);
-		
+		String msg = "Cadastro realizado com sucesso";
+		request.setAttribute("msg", msg);
 		request.getRequestDispatcher("cadastroEmailNotificacao.jsp").forward(request, response);
 		
 	}
