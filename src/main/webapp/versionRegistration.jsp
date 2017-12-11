@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title><fmt:message key="br.cefetrj.webdep.jsp.vr.title" /></title>
 <jsp:include page="head.jspf" />
+<title><fmt:message key="br.cefetrj.webdep.jsp.vr.title" /></title>
 </head>
 <body class="container-full ">
 	<jsp:include page="scripts.jspf" />
@@ -21,6 +21,11 @@
 	<div class="alert alert-info" role="alert">
 		<fmt:message key="br.cefetrj.webdep.jsp.vr.title" />
 	</div>
+	<c:if test="${ not empty msg  }">	
+		<div class="alert alert-success" role="alert">
+			<fmt:message key="br.cefetrj.webdep.jsp.vr.sucesso" />
+		</div>
+	</c:if>
 	<div class="container">
 		<form class="form-horizontal container" method="post" action="FrontControllerServlet">
 			<div class="panel panel-default">
@@ -54,9 +59,9 @@
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd"><fmt:message key="br.cefetrj.webdep.jsp.vr.releaseDate" /></label>
-						<div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+						<div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd" >
 							<div class="input-group">
-								<input class="form-control" type="text"  name="date" id="date" value="${ version.timestampLiberacao.toLocalDate() }" readonly />
+								<input class="form-control" type="text"  name="date" id="date" value="${ version.timestampLiberacao.toLocalDate() } " readonly />
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-remove"></span>
 								</span> 

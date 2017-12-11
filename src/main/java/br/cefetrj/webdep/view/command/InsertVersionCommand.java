@@ -21,7 +21,7 @@ public class InsertVersionCommand implements Command{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/*
-		 * Validação dos campos
+		 * Validaï¿½ï¿½o dos campos
 		 * */
 		Versao v = new Versao();
 		LocalDateTime l = null;
@@ -38,6 +38,8 @@ public class InsertVersionCommand implements Command{
 		boolean timeIn = true;
 		boolean systemIn = true;
 		boolean nameIn = true;
+		
+		String msg = "";
 		
 		try{
 			ld = LocalDate.parse(request.getParameter("date"));
@@ -77,15 +79,19 @@ public class InsertVersionCommand implements Command{
 			v.setSistema(s);
 		if(l != null)
 			v.setTimestampLiberacao(l);
-		if(dateIn && timeIn && nameIn && systemIn)
+		if(dateIn && timeIn && nameIn && systemIn) {
 			VersionServices.insertVersion(v);
-		else
+		msg = "VersÃ£o cadastrada com sucesso";
+		}
+		else {
 			request.setAttribute("version", v);
-		
+		}
 		request.setAttribute("nameIn", nameIn);
 		request.setAttribute("dateIn", dateIn);
 		request.setAttribute("timeIn", timeIn);
 		request.setAttribute("systemIn", systemIn);
+		request.setAttribute("msg", msg);
+		
 		request.getRequestDispatcher("versionRegistration.jsp").forward(request, response);
 	}
 
