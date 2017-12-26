@@ -14,8 +14,8 @@ import br.cefetrj.webdep.services.VersionServices;
 public class SearchVersionCommand implements Command{
 	
 	/*
-	 * Adicionar validaÁ„o quando n„o for digitado nada e adicionar
-	 * mensagem quando a busca n„o houver resultados
+	 * Adicionar valida√ß√£o quando n√£o for digitado nada e adicionar
+	 * mensagem quando a busca n√£o houver resultados
 	 * 
 	 */
 

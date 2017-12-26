@@ -15,7 +15,7 @@ import br.cefetrj.webdep.services.UsuarioServices;
 public class ObterUsuarioCommand implements Command{
 
 	
-	//Daqui retorno para  view ou daqui lanço para o JSP ?
+	//Daqui retorno para  view ou daqui lanÃ§o para o JSP ?
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

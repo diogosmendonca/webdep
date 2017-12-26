@@ -10,7 +10,7 @@ import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Versao;
 
 /**
- * Classe de abstra玢o de acesso aos dados de registros de log de acesso.
+ * Classe de abstra莽茫o de acesso aos dados de registros de log de acesso.
  * 		
  * @author diogo
  * @since 0.2
@@ -18,12 +18,12 @@ import br.cefetrj.webdep.model.entity.Versao;
 public class RegistroLogAcessoDAO {
 	
 	/**
-	 * Busca os c骴igos http distintos de um sistema em seu registro de log
+	 * Busca os c贸digos http distintos de um sistema em seu registro de log
 	 * de aesso.
 	 * 
 	 * @param s Sistema
-	 * @return Lista de registro de log acesso contendo somente o campo c骴igo 
-	 * preechido com os c骴igos HTTP distintos
+	 * @return Lista de registro de log acesso contendo somente o campo c贸digo 
+	 * preechido com os c贸digos HTTP distintos
 	 * 
 	 * @author diogo
 	 * @since 0.2
@@ -44,14 +44,14 @@ public class RegistroLogAcessoDAO {
 	
 	/**
 	 * Recupera uma lista de registros de log de acesso de um determinado sistema nas 
-	 * vers鮡s solicitadas e que tiveram os c骴igos HTTP de retorno especificados.
+	 * vers玫es solicitadas e que tiveram os c贸digos HTTP de retorno especificados.
 	 * 
 	 * @param sistema Sistema a serem buscados os registros de log de acesso
-	 * @param versoes Vers鮡s a serem filtradas
-	 * @param codigos c骴igos de retorno HTTP a serem considerados na busca. Par鈓etro opcional, pode
+	 * @param versoes Vers玫es a serem filtradas
+	 * @param codigos c贸digos de retorno HTTP a serem considerados na busca. Par芒metro opcional, pode
 	 * ser passado null.
 	 * 
-	 * @return lista de registro de logs de acesso filtrados pelos par鈓etros passados
+	 * @return lista de registro de logs de acesso filtrados pelos par芒metros passados
 	 * 
 	 * @author diogo
 	 * @since 0.2
@@ -67,7 +67,7 @@ public class RegistroLogAcessoDAO {
 		if (versoes == null || versoes.size() == 0)
 			throw new IllegalArgumentException("versoesId argument cannot be null or empty");
 		
-		//Monta a string de par鈓etro das vers鮡s
+		//Monta a string de par芒metro das vers玫es
 		StringBuilder versoesBuilder = new StringBuilder();
 		for (Versao versao : versoes) {
 			versoesBuilder.append(versao.getId());
@@ -76,7 +76,7 @@ public class RegistroLogAcessoDAO {
 		versoesBuilder.deleteCharAt(versoesBuilder.length() -1);
 		String versoesStr = versoesBuilder.toString();
 		
-		//Monta a string de par鈓etros dos c骴igos
+		//Monta a string de par芒metros dos c贸digos
 		String codigosStr = null;
 		if(codigos != null && codigos.size() > 0){
 			StringBuilder codigosBuilder = new StringBuilder();
@@ -122,13 +122,13 @@ public class RegistroLogAcessoDAO {
 	}
 	
 	/**
-	 * Busca ordenada por c骴igo dos registros de log acesso de um sistema  
-	 * dentro de um intervalo de tempo espec韋ico.
+	 * Busca ordenada por c贸digo dos registros de log acesso de um sistema  
+	 * dentro de um intervalo de tempo espec铆fico.
 	 * 
 	 * @param ldtInicial LocalDateTime
 	 * @param ldtFinal LocalDateTime
 	 * @param s Sistema
-	 * @return Lista de registro de log acesso ordenada por c骴igo, filtrada por Sistema
+	 * @return Lista de registro de log acesso ordenada por c贸digo, filtrada por Sistema
 	 * e dentro do intervalo de tempo entre ldtInicial e ldtFinal
 	 * 
 	 * @author GabrielPoyares

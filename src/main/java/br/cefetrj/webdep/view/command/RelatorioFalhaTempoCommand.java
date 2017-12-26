@@ -1,4 +1,4 @@
-﻿package br.cefetrj.webdep.view.command;
+package br.cefetrj.webdep.view.command;
 
 import java.io.IOException;
 import java.time.DateTimeException;

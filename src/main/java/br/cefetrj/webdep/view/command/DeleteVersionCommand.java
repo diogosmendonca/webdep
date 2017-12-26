@@ -13,7 +13,7 @@ public class DeleteVersionCommand implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		/* Tratamento de exceções
+		/* Tratamento de exceÃ§Ãµes
 		*/
 		
 		Long id = Long.parseLong(request.getParameter("id"));
